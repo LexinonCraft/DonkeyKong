@@ -1,0 +1,22 @@
+name: build
+run-name: Build and Test
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: |
+          cmake -B build
+          cmake --build build
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test
+        run: |
+          make getSFML
+          make tests
+          ./tests
