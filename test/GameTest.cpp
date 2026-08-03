@@ -67,4 +67,6 @@ TEST(BarrelTest, zig_zags_onto_the_next_girder) {
     EXPECT_LT(barrel.get_vx(), 0.f); // direction flipped on the down-left girder
     EXPECT_NEAR(barrel.get_position().y,
                 girders[1].surface_y_at(barrel.get_position().x) - R, 0.001f);
+
+    EXPECT_EQ(1, 2);
 }

@@ -9,7 +9,9 @@ Game::Game() :
     view(sf::FloatRect(sf::Vector2f({0,-constants::VIEW_HEIGHT}), sf::Vector2f({constants::VIEW_WIDTH,constants::VIEW_HEIGHT}))),
     game_layer(window),
     girders(),
-    barrel_control(game_layer) {
+    ladders(),
+    barrel_control(game_layer),
+    player_control(game_layer) {
         girders = build_girders();
         barrel_control.spawn(girders);
     
@@ -65,12 +67,40 @@ bool Game::input() {
         // if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>()) {
             // if (keyReleased->code == sf::Keyboard::Key::Right) { // right arrow released
                 // ...
+
+        if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+            if (keyPressed->code == sf::Keyboard::Key::Up) {
+                player_control.start_climbing_up();
+                player_control.jump();
+            } else if (keyPressed->code == sf::Keyboard::Key::Down) {
+                player_control.start_climbing_down();
+            }
+        }
     }
+
+    // handle continuous key presses (for smooth movement)
+    bool leftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left);
+    bool rightPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right);
+    if (leftPressed) {
+        if (rightPressed) {
+            player_control.set_horizontal_direction(Player::HorizontalDirection::None);
+        } else {
+            player_control.set_horizontal_direction(Player::HorizontalDirection::Left);
+        }
+    } else {
+        if (rightPressed) {
+            player_control.set_horizontal_direction(Player::HorizontalDirection::Right);
+        } else {
+            player_control.set_horizontal_direction(Player::HorizontalDirection::None);
+        }
+    }
+
     return false;
 }
 
 void Game::update(float time_passed) {
     barrel_control.update(time_passed, girders);
+    player_control.update(time_passed, girders, ladders);
 }
 
 void Game::draw() {
@@ -82,6 +112,7 @@ void Game::draw() {
         game_layer.add_to_layer(girder.get_shape());
     }
     barrel_control.draw();
+    player_control.draw();
     game_layer.draw();
 
     window.display();

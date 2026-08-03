@@ -6,8 +6,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "../model/Girder.hpp"
+#include "../model/Ladder.hpp"
 #include "../view/Layer.hpp"
 #include "BarrelControl.hpp"
+#include "PlayerControl.hpp"
 
 // Game class
 class Game {
@@ -38,7 +40,10 @@ private:
     Layer game_layer;
 
     std::vector<Girder> girders;
+    std::vector<Ladder> ladders;
+
     BarrelControl barrel_control;
+    PlayerControl player_control;
 };
 
 #endif
