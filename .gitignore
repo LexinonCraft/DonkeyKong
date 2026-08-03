@@ -146,4 +146,9 @@ ipch/
 *.e2e
 
 # Clangd cache
-.cache/
+/.cache/
+
+# Artifacts of tests
+/SFML/
+/GoogleTest/
+/tests
