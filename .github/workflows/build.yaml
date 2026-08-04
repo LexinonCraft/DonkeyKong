@@ -9,7 +9,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake libsfml-dev
+          sudo apt-get install -y cmake libsfml-dev libx11-dev
       - name: Build
         run: |
           cmake -B build
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake libsfml-dev
+          sudo apt-get install -y cmake libsfml-dev libx11-dev
       - name: Test
         run: |
           make getSFML
