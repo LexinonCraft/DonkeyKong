@@ -2,7 +2,7 @@ name: build
 run-name: Build and Test
 on: [push]
 env:
-  APT_DEPENDENCIES: cmake libsfml-dev libx11-dev xorg-dev libudev-dev libvorbis-dev
+  APT_DEPENDENCIES: cmake libsfml-dev libx11-dev xorg-dev libudev-dev libvorbis-dev libflac-dev
 jobs:
   build:
     runs-on: ubuntu-latest
