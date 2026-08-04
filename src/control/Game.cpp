@@ -13,6 +13,9 @@ Game::Game() :
     barrel_control(game_layer),
     player_control(game_layer) {
         girders = build_girders();
+        ladders.emplace_back(&girders[1], &girders[0], 200.0f);
+        ladders.emplace_back(&girders[2], &girders[1], 300.0f);
+        ladders.emplace_back(&girders[3], &girders[2], 500.0f);
         barrel_control.spawn(girders);
     
         // limit frame rate
@@ -69,11 +72,8 @@ bool Game::input() {
                 // ...
 
         if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            if (keyPressed->code == sf::Keyboard::Key::Up) {
-                player_control.start_climbing_up();
+            if (keyPressed->code == sf::Keyboard::Key::Space) {
                 player_control.jump();
-            } else if (keyPressed->code == sf::Keyboard::Key::Down) {
-                player_control.start_climbing_down();
             }
         }
     }
@@ -95,6 +95,22 @@ bool Game::input() {
         }
     }
 
+    bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up);
+    bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down);
+    if (upPressed) {
+        if (downPressed) {
+            player_control.set_vertical_direction(Player::VerticalDirection::None);
+        } else {
+            player_control.set_vertical_direction(Player::VerticalDirection::Up);
+        }
+    } else {
+        if (downPressed) {
+            player_control.set_vertical_direction(Player::VerticalDirection::Down);
+        } else {
+            player_control.set_vertical_direction(Player::VerticalDirection::None);
+        }
+    }
+
     return false;
 }
 
@@ -108,7 +124,10 @@ void Game::draw() {
 
     game_layer.clear();
     // the stage is owned by Game, so Game draws it; the barrel goes on top
-    for (const Girder& girder : girders) {
+    for (const Ladder &ladder : ladders) {
+        game_layer.add_to_layer(ladder.get_shape());
+    }
+    for (const Girder &girder : girders) {
         game_layer.add_to_layer(girder.get_shape());
     }
     barrel_control.draw();

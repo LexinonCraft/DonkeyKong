@@ -13,9 +13,8 @@ public:
     PlayerControl(Layer &layer);
 
     void set_horizontal_direction(Player::HorizontalDirection dir);
+    void set_vertical_direction(Player::VerticalDirection dir);
     void jump();
-    void start_climbing_up();
-    void start_climbing_down();
 
     void update(float dt, const std::vector<Girder> &girders, const std::vector<Ladder> &ladders);
     void draw();

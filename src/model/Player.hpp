@@ -13,12 +13,16 @@ public:
     enum class State {
         OnGirder,
         InAir,
-        ClimbingUp,
-        ClimbingDown,
+        Climbing,
     };
     enum class HorizontalDirection {
         Left,
         Right,
+        None,
+    };
+    enum class VerticalDirection {
+        Up,
+        Down,
         None,
     };
 
@@ -29,18 +33,22 @@ public:
 
     /// set the direction the player is trying to move horizontally (left/right/none)
     void set_horizontal_direction(HorizontalDirection dir);
+    /// set the direction the player is trying to move vertically (up/down/none)
+    void set_vertical_direction(VerticalDirection dir);
 
     /// initialize a jump if the player is currently on a girder
     void jump();
 
-    /// start climbing up a ladder, if the player is currently on a girder and there is a ladder leading up at the player's x position
-    void start_climbing_up();
-    /// start climbing down a ladder, if the player is currently on a girder and there is a ladder leading down at the player's x position
-    void start_climbing_down();
-
     const sf::RectangleShape& get_shape() const;
 
 private:
+    // check if there is a girder below the player and return a pointer to it, or nullptr if there is none
+    const Girder *find_girder_below(const std::vector<Girder>& girders) const;
+    // check if there is a ladder leading up from the player's current position and return a pointer to it, or nullptr if there is none
+    const Ladder *find_ladder_leading_up(const std::vector<Ladder>& ladders) const;
+    // check if there is a ladder leading down from the player's current position and return a pointer to it, or nullptr if there is none
+    const Ladder *find_ladder_leading_down(const std::vector<Ladder>& ladders) const;
+
     State state;
     const Girder* current_girder = nullptr;
     const Ladder* current_ladder = nullptr;
@@ -48,6 +56,7 @@ private:
     sf::Vector2f position;
     sf::Vector2f velocity;
     HorizontalDirection horizontal_direction = HorizontalDirection::None;
+    VerticalDirection vertical_direction = VerticalDirection::None;
 
     sf::RectangleShape shape;
 };
