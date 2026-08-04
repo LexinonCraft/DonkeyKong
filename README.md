@@ -15,6 +15,7 @@ cmake --build build
 For running the tests:
 
 ```bash
+make getGTest
 make getSFML
 make tests
 ./tests

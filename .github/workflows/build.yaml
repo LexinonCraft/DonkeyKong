@@ -27,6 +27,7 @@ jobs:
           sudo apt-get install -y $APT_DEPENDENCIES
       - name: Test
         run: |
+          make getGTest
           make getSFML
           make tests
           ./tests
