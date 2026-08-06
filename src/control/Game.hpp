@@ -6,9 +6,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "../model/Girder.hpp"
-#include "../model/Ladder.hpp"
+#include "../model/Level.hpp"
 #include "../view/Layer.hpp"
-#include "BarrelControl.hpp"
 #include "PlayerControl.hpp"
 
 // Game class
@@ -39,10 +38,7 @@ private:
     sf::View view;
     Layer game_layer;
 
-    std::vector<Girder> girders;
-    std::vector<Ladder> ladders;
-
-    BarrelControl barrel_control;
+    Level *level;
     PlayerControl player_control;
 };
 

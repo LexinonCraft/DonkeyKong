@@ -5,6 +5,10 @@ PlayerControl::PlayerControl(Layer &layer) :
     player(std::make_unique<Player>())
 {}
 
+Player &PlayerControl::get_player() const {
+    return *player;
+}
+
 void PlayerControl::set_horizontal_direction(Player::HorizontalDirection dir) {
     player->set_horizontal_direction(dir);
 }
@@ -17,8 +21,8 @@ void PlayerControl::jump() {
     player->jump();
 }
 
-void PlayerControl::update(float dt, const std::vector<Girder> &girders, const std::vector<Ladder> &ladders) {
-    player->update(dt, girders, ladders);
+void PlayerControl::update(Level &level, float dt) {
+    player->update(level, dt);
 }
 
 void PlayerControl::draw() {

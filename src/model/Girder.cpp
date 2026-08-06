@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "Constants.hpp"
+#include "visitor/PlatformVisitor.hpp"
 
 Girder::Girder(sf::Vector2f left, sf::Vector2f right) :
     left(left),
@@ -22,12 +23,12 @@ Girder::Girder(sf::Vector2f left, sf::Vector2f right) :
         shape.setFillColor(sf::Color(200, 80, 40));
 }
 
-float Girder::slope() const {
+float Girder::slope_at(float x) const {
     return (right.y - left.y) / (right.x - left.x);
 }
 
 float Girder::surface_y_at(float x) const {
-    return left.y + slope() * (x - left.x);
+    return left.y + slope_at(x) * (x - left.x);
 }
 
 bool Girder::covers_x(float x) const {
@@ -42,6 +43,23 @@ int Girder::downhill_sign() const {
 sf::Vector2f Girder::high_end() const {
     // the upper end has the smaller y
     return (left.y <= right.y) ? left : right;
+}
+
+bool Girder::is_active() const {
+    return true;
+}
+
+sf::Vector2f Girder::displacement_at(float x, float dt) const {
+    // the girder is static, so no displacement
+    return {0.f, 0.f};
+}
+
+void Girder::update(float dt) {
+    // the girder is static, so no update needed
+}
+
+void Girder::accept(PlatformVisitor &visitor) const {
+    visitor.visit(*this);
 }
 
 const sf::RectangleShape& Girder::get_shape() const {

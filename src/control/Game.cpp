@@ -3,37 +3,24 @@
 #include <SFML/Window/Keyboard.hpp>
 
 #include "../model/Constants.hpp"
+#include "../model/DemoLevel.hpp"
+#include "../model/Entity.hpp"
+#include "PlatformPainter.hpp"
+#include "EntityPainter.hpp"
 
 Game::Game() :
     window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
     view(sf::FloatRect(sf::Vector2f({0,-constants::VIEW_HEIGHT}), sf::Vector2f({constants::VIEW_WIDTH,constants::VIEW_HEIGHT}))),
     game_layer(window),
-    girders(),
-    ladders(),
-    barrel_control(game_layer),
-    player_control(game_layer) {
-        girders = build_girders();
-        ladders.emplace_back(&girders[1], &girders[0], 200.0f);
-        ladders.emplace_back(&girders[2], &girders[1], 300.0f);
-        ladders.emplace_back(&girders[3], &girders[2], 500.0f);
-        barrel_control.spawn(girders);
-    
+    level(new DemoLevel()),
+    player_control(game_layer) {    
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
         // set the view (visible area) for our game
         game_layer.set_view(view);
-}
 
-std::vector<Girder> Game::build_girders() {
-    // four girders alternating downhill direction so the barrel zig-zags down.
-    // Remember: the view is y-inverted (+y = downward), so a larger y means lower on screen.
-    std::vector<Girder> girders;
-    girders.emplace_back(sf::Vector2f{120, -500}, sf::Vector2f{500, -460});
-    girders.emplace_back(sf::Vector2f{80, -360},  sf::Vector2f{540, -400});
-    girders.emplace_back(sf::Vector2f{40, -300},  sf::Vector2f{520, -260});
-    girders.emplace_back(sf::Vector2f{80, -160},  sf::Vector2f{560, -200});
-    return girders;
+        level->set_player(std::rand, &player_control.get_player());
 }
 
 void Game::start() {
@@ -115,8 +102,8 @@ bool Game::input() {
 }
 
 void Game::update(float time_passed) {
-    barrel_control.update(time_passed, girders);
-    player_control.update(time_passed, girders, ladders);
+    level->update(time_passed);
+    //player_control.update(*level, time_passed);
 }
 
 void Game::draw() {
@@ -124,14 +111,17 @@ void Game::draw() {
 
     game_layer.clear();
     // the stage is owned by Game, so Game draws it; the barrel goes on top
-    for (const Ladder &ladder : ladders) {
-        game_layer.add_to_layer(ladder.get_shape());
+    PlatformPainter platform_painter(game_layer);
+    for (auto it = level->get_platforms().begin(); it != level->get_platforms().end(); ++it) {
+        it->second.accept(platform_painter);
     }
-    for (const Girder &girder : girders) {
-        game_layer.add_to_layer(girder.get_shape());
+    for (auto it = level->get_ladders().begin(); it != level->get_ladders().end(); ++it) {
+        game_layer.add_to_layer(it->second.get_shape());
     }
-    barrel_control.draw();
-    player_control.draw();
+    EntityPainter entity_painter(game_layer);
+    for (auto it = level->get_entities().begin(); it != level->get_entities().end(); ++it) {
+        it->second.accept(entity_painter);
+    }
     game_layer.draw();
 
     window.display();

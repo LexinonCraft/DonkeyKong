@@ -3,6 +3,9 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "Constants.hpp"
+#include "Level.hpp"
+#include "Platform.hpp"
+#include "visitor/EntityVisitor.hpp"
 
 Barrel::Barrel(sf::Vector2f position) :
     position(position),
@@ -13,21 +16,22 @@ Barrel::Barrel(sf::Vector2f position) :
         shape.setPosition(position);
 }
 
-void Barrel::set_on_girder(const Girder& girder) {
-    current_girder = &girder;
-    vx = constants::ROLL_SPEED * static_cast<float>(current_girder->downhill_sign());
+void Barrel::set_on_platform(const Platform &platform) {
+    current_platform = &platform;
+    vx = constants::ROLL_SPEED * static_cast<float>(current_platform->downhill_sign());
     vy = 0.f;
 }
 
-void Barrel::update(float dt, const std::vector<Girder>& girders) {
+void Barrel::update(Level &level, float dt) {
+    const auto platforms = level.get_platforms();
     if (get_state() == State::OnGirder) {
         position.x += vx * dt;
-        if (current_girder->covers_x(position.x)) {
+        if (current_platform->covers_x(position.x)) {
             // stay glued to the surface: height follows the slope (tan angle)
-            position.y = current_girder->surface_y_at(position.x) - constants::BARREL_RADIUS;
+            position.y = current_platform->surface_y_at(position.x) - constants::BARREL_RADIUS;
         } else {
             // rolled off the lower end -> drop straight down off the ledge.
-            current_girder = nullptr;
+            current_platform = nullptr;
             vx = 0.f;
             vy = 0.f;
         }
@@ -35,7 +39,7 @@ void Barrel::update(float dt, const std::vector<Girder>& girders) {
         vy += constants::GRAVITY * dt;
         position.x += vx * dt;
         position.y += vy * dt;
-        check_girder_intersection(girders);
+        check_platform_intersection(platforms);
     }
 
     // No respawn here: once the barrel rolls off the last girder it just keeps
@@ -43,15 +47,20 @@ void Barrel::update(float dt, const std::vector<Girder>& girders) {
     shape.setPosition(position);
 }
 
-void Barrel::check_girder_intersection(const std::vector<Girder>& girders) {
-    for (const Girder& girder : girders) {
-        if (!girder.covers_x(position.x)) {
+void Barrel::accept(EntityVisitor &visitor) const {
+    visitor.visit(*this);
+}
+
+void Barrel::check_platform_intersection(const std::unordered_map<int, Platform &> &platforms) {
+    for (const auto &pair : platforms) {
+        const Platform &platform = pair.second;
+        if (!platform.covers_x(position.x)) {
             continue;
         }
-        float surface = girder.surface_y_at(position.x);
+        float surface = platform.surface_y_at(position.x);
         if (position.y <= surface && surface <= position.y + constants::BARREL_RADIUS) {
             position.y = surface - constants::BARREL_RADIUS;
-            set_on_girder(girder);
+            set_on_platform(platform);
             return;
         }
     }

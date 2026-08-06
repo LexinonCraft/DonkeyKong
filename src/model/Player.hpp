@@ -1,17 +1,19 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <unordered_map>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "Girder.hpp"
 #include "Ladder.hpp"
+#include "Level.hpp"
+#include "Entity.hpp"
 
 /// A player character that can move left/right on girders, jump, and climb ladders.
-class Player {
+class Player : public Entity {
 public:
     enum class State {
-        OnGirder,
+        OnPlatform,
         InAir,
         Climbing,
     };
@@ -29,7 +31,7 @@ public:
     Player();
 
     /// advance the physics by `dt` seconds, given the stage's girders and ladders
-    void update(float dt, const std::vector<Girder>& girders, const std::vector<Ladder>& ladders);
+    void update(Level &level, float dt) override;
 
     /// set the direction the player is trying to move horizontally (left/right/none)
     void set_horizontal_direction(HorizontalDirection dir);
@@ -41,16 +43,18 @@ public:
 
     const sf::RectangleShape& get_shape() const;
 
+    void accept(EntityVisitor &visitor) const override;
+
 private:
-    // check if there is a girder below the player and return a pointer to it, or nullptr if there is none
-    const Girder *find_girder_below(const std::vector<Girder>& girders) const;
+    // check if there is a platform below the player and return a pointer to it, or nullptr if there is none
+    const Platform *find_platform_below(const std::unordered_map<int, Platform &> &platforms) const;
     // check if there is a ladder leading up from the player's current position and return a pointer to it, or nullptr if there is none
-    const Ladder *find_ladder_leading_up(const std::vector<Ladder>& ladders) const;
+    const Ladder *find_ladder_leading_up(const std::unordered_map<int, Ladder &> &ladders) const;
     // check if there is a ladder leading down from the player's current position and return a pointer to it, or nullptr if there is none
-    const Ladder *find_ladder_leading_down(const std::vector<Ladder>& ladders) const;
+    const Ladder *find_ladder_leading_down(const std::unordered_map<int, Ladder &> &ladders) const;
 
     State state;
-    const Girder* current_girder = nullptr;
+    const Platform* current_platform = nullptr;
     const Ladder* current_ladder = nullptr;
 
     sf::Vector2f position;

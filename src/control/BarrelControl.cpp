@@ -15,7 +15,7 @@ void BarrelControl::spawn(const std::vector<Girder>& girders) {
 }
 
 void BarrelControl::update(float dt, const std::vector<Girder>& girders) {
-    barrel->update(dt, girders);
+    // barrel->update(dt, girders);
 
     // once the barrel has dropped below the bottom of the screen (y = 0),
     // throw it away and roll a new one from the top

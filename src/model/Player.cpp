@@ -1,9 +1,12 @@
+#include <unordered_map>
+
 #include "Player.hpp"
 #include "Constants.hpp"
+#include "visitor/EntityVisitor.hpp"
 
 Player::Player() :
     state(State::InAir),
-    current_girder(nullptr),
+    current_platform(nullptr),
     current_ladder(nullptr),
     position(100.f, -300.f),
     velocity(0.f, 0.f),
@@ -16,7 +19,7 @@ Player::Player() :
         shape.setPosition(position);
 }
 
-void Player::update(float dt, const std::vector<Girder>& girders, const std::vector<Ladder>& ladders) {
+void Player::update(Level &level, float dt) {
     float walking_dir;
     switch (horizontal_direction) {
         case HorizontalDirection::Left:
@@ -47,12 +50,12 @@ void Player::update(float dt, const std::vector<Girder>& girders, const std::vec
     position.y += velocity.y * dt;
 
     switch (state) {
-        case State::OnGirder:
+        case State::OnPlatform:
             velocity.x = walking_dir;
-            position.y = current_girder->surface_y_at(position.x);
+            position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
 
-            if (!current_girder->covers_x(position.x)) {
+            if (!current_platform->covers_x(position.x)) {
                 state = State::InAir;
                 break;
             }
@@ -60,7 +63,7 @@ void Player::update(float dt, const std::vector<Girder>& girders, const std::vec
             const Ladder *ladder;
             switch (vertical_direction) {
                 case VerticalDirection::Up:
-                    ladder = find_ladder_leading_up(ladders);
+                    ladder = find_ladder_leading_up(level.get_ladders());
                     if (ladder != nullptr) {
                         state = State::Climbing;
                         current_ladder = ladder;
@@ -69,7 +72,7 @@ void Player::update(float dt, const std::vector<Girder>& girders, const std::vec
                     }
                     break;
                 case VerticalDirection::Down:
-                    ladder = find_ladder_leading_down(ladders);
+                    ladder = find_ladder_leading_down(level.get_ladders());
                     if (ladder != nullptr) {
                         state = State::Climbing;
                         current_ladder = ladder;
@@ -85,12 +88,12 @@ void Player::update(float dt, const std::vector<Girder>& girders, const std::vec
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const Girder *girder_below = find_girder_below(girders);
-                if (girder_below != nullptr) {
-                    state = State::OnGirder;
-                    current_girder = girder_below;
+                const Platform *platform_below = find_platform_below(level.get_platforms());
+                if (platform_below != nullptr) {
+                    state = State::OnPlatform;
+                    current_platform = platform_below;
                     velocity.y = 0.0f;
-                    position.y = current_girder->surface_y_at(position.x);
+                    position.y = current_platform->surface_y_at(position.x);
                 }
             }
             break;
@@ -99,13 +102,13 @@ void Player::update(float dt, const std::vector<Girder>& girders, const std::vec
             velocity.y = climbing_dir;
 
             if (position.y > current_ladder->get_lower_end()->surface_y_at(position.x)) {
-                state = State::OnGirder;
-                current_girder = current_ladder->get_lower_end();
-                position.y = current_girder->surface_y_at(position.x);
+                state = State::OnPlatform;
+                current_platform = current_ladder->get_lower_end();
+                position.y = current_platform->surface_y_at(position.x);
             } else if (position.y < current_ladder->get_upper_end()->surface_y_at(position.x)) {
-                state = State::OnGirder;
-                current_girder = current_ladder->get_upper_end();
-                position.y = current_girder->surface_y_at(position.x);
+                state = State::OnPlatform;
+                current_platform = current_ladder->get_upper_end();
+                position.y = current_platform->surface_y_at(position.x);
             }
             break;
     }
@@ -122,7 +125,7 @@ void Player::set_vertical_direction(VerticalDirection dir) {
 }
 
 void Player::jump() {
-    if (state == State::OnGirder) {
+    if (state == State::OnPlatform) {
         state = State::InAir;
         velocity.y = -constants::PLAYER_JUMP_SPEED;
     }
@@ -132,35 +135,39 @@ const sf::RectangleShape& Player::get_shape() const {
     return shape;
 }
 
-const Girder *Player::find_girder_below(const std::vector<Girder>& girders) const {
-    for (auto it = girders.begin(); it != girders.end(); ++it) {
-        const Girder &girder = *it;
-        if (girder.covers_x(position.x)) {
-            float surface = girder.surface_y_at(position.x);
+void Player::accept(EntityVisitor &visitor) const {
+    visitor.visit(*this);
+}
+
+const Platform *Player::find_platform_below(const std::unordered_map<int, Platform &> &platforms) const {
+    for (auto it = platforms.begin(); it != platforms.end(); ++it) {
+        const Platform &platform = it->second;
+        if (platform.covers_x(position.x)) {
+            float surface = platform.surface_y_at(position.x);
             if (position.y >= surface && surface >= position.y - constants::PLAYER_HEIGHT / 2.f) {
-                return &girder;
+                return &platform;
             }
         }
     }
     return nullptr;
 }
 
-const Ladder *Player::find_ladder_leading_up(const std::vector<Ladder>& ladders) const {
+const Ladder *Player::find_ladder_leading_up(const std::unordered_map<int, Ladder &> &ladders) const {
     for (auto it = ladders.begin(); it != ladders.end(); ++it) {
-        const Ladder &ladder = *it;
+        const Ladder &ladder = it->second;
         const float x_pos = ladder.get_x_pos();
-        if (ladder.get_lower_end() == current_girder && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
+        if (ladder.get_lower_end() == current_platform && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
             return &ladder;
         }
     }
     return nullptr;
 }
 
-const Ladder *Player::find_ladder_leading_down(const std::vector<Ladder>& ladders) const {
+const Ladder *Player::find_ladder_leading_down(const std::unordered_map<int, Ladder &> &ladders) const {
     for (auto it = ladders.begin(); it != ladders.end(); ++it) {
-        const Ladder &ladder = *it;
+        const Ladder &ladder = it->second;
         const float x_pos = ladder.get_x_pos();
-        if (ladder.get_upper_end() == current_girder && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
+        if (ladder.get_upper_end() == current_platform && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
             return &ladder;
         }
     }
