@@ -1,42 +1,35 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include <unordered_map>
+#include <memory>
 
-#include "Declarations.hpp"
+#include "repository/PlatformRepository.hpp"
+#include "repository/LadderRepository.hpp"
+#include "repository/EntityRepository.hpp"
+#include "../util/Declarations.hpp"
 
 /// An abstract level
 class Level {
 public:
     virtual ~Level() {}
 
-    const std::unordered_map<int, Platform &> &get_platforms() const;
-    const std::unordered_map<int, Ladder &> &get_ladders() const;
-    const std::unordered_map<int, Entity &> &get_entities() const;
+    PlatformRepository &get_platforms();
+    LadderRepository &get_ladders();
+    EntityRepository &get_entities();
 
-    Platform *get_platform(int id) const;
-    Ladder *get_ladder(int id) const;
-    Entity *get_entity(int id) const;
-
-    virtual void set_player(int id_generator(), Player *player);
+    std::shared_ptr<Player> get_player() const;
+    virtual void set_player(std::shared_ptr<Player> player); // TODO
 
     virtual void update(float dt);
 
 protected:
-    Level();
+    Level(RepositoryElementId id_generator());
 
-    int add_platform(int id_generator(), Platform *platform);
-    int add_ladder(int id_generator(), Ladder *ladder);
-    int add_entity(int id_generator(), Entity *entity);
+    PlatformRepository platforms;
+    LadderRepository ladders;
+    EntityRepository entities;
 
-    Platform *remove_platform(int id);
-    Ladder *remove_ladder(int id);
-    Entity *remove_entity(int id);
-
-private:
-    std::unordered_map<int, Platform &> platforms;
-    std::unordered_map<int, Ladder &> ladders;
-    std::unordered_map<int, Entity &> entities;
+    std::shared_ptr<Player> player;
 };
 
 #endif

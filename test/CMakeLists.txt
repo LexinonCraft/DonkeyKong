@@ -13,8 +13,6 @@ set(ModelSources
 # Controller
 set(ControlSources
     ${CMAKE_SOURCE_DIR}/src/control/Game.cpp
-    ${CMAKE_SOURCE_DIR}/src/control/BarrelControl.cpp
-    ${CMAKE_SOURCE_DIR}/src/control/PlayerControl.cpp
     ${CMAKE_SOURCE_DIR}/src/control/PlatformPainter.cpp
     ${CMAKE_SOURCE_DIR}/src/control/EntityPainter.cpp
     )
@@ -24,6 +22,11 @@ set(ViewSources
     ${CMAKE_SOURCE_DIR}/src/view/Layer.cpp
     )
 
+# Utility
+set(UtilSources
+    ${CMAKE_SOURCE_DIR}/src/util/Repository.cpp
+)
+
 set(TestSources
     ${CMAKE_CURRENT_SOURCE_DIR}/GameTest.cpp
     )
@@ -32,5 +35,6 @@ add_executable(Test
     ${ModelSources}
     ${ControlSources}
     ${ViewSources}
+    ${UtilSources}
     ${TestSources}
     )

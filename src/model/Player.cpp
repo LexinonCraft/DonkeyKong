@@ -1,13 +1,17 @@
+#include <memory>
+#include <optional>
 #include <unordered_map>
 
 #include "Player.hpp"
 #include "Constants.hpp"
 #include "visitor/EntityVisitor.hpp"
+#include "repository/PlatformRepository.hpp"
+#include "repository/LadderRepository.hpp"
+#include "Level.hpp"
 
-Player::Player() :
+Player::Player(Ref<Entity> ref) :
+    Entity(ref),
     state(State::InAir),
-    current_platform(nullptr),
-    current_ladder(nullptr),
     position(100.f, -300.f),
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
@@ -52,48 +56,51 @@ void Player::update(Level &level, float dt) {
     switch (state) {
         case State::OnPlatform:
             velocity.x = walking_dir;
-            position.y = current_platform->surface_y_at(position.x);
+            position.y = current_platform.value().get()->surface_y_at(position.x);
             velocity.y = 0.f;
 
-            if (!current_platform->covers_x(position.x)) {
+            if (!current_platform.value().get()->covers_x(position.x)) {
                 state = State::InAir;
                 break;
             }
 
-            const Ladder *ladder;
-            switch (vertical_direction) {
-                case VerticalDirection::Up:
-                    ladder = find_ladder_leading_up(level.get_ladders());
-                    if (ladder != nullptr) {
-                        state = State::Climbing;
-                        current_ladder = ladder;
-                        velocity.x = 0.f;
-                        velocity.y = climbing_dir;
-                    }
-                    break;
-                case VerticalDirection::Down:
-                    ladder = find_ladder_leading_down(level.get_ladders());
-                    if (ladder != nullptr) {
-                        state = State::Climbing;
-                        current_ladder = ladder;
-                        velocity.x = 0.f;
-                        velocity.y = climbing_dir;
-                    }
-                    break;
-                case VerticalDirection::None:
-                    break;
-            }
+                switch (vertical_direction) {
+                    case VerticalDirection::Up:
+                        {
+                            std::optional<Ref<Ladder>> ladder = find_ladder_leading_up(level.get_ladders());
+                            if (ladder.has_value()) {
+                                state = State::Climbing;
+                                current_ladder = ladder.value();
+                                velocity.x = 0.f;
+                                velocity.y = climbing_dir;
+                            }
+                        }
+                        break;
+                    case VerticalDirection::Down:
+                        {
+                            std::optional<Ref<Ladder>> ladder = find_ladder_leading_down(level.get_ladders());
+                            if (ladder.has_value()) {
+                                state = State::Climbing;
+                                current_ladder = ladder.value();
+                                velocity.x = 0.f;
+                                velocity.y = climbing_dir;
+                            }
+                        }
+                        break;
+                    case VerticalDirection::None:
+                        break;
+                }
             break;
         case State::InAir:
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const Platform *platform_below = find_platform_below(level.get_platforms());
-                if (platform_below != nullptr) {
+                const std::optional<Ref<Platform>> platform_below = find_platform_below(level.get_platforms());
+                if (platform_below.has_value()) {
                     state = State::OnPlatform;
-                    current_platform = platform_below;
+                    current_platform = platform_below.value();
                     velocity.y = 0.0f;
-                    position.y = current_platform->surface_y_at(position.x);
+                    position.y = current_platform.value().get()->surface_y_at(position.x);
                 }
             }
             break;
@@ -101,14 +108,14 @@ void Player::update(Level &level, float dt) {
             velocity.x = 0.f;
             velocity.y = climbing_dir;
 
-            if (position.y > current_ladder->get_lower_end()->surface_y_at(position.x)) {
+            if (position.y > current_ladder.value().get()->get_lower_end().get()->surface_y_at(position.x)) {
                 state = State::OnPlatform;
-                current_platform = current_ladder->get_lower_end();
-                position.y = current_platform->surface_y_at(position.x);
-            } else if (position.y < current_ladder->get_upper_end()->surface_y_at(position.x)) {
+                current_platform = current_ladder.value().get()->get_lower_end();
+                position.y = current_platform.value().get()->surface_y_at(position.x);
+            } else if (position.y < current_ladder.value().get()->get_upper_end().get()->surface_y_at(position.x)) {
                 state = State::OnPlatform;
-                current_platform = current_ladder->get_upper_end();
-                position.y = current_platform->surface_y_at(position.x);
+                current_platform = current_ladder.value().get()->get_upper_end();
+                position.y = current_platform.value().get()->surface_y_at(position.x);
             }
             break;
     }
@@ -139,37 +146,37 @@ void Player::accept(EntityVisitor &visitor) const {
     visitor.visit(*this);
 }
 
-const Platform *Player::find_platform_below(const std::unordered_map<int, Platform &> &platforms) const {
+const std::optional<Ref<Platform>> Player::find_platform_below(const PlatformRepository &platforms) const {
     for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-        const Platform &platform = it->second;
+        const Platform &platform = *(it->second);
         if (platform.covers_x(position.x)) {
             float surface = platform.surface_y_at(position.x);
             if (position.y >= surface && surface >= position.y - constants::PLAYER_HEIGHT / 2.f) {
-                return &platform;
+                return platform.get_ref();
             }
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
-const Ladder *Player::find_ladder_leading_up(const std::unordered_map<int, Ladder &> &ladders) const {
+const std::optional<Ref<Ladder>> Player::find_ladder_leading_up(const LadderRepository &ladders) const {
     for (auto it = ladders.begin(); it != ladders.end(); ++it) {
-        const Ladder &ladder = it->second;
-        const float x_pos = ladder.get_x_pos();
-        if (ladder.get_lower_end() == current_platform && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
-            return &ladder;
+        const std::shared_ptr<Ladder> ladder = it->second;
+        const float x_pos = ladder->get_x_pos();
+        if (ladder->get_lower_end().get_id() == current_platform.value().get_id() && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
+            return ladder->get_ref();
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
-const Ladder *Player::find_ladder_leading_down(const std::unordered_map<int, Ladder &> &ladders) const {
+const std::optional<Ref<Ladder>> Player::find_ladder_leading_down(const LadderRepository &ladders) const {
     for (auto it = ladders.begin(); it != ladders.end(); ++it) {
-        const Ladder &ladder = it->second;
-        const float x_pos = ladder.get_x_pos();
-        if (ladder.get_upper_end() == current_platform && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
-            return &ladder;
+        const std::shared_ptr<Ladder> ladder = it->second;
+        const float x_pos = ladder->get_x_pos();
+        if (ladder->get_upper_end().get_id() == current_platform.value().get_id() && x_pos - constants::PLAYER_WIDTH / 2.f <= position.x && position.x <= x_pos + constants::PLAYER_WIDTH / 2.f) {
+            return ladder->get_ref();
         }
     }
-    return nullptr;
+    return std::nullopt;
 }

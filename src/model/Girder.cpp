@@ -7,7 +7,8 @@
 #include "Constants.hpp"
 #include "visitor/PlatformVisitor.hpp"
 
-Girder::Girder(sf::Vector2f left, sf::Vector2f right) :
+Girder::Girder(Ref<Platform> ref, sf::Vector2f left, sf::Vector2f right) :
+    Platform(ref),
     left(left),
     right(right),
     shape() {

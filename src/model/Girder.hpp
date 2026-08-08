@@ -10,7 +10,7 @@
 // `left` and `right` (with left.x < right.x). The barrel rolls along its surface.
 class Girder : public Platform {
 public:
-    Girder(sf::Vector2f left, sf::Vector2f right);
+    Girder(Ref<Platform> ref, sf::Vector2f left, sf::Vector2f right);
 
     // slope = dy/dx = tan(tilt angle); the simple "gravity" approximation
     float slope_at(float x) const override;

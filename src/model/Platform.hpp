@@ -3,10 +3,14 @@
 
 #include <SFML/System/Vector2.hpp>
 #include "Declarations.hpp"
+#include "../util/RepositoryElement.hpp"
+#include "../util/Repository.hpp"
 
 /// An abstract platform in the game world (e. g. a girder).
-class Platform {
+class Platform : public RepositoryElement<Platform> {
 public:
+    Platform(Ref<Platform> ref) : RepositoryElement<Platform>(ref) {}
+
     virtual ~Platform() {}
 
     /// Returns true iff the platform covers the given horizontal position x.

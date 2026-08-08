@@ -8,7 +8,6 @@
 #include "../model/Girder.hpp"
 #include "../model/Level.hpp"
 #include "../view/Layer.hpp"
-#include "PlayerControl.hpp"
 
 // Game class
 class Game {
@@ -39,7 +38,6 @@ private:
     Layer game_layer;
 
     Level *level;
-    PlayerControl player_control;
 };
 
 #endif

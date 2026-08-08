@@ -1,8 +1,6 @@
 #ifndef BARREL_H
 #define BARREL_H
 
-#include <unordered_map>
-
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -18,7 +16,7 @@ class Barrel : public Entity {
 public:
     enum class State { OnGirder, Falling };
 
-    Barrel(sf::Vector2f position);
+    Barrel(Ref<Entity> ref, sf::Vector2f position);
 
     // place the barrel on `girder`, rolling toward its lower end
     void set_on_platform(const Platform &platform);
@@ -37,7 +35,7 @@ public:
 
 private:
     // if a platform surface lies within the barrel's lower half, snap onto it
-    void check_platform_intersection(const std::unordered_map<int, Platform &> &platforms);
+    void check_platform_intersection(const PlatformRepository &platforms);
 
     sf::Vector2f position;
     float vx = 0.f;

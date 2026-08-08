@@ -1,13 +1,16 @@
 #include "Barrel.hpp"
 
 #include <SFML/Graphics/Color.hpp>
+#include <memory>
 
 #include "Constants.hpp"
 #include "Level.hpp"
 #include "Platform.hpp"
+#include "repository/PlatformRepository.hpp"
 #include "visitor/EntityVisitor.hpp"
 
-Barrel::Barrel(sf::Vector2f position) :
+Barrel::Barrel(Ref<Entity> ref, sf::Vector2f position) :
+    Entity(ref),
     position(position),
     shape(constants::BARREL_RADIUS) {
         // origin at the circle's centre so `position` is the barrel's centre
@@ -51,16 +54,16 @@ void Barrel::accept(EntityVisitor &visitor) const {
     visitor.visit(*this);
 }
 
-void Barrel::check_platform_intersection(const std::unordered_map<int, Platform &> &platforms) {
-    for (const auto &pair : platforms) {
-        const Platform &platform = pair.second;
-        if (!platform.covers_x(position.x)) {
+void Barrel::check_platform_intersection(const PlatformRepository &platforms) {
+    for (auto it = platforms.begin(); it != platforms.end(); ++it) {
+        const std::shared_ptr<Platform> platform = it->second;
+        if (!platform->covers_x(position.x)) {
             continue;
         }
-        float surface = platform.surface_y_at(position.x);
+        float surface = platform->surface_y_at(position.x);
         if (position.y <= surface && surface <= position.y + constants::BARREL_RADIUS) {
             position.y = surface - constants::BARREL_RADIUS;
-            set_on_platform(platform);
+            set_on_platform(*platform);
             return;
         }
     }

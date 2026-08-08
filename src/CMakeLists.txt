@@ -11,8 +11,6 @@ set(ModelSources
 # Controller
 set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/control/BarrelControl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/control/PlayerControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/PlatformPainter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/EntityPainter.cpp
     )
@@ -22,10 +20,16 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
     )
 
+# Utility
+set(UtilSources
+    ${CMAKE_CURRENT_SOURCE_DIR}/util/Repository.cpp
+)
+
 # add src code to target
 add_executable(DonkeyKong
         ${ModelSources}
         ${ControlSources}
         ${ViewSources}
+        ${UtilSources}
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
