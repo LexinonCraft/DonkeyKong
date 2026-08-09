@@ -5,21 +5,18 @@
 
 #include "../model/Constants.hpp"
 #include "../model/DemoLevel.hpp"
-#include "../model/Entity.hpp"
-#include "PlatformPainter.hpp"
-#include "EntityPainter.hpp"
 #include "../model/Player.hpp"
 
 Game::Game() :
     window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
+    level(new DemoLevel(std::rand)),
     view(sf::FloatRect(sf::Vector2f({0,-constants::VIEW_HEIGHT}), sf::Vector2f({constants::VIEW_WIDTH,constants::VIEW_HEIGHT}))),
-    game_layer(window),
-    level(new DemoLevel(std::rand)) {
+    level_view(new LevelView(window, *level)) {
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
         // set the view (visible area) for our game
-        game_layer.set_view(view);
+        level_view->set_view(view);
 
         // level->set_player(std::rand, &player_control.get_player());
 }
@@ -110,22 +107,5 @@ void Game::update(float time_passed) {
 }
 
 void Game::draw() {
-    window.clear();
-
-    game_layer.clear();
-    // TODO: move this to view classes
-    PlatformPainter platform_painter(game_layer);
-    for (auto it = level->get_platforms().begin(); it != level->get_platforms().end(); ++it) {
-        it->second->accept(platform_painter);
-    }
-    for (auto it = level->get_ladders().begin(); it != level->get_ladders().end(); ++it) {
-        game_layer.add_to_layer(it->second->get_shape());
-    }
-    EntityPainter entity_painter(game_layer);
-    for (auto it = level->get_entities().begin(); it != level->get_entities().end(); ++it) {
-        it->second->accept(entity_painter);
-    }
-    game_layer.draw();
-
-    window.display();
+    level_view->draw();
 }

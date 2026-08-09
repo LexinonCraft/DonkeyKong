@@ -7,7 +7,7 @@
 
 #include "../model/Girder.hpp"
 #include "../model/Level.hpp"
-#include "../view/Layer.hpp"
+#include "../view/LevelView.hpp"
 
 // Game class
 class Game {
@@ -33,11 +33,11 @@ private:
 
     sf::RenderWindow window;
 
+    Level *level;
+
     // view area and layers
     sf::View view;
-    Layer game_layer;
-
-    Level *level;
+    LevelView *level_view;
 };
 
 #endif

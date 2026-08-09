@@ -13,13 +13,15 @@ set(ModelSources
 # Controller
 set(ControlSources
     ${CMAKE_SOURCE_DIR}/src/control/Game.cpp
-    ${CMAKE_SOURCE_DIR}/src/control/PlatformPainter.cpp
-    ${CMAKE_SOURCE_DIR}/src/control/EntityPainter.cpp
     )
 
 # View
 set(ViewSources
     ${CMAKE_SOURCE_DIR}/src/view/Layer.cpp
+    ${CMAKE_SOURCE_DIR}/src/view/LayerStack.cpp
+    ${CMAKE_SOURCE_DIR}/src/view/LevelView.cpp
+    ${CMAKE_SOURCE_DIR}/src/view/PlatformPainter.cpp
+    ${CMAKE_SOURCE_DIR}/src/view/EntityPainter.cpp
     )
 
 set(TestSources
@@ -30,6 +32,5 @@ add_executable(Test
     ${ModelSources}
     ${ControlSources}
     ${ViewSources}
-    ${UtilSources}
     ${TestSources}
     )
