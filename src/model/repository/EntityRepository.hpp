@@ -11,16 +11,14 @@ class EntityRepository : public Repository<Entity> {
 public:
     EntityRepository(RepositoryElementId id_generator()) : Repository<Entity>(id_generator) {}
 
-    Ref<Entity> add_player() {
+    std::shared_ptr<Player> add_player() {
         Ref<Entity> ref = gen_ref();
-        add(ref, std::make_shared<Player>(ref));
-        return ref;
+        return add(ref, std::make_shared<Player>(ref));
     }
 
-    Ref<Entity> add_barrel(sf::Vector2f position) {
+    std::shared_ptr<Barrel> add_barrel(sf::Vector2f position) {
         Ref<Entity> ref = gen_ref();
-        add(ref, std::make_shared<Barrel>(ref, position));
-        return ref;
+        return add(ref, std::make_shared<Barrel>(ref, position));
     }
 };
     

@@ -1,10 +1,6 @@
-#include <cstdlib>
 #include "SFML/System/Vector2.hpp"
 
 #include "DemoLevel.hpp"
-#include "Girder.hpp"
-#include "Ladder.hpp"
-#include "Barrel.hpp"
 
 DemoLevel::DemoLevel(RepositoryElementId id_generator()) : Level(id_generator) {
     auto p1 = platforms.add_girder({120, -500}, {500, -460});

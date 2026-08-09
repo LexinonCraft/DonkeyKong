@@ -22,11 +22,6 @@ set(ViewSources
     ${CMAKE_SOURCE_DIR}/src/view/Layer.cpp
     )
 
-# Utility
-set(UtilSources
-    ${CMAKE_SOURCE_DIR}/src/util/Repository.cpp
-)
-
 set(TestSources
     ${CMAKE_CURRENT_SOURCE_DIR}/GameTest.cpp
     )

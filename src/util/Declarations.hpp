@@ -6,4 +6,7 @@ typedef int RepositoryElementId;
 template <typename T>
 class Repository;
 
+template <typename T>
+class Ref;
+
 #endif

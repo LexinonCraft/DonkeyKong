@@ -2,9 +2,10 @@
 #define PLATFORM_H
 
 #include <SFML/System/Vector2.hpp>
+
 #include "Declarations.hpp"
 #include "../util/RepositoryElement.hpp"
-#include "../util/Repository.hpp"
+#include "../util/Ref.hpp"
 
 /// An abstract platform in the game world (e. g. a girder).
 class Platform : public RepositoryElement<Platform> {

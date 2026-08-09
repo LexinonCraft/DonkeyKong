@@ -3,7 +3,7 @@
 
 #include "Declarations.hpp"
 #include "../util/RepositoryElement.hpp"
-#include "../util/Repository.hpp"
+#include "../util/Ref.hpp"
 
 /// An abstract entity in the game world (e. g. a barrel or a power-up).
 class Entity : public RepositoryElement<Entity> {

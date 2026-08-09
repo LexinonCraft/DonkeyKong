@@ -1,6 +1,7 @@
+#include <memory>
+
 #include "Level.hpp"
 #include "Player.hpp"
-#include <memory>
 
 PlatformRepository &Level::get_platforms() {
     return platforms;
@@ -35,6 +36,6 @@ Level::Level(RepositoryElementId id_generator())
     : platforms(id_generator),
       ladders(id_generator),
       entities(id_generator) {
-    auto player_ref = entities.add_player();
-    set_player(std::dynamic_pointer_cast<Player>(player_ref.get()));
+    auto player = entities.add_player();
+    set_player(player);
 }

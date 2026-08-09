@@ -4,7 +4,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <memory>
-#include <optional>
 
 #include "Declarations.hpp"
 #include "Ladder.hpp"
@@ -48,15 +47,15 @@ public:
 
 private:
     // check if there is a platform below the player and return a pointer to it, or nullptr if there is none
-    const std::optional<Ref<Platform>> find_platform_below(const PlatformRepository &platforms) const;
+    const std::shared_ptr<Platform> find_platform_below(const PlatformRepository &platforms) const;
     // check if there is a ladder leading up from the player's current position and return a pointer to it, or nullptr if there is none
-    const std::optional<Ref<Ladder>> find_ladder_leading_up(const LadderRepository &ladders) const;
+    const std::shared_ptr<Ladder> find_ladder_leading_up(const LadderRepository &ladders) const;
     // check if there is a ladder leading down from the player's current position and return a pointer to it, or nullptr if there is none
-    const std::optional<Ref<Ladder>> find_ladder_leading_down(const LadderRepository &ladders) const;
+    const std::shared_ptr<Ladder> find_ladder_leading_down(const LadderRepository &ladders) const;
 
     State state;
-    std::optional<Ref<Platform>> current_platform = std::nullopt;
-    std::optional<Ref<Ladder>> current_ladder = std::nullopt;
+    std::shared_ptr<Platform> current_platform = nullptr;
+    std::shared_ptr<Ladder> current_ladder = nullptr;
 
     sf::Vector2f position;
     sf::Vector2f velocity;
