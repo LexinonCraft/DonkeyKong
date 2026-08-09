@@ -1,17 +1,15 @@
-#ifndef MODEL_DECLARATIONS_H
-#define MODEL_DECLARATIONS_H
+#ifndef DECLARATIONS_H
+#define DECLARATIONS_H
 
-class Barrel;
-class Girder;
-class Ladder;
-class Level;
-class Platform;
-class Entity;
-class Player;
-class EntityVisitor;
-class PlatformVisitor;
+typedef int Id;
+
 class EntityRepository;
-class PlatformRepository;
-class LadderRepository;
+class BaseEntity;
+class Platform;
+class Barrel;
+class Ref;
+class Level;
+class PlatformComponentRepository;
+class Girder;
 
 #endif

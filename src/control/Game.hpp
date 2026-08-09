@@ -5,9 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../model/Girder.hpp"
 #include "../model/Level.hpp"
-#include "../view/Layer.hpp"
+#include "../view/LevelView.hpp"
 
 // Game class
 class Game {
@@ -28,16 +27,13 @@ private:
     // draws the scene
     void draw();
 
-    // build the zig-zag of alternating sloped girders that make up the stage
-    static std::vector<Girder> build_girders();
-
     sf::RenderWindow window;
+
+    Level *level;
 
     // view area and layers
     sf::View view;
-    Layer game_layer;
-
-    Level *level;
+    LevelView level_view;
 };
 
 #endif

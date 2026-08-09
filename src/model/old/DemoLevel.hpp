@@ -5,7 +5,7 @@
 
 class DemoLevel : public Level {
 public:
-    DemoLevel(Id id_generator());
+    DemoLevel(RepositoryElementId id_generator());
 };
 
 #endif
