@@ -41,7 +41,7 @@ void Game::start() {
 
 // returns true, if the window has been closed
 bool Game::input() {
-    std::shared_ptr<Player> player = level->get_player().lock();
+    std::shared_ptr<Player> player = level->get_player();
 
     while (std::optional<sf::Event> event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {

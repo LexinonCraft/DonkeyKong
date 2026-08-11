@@ -12,9 +12,9 @@ class PlatformComponentRepository : public ComponentRepository<Component<Platfor
 public:
     PlatformComponentRepository(EntityRepository &repository) : ComponentRepository<Component<Platform>>(repository, std::make_unique<PlatformComponentFactory>()) {}
 
-    std::weak_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float snap_distance) {
+    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float snap_distance) {
         for (auto it = begin(); it != end(); ++it) {
-            auto platform = it->second->get_entity_locked();
+            auto platform = it->second->get_entity();
             
             if (platform->covers_x(position.x)) {
                 float surface_y = platform->surface_y_at(position.x);
@@ -23,7 +23,7 @@ public:
                 }
             }
         }
-        return std::weak_ptr<Platform>();
+        return std::shared_ptr<Platform>();
     }
 };
 

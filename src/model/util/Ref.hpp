@@ -12,6 +12,10 @@ public:
     Id get_id() const {
         return id;
     }
+
+    EntityRepository &get_repository() const {
+        return entity_repo;
+    }
     
 private:
     const Id id;

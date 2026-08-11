@@ -6,18 +6,14 @@
 
 class PlayerRenderer : public DrawableComponent {
 public:
-    PlayerRenderer(std::weak_ptr<Player> player) : player(player) {}
+    PlayerRenderer(std::shared_ptr<Player> player) : player(player) {}
 
     void draw(LayerStack &layer_stack) override {
-        auto player_locked = player.lock();
-        if (!player_locked)
-            return;
-
-        layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_locked->get_shape()); // TODO
+        layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player->get_shape()); // TODO
     }
 
 private:
-    std::weak_ptr<Player> player;
+    std::shared_ptr<Player> player;
 };
 
 #endif

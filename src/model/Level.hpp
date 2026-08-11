@@ -19,7 +19,7 @@ public:
     PlatformComponentRepository &get_platforms() { return platform_components; }
     ClimbableComponentRepository &get_climbables() { return climbable_components; }
 
-    std::weak_ptr<Player> get_player() const { return player; }
+    std::shared_ptr<Player> get_player() const { return player; }
 
 protected:
     Level(Id id_generator());
@@ -29,7 +29,7 @@ protected:
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
 
-    const std::weak_ptr<Player> player;
+    const std::shared_ptr<Player> player;
 };
 
 #endif

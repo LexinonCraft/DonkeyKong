@@ -20,11 +20,10 @@ Barrel::Barrel(Ref ref, sf::Vector2f position) :
         shape.setPosition(position);
 }
 
-void Barrel::set_on_platform(std::weak_ptr<Platform> platform) {
-    auto platform_locked = platform.lock();
-    if (!platform_locked)
+void Barrel::set_on_platform(std::shared_ptr<Platform> platform) {
+    if (!platform)
         return;
-    vx = constants::ROLL_SPEED * static_cast<float>(platform_locked->downhill_sign());
+    vx = constants::ROLL_SPEED * static_cast<float>(platform->downhill_sign());
     current_platform = platform;
     vy = 0.f;
 }
@@ -32,10 +31,9 @@ void Barrel::set_on_platform(std::weak_ptr<Platform> platform) {
 void Barrel::update(float dt, Level &level) {
     if (get_state() == State::OnGirder) {
         position.x += vx * dt;
-        auto platform = current_platform.lock();
-        if (platform && platform->covers_x(position.x)) {
+        if (current_platform && current_platform->covers_x(position.x)) {
             // stay glued to the surface: height follows the slope (tan angle)
-            position.y = platform->surface_y_at(position.x) - constants::BARREL_RADIUS;
+            position.y = current_platform->surface_y_at(position.x) - constants::BARREL_RADIUS;
         } else {
             // rolled off the lower end -> drop straight down off the ledge.
             current_platform.reset();
@@ -60,4 +58,8 @@ void Barrel::accept(EntityVisitor &visitor) {
 
 void Barrel::check_platform_intersection(PlatformComponentRepository &platforms) {
     set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS));
+}
+
+void Barrel::check_referenced_entities() {
+    handle_destroyed_indirect(current_platform);
 }

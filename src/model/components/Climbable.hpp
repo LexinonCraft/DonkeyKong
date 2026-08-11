@@ -4,8 +4,9 @@
 #include <memory>
 
 #include "../components/Platform.hpp"
+#include "../util/EntityFromComponentAux.hpp"
 
-class Climbable {
+class Climbable : public EntityFromComponentAux {
 public:
     virtual ~Climbable() {}
 
@@ -19,11 +20,11 @@ public:
         return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() - v_tolerance && position.y > get_upper_y_pos() - v_tolerance;
     }
 
-    std::weak_ptr<Platform> get_lower_end() const {
+    std::shared_ptr<Platform> get_lower_end() const {
         return lower_end;
     }
 
-    std::weak_ptr<Platform> get_upper_end() const {
+    std::shared_ptr<Platform> get_upper_end() const {
         return upper_end;
     }
 
@@ -32,19 +33,19 @@ public:
     }
 
     float get_lower_y_pos() const {
-        return lower_end.lock()->surface_y_at(x_pos);
+        return lower_end->surface_y_at(x_pos);
     }
 
     float get_upper_y_pos() const {
-        return upper_end.lock()->surface_y_at(x_pos);
+        return upper_end->surface_y_at(x_pos);
     }
 
 protected:
-    const std::weak_ptr<Platform> lower_end;
-    const std::weak_ptr<Platform> upper_end;
+    const std::shared_ptr<Platform> lower_end;
+    const std::shared_ptr<Platform> upper_end;
     const float x_pos;
 
-    Climbable(std::weak_ptr<Platform> lower_end, std::weak_ptr<Platform> upper_end, float x_pos)
+    Climbable(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos)
         : lower_end(lower_end), upper_end(upper_end), x_pos(x_pos) {}
 
 private:

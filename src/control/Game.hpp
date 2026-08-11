@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../model/Level.hpp"
+#include "../model/DemoLevel.hpp"
 #include "../view/LevelView.hpp"
 
 // Game class
@@ -29,7 +29,7 @@ private:
 
     sf::RenderWindow window;
 
-    Level *level;
+    DemoLevel *level;
 
     // view area and layers
     sf::View view;

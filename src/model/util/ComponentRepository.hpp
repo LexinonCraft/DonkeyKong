@@ -47,15 +47,15 @@ private:
     const Id observer_id;
     std::unique_ptr<ComponentFactory<C>> component_factory;
 
-    void on_entity_added(std::weak_ptr<BaseEntity> entity) override {
+    void on_entity_added(std::shared_ptr<BaseEntity> entity) override {
         auto component = component_factory->create_component_for(entity);
         if (component != nullptr) {
-            components[entity.lock()->get_id()] = std::move(component);
+            components[entity->get_id()] = std::move(component);
         }
     }
 
-    void on_entity_removed(std::weak_ptr<BaseEntity> entity) override {
-        components.erase(entity.lock()->get_id());
+    void on_entity_removed(std::shared_ptr<BaseEntity> entity) override {
+        components.erase(entity->get_id());
     }
 };
 

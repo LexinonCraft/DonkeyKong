@@ -2,8 +2,10 @@
 #define PLATFORM_HPP
 
 #include <SFML/System/Vector2.hpp>
+#include "../Declarations.hpp"
+#include "../util/EntityFromComponentAux.hpp"
 
-class Platform {
+class Platform : public EntityFromComponentAux {
 public:
     ~Platform() {}
 

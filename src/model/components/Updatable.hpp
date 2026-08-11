@@ -2,8 +2,9 @@
 #define UPDATABLE_HPP
 
 #include "../Declarations.hpp"
+#include "../util/EntityFromComponentAux.hpp"
 
-class Updatable {
+class Updatable : public EntityFromComponentAux {
 public:
     virtual ~Updatable() {}
 

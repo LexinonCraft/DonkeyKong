@@ -22,19 +22,23 @@ public:
     Barrel(Ref ref, sf::Vector2f position);
 
     // place the barrel on `girder`, rolling toward its lower end
-    void set_on_platform(std::weak_ptr<Platform> platform);
+    void set_on_platform(std::shared_ptr<Platform> platform);
 
     // advance the physics by `dt` seconds, given the stage's platforms
     void update(float dt, Level &level) override;
 
     // Falling iff we are not currently resting on a girder
-    State get_state() const { return current_platform.lock() ? State::OnGirder : State::Falling; }
+    State get_state() const { return current_platform ? State::OnGirder : State::Falling; }
     sf::Vector2f get_position() const { return position; }
     float get_vx() const { return vx; }
     float get_vy() const { return vy; }
     const sf::CircleShape &get_shape() const { return shape; }
 
     void accept(EntityVisitor &visitor) override;
+
+    void check_referenced_entities() override;
+
+    BaseEntity &get_entity() override { return *this; }
 
 private:
     // if a platform surface lies within the barrel's lower half, snap onto it
@@ -45,7 +49,7 @@ private:
     float vy = 0.f;
 
     // the girder we are rolling on, or empty while falling.
-    std::weak_ptr<Platform> current_platform = std::weak_ptr<Platform>();
+    std::shared_ptr<Platform> current_platform = nullptr;
 
     sf::CircleShape shape;
 };

@@ -52,10 +52,10 @@ void Player::update(float dt, Level &level) {
     switch (state) {
         case State::OnPlatform:
             velocity.x = walking_dir;
-            position.y = current_platform.lock()->surface_y_at(position.x);
+            position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
 
-            if (!current_platform.lock()->covers_x(position.x)) {
+            if (!current_platform->covers_x(position.x)) {
                 state = State::InAir;
                 break;
             }
@@ -63,8 +63,8 @@ void Player::update(float dt, Level &level) {
                 switch (vertical_direction) {
                     case VerticalDirection::Up:
                         {
-                            std::weak_ptr<Climbable> ladder = level.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                            if (ladder.lock()) {
+                            std::shared_ptr<Climbable> ladder = level.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                            if (ladder) {
                                 state = State::Climbing;
                                 current_ladder = ladder;
                                 velocity.x = 0.f;
@@ -74,8 +74,8 @@ void Player::update(float dt, Level &level) {
                         break;
                     case VerticalDirection::Down:
                         {
-                            std::weak_ptr<Climbable> ladder = level.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                            if (ladder.lock()) {
+                            std::shared_ptr<Climbable> ladder = level.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                            if (ladder) {
                                 state = State::Climbing;
                                 current_ladder = ladder;
                                 velocity.x = 0.f;
@@ -91,12 +91,12 @@ void Player::update(float dt, Level &level) {
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const std::weak_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::PLAYER_HEIGHT / 2.f);
-                if (platform_below.lock()) {
+                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::PLAYER_HEIGHT / 2.f);
+                if (platform_below) {
                     state = State::OnPlatform;
                     current_platform = platform_below;
                     velocity.y = 0.0f;
-                    position.y = current_platform.lock()->surface_y_at(position.x);
+                    position.y = current_platform->surface_y_at(position.x);
                 }
             }
             break;
@@ -104,14 +104,14 @@ void Player::update(float dt, Level &level) {
             velocity.x = 0.f;
             velocity.y = climbing_dir;
 
-            if (position.y > current_ladder.lock()->get_lower_end().lock()->surface_y_at(position.x)) {
+            if (position.y > current_ladder->get_lower_end()->surface_y_at(position.x)) {
                 state = State::OnPlatform;
-                current_platform = current_ladder.lock()->get_lower_end();
-                position.y = current_platform.lock()->surface_y_at(position.x);
-            } else if (position.y < current_ladder.lock()->get_upper_end().lock()->surface_y_at(position.x)) {
+                current_platform = current_ladder->get_lower_end();
+                position.y = current_platform->surface_y_at(position.x);
+            } else if (position.y < current_ladder->get_upper_end()->surface_y_at(position.x)) {
                 state = State::OnPlatform;
-                current_platform = current_ladder.lock()->get_upper_end();
-                position.y = current_platform.lock()->surface_y_at(position.x);
+                current_platform = current_ladder->get_upper_end();
+                position.y = current_platform->surface_y_at(position.x);
             }
             break;
     }
@@ -136,6 +136,15 @@ void Player::jump() {
 
 const sf::RectangleShape& Player::get_shape() const {
     return shape;
+}
+
+void Player::check_referenced_entities() {
+    if (handle_destroyed_indirect(current_platform) && state == State::OnPlatform) {
+        state = State::InAir;
+    }
+    if (handle_destroyed_indirect(current_ladder) && state == State::Climbing) {
+        state = State::InAir;
+    }
 }
 
 void Player::accept(EntityVisitor &visitor) {

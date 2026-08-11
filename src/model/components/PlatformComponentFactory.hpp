@@ -10,7 +10,7 @@
 
 class PlatformComponentFactory : public ComponentFactory<Component<Platform>> {
 protected:
-    std::unique_ptr<Component<Platform>> create_component_for(Girder &girder, std::weak_ptr<Girder> entity_ptr) const override {
+    std::unique_ptr<Component<Platform>> create_component_for(Girder &girder, std::shared_ptr<Girder> entity_ptr) const override {
         return std::make_unique<Component<Platform>>(entity_ptr);
     }
 };

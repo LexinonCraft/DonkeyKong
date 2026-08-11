@@ -16,19 +16,19 @@
 
 class DrawableComponentFactory : public ComponentFactory<DrawableComponent> {
 protected:
-    std::unique_ptr<DrawableComponent> create_component_for(Barrel &barrel, std::weak_ptr<Barrel> entity_ptr) const override {
+    std::unique_ptr<DrawableComponent> create_component_for(Barrel &barrel, std::shared_ptr<Barrel> entity_ptr) const override {
         return std::make_unique<BarrelRenderer>(entity_ptr);
     }
 
-    std::unique_ptr<DrawableComponent> create_component_for(Girder &girder, std::weak_ptr<Girder> entity_ptr) const override {
+    std::unique_ptr<DrawableComponent> create_component_for(Girder &girder, std::shared_ptr<Girder> entity_ptr) const override {
         return std::make_unique<GirderRenderer>(entity_ptr);
     }
 
-    std::unique_ptr<DrawableComponent> create_component_for(Player &entity, std::weak_ptr<Player> entity_ptr) const override {
+    std::unique_ptr<DrawableComponent> create_component_for(Player &entity, std::shared_ptr<Player> entity_ptr) const override {
         return std::make_unique<PlayerRenderer>(entity_ptr);
     }
 
-    std::unique_ptr<DrawableComponent> create_component_for(Ladder &entity, std::weak_ptr<Ladder> entity_ptr) const override {
+    std::unique_ptr<DrawableComponent> create_component_for(Ladder &entity, std::shared_ptr<Ladder> entity_ptr) const override {
         return std::make_unique<LadderRenderer>(entity_ptr);
     }
 };

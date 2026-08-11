@@ -10,7 +10,7 @@
 
 class ClimbableComponentFactory : public ComponentFactory<Component<Climbable>> {
 protected:
-    std::unique_ptr<Component<Climbable>> create_component_for(Ladder &ladder, std::weak_ptr<Ladder> entity_ptr) const override {
+    std::unique_ptr<Component<Climbable>> create_component_for(Ladder &ladder, std::shared_ptr<Ladder> entity_ptr) const override {
         return std::make_unique<Component<Climbable>>(entity_ptr);
     }
 };

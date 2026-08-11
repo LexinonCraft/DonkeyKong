@@ -8,6 +8,7 @@ set(ModelSources
 #    ${CMAKE_CURRENT_SOURCE_DIR}/model/Player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Level.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoLevel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
     )
 
 # Controller

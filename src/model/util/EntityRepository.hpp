@@ -3,6 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <memory>
+#include <queue>
 #include <unordered_map>
 
 #include "../Declarations.hpp"
@@ -18,34 +19,43 @@ class EntityRepository {
 public:
     EntityRepository(Id (*id_generator)()) : id_generator(id_generator) {}
 
-    std::weak_ptr<Barrel> add_barrel(sf::Vector2f position) {
+    std::shared_ptr<Barrel> add_barrel(sf::Vector2f position) {
         return add_entity(std::make_shared<Barrel>(gen_ref(), position));
     }
 
-    std::weak_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right) {
+    std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right) {
         return add_entity(std::make_shared<Girder>(gen_ref(), left, right));
     }
 
-    std::weak_ptr<Player> add_player() {
+    std::shared_ptr<Player> add_player() {
         return add_entity(std::make_shared<Player>(gen_ref()));
     }
 
-    std::weak_ptr<Ladder> add_ladder(std::weak_ptr<Platform> lower_end, std::weak_ptr<Platform> upper_end, float x_position) {
+    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position));
     }
 
-    bool remove_entity(std::weak_ptr<BaseEntity> entity) {
-        if (entity.expired()) {
-            return false;
+    void prepare_for_deletion(Id id) {
+        pending_deletions.push(id);
+    }
+
+    void handle_deletions() {
+        while (!pending_deletions.empty()) {
+            Id id = pending_deletions.front();
+            pending_deletions.pop();
+
+            auto it = entities.find(id);
+            if (it != entities.end()) {
+                for (auto obs_it = observers.begin(); obs_it != observers.end(); ++obs_it) {
+                    obs_it->second->on_entity_removed(it->second);
+                }
+                entities.erase(it);
+            }
         }
 
-        for (auto it = observers.begin(); it != observers.end(); ++it) {
-            it->second->on_entity_removed(entity);
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
+            it->second->check_referenced_entities();
         }
-
-        entities.erase(entity.lock()->get_id());
-
-        return true;
     }
 
     auto begin() {
@@ -72,7 +82,7 @@ private:
     }
 
     template <typename E>
-    std::weak_ptr<E> add_entity(std::shared_ptr<E> entity) {
+    std::shared_ptr<E> add_entity(std::shared_ptr<E> entity) {
         Id id = entity->get_ref().get_id();
         entities[id] = entity;
 
@@ -85,6 +95,7 @@ private:
 
     std::unordered_map<Id, std::shared_ptr<BaseEntity>> entities;
     std::unordered_map<Id, EntityRepositoryObserver *> observers;
+    std::queue<Id> pending_deletions;
     Id (*id_generator)();
 };
 

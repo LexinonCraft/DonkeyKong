@@ -9,9 +9,9 @@ class EntityRepositoryObserver {
 public:
     virtual ~EntityRepositoryObserver() {}
 
-    virtual void on_entity_added(std::weak_ptr<BaseEntity> entity) = 0;
+    virtual void on_entity_added(std::shared_ptr<BaseEntity> entity) = 0;
 
-    virtual void on_entity_removed(std::weak_ptr<BaseEntity> entity) = 0;
+    virtual void on_entity_removed(std::shared_ptr<BaseEntity> entity) = 0;
 };
 
 #endif

@@ -36,6 +36,8 @@ public:
 
     const sf::RectangleShape& get_shape() const;
 
+    BaseEntity &get_entity() override { return *this; }
+
 private:
     sf::Vector2f left;
     sf::Vector2f right;

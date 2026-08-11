@@ -45,12 +45,16 @@ public:
 
     const sf::RectangleShape &get_shape() const;
 
+    void check_referenced_entities() override;
+
     void accept(EntityVisitor &visitor) override;
+
+    BaseEntity &get_entity() override { return *this; }
 
 private:
     State state;
-    std::weak_ptr<Platform> current_platform;
-    std::weak_ptr<Climbable> current_ladder;
+    std::shared_ptr<Platform> current_platform;
+    std::shared_ptr<Climbable> current_ladder;
 
     sf::Vector2f position;
     sf::Vector2f velocity;

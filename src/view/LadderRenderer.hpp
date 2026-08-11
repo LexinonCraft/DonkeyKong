@@ -6,18 +6,14 @@
 
 class LadderRenderer : public DrawableComponent {
 public:
-    LadderRenderer(std::weak_ptr<Ladder> ladder) : ladder(ladder) {}
+    LadderRenderer(std::shared_ptr<Ladder> ladder) : ladder(ladder) {}
 
     void draw(LayerStack &layer_stack) override {
-        auto ladder_locked = ladder.lock();
-        if (!ladder_locked)
-            return;
-
-        layer_stack.get_layer(LayerStack::LayerId::Ladders).add_to_layer(ladder_locked->get_shape()); // TODO
+        layer_stack.get_layer(LayerStack::LayerId::Ladders).add_to_layer(ladder->get_shape()); // TODO
     }
 
 private:
-    std::weak_ptr<Ladder> ladder;
+    std::shared_ptr<Ladder> ladder;
 };
 
 #endif
