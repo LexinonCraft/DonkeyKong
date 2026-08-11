@@ -9,7 +9,7 @@ public:
     GirderRenderer(std::shared_ptr<Girder> girder) : girder(girder) {}
 
     void draw(LayerStack &layer_stack) override {
-        layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(girder->get_shape()); // TODO
+        layer_stack.get_layer(LayerStack::LayerId::Platforms).add_to_layer(girder->get_shape()); // TODO
     }
 
 private:

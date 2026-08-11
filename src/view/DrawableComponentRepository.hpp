@@ -9,11 +9,7 @@ class DrawableComponentRepository : public ComponentRepository<DrawableComponent
 public:
     DrawableComponentRepository(EntityRepository &entity_repo) : ComponentRepository<DrawableComponent>(entity_repo, std::make_unique<DrawableComponentFactory>()) {}
 
-    void draw_all(LayerStack &layer) {
-        for (auto it = begin(); it != end(); ++it) {
-            it->second->draw(layer);
-        }
-    }
+    void draw_all(LayerStack &layer);
 };
 
 #endif

@@ -7,3 +7,9 @@ void BaseEntity::destroy() {
         destroyed = true;
     }
 }
+
+void BaseEntity::assert_alive() const {
+    if (destroyed) {
+        throw std::runtime_error("Entity is destroyed but expected to be alive.");
+    }
+}

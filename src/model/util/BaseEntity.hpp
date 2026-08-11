@@ -44,11 +44,7 @@ public:
         return false;
     }
 
-    void assert_alive() const {
-        if (destroyed) {
-            throw std::runtime_error("Entity is destroyed but expected to be alive.");
-        }
-    }
+    void assert_alive() const;
 
     virtual void check_referenced_entities() {}
 

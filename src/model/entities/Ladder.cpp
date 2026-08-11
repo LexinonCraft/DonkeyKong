@@ -10,3 +10,9 @@ Ladder::Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Pla
     shape.setSize({constants::LADDER_WIDTH, upper_end->surface_y_at(x_pos) - lower_end->surface_y_at(x_pos)});
     shape.setFillColor(sf::Color(100, 200, 100)); // light green, stands out on the girders
 }
+
+void Ladder::check_referenced_entities() {
+    if (lower_end->get_entity().is_destroyed() || upper_end->get_entity().is_destroyed()) {
+        destroy();
+    }
+}

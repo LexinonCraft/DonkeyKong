@@ -12,11 +12,7 @@ class UpdatableComponentRepository : public ComponentRepository<Component<Updata
 public:
     UpdatableComponentRepository(EntityRepository &entity_repo) : ComponentRepository<Component<Updatable>>(entity_repo, std::make_unique<UpdatableComponentFactory>()) {}
 
-    void update_all(float dt, Level &level) {
-        for (auto it = begin(); it != end(); ++it) {
-            it->second->get_entity()->update(dt, level);
-        }
-    }
+    void update_all(float dt, Level &level);
 };
 
 #endif

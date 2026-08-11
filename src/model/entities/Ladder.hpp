@@ -26,11 +26,7 @@ public:
         visitor.visit(*this);
     }
 
-    void check_referenced_entities() override {
-        if (lower_end->get_entity().is_destroyed() || upper_end->get_entity().is_destroyed()) {
-            destroy();
-        }
-    }
+    void check_referenced_entities() override;
 
     BaseEntity &get_entity() override { return *this; }
 
