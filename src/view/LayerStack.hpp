@@ -1,8 +1,9 @@
-#ifndef LAYER_STACK_H
-#define LAYER_STACK_H
+#ifndef LAYER_STACK_HPP
+#define LAYER_STACK_HPP
+
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Layer.hpp"
-#include <SFML/Graphics/RenderWindow.hpp>
 
 class LayerStack {
 public:

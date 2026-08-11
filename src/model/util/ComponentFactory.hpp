@@ -1,5 +1,5 @@
-#ifndef COMPONENT_FACTORY_H
-#define COMPONENT_FACTORY_H
+#ifndef COMPONENT_FACTORY_HPP
+#define COMPONENT_FACTORY_HPP
 
 #include <memory>
 

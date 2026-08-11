@@ -2,28 +2,10 @@
 
 This is a university project where the goal is to implement (the core mechanics of) the original Donkey Kong arcade game in C++ with SFML.
 
-## Running the game and tests
+See the documentation:
 
-For running the game:
-
-```bash
-cmake -B build
-cmake --build build
-./build/bin/DonkeyKong
-```
-
-For running the tests:
-
-```bash
-make getGTest
-make getSFML
-make tests
-./tests
-```
-
-## Used tools
-
-GitHub Copilot was used for the following purposes:
-
-* Generating boilerplate code using inline suggestions
-* Configuring this project for clangd
+1. [Building](docs/building.md)
+1. [Use of AI](docs/use-of-ai.md)
+1. [Architecture](docs/architecture.md)
+1. [Development](docs/development.md)
+1. [To-do](docs/todo.md)

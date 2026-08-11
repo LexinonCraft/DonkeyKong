@@ -1,5 +1,5 @@
-#ifndef GIRDER_RENDERER_H
-#define GIRDER_RENDERER_H
+#ifndef GIRDER_RENDERER_HPP
+#define GIRDER_RENDERER_HPP
 
 #include "DrawableComponent.hpp"
 #include "../model/entities/Girder.hpp"

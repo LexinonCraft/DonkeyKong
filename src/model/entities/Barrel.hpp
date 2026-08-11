@@ -1,7 +1,8 @@
-#ifndef BARREL_H
-#define BARREL_H
+#ifndef BARREL_HPP
+#define BARREL_HPP
 
 #include <memory>
+
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 

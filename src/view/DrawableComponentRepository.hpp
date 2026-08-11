@@ -1,5 +1,5 @@
-#ifndef DRAWABLE_COMPONENT_REPOSITORY_H
-#define DRAWABLE_COMPONENT_REPOSITORY_H
+#ifndef DRAWABLE_COMPONENT_REPOSITORY_HPP
+#define DRAWABLE_COMPONENT_REPOSITORY_HPP
 
 #include "DrawableComponent.hpp"
 #include "DrawableComponentFactory.hpp"

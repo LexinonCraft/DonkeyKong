@@ -1,5 +1,6 @@
-#include "LevelView.hpp"
 #include <random>
+
+#include "LevelView.hpp"
 
 LevelView::LevelView(sf::RenderWindow &window, Level &level)
     : layer_stack(window),

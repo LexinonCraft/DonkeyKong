@@ -1,5 +1,5 @@
-#ifndef ENTITY_VISITOR_H
-#define ENTITY_VISITOR_H
+#ifndef ENTITY_VISITOR_HPP
+#define ENTITY_VISITOR_HPP
 
 #include "../Declarations.hpp"
 

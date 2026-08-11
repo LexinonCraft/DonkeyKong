@@ -1,5 +1,5 @@
-#ifndef ENTITY_REPOSITORY_H
-#define ENTITY_REPOSITORY_H
+#ifndef ENTITY_REPOSITORY_HPP
+#define ENTITY_REPOSITORY_HPP
 
 #include <SFML/System/Vector2.hpp>
 #include <memory>

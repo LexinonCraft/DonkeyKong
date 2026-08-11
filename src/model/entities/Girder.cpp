@@ -1,6 +1,7 @@
 #include "Girder.hpp"
 
 #include <cmath>
+
 #include <SFML/Graphics/Color.hpp>
 
 #include "../Constants.hpp"

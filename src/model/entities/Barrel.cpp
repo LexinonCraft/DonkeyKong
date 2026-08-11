@@ -1,15 +1,14 @@
 #include "Barrel.hpp"
 
-#include <SFML/Graphics/Color.hpp>
 #include <memory>
+
+#include <SFML/Graphics/Color.hpp>
 
 #include "../Constants.hpp"
 #include "../Level.hpp"
 #include "../components/Platform.hpp"
 #include "../components/PlatformComponentRepository.hpp"
 #include "../util/EntityVisitor.hpp"
-
-#include <iostream>
 
 Barrel::Barrel(Ref ref, sf::Vector2f position) :
     BaseEntity(ref),

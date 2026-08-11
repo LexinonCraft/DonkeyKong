@@ -1,5 +1,5 @@
-#ifndef REF_H
-#define REF_H
+#ifndef REF_HPP
+#define REF_HPP
 
 #include "../Declarations.hpp"
 

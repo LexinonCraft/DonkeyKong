@@ -1,5 +1,5 @@
-#ifndef COMPONENT_REPOSITORY_H
-#define COMPONENT_REPOSITORY_H
+#ifndef COMPONENT_REPOSITORY_HPP
+#define COMPONENT_REPOSITORY_HPP
 
 #include <memory>
 #include <unordered_map>

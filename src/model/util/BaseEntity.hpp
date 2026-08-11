@@ -1,5 +1,5 @@
-#ifndef BASE_ENTITY_H
-#define BASE_ENTITY_H
+#ifndef BASE_ENTITY_HPP
+#define BASE_ENTITY_HPP
 
 #include "../Declarations.hpp"
 #include "EntityVisitor.hpp"

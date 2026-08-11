@@ -1,5 +1,5 @@
-#ifndef BARREL_RENDERER_H
-#define BARREL_RENDERER_H
+#ifndef BARREL_RENDERER_HPP
+#define BARREL_RENDERER_HPP
 
 #include "DrawableComponent.hpp"
 #include "../model/entities/Barrel.hpp"

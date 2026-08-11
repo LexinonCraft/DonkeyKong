@@ -1,5 +1,5 @@
-#ifndef DECLARATIONS_H
-#define DECLARATIONS_H
+#ifndef DECLARATIONS_HPP
+#define DECLARATIONS_HPP
 
 typedef int Id;
 

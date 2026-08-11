@@ -1,5 +1,5 @@
-#ifndef GIRDER_H
-#define GIRDER_H
+#ifndef GIRDER_HPP
+#define GIRDER_HPP
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>

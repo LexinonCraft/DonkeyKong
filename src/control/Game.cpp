@@ -1,8 +1,9 @@
 #include "Game.hpp"
 
-#include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 #include <memory>
+
+#include <SFML/Window/Keyboard.hpp>
 
 #include "../model/Constants.hpp"
 #include "../model/DemoLevel.hpp"

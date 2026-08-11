@@ -1,5 +1,5 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#ifndef LEVEL_HPP
+#define LEVEL_HPP
 
 #include "util/EntityRepository.hpp"
 #include "components/UpdatableComponentRepository.hpp"

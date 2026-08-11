@@ -1,5 +1,5 @@
-#ifndef LEVEL_VIEW_H
-#define LEVEL_VIEW_H
+#ifndef LEVEL_VIEW_HPP
+#define LEVEL_VIEW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

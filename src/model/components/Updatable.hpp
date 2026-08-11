@@ -1,5 +1,5 @@
-#ifndef UPDATABLE_H
-#define UPDATABLE_H
+#ifndef UPDATABLE_HPP
+#define UPDATABLE_HPP
 
 #include "../Declarations.hpp"
 

@@ -1,5 +1,5 @@
-#ifndef DEMO_LEVEL_H
-#define DEMO_LEVEL_H
+#ifndef DEMO_LEVEL_HPP
+#define DEMO_LEVEL_HPP
 
 #include "Level.hpp"
 
