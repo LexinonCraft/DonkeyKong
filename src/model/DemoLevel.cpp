@@ -8,9 +8,9 @@ DemoLevel::DemoLevel(Id id_generator()) : Level(id_generator) {
     auto p3 = entities.add_girder({40, -300}, {520, -260});
     auto p4 = entities.add_girder({80, -160}, {560, -200});
 
-    // entities.add_ladder(p2, p1, 200.0f);
-    // entities.add_ladder(p3, p2, 300.0f);
-    // entities.add_ladder(p4, p3, 500.0f);
+    entities.add_ladder(p2, p1, 200.0f);
+    entities.add_ladder(p3, p2, 300.0f);
+    entities.add_ladder(p4, p3, 500.0f);
 
     entities.add_barrel({300, -500});
 }

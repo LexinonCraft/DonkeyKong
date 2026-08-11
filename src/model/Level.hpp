@@ -4,20 +4,22 @@
 #include "util/EntityRepository.hpp"
 #include "components/UpdatableComponentRepository.hpp"
 #include "components/PlatformComponentRepository.hpp"
+#include "components/ClimbableComponentRepository.hpp"
 #include "Declarations.hpp"
+#include <memory>
 
 /// An abstract level
 class Level {
 public:
     virtual ~Level() {}
 
-    // std::shared_ptr<Player> get_player() const;
-    // virtual void set_player(std::shared_ptr<Player> player); // TODO
-
     virtual void update(float dt);
 
     EntityRepository &get_entities() { return entities; }
     PlatformComponentRepository &get_platforms() { return platform_components; }
+    ClimbableComponentRepository &get_climbables() { return climbable_components; }
+
+    std::weak_ptr<Player> get_player() const { return player; }
 
 protected:
     Level(Id id_generator());
@@ -25,8 +27,9 @@ protected:
     EntityRepository entities;
     UpdatableComponentRepository updatable_components;
     PlatformComponentRepository platform_components;
+    ClimbableComponentRepository climbable_components;
 
-    // std::shared_ptr<Player> player;
+    const std::weak_ptr<Player> player;
 };
 
 #endif

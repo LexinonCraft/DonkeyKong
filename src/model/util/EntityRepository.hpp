@@ -10,6 +10,8 @@
 #include "BaseEntity.hpp"
 #include "../entities/Barrel.hpp"
 #include "../entities/Girder.hpp"
+#include "../entities/Player.hpp"
+#include "../entities/Ladder.hpp"
 #include "Ref.hpp"
 
 class EntityRepository {
@@ -24,11 +26,13 @@ public:
         return add_entity(std::make_shared<Girder>(gen_ref(), left, right));
     }
 
-    /*
-    std::weak_ptr<Platform> add_platform(float width) {
-        return add_entity(std::make_shared<Platform>(gen_ref(), width));
+    std::weak_ptr<Player> add_player() {
+        return add_entity(std::make_shared<Player>(gen_ref()));
     }
-        */
+
+    std::weak_ptr<Ladder> add_ladder(std::weak_ptr<Platform> lower_end, std::weak_ptr<Platform> upper_end, float x_position) {
+        return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position));
+    }
 
     bool remove_entity(std::weak_ptr<BaseEntity> entity) {
         if (entity.expired()) {

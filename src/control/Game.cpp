@@ -1,13 +1,11 @@
 #include "Game.hpp"
 
-#include <iostream>
 #include <memory>
 
 #include <SFML/Window/Keyboard.hpp>
 
 #include "../model/Constants.hpp"
 #include "../model/DemoLevel.hpp"
-// #include "../model/Player.hpp"
 
 Game::Game() :
     window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
@@ -43,7 +41,7 @@ void Game::start() {
 
 // returns true, if the window has been closed
 bool Game::input() {
-    //std::shared_ptr<Player> player = level->get_player();
+    std::shared_ptr<Player> player = level->get_player().lock();
 
     while (std::optional<sf::Event> event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
@@ -60,16 +58,13 @@ bool Game::input() {
             // if (keyReleased->code == sf::Keyboard::Key::Right) { // right arrow released
                 // ...
 
-        /*
         if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
             if (keyPressed->code == sf::Keyboard::Key::Space) {
                 player->jump();
             }
         }
-            */
     }
 
-    /*
     // handle continuous key presses (for smooth movement)
     bool leftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left);
     bool rightPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right);
@@ -102,14 +97,12 @@ bool Game::input() {
             player->set_vertical_direction(Player::VerticalDirection::None);
         }
     }
-        */
 
     return false;
 }
 
 void Game::update(float time_passed) {
     level->update(time_passed);
-    // player_control.update(*level, time_passed);
 }
 
 void Game::draw() {

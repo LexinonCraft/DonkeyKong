@@ -7,6 +7,7 @@
 #include "../util/Component.hpp"
 #include "Updatable.hpp"
 #include "../entities/Barrel.hpp"
+#include "../entities/Player.hpp"
 
 class UpdatableComponentFactory : public ComponentFactory<Component<Updatable>> {
 protected:
@@ -14,8 +15,8 @@ protected:
         return std::make_unique<Component<Updatable>>(entity_ptr);
     }
 
-    std::unique_ptr<Component<Updatable>> create_component_for(Girder &girder, std::weak_ptr<Girder> entity_ptr) const override {
-        return nullptr;
+    std::unique_ptr<Component<Updatable>> create_component_for(Player &player, std::weak_ptr<Player> entity_ptr) const override {
+        return std::make_unique<Component<Updatable>>(entity_ptr);
     }
 };
 

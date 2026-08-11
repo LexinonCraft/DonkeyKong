@@ -11,5 +11,7 @@ class Ref;
 class Level;
 class PlatformComponentRepository;
 class Girder;
+class Player;
+class Ladder;
 
 #endif

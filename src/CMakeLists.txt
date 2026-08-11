@@ -2,6 +2,8 @@
 set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Girder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Barrel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Player.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ladder.cpp
 #    ${CMAKE_CURRENT_SOURCE_DIR}/model/Ladder.cpp
 #    ${CMAKE_CURRENT_SOURCE_DIR}/model/Player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Level.cpp
