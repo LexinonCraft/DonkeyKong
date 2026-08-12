@@ -1,16 +1,20 @@
-#include "SFML/System/Vector2.hpp"
+#include <SFML/System/Vector2.hpp>
 
 #include "DemoLevel.hpp"
 
-DemoLevel::DemoLevel(RepositoryElementId id_generator()) : Level(id_generator) {
-    auto p1 = platforms.add_girder({120, -500}, {500, -460});
-    auto p2 = platforms.add_girder({80, -360}, {540, -400});
-    auto p3 = platforms.add_girder({40, -300}, {520, -260});
-    auto p4 = platforms.add_girder({80, -160}, {560, -200});
+/**
+ * @brief Builds the prototype scene used for the current game demo.
+ * @param id_generator Function used to create unique entity ids.
+ */
+DemoLevel::DemoLevel(Id id_generator()) : Level(id_generator) {
+    auto p1 = entities.add_girder({120, -500}, {500, -460});
+    auto p2 = entities.add_girder({80, -360}, {540, -400});
+    auto p3 = entities.add_girder({40, -300}, {520, -260});
+    auto p4 = entities.add_girder({80, -160}, {560, -200});
 
-    ladders.add_ladder(p2, p1, 200.0f);
-    ladders.add_ladder(p3, p2, 300.0f);
-    ladders.add_ladder(p4, p3, 500.0f);
+    entities.add_ladder(p2, p1, 200.0f);
+    entities.add_ladder(p3, p2, 300.0f);
+    entities.add_ladder(p4, p3, 500.0f);
 
     entities.add_barrel({300, -500});
 }

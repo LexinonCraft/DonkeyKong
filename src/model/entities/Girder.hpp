@@ -1,0 +1,108 @@
+#ifndef GIRDER_HPP
+#define GIRDER_HPP
+
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <memory>
+
+#include "../components/Platform.hpp"
+#include "../Declarations.hpp"
+#include "../util/BaseEntity.hpp"
+
+/**
+ * @brief Sloped platform entity that forms the walkable floors of the level.
+ *
+ * A girder is a directed line segment with a surface that barrels and the player
+ * can traverse. Its geometry defines the slope and the lower/upper endpoint used
+ * for platform detection and player placement.
+ */
+class Girder : public BaseEntity, public Platform {
+public:
+    /**
+     * @brief Creates a girder between its left and right endpoints.
+     * @param ref Repository reference assigned to the girder.
+     * @param left First endpoint of the line segment.
+     * @param right Second endpoint of the line segment.
+     */
+    Girder(Ref ref, sf::Vector2f left, sf::Vector2f right);
+
+    /**
+     * @brief Returns the slope of the girder surface at a given x position.
+     * @param x Horizontal position.
+     * @return dy/dx value for the surface at x.
+     */
+    float slope_at(float x) const override;
+
+    /**
+     * @brief Returns the y-coordinate of the girder surface at a given x position.
+     * @param x Horizontal position.
+     * @return Surface height.
+     */
+    float surface_y_at(float x) const override;
+
+    /**
+     * @brief Returns whether the girder covers the supplied x-coordinate.
+     * @param x Horizontal position.
+     * @return True if x lies within the girder's horizontal span.
+     */
+    bool covers_x(float x) const override;
+
+    /**
+     * @brief Returns the direction in which a barrel should roll on this girder.
+     * @return +1 toward the right, -1 toward the left, 0 for a flat surface.
+     */
+    int downhill_sign() const override;
+
+    /**
+     * @brief Returns the higher end of the girder.
+     * @return World-space endpoint with smaller y value.
+     */
+    sf::Vector2f high_end() const override;
+
+    /**
+     * @brief Returns whether the girder is currently usable as a standing surface.
+     * @return Always true for a static girder.
+     */
+    bool is_active() const override;
+
+    /**
+     * @brief Returns the displacement of an object lying on this girder.
+     * @param x Horizontal position.
+     * @param dt Time step.
+     * @return Zero displacement for a static surface.
+     */
+    sf::Vector2f displacement_at(float x, float dt) const override;
+
+    /**
+     * @brief Dispatches the girder to the entity visitor.
+     * @param visitor Visitor used for type-based rendering logic.
+     */
+    void accept(EntityVisitor &visitor) override;
+
+    /**
+     * @brief Returns the visible rectangle representing the girder.
+     * @return SFML rectangle shape used for rendering.
+     */
+    const sf::RectangleShape& get_shape() const;
+
+    /**
+     * @brief Returns the underlying entity as an abstract base pointer.
+     * @return Reference to this entity.
+     */
+    BaseEntity &get_entity() override { return *this; }
+
+    /**
+     * @brief Creates the platform component for this girder.
+     * @return Unique pointer to the platform component wrapper.
+     */
+    std::unique_ptr<Component<Platform>> create_platform_component() override {
+        return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
+    }
+
+private:
+    sf::Vector2f left;
+    sf::Vector2f right;
+    sf::RectangleShape shape;
+};
+
+#endif

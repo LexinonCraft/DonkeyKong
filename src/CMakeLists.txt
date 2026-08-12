@@ -1,11 +1,17 @@
 # Model
 set(ModelSources
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/Girder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/Barrel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/Ladder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/Player.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Girder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Barrel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Player.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ladder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Level.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoLevel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/components/ClimbableComponentRepository.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PlatformComponentRepository.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/components/UpdatableComponentRepository.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/util/EntityRepository.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/DrawableComponentRepository.cpp
     )
 
 # Controller
@@ -15,11 +21,9 @@ set(ControlSources
 
 # View
 set(ViewSources
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/LevelView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/LayerStack.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/LevelView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/PlatformPainter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/EntityPainter.cpp
     )
 
 # add src code to target
@@ -27,5 +31,6 @@ add_executable(DonkeyKong
         ${ModelSources}
         ${ControlSources}
         ${ViewSources}
+        ${UtilSources}
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
