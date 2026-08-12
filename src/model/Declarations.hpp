@@ -1,17 +1,22 @@
-#ifndef MODEL_DECLARATIONS_H
-#define MODEL_DECLARATIONS_H
+#ifndef DECLARATIONS_HPP
+#define DECLARATIONS_HPP
 
-class Barrel;
-class Girder;
-class Ladder;
-class Level;
-class Platform;
-class Entity;
-class Player;
-class EntityVisitor;
-class PlatformVisitor;
+/**
+ * @brief Type used for unique entity ids within the game world.
+ */
+typedef int Id;
+
 class EntityRepository;
-class PlatformRepository;
-class LadderRepository;
+class BaseEntity;
+class Platform;
+class Barrel;
+class Ref;
+class Level;
+class PlatformComponentRepository;
+class Girder;
+class Player;
+class Ladder;
+class Climbable;
+class Updatable;
 
 #endif

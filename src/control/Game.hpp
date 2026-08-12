@@ -1,43 +1,51 @@
-#ifndef GAME_H
-#define GAME_H
-
-#include <vector>
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include <SFML/Graphics.hpp>
 
-#include "../model/Girder.hpp"
-#include "../model/Level.hpp"
+#include "../model/DemoLevel.hpp"
 #include "../view/LevelView.hpp"
 
-// Game class
+/**
+ * @brief Main controller for the Donkey Kong-style game loop.
+ *
+ * The game owns the window, the demo level, and the view state used by the
+ * render pipeline.
+ */
 class Game {
-
 public:
-    //initialize the game (window and controls)
+    /**
+     * @brief Initialises the application window, level, and view.
+     */
     Game();
 
+    /**
+     * @brief Runs the main game loop until the window is closed.
+     */
     void start();
 
 private:
-    // processes user input, returns true if window has been closed
+    /**
+     * @brief Handles keyboard input and updates movement state.
+     * @return True if the window was closed, otherwise false.
+     */
     bool input();
 
-    // updates all game elements
+    /**
+     * @brief Advances the model by the elapsed time.
+     * @param time_passed Time since the last update in seconds.
+     */
     void update(float time_passed);
 
-    // draws the scene
+    /**
+     * @brief Draws the current scene to the window.
+     */
     void draw();
 
-    // build the zig-zag of alternating sloped girders that make up the stage
-    static std::vector<Girder> build_girders();
-
     sf::RenderWindow window;
-
-    Level *level;
-
-    // view area and layers
+    DemoLevel *level;
     sf::View view;
-    LevelView *level_view;
+    LevelView level_view;
 };
 
 #endif

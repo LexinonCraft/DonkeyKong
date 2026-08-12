@@ -1,22 +1,22 @@
 #include "Game.hpp"
 
-#include <SFML/Window/Keyboard.hpp>
 #include <memory>
+
+#include <SFML/Window/Keyboard.hpp>
 
 #include "../model/Constants.hpp"
 #include "../model/DemoLevel.hpp"
-#include "../model/Player.hpp"
 
 Game::Game() :
     window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
     level(new DemoLevel(std::rand)),
     view(sf::FloatRect(sf::Vector2f({0,-constants::VIEW_HEIGHT}), sf::Vector2f({constants::VIEW_WIDTH,constants::VIEW_HEIGHT}))),
-    level_view(new LevelView(window, *level)) {
+    level_view(window, *level) {
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
         // set the view (visible area) for our game
-        level_view->set_view(view);
+        level_view.set_view(view);
 
         // level->set_player(std::rand, &player_control.get_player());
 }
@@ -103,9 +103,8 @@ bool Game::input() {
 
 void Game::update(float time_passed) {
     level->update(time_passed);
-    //player_control.update(*level, time_passed);
 }
 
 void Game::draw() {
-    level_view->draw();
+    level_view.draw();
 }

@@ -1,41 +1,15 @@
-#include <memory>
-
 #include "Level.hpp"
-#include "Player.hpp"
 
-PlatformRepository &Level::get_platforms() {
-    return platforms;
-}
+/**
+ * @brief Creates a level and initializes the tracked repositories.
+ */
+Level::Level(Id id_generator()) : entities(id_generator), updatable_components(entities), platform_components(entities), climbable_components(entities), player(entities.add_player()) {}
 
-LadderRepository &Level::get_ladders() {
-    return ladders;
-}
-
-EntityRepository &Level::get_entities() {
-    return entities;
-}
-
-std::shared_ptr<Player> Level::get_player() const {
-    return player;
-}
-
-void Level::set_player(std::shared_ptr<Player> player) {
-    this->player = player;
-}
-
+/**
+ * @brief Advances the level simulation by one tick.
+ * @param dt Time step in seconds.
+ */
 void Level::update(float dt) {
-    for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-        it->second->update(dt);
-    }
-    for (auto it = entities.begin(); it != entities.end(); ++it) {
-        it->second->update(*this, dt);
-    }
-}
-
-Level::Level(RepositoryElementId id_generator())
-    : platforms(id_generator),
-      ladders(id_generator),
-      entities(id_generator) {
-    auto player = entities.add_player();
-    set_player(player);
+    entities.handle_deletions();
+    updatable_components.update_all(dt, *this);
 }
