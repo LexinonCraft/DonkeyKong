@@ -3,15 +3,14 @@
 
 #include <memory>
 
-#include "../util/ComponentFactory.hpp"
+#include "../util/AbstractComponentFactory.hpp"
 #include "../util/Component.hpp"
 #include "Platform.hpp"
-#include "../entities/Girder.hpp"
 
-class PlatformComponentFactory : public ComponentFactory<Component<Platform>> {
+class PlatformComponentFactory : public AbstractComponentFactory<Component<Platform>> {
 protected:
-    std::unique_ptr<Component<Platform>> create_component_for(Girder &girder, std::shared_ptr<Girder> entity_ptr) const override {
-        return std::make_unique<Component<Platform>>(entity_ptr);
+    std::unique_ptr<Component<Platform>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
+        return entity->create_platform_component();
     }
 };
 

@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "BaseEntity.hpp"
 #include "EntityRepository.hpp"
 

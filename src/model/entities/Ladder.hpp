@@ -30,6 +30,10 @@ public:
 
     BaseEntity &get_entity() override { return *this; }
 
+    std::unique_ptr<Component<Climbable>> create_climbable_component() override {
+        return std::make_unique<Component<Climbable>>(std::static_pointer_cast<Ladder>(shared_from_this()));
+    }
+
 private:
     sf::RectangleShape shape;
 };

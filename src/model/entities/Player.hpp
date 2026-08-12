@@ -51,6 +51,10 @@ public:
 
     BaseEntity &get_entity() override { return *this; }
 
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
+        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
+    }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;

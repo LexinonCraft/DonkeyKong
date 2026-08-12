@@ -1,14 +1,14 @@
 #ifndef BASE_ENTITY_HPP
 #define BASE_ENTITY_HPP
 
-#include <stdexcept>
 #include <memory>
 
 #include "../Declarations.hpp"
 #include "EntityVisitor.hpp"
 #include "Ref.hpp"
+#include "Component.hpp"
 
-class BaseEntity {
+class BaseEntity : public std::enable_shared_from_this<BaseEntity> {
 public:
     BaseEntity(Ref ref) : ref(ref) {}
 
@@ -49,6 +49,12 @@ public:
     virtual void check_referenced_entities() {}
 
     virtual void accept(EntityVisitor &visitor) = 0;
+
+    virtual std::unique_ptr<Component<Climbable>> create_climbable_component() { return nullptr; }
+
+    virtual std::unique_ptr<Component<Platform>> create_platform_component() { return nullptr; }
+
+    virtual std::unique_ptr<Component<Updatable>> create_updatable_component() { return nullptr; }
 
 protected:
     void destroy();

@@ -13,5 +13,7 @@ class PlatformComponentRepository;
 class Girder;
 class Player;
 class Ladder;
+class Climbable;
+class Updatable;
 
 #endif

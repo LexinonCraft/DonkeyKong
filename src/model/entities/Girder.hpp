@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <memory>
 
 #include "../components/Platform.hpp"
 #include "../Declarations.hpp"
@@ -37,6 +38,10 @@ public:
     const sf::RectangleShape& get_shape() const;
 
     BaseEntity &get_entity() override { return *this; }
+
+    std::unique_ptr<Component<Platform>> create_platform_component() override {
+        return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
+    }
 
 private:
     sf::Vector2f left;

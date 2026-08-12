@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "../model/util/ComponentFactory.hpp"
+#include "../model/util/AbstractComponentFactory.hpp"
 #include "DrawableComponent.hpp"
 #include "GirderRenderer.hpp"
 #include "BarrelRenderer.hpp"
@@ -14,22 +14,30 @@
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
 
-class DrawableComponentFactory : public ComponentFactory<DrawableComponent> {
-protected:
-    std::unique_ptr<DrawableComponent> create_component_for(Barrel &barrel, std::shared_ptr<Barrel> entity_ptr) const override {
-        return std::make_unique<BarrelRenderer>(entity_ptr);
+class DrawableComponentFactory : public AbstractComponentFactory<DrawableComponent>, private EntityVisitor {
+public:
+    std::unique_ptr<DrawableComponent> create_component_for(std::shared_ptr<BaseEntity> entity) override {
+        entity->accept(*this);
+        return std::move(component);
     }
 
-    std::unique_ptr<DrawableComponent> create_component_for(Girder &girder, std::shared_ptr<Girder> entity_ptr) const override {
-        return std::make_unique<GirderRenderer>(entity_ptr);
+private:
+    std::unique_ptr<DrawableComponent> component;
+
+    void visit(Barrel &barrel) override {
+        component = std::make_unique<BarrelRenderer>(std::static_pointer_cast<Barrel>(barrel.shared_from_this()));
     }
 
-    std::unique_ptr<DrawableComponent> create_component_for(Player &entity, std::shared_ptr<Player> entity_ptr) const override {
-        return std::make_unique<PlayerRenderer>(entity_ptr);
+    void visit(Girder &girder) override {
+        component = std::make_unique<GirderRenderer>(std::static_pointer_cast<Girder>(girder.shared_from_this()));
     }
 
-    std::unique_ptr<DrawableComponent> create_component_for(Ladder &entity, std::shared_ptr<Ladder> entity_ptr) const override {
-        return std::make_unique<LadderRenderer>(entity_ptr);
+    void visit(Player &player) override {
+        component = std::make_unique<PlayerRenderer>(std::static_pointer_cast<Player>(player.shared_from_this()));
+    }
+
+    void visit(Ladder &ladder) override {
+        component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()));
     }
 };
 

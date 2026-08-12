@@ -40,6 +40,10 @@ public:
 
     BaseEntity &get_entity() override { return *this; }
 
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
+        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+    }
+
 private:
     // if a platform surface lies within the barrel's lower half, snap onto it
     void check_platform_intersection(PlatformComponentRepository &platforms);

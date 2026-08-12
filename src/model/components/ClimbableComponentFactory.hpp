@@ -3,15 +3,14 @@
 
 #include <memory>
 
-#include "../util/ComponentFactory.hpp"
+#include "../util/AbstractComponentFactory.hpp"
 #include "../util/Component.hpp"
 #include "Climbable.hpp"
-#include "../entities/Ladder.hpp"
 
-class ClimbableComponentFactory : public ComponentFactory<Component<Climbable>> {
+class ClimbableComponentFactory : public AbstractComponentFactory<Component<Climbable>> {
 protected:
-    std::unique_ptr<Component<Climbable>> create_component_for(Ladder &ladder, std::shared_ptr<Ladder> entity_ptr) const override {
-        return std::make_unique<Component<Climbable>>(entity_ptr);
+    std::unique_ptr<Component<Climbable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
+        return entity->create_climbable_component();
     }
 };
 
