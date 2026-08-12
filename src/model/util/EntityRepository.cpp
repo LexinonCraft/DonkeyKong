@@ -1,5 +1,8 @@
 #include "EntityRepository.hpp"
 
+/**
+ * @brief Removes all entities queued for deletion and refreshes remaining references.
+ */
 void EntityRepository::handle_deletions() {
     while (!pending_deletions.empty()) {
         Id id = pending_deletions.front();

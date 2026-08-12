@@ -11,46 +11,98 @@
 #include "../util/BaseEntity.hpp"
 #include "../components/Updatable.hpp"
 
-/// A player character that can move left/right on girders, jump, and climb ladders.
+/**
+ * @brief Player-controlled entity.
+ *
+ * The player can walk on girders, jump into the air, and climb ladders using a
+ * small state machine composed of OnPlatform, InAir and Climbing states.
+ */
 class Player : public BaseEntity, public Updatable {
 public:
+    /**
+     * @brief High-level player states used by the movement logic.
+     */
     enum class State {
         OnPlatform,
         InAir,
         Climbing,
     };
+
+    /**
+     * @brief Requested horizontal movement direction.
+     */
     enum class HorizontalDirection {
         Left,
         Right,
         None,
     };
+
+    /**
+     * @brief Requested vertical movement direction.
+     */
     enum class VerticalDirection {
         Up,
         Down,
         None,
     };
 
+    /**
+     * @brief Creates a player entity in the repository.
+     * @param ref Repository reference assigned to the player.
+     */
     Player(Ref ref);
 
-    /// advance the physics by `dt` seconds, given the stage's girders and ladders
+    /**
+     * @brief Advances the player by one physics update step.
+     * @param dt Time step in seconds.
+     * @param level Level used for collision and climbable lookup.
+     */
     void update(float dt, Level &level) override;
 
-    /// set the direction the player is trying to move horizontally (left/right/none)
+    /**
+     * @brief Sets the horizontal direction currently requested by input.
+     * @param dir Desired movement direction.
+     */
     void set_horizontal_direction(HorizontalDirection dir);
-    /// set the direction the player is trying to move vertically (up/down/none)
+
+    /**
+     * @brief Sets the vertical direction currently requested by input.
+     * @param dir Desired climbing direction.
+     */
     void set_vertical_direction(VerticalDirection dir);
 
-    /// initialize a jump if the player is currently on a girder
+    /**
+     * @brief Initiates a jump while the player is standing on a platform.
+     */
     void jump();
 
+    /**
+     * @brief Returns the SFML shape used for rendering.
+     * @return Player geometry.
+     */
     const sf::RectangleShape &get_shape() const;
 
+    /**
+     * @brief Clears references to deleted platforms or ladders.
+     */
     void check_referenced_entities() override;
 
+    /**
+     * @brief Dispatches this entity to the visitor.
+     * @param visitor Visitor used for type-based rendering/factory logic.
+     */
     void accept(EntityVisitor &visitor) override;
 
+    /**
+     * @brief Returns the underlying entity as an abstract base pointer.
+     * @return Reference to this entity.
+     */
     BaseEntity &get_entity() override { return *this; }
 
+    /**
+     * @brief Creates the updatable component for this player.
+     * @return Unique pointer to the component wrapper.
+     */
     std::unique_ptr<Component<Updatable>> create_updatable_component() override {
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
     }

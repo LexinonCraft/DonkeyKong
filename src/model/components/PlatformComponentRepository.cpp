@@ -1,5 +1,8 @@
 #include "PlatformComponentRepository.hpp"
 
+/**
+ * @brief Finds a platform directly below the provided world position.
+ */
 std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(const sf::Vector2f &position, float snap_distance) {
     for (auto it = begin(); it != end(); ++it) {
         auto platform = it->second->get_entity();

@@ -1,4 +1,9 @@
-// define some constants to make code more readable
+/**
+ * @brief Gameplay and rendering constants used throughout the project.
+ *
+ * The coordinate system follows SFML conventions where the positive y axis points
+ * downward, so gravity also points downward in world space.
+ */
 namespace constants {
     constexpr int VIEW_WIDTH = 600;
     constexpr int VIEW_HEIGHT = 600;

@@ -14,8 +14,16 @@
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
 
+/**
+ * @brief Factory that converts entities into their matching SFML renderer components.
+ */
 class DrawableComponentFactory : public AbstractComponentFactory<DrawableComponent>, private EntityVisitor {
 public:
+    /**
+     * @brief Creates the drawable component for an entity using visitor dispatch.
+     * @param entity Entity to render.
+     * @return Unique pointer to the drawable component.
+     */
     std::unique_ptr<DrawableComponent> create_component_for(std::shared_ptr<BaseEntity> entity) override {
         entity->accept(*this);
         return std::move(component);

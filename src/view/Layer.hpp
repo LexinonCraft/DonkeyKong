@@ -3,32 +3,42 @@
 
 #include <SFML/Graphics.hpp>
 
-// Layer class
+/**
+ * @brief Offscreen render layer that collects drawables before transferring them to the window.
+ */
 class Layer {
-public:   
-    // Initializes the layer in the given window
+public:
+    /**
+     * @brief Creates a layer bound to a given render window.
+     * @param window Window that will display the final layer content.
+     */
     Layer(sf::RenderWindow &window);
 
-    // adds the drawable element to the layer
+    /**
+     * @brief Adds an SFML drawable object to this layer.
+     * @param drawable Drawable object to render into the layer.
+     */
     void add_to_layer(const sf::Drawable &drawable);
 
-    // draws the scene to the window
+    /**
+     * @brief Uploads the layer texture to the window and presents it.
+     */
     void draw();
 
-    // clear the layer, remove all drawable elements
+    /**
+     * @brief Clears the layer contents while preserving the underlying window.
+     */
     void clear();
 
-    // adjust the layer's view
+    /**
+     * @brief Sets the view used when rendering this layer.
+     * @param view Camera/view state to apply.
+     */
     void set_view(const sf::View &view);
 
 private:
-    // window in which the layer is shown
     sf::RenderWindow &window;
-
-    // render target
     sf::RenderTexture target;
-
-    // sprite to which the target is drawn, that gets shown in the window
     sf::Sprite sprite;
 };
 

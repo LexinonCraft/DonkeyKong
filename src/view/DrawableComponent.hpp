@@ -3,10 +3,20 @@
 
 #include "LayerStack.hpp"
 
+/**
+ * @brief Abstract render adapter for a world entity.
+ *
+ * A drawable component takes a concrete entity and writes its visual
+ * representation to the correct render layer.
+ */
 class DrawableComponent {
 public:
     ~DrawableComponent() {}
 
+    /**
+     * @brief Draws this component into the supplied layer stack.
+     * @param layer_stack Stack of render layers used by the current view.
+     */
     virtual void draw(LayerStack &layer_stack) = 0;
 };
 

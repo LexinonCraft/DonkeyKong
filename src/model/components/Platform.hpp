@@ -5,23 +5,62 @@
 #include "../Declarations.hpp"
 #include "../util/EntityFromComponentAux.hpp"
 
+/**
+ * @brief Behaviour interface for surfaces that entities can stand on.
+ *
+ * Platform-like objects are represented by an entity implementing this interface so that
+ * barrels and the player can query the geometric properties of the surface they
+ * are walking on.
+ */
 class Platform : public EntityFromComponentAux {
 public:
     ~Platform() {}
 
-    /// Returns true iff the platform covers the given horizontal position x.
+    /**
+     * @brief Returns whether the platform spans the given world x position.
+     * @param x Horizontal world coordinate.
+     * @return True if x lies on the platform.
+     */
     virtual bool covers_x(float x) const = 0;
-    /// Returns the height (y) of the platform surface at horizontal position x.
+
+    /**
+     * @brief Returns the platform surface height at a given x position.
+     * @param x Horizontal world coordinate.
+     * @return Y coordinate of the surface at x.
+     */
     virtual float surface_y_at(float x) const = 0;
-    /// Returns the slope (dy/dx) of the platform surface at horizontal position x.
+
+    /**
+     * @brief Returns the slope of the platform surface at x.
+     * @param x Horizontal world coordinate.
+     * @return dy/dx value of the surface.
+     */
     virtual float slope_at(float x) const = 0;
-    /// Returns true iff the player currently should be able to stand on the platform.
+
+    /**
+     * @brief Returns whether the platform is currently usable.
+     * @return True if entities may stand on it.
+     */
     virtual bool is_active() const = 0;
-    /// Returns the displacement an object on the platform would experience at horizontal position x over time dt (relevant for moving platforms).
+
+    /**
+     * @brief Returns the displacement that an object on this platform experiences.
+     * @param x Horizontal world coordinate.
+     * @param dt Time step.
+     * @return Displacement vector for the given position and timestep.
+     */
     virtual sf::Vector2f displacement_at(float x, float dt) const = 0;
-    // Returns -1 for a platform sloping down to the left, +1 for a platform sloping down to the right, and 0 for a horizontal platform.
+
+    /**
+     * @brief Returns the direction in which the surface slopes downward.
+     * @return -1 for a slope down to the left, +1 for down to the right, 0 for horizontal.
+     */
     virtual int downhill_sign() const = 0;
-    // Returns the endpoint of the platform that is higher in the world coordinates (i. e. has a smaller y value).
+
+    /**
+     * @brief Returns the higher end of the platform.
+     * @return World-space endpoint with smaller y coordinate.
+     */
     virtual sf::Vector2f high_end() const = 0;
 };
 

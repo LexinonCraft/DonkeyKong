@@ -7,8 +7,16 @@
 #include "../util/Component.hpp"
 #include "Climbable.hpp"
 
+/**
+ * @brief Factory that creates climbable components for entities that support climbing.
+ */
 class ClimbableComponentFactory : public AbstractComponentFactory<Component<Climbable>> {
 protected:
+    /**
+     * @brief Creates the climbable component for a specific entity if supported.
+     * @param entity Entity to inspect.
+     * @return Unique pointer to the climbable component or nullptr.
+     */
     std::unique_ptr<Component<Climbable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
         return entity->create_climbable_component();
     }

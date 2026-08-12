@@ -10,51 +10,106 @@
 #include "../util/BaseEntity.hpp"
 #include "../components/Updatable.hpp"
 
-// A barrel rolling down the girders. It is a tiny 2-state machine:
-//  - OnGirder: glued to the girder surface, rolling downhill at constant speed
-//              (the simple tan(angle) "gravity on a slope" approximation).
-//  - Falling:  in the air between girders, pulled down by gravity (vy += g*dt),
-//              until it crosses the surface of the girder below.
+/**
+ * @brief Barrel entity that rolls down sloped platforms and falls between them.
+ *
+ * The barrel is a small two-state simulation: it either sticks to a platform and
+ * rolls downhill, or it is in free fall until it intersects another platform.
+ */
 class Barrel : public BaseEntity, public Updatable {
 public:
+    /**
+     * @brief Current barrel state.
+     */
     enum class State { OnGirder, Falling };
 
+    /**
+     * @brief Creates a barrel at a world position.
+     * @param ref Repository reference assigned to the barrel.
+     * @param position Initial world position.
+     */
     Barrel(Ref ref, sf::Vector2f position);
 
-    // place the barrel on `girder`, rolling toward its lower end
+    /**
+     * @brief Places the barrel on a platform and sets its rolling direction.
+     * @param platform Platform surface to rest on.
+     */
     void set_on_platform(std::shared_ptr<Platform> platform);
 
-    // advance the physics by `dt` seconds, given the stage's platforms
+    /**
+     * @brief Advances the barrel simulation by one time step.
+     * @param dt Time step in seconds.
+     * @param level Level used to resolve platform intersections.
+     */
     void update(float dt, Level &level) override;
 
-    // Falling iff we are not currently resting on a girder
+    /**
+     * @brief Returns whether the barrel is currently attached to a platform.
+     * @return OnGirder if attached, otherwise Falling.
+     */
     State get_state() const { return current_platform ? State::OnGirder : State::Falling; }
+
+    /**
+     * @brief Returns the barrel's world position.
+     * @return Current position vector.
+     */
     sf::Vector2f get_position() const { return position; }
+
+    /**
+     * @brief Returns the current horizontal velocity.
+     * @return x-velocity in pixels per second.
+     */
     float get_vx() const { return vx; }
+
+    /**
+     * @brief Returns the current vertical velocity.
+     * @return y-velocity in pixels per second.
+     */
     float get_vy() const { return vy; }
+
+    /**
+     * @brief Returns the barrel's SFML render shape.
+     * @return Circle shape used for rendering.
+     */
     const sf::CircleShape &get_shape() const { return shape; }
 
+    /**
+     * @brief Dispatches the barrel to the visitor.
+     * @param visitor Visitor used for object-specific rendering logic.
+     */
     void accept(EntityVisitor &visitor) override;
 
+    /**
+     * @brief Clears references to deleted platforms.
+     */
     void check_referenced_entities() override;
 
+    /**
+     * @brief Returns the underlying entity as an abstract base pointer.
+     * @return Reference to this entity.
+     */
     BaseEntity &get_entity() override { return *this; }
 
+    /**
+     * @brief Creates the updatable component for this barrel.
+     * @return Unique pointer to the component wrapper.
+     */
     std::unique_ptr<Component<Updatable>> create_updatable_component() override {
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
     }
 
 private:
-    // if a platform surface lies within the barrel's lower half, snap onto it
+    /**
+     * @brief Snaps the barrel onto a platform if it intersects the platform surface.
+     * @param platforms Repository of all platform objects in the level.
+     */
     void check_platform_intersection(PlatformComponentRepository &platforms);
 
     sf::Vector2f position;
     float vx = 0.f;
     float vy = 0.f;
 
-    // the girder we are rolling on, or empty while falling.
     std::shared_ptr<Platform> current_platform = nullptr;
-
     sf::CircleShape shape;
 };
 

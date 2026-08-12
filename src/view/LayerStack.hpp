@@ -5,8 +5,14 @@
 
 #include "Layer.hpp"
 
+/**
+ * @brief Container holding the layered render targets for the game world.
+ */
 class LayerStack {
 public:
+    /**
+     * @brief Identifies the rendering layer used for a specific object type.
+     */
     enum class LayerId {
         Background,
         Platforms,
@@ -16,12 +22,27 @@ public:
         UI,
     };
 
+    /**
+     * @brief Creates the stack and initialises all render layers.
+     * @param window Window that receives the final draw call.
+     */
     LayerStack(sf::RenderWindow &window);
 
+    /**
+     * @brief Returns the render layer for a specific object category.
+     * @param id Layer identifier.
+     * @return Reference to the corresponding layer.
+     */
     Layer &get_layer(LayerId id);
 
+    /**
+     * @brief Draws all layers into the window.
+     */
     void draw_all();
 
+    /**
+     * @brief Clears all internal layer targets and the window.
+     */
     void clear_all();
 
 private:

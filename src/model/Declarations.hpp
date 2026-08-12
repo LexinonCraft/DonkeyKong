@@ -1,6 +1,9 @@
 #ifndef DECLARATIONS_HPP
 #define DECLARATIONS_HPP
 
+/**
+ * @brief Type used for unique entity ids within the game world.
+ */
 typedef int Id;
 
 class EntityRepository;
