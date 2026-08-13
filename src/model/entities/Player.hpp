@@ -57,7 +57,7 @@ public:
      * @param dt Time step in seconds.
      * @param level Level used for collision and climbable lookup.
      */
-    void update(float dt, Level &level) override;
+    void update(float dt, Stage &level) override;
 
     /**
      * @brief Sets the horizontal direction currently requested by input.

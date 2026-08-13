@@ -41,7 +41,7 @@ public:
      * @param dt Time step in seconds.
      * @param level Level used to resolve platform intersections.
      */
-    void update(float dt, Level &level) override;
+    void update(float dt, Stage &level) override;
 
     /**
      * @brief Returns whether the barrel is currently attached to a platform.

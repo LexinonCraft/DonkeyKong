@@ -3,7 +3,7 @@
 #include "Player.hpp"
 #include "../Constants.hpp"
 #include "../util/EntityVisitor.hpp"
-#include "../Level.hpp"
+#include "../Stage.hpp"
 
 Player::Player(Ref ref) :
     BaseEntity(ref),
@@ -19,7 +19,7 @@ Player::Player(Ref ref) :
         shape.setPosition(position);
 }
 
-void Player::update(float dt, Level &level) {
+void Player::update(float dt, Stage &level) {
     float walking_dir;
     switch (horizontal_direction) {
         case HorizontalDirection::Left:

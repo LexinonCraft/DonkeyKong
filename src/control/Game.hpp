@@ -3,8 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../model/DemoLevel.hpp"
-#include "../view/LevelView.hpp"
+#include "../control/AbstractSceneControl.hpp"
 
 /**
  * @brief Main controller for the Donkey Kong-style game loop.
@@ -22,30 +21,12 @@ public:
     /**
      * @brief Runs the main game loop until the window is closed.
      */
-    void start();
+    void run();
 
 private:
-    /**
-     * @brief Handles keyboard input and updates movement state.
-     * @return True if the window was closed, otherwise false.
-     */
-    bool input();
-
-    /**
-     * @brief Advances the model by the elapsed time.
-     * @param time_passed Time since the last update in seconds.
-     */
-    void update(float time_passed);
-
-    /**
-     * @brief Draws the current scene to the window.
-     */
-    void draw();
-
+    sf::Clock clock;
     sf::RenderWindow window;
-    DemoLevel *level;
-    sf::View view;
-    LevelView level_view;
+    std::unique_ptr<AbstractSceneControl> scene_control;
 };
 
 #endif

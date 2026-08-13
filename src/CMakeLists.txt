@@ -4,8 +4,8 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Barrel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ladder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/Level.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoLevel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/Stage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoStage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/ClimbableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PlatformComponentRepository.cpp
@@ -17,13 +17,15 @@ set(ModelSources
 # Controller
 set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/StageControl.cpp
     )
 
 # View
 set(ViewSources
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/LevelView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/StageView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/LayerStack.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenSceneView.cpp
     )
 
 # add src code to target

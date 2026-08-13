@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
+
 /**
  * @brief Gameplay and rendering constants used throughout the project.
  *
@@ -24,3 +27,5 @@ namespace constants {
 
     constexpr float LADDER_WIDTH = 10.f;  // px
 }
+
+#endif

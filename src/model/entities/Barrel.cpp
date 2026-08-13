@@ -5,7 +5,7 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "../Constants.hpp"
-#include "../Level.hpp"
+#include "../Stage.hpp"
 #include "../components/Platform.hpp"
 #include "../components/PlatformComponentRepository.hpp"
 #include "../util/EntityVisitor.hpp"
@@ -28,7 +28,7 @@ void Barrel::set_on_platform(std::shared_ptr<Platform> platform) {
     vy = 0.f;
 }
 
-void Barrel::update(float dt, Level &level) {
+void Barrel::update(float dt, Stage &level) {
     if (get_state() == State::OnGirder) {
         position.x += vx * dt;
         if (current_platform && current_platform->covers_x(position.x)) {

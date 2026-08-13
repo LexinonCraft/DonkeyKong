@@ -11,12 +11,14 @@ class BaseEntity;
 class Platform;
 class Barrel;
 class Ref;
-class Level;
+class Stage;
 class PlatformComponentRepository;
 class Girder;
 class Player;
 class Ladder;
 class Climbable;
 class Updatable;
+class SceneVisitor;
+class TitleScreenScene;
 
 #endif

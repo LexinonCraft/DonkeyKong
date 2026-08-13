@@ -1,12 +1,15 @@
-#ifndef LEVEL_HPP
-#define LEVEL_HPP
+#ifndef STAGE_HPP
+#define STAGE_HPP
+
+#include <memory>
 
 #include "util/EntityRepository.hpp"
 #include "components/UpdatableComponentRepository.hpp"
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "Declarations.hpp"
-#include <memory>
+#include "Scene.hpp"
+#include "SceneVisitor.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -14,9 +17,9 @@
  * Concrete levels populate the repository with the world objects and expose the
  * player plus per-entity behaviour collections needed by the game loop.
  */
-class Level {
+class Stage : public Scene {
 public:
-    virtual ~Level() {}
+    virtual ~Stage() {}
 
     /**
      * @brief Advances the level state by one simulation step.
@@ -48,12 +51,16 @@ public:
      */
     std::shared_ptr<Player> get_player() const { return player; }
 
+    void accept(SceneVisitor &visitor) override {
+        visitor.visit(*this);
+    }
+
 protected:
     /**
      * @brief Creates a level and registers the behaviour repositories with the entity repository.
      * @param id_generator Function used to generate fresh entity ids.
      */
-    Level(Id id_generator());
+    Stage(Id id_generator());
 
     EntityRepository entities;
     UpdatableComponentRepository updatable_components;
