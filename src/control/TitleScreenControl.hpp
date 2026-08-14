@@ -2,7 +2,7 @@
 #define TITLE_SCREEN_CONTROL_HPP
 
 #include "AbstractSceneControl.hpp"
-#include "../view/TitleScreenSceneView.hpp"
+#include "../view/TitleScreenView.hpp"
 
 class TitleScreenControl : public AbstractSceneControl {
 public:
@@ -19,7 +19,7 @@ public:
     NextScene get_next_scene() const override;
 
 private:
-    TitleScreenSceneView title_screen_view;
+    TitleScreenView title_screen_view;
     NextScene next_scene = NextScene::Stay;
 };
 

@@ -8,8 +8,6 @@
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "Declarations.hpp"
-#include "Scene.hpp"
-#include "SceneVisitor.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -17,7 +15,7 @@
  * Concrete levels populate the repository with the world objects and expose the
  * player plus per-entity behaviour collections needed by the game loop.
  */
-class Stage : public Scene {
+class Stage {
 public:
     virtual ~Stage() {}
 
@@ -50,10 +48,6 @@ public:
      * @return Shared pointer to the player entity.
      */
     std::shared_ptr<Player> get_player() const { return player; }
-
-    void accept(SceneVisitor &visitor) override {
-        visitor.visit(*this);
-    }
 
 protected:
     /**

@@ -1,11 +1,11 @@
-#include "TitleScreenSceneView.hpp"
+#include "TitleScreenView.hpp"
 #include <SFML/Graphics/Rect.hpp>
 
-TitleScreenSceneView::TitleScreenSceneView(sf::RenderWindow &window)
+TitleScreenView::TitleScreenView(sf::RenderWindow &window)
     : layer_stack(window),
       window(window) {}
 
-void TitleScreenSceneView::draw() {
+void TitleScreenView::draw() {
     layer_stack.clear_all();
 
     sf::Font font("assets/fonts/DejaVuSansMono.ttf");
@@ -29,7 +29,7 @@ void TitleScreenSceneView::draw() {
     layer_stack.draw_all();
 }
 
-void TitleScreenSceneView::set_view(const sf::View &view) {
+void TitleScreenView::set_view(const sf::View &view) {
     layer_stack.get_layer(LayerStack::LayerId::Background).set_view(view);
     layer_stack.get_layer(LayerStack::LayerId::Platforms).set_view(view);
     layer_stack.get_layer(LayerStack::LayerId::Ladders).set_view(view);

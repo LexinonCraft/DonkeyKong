@@ -1,22 +1,21 @@
-#ifndef TITLE_SCREEN_SCENE_VIEW_HPP
-#define TITLE_SCREEN_SCENE_VIEW_HPP
+#ifndef TITLE_SCREEN_VIEW_HPP
+#define TITLE_SCREEN_VIEW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AbstractSceneView.hpp"
 #include "LayerStack.hpp"
 
-class TitleScreenSceneView : public AbstractSceneView {
+class TitleScreenView {
 public:
-    TitleScreenSceneView(sf::RenderWindow &window);
+    TitleScreenView(sf::RenderWindow &window);
 
-    void draw() override;
+    void draw();
 
     /**
      * @brief Applies the active camera view to every render layer.
      * @param view Camera to use for the rendering scene.
      */
-    void set_view(const sf::View &view) override;
+    void set_view(const sf::View &view);
 
 private:
     LayerStack layer_stack;

@@ -26,7 +26,7 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/StageView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/LayerStack.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenSceneView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenView.cpp
     )
 
 # add src code to target
