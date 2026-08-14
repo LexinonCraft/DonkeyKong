@@ -1,9 +1,14 @@
-#include "TitleScreenView.hpp"
-#include <SFML/Graphics/Rect.hpp>
+#include <stdexcept>
 
-TitleScreenView::TitleScreenView(sf::RenderWindow &window)
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
+#include "TitleScreenView.hpp"
+
+TitleScreenView::TitleScreenView(sf::RenderWindow &window, TextureRegistry &texture_registry)
     : layer_stack(window),
-      window(window) {}
+      window(window),
+      texture_registry(texture_registry) {}
 
 void TitleScreenView::draw() {
     layer_stack.clear_all();
@@ -25,6 +30,13 @@ void TitleScreenView::draw() {
     subtitle.setOrigin({subtitle_bounds.size.x / 2.f, subtitle_bounds.size.y / 2.f});
     subtitle.setPosition({300.f, -200.f});
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(subtitle);
+
+    sf::Sprite donkey_kong_sprite(texture_registry.get_texture(TextureRegistry::TextureId::DonkeyKong));
+    donkey_kong_sprite.setPosition({300.f, -300.f});
+    sf::FloatRect sprite_bounds = donkey_kong_sprite.getLocalBounds();
+    donkey_kong_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});
+    donkey_kong_sprite.setScale({3.f, 3.f});
+    layer_stack.get_layer(LayerStack::LayerId::Background).add_to_layer(donkey_kong_sprite);
 
     layer_stack.draw_all();
 }

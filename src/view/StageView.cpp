@@ -1,9 +1,11 @@
 #include "StageView.hpp"
 
-StageView::StageView(sf::RenderWindow &window, Stage &level)
+StageView::StageView(sf::RenderWindow &window, Stage &level, TextureRegistry &texture_registry)
     : layer_stack(window),
       window(window),
-      drawable_components(level.get_entities()) {}
+      drawable_components(level.get_entities()) {
+    // Use the texture_registry as needed
+}
 
 void StageView::draw() {
     layer_stack.clear_all();

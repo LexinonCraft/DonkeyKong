@@ -8,11 +8,12 @@
 #include "../model/Stage.hpp"
 #include "../view/StageView.hpp"
 #include "../model/DemoStage.hpp"
+#include "../view/TextureRegistry.hpp"
 
 class StageControl : public AbstractSceneControl {
 public:
-    StageControl(sf::RenderWindow &window)
-        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand))), stage_view(window, *stage.get()) {
+    StageControl(sf::RenderWindow &window, TextureRegistry &texture_registry)
+        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand))), stage_view(window, *stage.get(), texture_registry) {
         stage_view.set_view(view);
     } // TODO: allow stage selection
 

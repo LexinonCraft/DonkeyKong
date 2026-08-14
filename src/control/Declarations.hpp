@@ -1,0 +1,6 @@
+#ifndef CONTROL_DECLARATIONS_HPP
+#define CONTROL_DECLARATIONS_HPP
+
+class Game;
+
+#endif

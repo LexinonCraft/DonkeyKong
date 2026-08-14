@@ -6,7 +6,7 @@
 
 class TitleScreenControl : public AbstractSceneControl {
 public:
-    TitleScreenControl(sf::RenderWindow &window) : AbstractSceneControl(window), title_screen_view(window) {
+    TitleScreenControl(sf::RenderWindow &window, TextureRegistry &texture_registry) : AbstractSceneControl(window), title_screen_view(window, texture_registry) {
         title_screen_view.set_view(view);
     }
 
