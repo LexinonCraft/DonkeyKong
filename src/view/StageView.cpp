@@ -21,3 +21,5 @@ void StageView::set_view(const sf::View &view) {
     layer_stack.get_layer(LayerStack::LayerId::Player).set_view(view);
     layer_stack.get_layer(LayerStack::LayerId::UI).set_view(view);
 }
+
+

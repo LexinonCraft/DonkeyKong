@@ -18,6 +18,7 @@ set(ModelSources
 set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/StageControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/TitleScreenControl.cpp
     )
 
 # View

@@ -13,7 +13,6 @@ class StageControl : public AbstractSceneControl {
 public:
     StageControl(sf::RenderWindow &window)
         : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand))), stage_view(window, *stage.get()) {
-        window.setView(view);
         stage_view.set_view(view);
     } // TODO: allow stage selection
 
@@ -24,6 +23,10 @@ public:
     void update(float dt) override;
 
     void draw() override;
+
+    NextScene get_next_scene() const override {
+        return NextScene::Stay;
+    }
 
 private:
     std::unique_ptr<Stage> stage;

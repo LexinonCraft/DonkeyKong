@@ -4,9 +4,10 @@
 
 #include "../model/Constants.hpp"
 #include "StageControl.hpp"
+#include "TitleScreenControl.hpp"
 
 Game::Game() :
-    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), scene_control(std::unique_ptr<AbstractSceneControl>(new StageControl(window))) {
+    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window))) {
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
@@ -27,6 +28,18 @@ void Game::run() {
             scene_control->update(elapsed_time.asSeconds());
             // draw the scene
             scene_control->draw();
+
+            AbstractSceneControl::NextScene next_scene = scene_control->get_next_scene();
+            switch (next_scene) {
+                case AbstractSceneControl::NextScene::Stay:
+                    break;
+                case AbstractSceneControl::NextScene::MainMenu:
+                    scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window));
+                    break;
+                case AbstractSceneControl::NextScene::Stage:
+                    scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window));
+                    break;
+            }
         }
     }
 }

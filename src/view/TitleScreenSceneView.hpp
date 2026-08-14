@@ -5,11 +5,10 @@
 
 #include "AbstractSceneView.hpp"
 #include "LayerStack.hpp"
-#include "../model/TitleScreenScene.hpp"
 
 class TitleScreenSceneView : public AbstractSceneView {
 public:
-    TitleScreenSceneView(sf::RenderWindow &window, TitleScreenScene &scene);
+    TitleScreenSceneView(sf::RenderWindow &window);
 
     void draw() override;
 
