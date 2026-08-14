@@ -1,19 +1,17 @@
-#include <stdexcept>
-
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "TitleScreenView.hpp"
 
-TitleScreenView::TitleScreenView(sf::RenderWindow &window, TextureRegistry &texture_registry)
+TitleScreenView::TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager)
     : layer_stack(window),
       window(window),
-      texture_registry(texture_registry) {}
+      assets_manager(assets_manager) {}
 
 void TitleScreenView::draw() {
     layer_stack.clear_all();
 
-    sf::Font font("assets/fonts/DejaVuSansMono.ttf");
+    sf::Font font("assets/fonts/PressStart2P.ttf");
 
     sf::Text title(font);
     title.setString("Donkey Kong");
@@ -31,7 +29,7 @@ void TitleScreenView::draw() {
     subtitle.setPosition({300.f, -200.f});
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(subtitle);
 
-    sf::Sprite donkey_kong_sprite(texture_registry.get_texture(TextureRegistry::TextureId::DonkeyKong));
+    sf::Sprite donkey_kong_sprite(assets_manager.get_texture(AssetsManager::TextureId::DonkeyKong));
     donkey_kong_sprite.setPosition({300.f, -300.f});
     sf::FloatRect sprite_bounds = donkey_kong_sprite.getLocalBounds();
     donkey_kong_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});

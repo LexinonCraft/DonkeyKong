@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "TextureRegistry.hpp"
+#include "AssetsManager.hpp"
 #include "AbstractSceneView.hpp"
 #include "LayerStack.hpp"
 #include "../model/Stage.hpp"
@@ -19,7 +19,7 @@ public:
      * @param window Window used for rendering.
      * @param stage Stage whose entities are rendered.
      */
-    StageView(sf::RenderWindow &window, Stage &stage, TextureRegistry &texture_registry);
+    StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &assets_manager);
 
     /**
      * @brief Renders the current state of the stage.

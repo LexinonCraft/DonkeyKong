@@ -7,7 +7,7 @@
 #include "TitleScreenControl.hpp"
 
 Game::Game() :
-    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), texture_registry("assets/textures/"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, texture_registry))) {
+    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager))) {
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
@@ -34,10 +34,10 @@ void Game::run() {
                 case AbstractSceneControl::NextScene::Stay:
                     break;
                 case AbstractSceneControl::NextScene::MainMenu:
-                    scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, texture_registry));
+                    scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
                     break;
                 case AbstractSceneControl::NextScene::Stage:
-                    scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, texture_registry));
+                    scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, assets_manager));
                     break;
             }
         }

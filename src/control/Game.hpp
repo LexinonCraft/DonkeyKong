@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../control/AbstractSceneControl.hpp"
-#include "../view/TextureRegistry.hpp"
+#include "../view/AssetsManager.hpp"
 
 /**
  * @brief Main controller for the Donkey Kong-style game loop.
@@ -24,12 +24,10 @@ public:
      */
     void run();
 
-    TextureRegistry &get_texture_registry() { return texture_registry; }
-
 private:
     sf::Clock clock;
     sf::RenderWindow window;
-    TextureRegistry texture_registry;
+    AssetsManager assets_manager;
     std::unique_ptr<AbstractSceneControl> scene_control;
 };
 

@@ -1,6 +1,6 @@
 #include "StageView.hpp"
 
-StageView::StageView(sf::RenderWindow &window, Stage &level, TextureRegistry &texture_registry)
+StageView::StageView(sf::RenderWindow &window, Stage &level, AssetsManager &texture_registry)
     : layer_stack(window),
       window(window),
       drawable_components(level.get_entities()) {

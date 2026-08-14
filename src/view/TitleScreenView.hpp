@@ -4,11 +4,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "LayerStack.hpp"
-#include "TextureRegistry.hpp"
+#include "AssetsManager.hpp"
 
 class TitleScreenView {
 public:
-    TitleScreenView(sf::RenderWindow &window, TextureRegistry &texture_registry);
+    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager);
 
     void draw();
 
@@ -21,7 +21,7 @@ public:
 private:
     LayerStack layer_stack;
     sf::RenderWindow &window;
-    TextureRegistry &texture_registry;
+    AssetsManager &assets_manager;
 };
 
 #endif

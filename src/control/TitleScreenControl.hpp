@@ -2,11 +2,12 @@
 #define TITLE_SCREEN_CONTROL_HPP
 
 #include "AbstractSceneControl.hpp"
+#include "../view/AssetsManager.hpp"
 #include "../view/TitleScreenView.hpp"
 
 class TitleScreenControl : public AbstractSceneControl {
 public:
-    TitleScreenControl(sf::RenderWindow &window, TextureRegistry &texture_registry) : AbstractSceneControl(window), title_screen_view(window, texture_registry) {
+    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneControl(window), title_screen_view(window, assets_manager) {
         title_screen_view.set_view(view);
     }
 
