@@ -48,3 +48,12 @@ void LayerStack::clear_all() {
     player_layer.clear();
     ui_layer.clear();
 }
+
+void LayerStack::set_view(const sf::View &view) {
+    background_layer.set_view(view);
+    platforms_layer.set_view(view);
+    ladders_layer.set_view(view);
+    objects_layer.set_view(view);
+    player_layer.set_view(view);
+    ui_layer.set_view(view);
+}

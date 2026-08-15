@@ -7,9 +7,7 @@
 
 class TitleScreenControl : public AbstractSceneControl {
 public:
-    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneControl(window), title_screen_view(window, assets_manager) {
-        title_screen_view.set_view(view);
-    }
+    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneControl(window), title_screen_view(window, assets_manager) {}
 
     bool handle_input() override;
 

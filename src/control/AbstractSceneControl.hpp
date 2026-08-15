@@ -4,8 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "../model/Constants.hpp"
-
 class AbstractSceneControl {
 public:
     enum class NextScene {
@@ -14,7 +12,7 @@ public:
         Stage,
     };
 
-    AbstractSceneControl(sf::RenderWindow &window) : view(sf::FloatRect(sf::Vector2f({0,-constants::VIEW_HEIGHT}), sf::Vector2f({constants::VIEW_WIDTH,constants::VIEW_HEIGHT}))), window(window) {}
+    AbstractSceneControl(sf::RenderWindow &window) : window(window) {}
 
     virtual ~AbstractSceneControl() {}
 
@@ -27,7 +25,6 @@ public:
     virtual NextScene get_next_scene() const = 0;
 
 protected:
-    sf::View view;
     sf::RenderWindow &window;
 };
 

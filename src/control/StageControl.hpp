@@ -13,9 +13,7 @@
 class StageControl : public AbstractSceneControl {
 public:
     StageControl(sf::RenderWindow &window, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand))), stage_view(window, *stage.get(), assets_manager) {
-        stage_view.set_view(view);
-    } // TODO: allow stage selection
+        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand))), stage_view(window, *stage.get(), assets_manager) {}
 
     virtual ~StageControl() {}
 

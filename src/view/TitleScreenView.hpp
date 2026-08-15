@@ -3,25 +3,14 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "LayerStack.hpp"
 #include "AssetsManager.hpp"
+#include "AbstractSceneView.hpp"
 
-class TitleScreenView {
+class TitleScreenView : public AbstractSceneView {
 public:
-    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager);
+    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {};
 
     void draw();
-
-    /**
-     * @brief Applies the active camera view to every render layer.
-     * @param view Camera to use for the rendering scene.
-     */
-    void set_view(const sf::View &view);
-
-private:
-    LayerStack layer_stack;
-    sf::RenderWindow &window;
-    AssetsManager &assets_manager;
 };
 
 #endif

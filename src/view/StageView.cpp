@@ -1,27 +1,13 @@
 #include "StageView.hpp"
 
 StageView::StageView(sf::RenderWindow &window, Stage &level, AssetsManager &texture_registry)
-    : layer_stack(window),
-      window(window),
+    : AbstractSceneView(window, texture_registry),
       drawable_components(level.get_entities()) {
     // Use the texture_registry as needed
 }
 
 void StageView::draw() {
-    layer_stack.clear_all();
-
+    pre_draw();
     drawable_components.draw_all(layer_stack);
-
-    layer_stack.draw_all();
+    post_draw();
 }
-
-void StageView::set_view(const sf::View &view) {
-    layer_stack.get_layer(LayerStack::LayerId::Background).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Platforms).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Ladders).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Objects).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Player).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::UI).set_view(view);
-}
-
-

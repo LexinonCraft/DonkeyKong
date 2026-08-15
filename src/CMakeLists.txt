@@ -28,6 +28,7 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/LayerStack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/AssetsManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/AbstractSceneView.cpp
     )
 
 # add src code to target

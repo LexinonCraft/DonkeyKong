@@ -3,17 +3,10 @@
 
 #include "TitleScreenView.hpp"
 
-TitleScreenView::TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager)
-    : layer_stack(window),
-      window(window),
-      assets_manager(assets_manager) {}
-
 void TitleScreenView::draw() {
-    layer_stack.clear_all();
+    pre_draw();
 
-    sf::Font font("assets/fonts/PressStart2P.ttf");
-
-    sf::Text title(font);
+    sf::Text title(assets_manager.get_font());
     title.setString("Donkey Kong");
     title.setCharacterSize(48);
     sf::FloatRect text_bounds = title.getLocalBounds();
@@ -21,7 +14,7 @@ void TitleScreenView::draw() {
     title.setPosition({300.f, -400.f});
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(title);
 
-    sf::Text subtitle(font);
+    sf::Text subtitle(assets_manager.get_font());
     subtitle.setString("Press ENTER to Start");
     subtitle.setCharacterSize(24);
     sf::FloatRect subtitle_bounds = subtitle.getLocalBounds();
@@ -36,14 +29,5 @@ void TitleScreenView::draw() {
     donkey_kong_sprite.setScale({3.f, 3.f});
     layer_stack.get_layer(LayerStack::LayerId::Background).add_to_layer(donkey_kong_sprite);
 
-    layer_stack.draw_all();
-}
-
-void TitleScreenView::set_view(const sf::View &view) {
-    layer_stack.get_layer(LayerStack::LayerId::Background).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Platforms).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Ladders).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Objects).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::Player).set_view(view);
-    layer_stack.get_layer(LayerStack::LayerId::UI).set_view(view);
+    post_draw();
 }
