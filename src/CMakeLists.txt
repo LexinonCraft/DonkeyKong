@@ -13,6 +13,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/util/EntityRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/DrawableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/PlayerData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/components/EnemyComponentRepository.cpp
     )
 
 # Controller

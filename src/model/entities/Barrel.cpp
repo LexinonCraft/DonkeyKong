@@ -3,6 +3,7 @@
 #include <memory>
 
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 #include "../Constants.hpp"
 #include "../Stage.hpp"
@@ -54,6 +55,10 @@ void Barrel::update(float dt, Stage &level) {
 
 void Barrel::accept(EntityVisitor &visitor) {
     visitor.visit(*this);
+}
+
+bool Barrel::touches(const sf::RectangleShape &player_shape) const {
+    return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
 void Barrel::check_platform_intersection(PlatformComponentRepository &platforms) {

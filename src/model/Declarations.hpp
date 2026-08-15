@@ -20,5 +20,6 @@ class Climbable;
 class Updatable;
 class SceneVisitor;
 class PlayerData;
+class Enemy;
 
 #endif

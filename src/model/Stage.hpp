@@ -7,6 +7,7 @@
 #include "components/UpdatableComponentRepository.hpp"
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
+#include "components/EnemyComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "Constants.hpp"
 
@@ -25,13 +26,19 @@ public:
         Stage100M,
     };
 
+    enum class StageState {
+        Running,
+        PlayerDied,
+        Completed,
+    };
+
     virtual ~Stage() {}
 
     /**
      * @brief Advances the level state by one simulation step.
      * @param dt Time step in seconds.
      */
-    virtual void update(float dt);
+    void update(float dt);
 
     /**
      * @brief Returns the entity repository for this level.
@@ -52,6 +59,12 @@ public:
     ClimbableComponentRepository &get_climbables() { return climbable_components; }
 
     /**
+     * @brief Returns the enemy repository for this level.
+     * @return Repository containing enemy behaviour components.
+     */
+    EnemyComponentRepository &get_enemies() { return enemy_components; }
+
+    /**
      * @brief Returns the player associated with this level.
      * @return Shared pointer to the player entity.
      */
@@ -62,6 +75,12 @@ public:
     virtual std::optional<float> get_left_boundary() const { return 0.f; }
 
     virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
+
+    virtual void on_player_died();
+
+    StageState get_state() const { return state; }
+
+    virtual void update_while_running(float dt);
 
 protected:
     /**
@@ -74,6 +93,11 @@ protected:
     UpdatableComponentRepository updatable_components;
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
+    EnemyComponentRepository enemy_components;
+
+    StageState state = StageState::Running;
+    float time_elapsed = 0.f;
+    float time_since_state_change = 0.f;
 
     const std::shared_ptr<Player> player;
     PlayerData &player_data;

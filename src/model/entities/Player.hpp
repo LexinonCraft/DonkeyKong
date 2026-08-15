@@ -26,6 +26,7 @@ public:
         OnPlatform,
         InAir,
         Climbing,
+        Dead,
     };
 
     /**
@@ -55,9 +56,9 @@ public:
     /**
      * @brief Advances the player by one physics update step.
      * @param dt Time step in seconds.
-     * @param level Level used for collision and climbable lookup.
+     * @param stage Stage used for collision and climbable lookup.
      */
-    void update(float dt, Stage &level) override;
+    void update(float dt, Stage &stage) override;
 
     /**
      * @brief Sets the horizontal direction currently requested by input.
