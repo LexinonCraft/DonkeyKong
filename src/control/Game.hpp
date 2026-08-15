@@ -33,6 +33,8 @@ private:
     PlayerData player_data;
 
     bool input();
+
+    void handle_next_scene(AbstractSceneControl::NextScene next_scene);
 };
 
 #endif

@@ -29,17 +29,8 @@ void Game::run() {
             // draw the scene
             scene_control->draw();
 
-            AbstractSceneControl::NextScene next_scene = scene_control->get_next_scene();
-            switch (next_scene) {
-                case AbstractSceneControl::NextScene::Stay:
-                    break;
-                case AbstractSceneControl::NextScene::MainMenu:
-                    scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
-                    break;
-                case AbstractSceneControl::NextScene::Stage:
-                    scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, player_data, assets_manager));
-                    break;
-            }
+            // check if we need to switch to a different scene
+            handle_next_scene(scene_control->get_next_scene());
         }
     }
 }
@@ -58,4 +49,17 @@ bool Game::input() {
     scene_control->handle_input();
 
     return false;
+}
+
+void Game::handle_next_scene(AbstractSceneControl::NextScene next_scene) {
+    switch (next_scene) {
+        case AbstractSceneControl::NextScene::Stay:
+            break;
+        case AbstractSceneControl::NextScene::MainMenu:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
+            break;
+        case AbstractSceneControl::NextScene::Stage:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, player_data, assets_manager));
+            break;
+    }
 }
