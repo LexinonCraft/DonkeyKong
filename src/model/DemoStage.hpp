@@ -17,6 +17,11 @@ public:
      * @param id_generator Function used to allocate entity ids.
      */
     DemoStage(Id id_generator(), PlayerData &player_data);
+
+    void update(float dt) override;
+
+private:
+    float time_since_last_spawn = 0.f;
 };
 
 #endif

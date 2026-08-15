@@ -8,7 +8,7 @@
 Player::Player(Ref ref) :
     BaseEntity(ref),
     state(State::InAir),
-    position(100.f, -300.f),
+    position(100.f, -200.f),
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
     vertical_direction(VerticalDirection::None),

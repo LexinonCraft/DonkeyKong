@@ -15,6 +15,15 @@ DemoStage::DemoStage(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     entities.add_ladder(p2, p1, 200.0f);
     entities.add_ladder(p3, p2, 300.0f);
     entities.add_ladder(p4, p3, 500.0f);
+}
 
-    entities.add_barrel({300, -500});
+void DemoStage::update(float dt) {
+    time_since_last_spawn += dt;
+
+    if (time_since_last_spawn > 2.0f) {
+        entities.add_barrel({300, -500});
+        time_since_last_spawn = 0.f;
+    }
+
+    Stage::update(dt);
 }
