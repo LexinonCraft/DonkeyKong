@@ -8,6 +8,7 @@
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "Declarations.hpp"
+#include "Constants.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -57,6 +58,10 @@ public:
     std::shared_ptr<Player> get_player() const { return player; }
 
     PlayerData &get_player_data() { return player_data; }
+
+    virtual std::optional<float> get_left_boundary() const { return 0.f; }
+
+    virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
 
 protected:
     /**

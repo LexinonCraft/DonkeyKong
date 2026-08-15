@@ -116,6 +116,17 @@ void Player::update(float dt, Stage &level) {
             break;
     }
 
+    if (auto left_boundary = level.get_left_boundary()) {
+        if (position.x < *left_boundary) {
+            position.x = *left_boundary;
+        }
+    }
+    if (auto right_boundary = level.get_right_boundary()) {
+        if (position.x > *right_boundary) {
+            position.x = *right_boundary;
+        }
+    }
+
     shape.setPosition(position);
 }
 
