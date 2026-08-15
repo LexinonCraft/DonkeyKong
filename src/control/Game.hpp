@@ -31,6 +31,8 @@ private:
     AssetsManager assets_manager;
     std::unique_ptr<AbstractSceneControl> scene_control;
     PlayerData player_data;
+
+    bool input();
 };
 
 #endif

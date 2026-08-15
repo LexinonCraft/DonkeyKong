@@ -1,30 +1,16 @@
 #include "StageControl.hpp"
 
-bool StageControl::handle_input() {
-    std::shared_ptr<Player> player = stage->get_player();
-
-    while (std::optional<sf::Event> event = window.pollEvent()) {
-        if (event->is<sf::Event::Closed>()) {
-            // quit
-            window.close();
-            return true;
-        }
-        // TODO: Process other events
-        // examples:
-        //if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            //if (keyPressed->code == sf::Keyboard::Key::Right) { // right arrow key pressed
-                // ...
-        // if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>()) {
-            // if (keyReleased->code == sf::Keyboard::Key::Right) { // right arrow released
-                // ...
-
-        if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            if (keyPressed->code == sf::Keyboard::Key::Space) {
-                player->jump();
-                stage->get_player_data().add_to_score(10);  // add points for jumping (only for demonstration purposes)
-            }
+void StageControl::handle_event(sf::Event *event) {
+    if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+        if (keyPressed->code == sf::Keyboard::Key::Space) {
+            stage->get_player()->jump();
+            stage->get_player_data().add_to_score(10);  // add points for jumping (only for demonstration purposes)
         }
     }
+}
+
+void StageControl::handle_input() {
+    auto player = stage->get_player();
 
     // handle continuous key presses (for smooth movement)
     bool leftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left);
@@ -58,8 +44,6 @@ bool StageControl::handle_input() {
             player->set_vertical_direction(Player::VerticalDirection::None);
         }
     }
-
-    return false;
 }
 
 void StageControl::update(float dt) {

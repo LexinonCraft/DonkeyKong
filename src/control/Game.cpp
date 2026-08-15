@@ -23,7 +23,7 @@ void Game::run() {
         sf::Time elapsed_time = clock.restart();
  
         // handle input, check if window is still open
-        if (!scene_control->handle_input()) {
+        if (!input()) {
             // update the scene according to the passed time
             scene_control->update(elapsed_time.asSeconds());
             // draw the scene
@@ -42,4 +42,20 @@ void Game::run() {
             }
         }
     }
+}
+
+bool Game::input() {
+    while (std::optional<sf::Event> event = window.pollEvent()) {
+        if (event->is<sf::Event::Closed>()) {
+            // quit
+            window.close();
+            return true;
+        }
+
+        scene_control->handle_event(&(*event));
+    }
+
+    scene_control->handle_input();
+
+    return false;
 }

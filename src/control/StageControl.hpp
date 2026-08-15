@@ -18,7 +18,9 @@ public:
 
     virtual ~StageControl() {}
 
-    bool handle_input() override;
+    void handle_event(sf::Event *event) override;
+
+    void handle_input() override;
 
     void update(float dt) override;
 

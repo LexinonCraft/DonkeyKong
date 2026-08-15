@@ -16,7 +16,9 @@ public:
 
     virtual ~AbstractSceneControl() {}
 
-    virtual bool handle_input() = 0;
+    virtual void handle_event(sf::Event *event) = 0;
+
+    virtual void handle_input() = 0;
 
     virtual void update(float dt) = 0;
 

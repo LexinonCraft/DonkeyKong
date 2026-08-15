@@ -1,19 +1,15 @@
 #include "TitleScreenControl.hpp"
 
-bool TitleScreenControl::handle_input() {
-    while (std::optional<sf::Event> event = window.pollEvent()) {
-        if (event->is<sf::Event::Closed>()) {
-            // quit
-            window.close();
-            return true;
-        }
-        if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            if (keyPressed->code == sf::Keyboard::Key::Enter) {
-                next_scene = NextScene::Stage; // Transition to the stage scene
-            }
+void TitleScreenControl::handle_event(sf::Event *event) {
+    if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+        if (keyPressed->code == sf::Keyboard::Key::Enter) {
+            next_scene = NextScene::Stage; // Transition to the stage scene
         }
     }
-    return false;
+}
+
+void TitleScreenControl::handle_input() {
+    // No continuous input handling for the title screen
 }
 
 void TitleScreenControl::update(float dt) {

@@ -9,7 +9,9 @@ class TitleScreenControl : public AbstractSceneControl {
 public:
     TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneControl(window), title_screen_view(window, assets_manager) {}
 
-    bool handle_input() override;
+    void handle_event(sf::Event *event) override;
+
+    void handle_input() override;
 
     void update(float dt) override;
 
