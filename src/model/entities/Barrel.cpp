@@ -15,7 +15,7 @@ Barrel::Barrel(Ref ref, sf::Vector2f position) :
     position(position),
     shape(constants::BARREL_RADIUS) {
         // origin at the circle's centre so `position` is the barrel's centre
-        shape.setOrigin({constants::BARREL_RADIUS, constants::BARREL_RADIUS});
+        shape.setOrigin({constants::BARREL_RADIUS, 2 * constants::BARREL_RADIUS});
         shape.setFillColor(sf::Color(120, 200, 230)); // light blue, stands out on the red girders
         shape.setPosition(position);
 }
@@ -33,7 +33,7 @@ void Barrel::update(float dt, Stage &level) {
         position.x += vx * dt;
         if (current_platform && current_platform->covers_x(position.x)) {
             // stay glued to the surface: height follows the slope (tan angle)
-            position.y = current_platform->surface_y_at(position.x) - constants::BARREL_RADIUS;
+            position.y = current_platform->surface_y_at(position.x);
         } else {
             // rolled off the lower end -> drop straight down off the ledge.
             current_platform.reset();
