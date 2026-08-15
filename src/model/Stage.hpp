@@ -17,6 +17,13 @@
  */
 class Stage {
 public:
+    enum class StageId {
+        Stage25M,
+        Stage50M,
+        Stage75M,
+        Stage100M,
+    };
+
     virtual ~Stage() {}
 
     /**
@@ -49,12 +56,14 @@ public:
      */
     std::shared_ptr<Player> get_player() const { return player; }
 
+    PlayerData &get_player_data() { return player_data; }
+
 protected:
     /**
      * @brief Creates a level and registers the behaviour repositories with the entity repository.
      * @param id_generator Function used to generate fresh entity ids.
      */
-    Stage(Id id_generator());
+    Stage(Id id_generator(), PlayerData &player_data);
 
     EntityRepository entities;
     UpdatableComponentRepository updatable_components;
@@ -62,6 +71,7 @@ protected:
     ClimbableComponentRepository climbable_components;
 
     const std::shared_ptr<Player> player;
+    PlayerData &player_data;
 };
 
 #endif

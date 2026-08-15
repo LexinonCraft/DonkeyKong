@@ -27,6 +27,8 @@ namespace constants {
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
 
     constexpr float LADDER_WIDTH = 10.f;  // px
+
+    constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
 }
 
 #endif

@@ -19,6 +19,6 @@ class Ladder;
 class Climbable;
 class Updatable;
 class SceneVisitor;
-class TitleScreenScene;
+class PlayerData;
 
 #endif

@@ -2,6 +2,7 @@
 #define DEMO_STAGE_HPP
 
 #include "Stage.hpp"
+#include "Declarations.hpp"
 
 /**
  * @brief Concrete test level used for the current prototype.
@@ -15,7 +16,7 @@ public:
      * @brief Creates the demo scene for the level.
      * @param id_generator Function used to allocate entity ids.
      */
-    DemoStage(Id id_generator());
+    DemoStage(Id id_generator(), PlayerData &player_data);
 };
 
 #endif

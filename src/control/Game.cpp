@@ -37,7 +37,7 @@ void Game::run() {
                     scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
                     break;
                 case AbstractSceneControl::NextScene::Stage:
-                    scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, assets_manager));
+                    scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, player_data, assets_manager));
                     break;
             }
         }

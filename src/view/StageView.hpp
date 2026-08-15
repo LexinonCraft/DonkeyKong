@@ -27,6 +27,7 @@ public:
 
 private:
     DrawableComponentRepository drawable_components;
+    Stage &stage;
 };
 
 #endif

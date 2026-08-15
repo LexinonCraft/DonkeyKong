@@ -9,11 +9,12 @@
 #include "../view/StageView.hpp"
 #include "../model/DemoStage.hpp"
 #include "../view/AssetsManager.hpp"
+#include "../model/PlayerData.hpp"
 
 class StageControl : public AbstractSceneControl {
 public:
-    StageControl(sf::RenderWindow &window, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand))), stage_view(window, *stage.get(), assets_manager) {}
+    StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
+        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand, player_data))), stage_view(window, *stage.get(), assets_manager) {}
 
     virtual ~StageControl() {}
 

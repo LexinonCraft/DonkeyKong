@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../model/PlayerData.hpp"
 #include "../control/AbstractSceneControl.hpp"
 #include "../view/AssetsManager.hpp"
 
@@ -29,6 +30,7 @@ private:
     sf::RenderWindow window;
     AssetsManager assets_manager;
     std::unique_ptr<AbstractSceneControl> scene_control;
+    PlayerData player_data;
 };
 
 #endif

@@ -6,7 +6,7 @@
  * @brief Builds the prototype scene used for the current game demo.
  * @param id_generator Function used to create unique entity ids.
  */
-DemoStage::DemoStage(Id id_generator()) : Stage(id_generator) {
+DemoStage::DemoStage(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     auto p1 = entities.add_girder({120, -500}, {500, -460});
     auto p2 = entities.add_girder({80, -360}, {540, -400});
     auto p3 = entities.add_girder({40, -300}, {520, -260});

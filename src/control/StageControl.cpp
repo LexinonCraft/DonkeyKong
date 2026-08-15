@@ -21,6 +21,7 @@ bool StageControl::handle_input() {
         if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
             if (keyPressed->code == sf::Keyboard::Key::Space) {
                 player->jump();
+                stage->get_player_data().add_to_score(10);  // add points for jumping (only for demonstration purposes)
             }
         }
     }
