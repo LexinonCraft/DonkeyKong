@@ -11,6 +11,13 @@ Game::Game() :
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
+        // set icon
+        auto image = sf::Image();
+        if (!image.loadFromFile("assets/icon.png")) {
+            throw std::runtime_error("Failed to load icon");
+        }
+        window.setIcon(image.getSize(), image.getPixelsPtr());
+
         // level->set_player(std::rand, &player_control.get_player());
 }
 
