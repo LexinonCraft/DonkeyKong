@@ -29,6 +29,7 @@ namespace constants {
     constexpr float LADDER_WIDTH = 10.f;  // px
 
     constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
+    constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
 }
 
 #endif

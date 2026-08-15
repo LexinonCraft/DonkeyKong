@@ -20,6 +20,8 @@ public:
 
     void set_level_and_stage(unsigned int new_level, Stage::StageId new_stage);
 
+    void reset();
+
 private:
     unsigned int score;
     unsigned int highscore;

@@ -21,6 +21,8 @@ set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/StageControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/TitleScreenControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/StageTransitionControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/GameOverControl.cpp
     )
 
 # View
@@ -31,6 +33,8 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/AssetsManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/AbstractSceneView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/StageTransitionView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/GameOverView.cpp
     )
 
 # add src code to target

@@ -28,7 +28,8 @@ public:
 
     enum class StageState {
         Running,
-        PlayerDied,
+        PlayerDying,
+        PlayerDead,
         Completed,
     };
 
@@ -76,11 +77,9 @@ public:
 
     virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
 
-    virtual void on_player_died();
+    virtual void on_player_dying();
 
     StageState get_state() const { return state; }
-
-    virtual void update_while_running(float dt);
 
 protected:
     /**
@@ -101,6 +100,8 @@ protected:
 
     const std::shared_ptr<Player> player;
     PlayerData &player_data;
+
+    virtual void update_while_running(float dt);
 };
 
 #endif

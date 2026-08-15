@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <memory>
+#include <stdexcept>
 
 #include "AbstractSceneControl.hpp"
 #include "../model/Stage.hpp"
@@ -14,7 +15,7 @@
 class StageControl : public AbstractSceneControl {
 public:
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand, player_data))), stage_view(window, *stage.get(), assets_manager) {}
+        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand, player_data))), stage_view(window, *stage.get(), assets_manager), player_data(player_data) {}
 
     virtual ~StageControl() {}
 
@@ -26,13 +27,12 @@ public:
 
     void draw() override;
 
-    NextScene get_next_scene() const override {
-        return NextScene::Stay;
-    }
+    NextScene get_next_scene() const override;
 
 private:
     std::unique_ptr<Stage> stage;
     StageView stage_view;
+    PlayerData &player_data;
 };
 
 #endif

@@ -18,10 +18,10 @@ public:
      */
     DemoStage(Id id_generator(), PlayerData &player_data);
 
-    void update_while_running(float dt) override;
-
 private:
     float time_since_last_spawn = 0.f;
+
+    void update_while_running(float dt) override;
 };
 
 #endif

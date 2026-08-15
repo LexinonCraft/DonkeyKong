@@ -1,4 +1,5 @@
 #include "Stage.hpp"
+#include "PlayerData.hpp"
 
 /**
  * @brief Creates a level and initializes the tracked repositories.
@@ -10,9 +11,11 @@ Stage::Stage(Id id_generator(), PlayerData &player_data) : entities(id_generator
  * @param dt Time step in seconds.
  */
 void Stage::update(float dt) {
-    time_elapsed += dt;
     if (state != StageState::Running) {
         time_since_state_change += dt;
+    }
+    if (state == StageState::PlayerDying && time_since_state_change >= constants::PLAYER_DEATH_DURATION) {
+        state = StageState::PlayerDead;
     }
 
     entities.handle_deletions();
@@ -22,11 +25,16 @@ void Stage::update(float dt) {
     }
 }
 
-void Stage::on_player_died() {
-    state = StageState::PlayerDied;
+void Stage::on_player_dying() {
+    if (state != StageState::Running)
+        return;
+    
+    state = StageState::PlayerDying;
     time_since_state_change = 0.f;
+    player_data.lose_life();
 }
 
 void Stage::update_while_running(float dt) {
+    time_elapsed += dt;
     updatable_components.update_all(dt, *this);
 }

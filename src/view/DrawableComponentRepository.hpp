@@ -14,7 +14,7 @@ public:
      * @brief Creates a repository for all drawables in the current level.
      * @param entity_repo Entity repository to observe.
      */
-    DrawableComponentRepository(EntityRepository &entity_repo) : ComponentRepository<DrawableComponent>(entity_repo, std::make_unique<DrawableComponentFactory>()) {}
+    DrawableComponentRepository(EntityRepository &entity_repo, AssetsManager &assets_manager) : ComponentRepository<DrawableComponent>(entity_repo, std::make_unique<DrawableComponentFactory>(assets_manager)) {}
 
     /**
      * @brief Draws every drawable component onto the active layer stack.

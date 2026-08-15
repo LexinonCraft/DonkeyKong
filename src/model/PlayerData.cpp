@@ -8,14 +8,19 @@ void PlayerData::add_to_score(unsigned int points) {
 }
 
 bool PlayerData::lose_life() {
-    if (lives > 0) {
-        --lives;
-        return true;
-    }
-    return false;
+    --lives;
+    return lives > 0;
 }
 
 void PlayerData::set_level_and_stage(unsigned int new_level, Stage::StageId new_stage) {
     level = new_level;
     stage = new_stage;
+}
+
+void PlayerData::reset() {
+    score = 0;
+    // do not reset highscore
+    lives = constants::INITIAL_LIVES;
+    level = 0;
+    stage = Stage::StageId::Stage25M;
 }

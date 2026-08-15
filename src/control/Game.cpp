@@ -4,7 +4,9 @@
 
 #include "../model/Constants.hpp"
 #include "StageControl.hpp"
+#include "StageTransitionControl.hpp"
 #include "TitleScreenControl.hpp"
+#include "GameOverControl.hpp"
 
 Game::Game() :
     window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager))) {
@@ -65,8 +67,14 @@ void Game::handle_next_scene(AbstractSceneControl::NextScene next_scene) {
         case AbstractSceneControl::NextScene::MainMenu:
             scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
             break;
+        case AbstractSceneControl::NextScene::StageTransition:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new StageTransitionControl(window, assets_manager));
+            break;
         case AbstractSceneControl::NextScene::Stage:
             scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, player_data, assets_manager));
+            break;
+        case AbstractSceneControl::NextScene::GameOver:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new GameOverControl(window, player_data, assets_manager));
             break;
     }
 }

@@ -19,6 +19,8 @@
  */
 class DrawableComponentFactory : public AbstractComponentFactory<DrawableComponent>, private EntityVisitor {
 public:
+    DrawableComponentFactory(AssetsManager &assets_manager) : assets_manager(assets_manager) {}
+
     /**
      * @brief Creates the drawable component for an entity using visitor dispatch.
      * @param entity Entity to render.
@@ -31,6 +33,7 @@ public:
 
 private:
     std::unique_ptr<DrawableComponent> component;
+    AssetsManager &assets_manager;
 
     void visit(Barrel &barrel) override {
         component = std::make_unique<BarrelRenderer>(std::static_pointer_cast<Barrel>(barrel.shared_from_this()));
@@ -41,7 +44,7 @@ private:
     }
 
     void visit(Player &player) override {
-        component = std::make_unique<PlayerRenderer>(std::static_pointer_cast<Player>(player.shared_from_this()));
+        component = std::make_unique<PlayerRenderer>(std::static_pointer_cast<Player>(player.shared_from_this()), assets_manager);
     }
 
     void visit(Ladder &ladder) override {

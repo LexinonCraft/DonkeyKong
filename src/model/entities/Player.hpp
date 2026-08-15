@@ -26,7 +26,7 @@ public:
         OnPlatform,
         InAir,
         Climbing,
-        Dead,
+        Dying,
     };
 
     /**
@@ -108,10 +108,15 @@ public:
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
     }
 
+    sf::Vector2f get_position() const { return position; }
+
+    bool is_facing_right() const { return facing_right; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
     std::shared_ptr<Climbable> current_ladder;
+    bool facing_right = true;
 
     sf::Vector2f position;
     sf::Vector2f velocity;

@@ -9,7 +9,9 @@ public:
     enum class NextScene {
         Stay,
         MainMenu,
+        StageTransition,
         Stage,
+        GameOver,
     };
 
     AbstractSceneControl(sf::RenderWindow &window) : window(window) {}

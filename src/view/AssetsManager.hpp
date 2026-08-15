@@ -10,7 +10,7 @@ class AssetsManager {
 public:
     enum class TextureId {
         DonkeyKong,
-        // Add more texture identifiers as needed
+        Jumpman,
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -22,6 +22,7 @@ public:
 private:
     std::string textures_base_path;
     sf::Texture donkey_kong_texture;
+    sf::Texture jumpman_texture;
     sf::Font font;
 
     void load(const std::string &filename, sf::Texture &texture);
