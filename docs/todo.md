@@ -15,7 +15,7 @@
 - [ ] Polish physics (~~prevent player from falling off girders at edges~~, ~~prevent player from jumping onto next girder~~, adjust hitboxes)
 - [x] Add broken ladders
 - [x] Allow barrels to roll down ladders
-- [ ] Seed for RNG
+- [x] Seed for RNG
 
 ## Low priority
 
@@ -34,3 +34,4 @@
 - Update (architecture) documentation
 - Implement unit tests
 - Check whether entities handle deletion of referenced entities correctly
+- Check which methods go to CPP files and which to HPP files

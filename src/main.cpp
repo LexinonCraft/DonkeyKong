@@ -1,3 +1,7 @@
+#include <cstddef>
+#include <cstdlib>
+#include <ctime>
+
 #include "control/Game.hpp"
 
 /**
@@ -5,7 +9,8 @@
  * @return Exit status code for the application.
  */
 int main() {
-    Game game;
+    srand(time(NULL)); // seed the RNG
 
+    Game game;
     game.run();
 }
