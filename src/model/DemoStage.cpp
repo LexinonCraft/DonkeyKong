@@ -13,10 +13,10 @@ DemoStage::DemoStage(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     auto p3 = entities.add_girder({-5, -300}, {550, -260});
     auto p4 = entities.add_girder({-100, -140}, {605, -200});
 
-    entities.add_ladder(p1, p0, 300.0f);
-    entities.add_ladder(p2, p1, 200.0f);
-    entities.add_ladder(p3, p2, 300.0f);
-    entities.add_ladder(p4, p3, 500.0f);
+    entities.add_ladder(p1, p0, 300.0f, false);
+    entities.add_ladder(p2, p1, 200.0f, false);
+    entities.add_ladder(p3, p2, 300.0f, false);
+    entities.add_ladder(p4, p3, 500.0f, false);
 
     final_girder = p0;
 }

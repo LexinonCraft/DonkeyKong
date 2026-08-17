@@ -17,19 +17,19 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     auto p7 = entities.add_girder({0, -520}, {380, -520});
     auto p8 = entities.add_girder({230, -610}, {360, -610});
 
-    entities.add_ladder(p0, p2, 220);
-    entities.add_ladder(p1, p2, 500);
-    entities.add_ladder(p2, p3, 260);
-    entities.add_ladder(p2, p3, 90);
-    entities.add_ladder(p3, p4, 180);
-    entities.add_ladder(p3, p4, 300);
-    entities.add_ladder(p3, p4, 500);
-    entities.add_ladder(p4, p5, 450);
-    entities.add_ladder(p4, p5, 200);
-    entities.add_ladder(p4, p5, 100);
-    entities.add_ladder(p5, p7, 240);
-    entities.add_ladder(p5, p6, 490);
-    entities.add_ladder(p7, p8, 340);
+    entities.add_ladder(p0, p2, 220, true);
+    entities.add_ladder(p1, p2, 500, false);
+    entities.add_ladder(p2, p3, 260, false);
+    entities.add_ladder(p2, p3, 90, false);
+    entities.add_ladder(p3, p4, 180, true);
+    entities.add_ladder(p3, p4, 300, false);
+    entities.add_ladder(p3, p4, 500, false);
+    entities.add_ladder(p4, p5, 450, true);
+    entities.add_ladder(p4, p5, 200, false);
+    entities.add_ladder(p4, p5, 100, false);
+    entities.add_ladder(p5, p7, 240, false);
+    entities.add_ladder(p5, p6, 490, false);
+    entities.add_ladder(p7, p8, 340, false);
 
     final_girder = p8;
 }

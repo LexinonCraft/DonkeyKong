@@ -63,8 +63,8 @@ public:
      * @param x_position Horizontal x-position of the ladder.
      * @return Shared pointer to the created ladder.
      */
-    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position) {
-        return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position));
+    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken) {
+        return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken));
     }
 
     /**

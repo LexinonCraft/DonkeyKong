@@ -12,10 +12,10 @@
 /// @brief Represents a ladder connecting two girders at a specific x position.
 class Ladder : public BaseEntity, public Climbable {
 public:
-    Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos);
+    Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos, bool broken);
 
     bool is_active_for_player() const override {
-        return true;
+        return !broken;
     }
 
     const sf::RectangleShape &get_shape() const {
@@ -36,5 +36,6 @@ public:
 
 private:
     sf::RectangleShape shape;
+    bool broken;
 };
 #endif
