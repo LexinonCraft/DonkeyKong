@@ -24,7 +24,7 @@ public:
      * @param dt Time step in seconds.
      * @param level Level used to query surrounding game state.
      */
-    void update_all(float dt, Level &level);
+    void update_all(float dt, Stage &level);
 };
 
 #endif

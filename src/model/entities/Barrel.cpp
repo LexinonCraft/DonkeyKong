@@ -3,9 +3,10 @@
 #include <memory>
 
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
-#include "../Constants.hpp"
-#include "../Level.hpp"
+#include "../../Constants.hpp"
+#include "../Stage.hpp"
 #include "../components/Platform.hpp"
 #include "../components/PlatformComponentRepository.hpp"
 #include "../util/EntityVisitor.hpp"
@@ -15,7 +16,7 @@ Barrel::Barrel(Ref ref, sf::Vector2f position) :
     position(position),
     shape(constants::BARREL_RADIUS) {
         // origin at the circle's centre so `position` is the barrel's centre
-        shape.setOrigin({constants::BARREL_RADIUS, constants::BARREL_RADIUS});
+        shape.setOrigin({constants::BARREL_RADIUS, 2 * constants::BARREL_RADIUS});
         shape.setFillColor(sf::Color(120, 200, 230)); // light blue, stands out on the red girders
         shape.setPosition(position);
 }
@@ -24,27 +25,56 @@ void Barrel::set_on_platform(std::shared_ptr<Platform> platform) {
     if (!platform)
         return;
     vx = constants::ROLL_SPEED * static_cast<float>(platform->downhill_sign());
+    state = State::OnGirder;
     current_platform = platform;
     vy = 0.f;
 }
 
-void Barrel::update(float dt, Level &level) {
-    if (get_state() == State::OnGirder) {
-        position.x += vx * dt;
-        if (current_platform && current_platform->covers_x(position.x)) {
-            // stay glued to the surface: height follows the slope (tan angle)
-            position.y = current_platform->surface_y_at(position.x) - constants::BARREL_RADIUS;
-        } else {
-            // rolled off the lower end -> drop straight down off the ledge.
-            current_platform.reset();
-            vx = 0.f;
-            vy = 0.f;
-        }
-    } else { // Falling
-        vy += constants::GRAVITY * dt;
-        position.x += vx * dt;
-        position.y += vy * dt;
-        check_platform_intersection(level.get_platforms());
+void Barrel::update(float dt, Stage &level) {
+    switch (state) {
+        case State::OnGirder:
+            position.x += vx * dt;
+            if (current_platform && current_platform->covers_x(position.x, constants::BARREL_RADIUS)) {
+                // stay glued to the surface: height follows the slope (tan angle)
+                position.y = current_platform->surface_y_at(position.x);
+
+                if (current_climbable) {
+                    if (roll_down_climbable && ((vx < 0 && position.x < current_climbable->get_x_pos()) || (vx > 0 && position.x > current_climbable->get_x_pos()))) {
+                        vx = 0;
+                        vy = constants::ROLL_SPEED;
+                        position.x = current_climbable->get_x_pos();
+                        position.y = current_climbable->get_upper_y_pos();
+                        state = State::RollingDownClimbable;
+                    }
+                } else {
+                    current_climbable = level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
+                    if (current_climbable) {
+                        roll_down_climbable = level.random_int() % 2 == 0;
+                    }
+                }
+            } else {
+                // rolled off the lower end -> drop straight down off the ledge.
+                state = State::Falling;
+                vx = 0.f;
+                vy = 0.f;
+            }
+            break;
+        case State::Falling:
+            vy += constants::GRAVITY * dt;
+            check_platform_intersection(level.get_platforms(), dt);
+            position.x += vx * dt;
+            position.y += vy * dt;
+            break;
+        case State::RollingDownClimbable:
+            if (position.y < current_climbable->get_lower_y_pos()) {
+                position.y += vy * dt;
+            } else {
+                set_on_platform(current_climbable->get_lower_end());
+                current_climbable.reset();
+                position.x += vx * dt;
+                position.y += vy * dt;
+            }
+            break; // TODO
     }
 
     // No respawn here: once the barrel rolls off the last girder it just keeps
@@ -56,8 +86,12 @@ void Barrel::accept(EntityVisitor &visitor) {
     visitor.visit(*this);
 }
 
-void Barrel::check_platform_intersection(PlatformComponentRepository &platforms) {
-    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS));
+bool Barrel::touches(const sf::RectangleShape &player_shape) const {
+    return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
+}
+
+void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt) {
+    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, vy * dt));
 }
 
 void Barrel::check_referenced_entities() {

@@ -1,4 +1,5 @@
 #include "Layer.hpp"
+#include "../Constants.hpp"
 
 /**
  * @brief Creates an off-screen render layer for one part of the game scene.
@@ -6,11 +7,9 @@
  */
 Layer::Layer(sf::RenderWindow &window) :
     window(window),
-    target(window.getSize()),
+    target({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}),
     sprite(target.getTexture()) {
     target.display();
-    if (!target.resize(window.getSize()))
-        throw std::runtime_error("undefined window size");
 }
 
 /**

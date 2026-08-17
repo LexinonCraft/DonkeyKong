@@ -26,6 +26,7 @@ public:
         OnPlatform,
         InAir,
         Climbing,
+        Dying,
     };
 
     /**
@@ -55,9 +56,9 @@ public:
     /**
      * @brief Advances the player by one physics update step.
      * @param dt Time step in seconds.
-     * @param level Level used for collision and climbable lookup.
+     * @param stage Stage used for collision and climbable lookup.
      */
-    void update(float dt, Level &level) override;
+    void update(float dt, Stage &stage) override;
 
     /**
      * @brief Sets the horizontal direction currently requested by input.
@@ -107,10 +108,17 @@ public:
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
     }
 
+    sf::Vector2f get_position() const { return position; }
+
+    bool is_facing_right() const { return facing_right; }
+
+    std::shared_ptr<Platform> get_current_platform() const { return current_platform; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
     std::shared_ptr<Climbable> current_ladder;
+    bool facing_right = true;
 
     sf::Vector2f position;
     sf::Vector2f velocity;

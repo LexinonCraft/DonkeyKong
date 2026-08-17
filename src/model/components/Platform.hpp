@@ -21,7 +21,7 @@ public:
      * @param x Horizontal world coordinate.
      * @return True if x lies on the platform.
      */
-    virtual bool covers_x(float x) const = 0;
+    virtual bool covers_x(float x, float h_tolerance) const = 0;
 
     /**
      * @brief Returns the platform surface height at a given x position.

@@ -20,7 +20,7 @@ public:
      * @brief Returns whether this climbable currently accepts climbing attempts.
      * @return True if active.
      */
-    virtual bool is_active() const = 0;
+    virtual bool is_active_for_player() const = 0;
 
     /**
      * @brief Checks whether the player can climb upward from a given position.
@@ -106,7 +106,7 @@ private:
      * @return True if the player's x-coordinate is close enough to the climbable.
      */
     bool can_climb(sf::Vector2f position, float h_tolerance) const {
-        return is_active() && position.x < x_pos + h_tolerance && position.x > x_pos - h_tolerance;
+        return is_active_for_player() && position.x < x_pos + h_tolerance && position.x > x_pos - h_tolerance;
     }
 };
 

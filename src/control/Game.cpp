@@ -1,27 +1,29 @@
 #include "Game.hpp"
 
-#include <memory>
-
 #include <SFML/Window/Keyboard.hpp>
 
-#include "../model/Constants.hpp"
-#include "../model/DemoLevel.hpp"
+#include "../Constants.hpp"
+#include "StageControl.hpp"
+#include "StageTransitionControl.hpp"
+#include "TitleScreenControl.hpp"
+#include "GameOverControl.hpp"
 
 Game::Game() :
-    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
-    level(new DemoLevel(std::rand)),
-    view(sf::FloatRect(sf::Vector2f({0,-constants::VIEW_HEIGHT}), sf::Vector2f({constants::VIEW_WIDTH,constants::VIEW_HEIGHT}))),
-    level_view(window, *level) {
+    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager))) {
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
-        // set the view (visible area) for our game
-        level_view.set_view(view);
+        // set icon
+        auto image = sf::Image();
+        if (!image.loadFromFile("assets/icon.png")) {
+            throw std::runtime_error("Failed to load icon");
+        }
+        window.setIcon(image.getSize(), image.getPixelsPtr());
 
         // level->set_player(std::rand, &player_control.get_player());
 }
 
-void Game::start() {
+void Game::run() {
     // The clock is needed to control the speed of movement
     sf::Clock clock;
 
@@ -32,79 +34,47 @@ void Game::start() {
         // handle input, check if window is still open
         if (!input()) {
             // update the scene according to the passed time
-            update(elapsed_time.asSeconds());
+            scene_control->update(elapsed_time.asSeconds());
             // draw the scene
-            draw();
+            scene_control->draw();
+
+            // check if we need to switch to a different scene
+            handle_next_scene(scene_control->get_next_scene());
         }
     }
 }
 
-// returns true, if the window has been closed
 bool Game::input() {
-    std::shared_ptr<Player> player = level->get_player();
-
     while (std::optional<sf::Event> event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
             // quit
             window.close();
             return true;
         }
-        // TODO: Process other events
-        // examples:
-        //if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            //if (keyPressed->code == sf::Keyboard::Key::Right) { // right arrow key pressed
-                // ...
-        // if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>()) {
-            // if (keyReleased->code == sf::Keyboard::Key::Right) { // right arrow released
-                // ...
 
-        if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-            if (keyPressed->code == sf::Keyboard::Key::Space) {
-                player->jump();
-            }
-        }
+        scene_control->handle_event(&(*event));
     }
 
-    // handle continuous key presses (for smooth movement)
-    bool leftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left);
-    bool rightPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right);
-    if (leftPressed) {
-        if (rightPressed) {
-            player->set_horizontal_direction(Player::HorizontalDirection::None);
-        } else {
-            player->set_horizontal_direction(Player::HorizontalDirection::Left);
-        }
-    } else {
-        if (rightPressed) {
-            player->set_horizontal_direction(Player::HorizontalDirection::Right);
-        } else {
-            player->set_horizontal_direction(Player::HorizontalDirection::None);
-        }
-    }
-
-    bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up);
-    bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down);
-    if (upPressed) {
-        if (downPressed) {
-            player->set_vertical_direction(Player::VerticalDirection::None);
-        } else {
-            player->set_vertical_direction(Player::VerticalDirection::Up);
-        }
-    } else {
-        if (downPressed) {
-            player->set_vertical_direction(Player::VerticalDirection::Down);
-        } else {
-            player->set_vertical_direction(Player::VerticalDirection::None);
-        }
-    }
+    scene_control->handle_input();
 
     return false;
 }
 
-void Game::update(float time_passed) {
-    level->update(time_passed);
-}
-
-void Game::draw() {
-    level_view.draw();
+void Game::handle_next_scene(AbstractSceneControl::NextScene next_scene) {
+    switch (next_scene) {
+        case AbstractSceneControl::NextScene::Stay:
+            break;
+        case AbstractSceneControl::NextScene::MainMenu:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
+            break;
+        case AbstractSceneControl::NextScene::StageTransition:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new StageTransitionControl(window, player_data, assets_manager));
+            break;
+        case AbstractSceneControl::NextScene::Stage:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new StageControl(window, player_data, assets_manager));
+            break;
+        case AbstractSceneControl::NextScene::GameOver:
+            scene_control = std::unique_ptr<AbstractSceneControl>(new GameOverControl(window, player_data, assets_manager));
+            break;
+    }
 }

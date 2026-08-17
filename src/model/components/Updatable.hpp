@@ -19,7 +19,7 @@ public:
      * @param dt Duration of the simulation step in seconds.
      * @param level Level containing the surrounding entities and platform data.
      */
-    virtual void update(float dt, Level &level) = 0;
+    virtual void update(float dt, Stage &level) = 0;
 };
 
 #endif

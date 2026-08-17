@@ -45,6 +45,8 @@ public:
      */
     void clear_all();
 
+    void set_view(const sf::View &view);
+
 private:
     Layer background_layer;
     Layer platforms_layer;

@@ -9,6 +9,7 @@
 #include "../Declarations.hpp"
 #include "../util/BaseEntity.hpp"
 #include "../components/Updatable.hpp"
+#include "../components/Enemy.hpp"
 
 /**
  * @brief Barrel entity that rolls down sloped platforms and falls between them.
@@ -16,12 +17,12 @@
  * The barrel is a small two-state simulation: it either sticks to a platform and
  * rolls downhill, or it is in free fall until it intersects another platform.
  */
-class Barrel : public BaseEntity, public Updatable {
+class Barrel : public BaseEntity, public Updatable, public Enemy {
 public:
     /**
      * @brief Current barrel state.
      */
-    enum class State { OnGirder, Falling };
+    enum class State { OnGirder, Falling, RollingDownClimbable };
 
     /**
      * @brief Creates a barrel at a world position.
@@ -41,13 +42,13 @@ public:
      * @param dt Time step in seconds.
      * @param level Level used to resolve platform intersections.
      */
-    void update(float dt, Level &level) override;
+    void update(float dt, Stage &level) override;
 
     /**
      * @brief Returns whether the barrel is currently attached to a platform.
      * @return OnGirder if attached, otherwise Falling.
      */
-    State get_state() const { return current_platform ? State::OnGirder : State::Falling; }
+    State get_state() const { return state; }
 
     /**
      * @brief Returns the barrel's world position.
@@ -98,19 +99,29 @@ public:
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
     }
 
-private:
-    /**
-     * @brief Snaps the barrel onto a platform if it intersects the platform surface.
-     * @param platforms Repository of all platform objects in the level.
-     */
-    void check_platform_intersection(PlatformComponentRepository &platforms);
+    std::unique_ptr<Component<Enemy>> create_enemy_component() override {
+        return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+    }
 
+    bool touches(const sf::RectangleShape &player_shape) const override;
+
+private:
     sf::Vector2f position;
     float vx = 0.f;
     float vy = 0.f;
 
+    State state = State::Falling;
     std::shared_ptr<Platform> current_platform = nullptr;
+    std::shared_ptr<Climbable> current_climbable = nullptr;
+    bool roll_down_climbable;
+    
     sf::CircleShape shape;
+
+    /**
+     * @brief Snaps the barrel onto a platform if it intersects the platform surface.
+     * @param platforms Repository of all platform objects in the level.
+     */
+    void check_platform_intersection(PlatformComponentRepository &platforms, float dt);
 };
 
 #endif

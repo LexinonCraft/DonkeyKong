@@ -4,7 +4,7 @@
 
 //#include "../src/model/Barrel.hpp"
 //#include "../src/model/Girder.hpp"
-//#include "../src/model/Constants.hpp"
+//#include "../src/../Constants.hpp"
 
 // These tests exercise the barrel/girder physics directly. They construct only
 // model objects (which hold CPU-side SFML shapes, no window), so they run headless.

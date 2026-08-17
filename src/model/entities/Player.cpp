@@ -1,14 +1,15 @@
+#include <SFML/System/Angle.hpp>
 #include <memory>
 
 #include "Player.hpp"
-#include "../Constants.hpp"
+#include "../../Constants.hpp"
 #include "../util/EntityVisitor.hpp"
-#include "../Level.hpp"
+#include "../Stage.hpp"
 
 Player::Player(Ref ref) :
     BaseEntity(ref),
     state(State::InAir),
-    position(100.f, -300.f),
+    position(100.f, -200.f),
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
     vertical_direction(VerticalDirection::None),
@@ -19,7 +20,7 @@ Player::Player(Ref ref) :
         shape.setPosition(position);
 }
 
-void Player::update(float dt, Level &level) {
+void Player::update(float dt, Stage &stage) {
     float walking_dir;
     switch (horizontal_direction) {
         case HorizontalDirection::Left:
@@ -55,43 +56,54 @@ void Player::update(float dt, Level &level) {
             position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
 
-            if (!current_platform->covers_x(position.x)) {
+            if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f)) {
                 state = State::InAir;
                 break;
             }
 
-                switch (vertical_direction) {
-                    case VerticalDirection::Up:
-                        {
-                            std::shared_ptr<Climbable> ladder = level.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                            if (ladder) {
-                                state = State::Climbing;
-                                current_ladder = ladder;
-                                velocity.x = 0.f;
-                                velocity.y = climbing_dir;
-                            }
+            switch (horizontal_direction) {
+                case HorizontalDirection::Left:
+                    facing_right = false;
+                    break;
+                case HorizontalDirection::Right:
+                    facing_right = true;
+                    break;
+                case HorizontalDirection::None:
+                    break;
+            }
+
+            switch (vertical_direction) {
+                case VerticalDirection::Up:
+                    {
+                        std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                        if (ladder) {
+                            state = State::Climbing;
+                            current_ladder = ladder;
+                            velocity.x = 0.f;
+                            velocity.y = climbing_dir;
                         }
-                        break;
-                    case VerticalDirection::Down:
-                        {
-                            std::shared_ptr<Climbable> ladder = level.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                            if (ladder) {
-                                state = State::Climbing;
-                                current_ladder = ladder;
-                                velocity.x = 0.f;
-                                velocity.y = climbing_dir;
-                            }
+                    }
+                    break;
+                case VerticalDirection::Down:
+                    {
+                        std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                        if (ladder) {
+                            state = State::Climbing;
+                            current_ladder = ladder;
+                            velocity.x = 0.f;
+                            velocity.y = climbing_dir;
                         }
-                        break;
-                    case VerticalDirection::None:
-                        break;
-                }
+                    }
+                    break;
+                case VerticalDirection::None:
+                    break;
+            }
             break;
         case State::InAir:
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::PLAYER_HEIGHT / 2.f);
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, velocity.y * dt);
                 if (platform_below) {
                     state = State::OnPlatform;
                     current_platform = platform_below;
@@ -114,6 +126,26 @@ void Player::update(float dt, Level &level) {
                 position.y = current_platform->surface_y_at(position.x);
             }
             break;
+        case State::Dying:
+            velocity.x = 0.f;
+            velocity.y = 0.f;
+            break;
+    }
+
+    if (auto left_boundary = stage.get_left_boundary()) {
+        if (position.x < *left_boundary) {
+            position.x = *left_boundary;
+        }
+    }
+    if (auto right_boundary = stage.get_right_boundary()) {
+        if (position.x > *right_boundary) {
+            position.x = *right_boundary;
+        }
+    }
+
+    if (stage.get_enemies().find_touching_enemy(shape)) {
+        state = State::Dying;
+        stage.on_player_dying();
     }
 
     shape.setPosition(position);

@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
+
 /**
  * @brief Gameplay and rendering constants used throughout the project.
  *
@@ -6,8 +9,9 @@
  */
 namespace constants {
     constexpr int VIEW_WIDTH = 600;
-    constexpr int VIEW_HEIGHT = 600;
+    constexpr int VIEW_HEIGHT = 800;
     constexpr unsigned int FRAME_RATE = 60;
+    constexpr float TARGET_ASPECT_RATIO = static_cast<float>(VIEW_WIDTH) / static_cast<float>(VIEW_HEIGHT);
 
     // barrel / girder physics (increment 2). Remember: the view is y-inverted,
     // so +y points downward (toward the bottom of the screen) = gravity direction.
@@ -23,4 +27,9 @@ namespace constants {
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
 
     constexpr float LADDER_WIDTH = 10.f;  // px
+
+    constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
+    constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
 }
+
+#endif

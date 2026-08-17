@@ -45,7 +45,7 @@ public:
      * @param x Horizontal position.
      * @return True if x lies within the girder's horizontal span.
      */
-    bool covers_x(float x) const override;
+    bool covers_x(float x, float h_tolerance) const override;
 
     /**
      * @brief Returns the direction in which a barrel should roll on this girder.
