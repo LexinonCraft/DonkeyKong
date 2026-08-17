@@ -32,7 +32,7 @@ void Barrel::set_on_platform(std::shared_ptr<Platform> platform) {
 void Barrel::update(float dt, Stage &level) {
     if (get_state() == State::OnGirder) {
         position.x += vx * dt;
-        if (current_platform && current_platform->covers_x(position.x)) {
+        if (current_platform && current_platform->covers_x(position.x, constants::BARREL_RADIUS)) {
             // stay glued to the surface: height follows the slope (tan angle)
             position.y = current_platform->surface_y_at(position.x);
         } else {
@@ -62,7 +62,7 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
 }
 
 void Barrel::check_platform_intersection(PlatformComponentRepository &platforms) {
-    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS));
+    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, constants::BARREL_RADIUS));
 }
 
 void Barrel::check_referenced_entities() {

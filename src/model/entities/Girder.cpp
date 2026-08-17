@@ -31,8 +31,8 @@ float Girder::surface_y_at(float x) const {
     return left.y + slope_at(x) * (x - left.x);
 }
 
-bool Girder::covers_x(float x) const {
-    return x >= left.x && x <= right.x;
+bool Girder::covers_x(float x, float h_tolerance) const {
+    return x >= left.x - h_tolerance && x <= right.x + h_tolerance;
 }
 
 int Girder::downhill_sign() const {
