@@ -13,7 +13,7 @@
 - [x] Implement level transitions and manage player data across levels
 - [x] Make sure that entities are deleted only at the end of the update cycle, not during it
 - [ ] Revisit code comments
-- [ ] Polish physics (~~prevent player from falling off girders at edges~~, prevent player from jumping onto next girder)
+- [ ] Polish physics (~~prevent player from falling off girders at edges~~, ~~prevent player from jumping onto next girder~~, adjust hitboxes)
 - [ ] Add broken ladders
 - [ ] Allow barrels to roll down ladders
 

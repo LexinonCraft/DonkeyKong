@@ -43,9 +43,9 @@ void Barrel::update(float dt, Stage &level) {
         }
     } else { // Falling
         vy += constants::GRAVITY * dt;
+        check_platform_intersection(level.get_platforms(), dt);
         position.x += vx * dt;
         position.y += vy * dt;
-        check_platform_intersection(level.get_platforms());
     }
 
     // No respawn here: once the barrel rolls off the last girder it just keeps
@@ -61,8 +61,8 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
-void Barrel::check_platform_intersection(PlatformComponentRepository &platforms) {
-    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, constants::BARREL_RADIUS));
+void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt) {
+    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, vy * dt));
 }
 
 void Barrel::check_referenced_entities() {

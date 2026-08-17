@@ -110,7 +110,7 @@ private:
      * @brief Snaps the barrel onto a platform if it intersects the platform surface.
      * @param platforms Repository of all platform objects in the level.
      */
-    void check_platform_intersection(PlatformComponentRepository &platforms);
+    void check_platform_intersection(PlatformComponentRepository &platforms, float dt);
 
     sf::Vector2f position;
     float vx = 0.f;

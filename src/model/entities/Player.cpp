@@ -103,7 +103,7 @@ void Player::update(float dt, Stage &stage) {
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, velocity.y * dt);
                 if (platform_below) {
                     state = State::OnPlatform;
                     current_platform = platform_below;
