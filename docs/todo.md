@@ -7,6 +7,7 @@
 - [ ] Add unit tests
 - [ ] Add hammer power-up
 - [ ] Add other stages
+- [ ] Fix bug where player/barrels can fall through two connected girders
 
 ## Medium priority
 
@@ -15,7 +16,8 @@
 - [ ] Revisit code comments
 - [ ] Polish physics (~~prevent player from falling off girders at edges~~, ~~prevent player from jumping onto next girder~~, adjust hitboxes)
 - [ ] Add broken ladders
-- [ ] Allow barrels to roll down ladders
+- [x] Allow barrels to roll down ladders
+- [ ] Seed for RNG
 
 ## Low priority
 

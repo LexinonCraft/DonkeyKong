@@ -22,7 +22,7 @@ public:
     /**
      * @brief Current barrel state.
      */
-    enum class State { OnGirder, Falling };
+    enum class State { OnGirder, Falling, RollingDownClimbable };
 
     /**
      * @brief Creates a barrel at a world position.
@@ -48,7 +48,7 @@ public:
      * @brief Returns whether the barrel is currently attached to a platform.
      * @return OnGirder if attached, otherwise Falling.
      */
-    State get_state() const { return current_platform ? State::OnGirder : State::Falling; }
+    State get_state() const { return state; }
 
     /**
      * @brief Returns the barrel's world position.
@@ -106,18 +106,22 @@ public:
     bool touches(const sf::RectangleShape &player_shape) const override;
 
 private:
+    sf::Vector2f position;
+    float vx = 0.f;
+    float vy = 0.f;
+
+    State state = State::Falling;
+    std::shared_ptr<Platform> current_platform = nullptr;
+    std::shared_ptr<Climbable> current_climbable = nullptr;
+    bool roll_down_climbable;
+    
+    sf::CircleShape shape;
+
     /**
      * @brief Snaps the barrel onto a platform if it intersects the platform surface.
      * @param platforms Repository of all platform objects in the level.
      */
     void check_platform_intersection(PlatformComponentRepository &platforms, float dt);
-
-    sf::Vector2f position;
-    float vx = 0.f;
-    float vy = 0.f;
-
-    std::shared_ptr<Platform> current_platform = nullptr;
-    sf::CircleShape shape;
 };
 
 #endif

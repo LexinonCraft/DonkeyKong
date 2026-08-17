@@ -80,12 +80,18 @@ public:
 
     StageState get_state() const { return state; }
 
+    int random_int() {
+        return rng();
+    }
+
 protected:
     /**
      * @brief Creates a level and registers the behaviour repositories with the entity repository.
      * @param id_generator Function used to generate fresh entity ids.
      */
-    Stage(Id id_generator(), PlayerData &player_data);
+    Stage(int rng(), PlayerData &player_data);
+
+    int (*rng)();
 
     EntityRepository entities;
     UpdatableComponentRepository updatable_components;

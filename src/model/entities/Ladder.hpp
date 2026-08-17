@@ -14,7 +14,7 @@ class Ladder : public BaseEntity, public Climbable {
 public:
     Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos);
 
-    bool is_active() const override {
+    bool is_active_for_player() const override {
         return true;
     }
 
