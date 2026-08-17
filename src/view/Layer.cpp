@@ -1,5 +1,5 @@
 #include "Layer.hpp"
-#include "../model/Constants.hpp"
+#include "../Constants.hpp"
 
 /**
  * @brief Creates an off-screen render layer for one part of the game scene.

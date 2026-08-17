@@ -2,7 +2,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
-#include "../model/Constants.hpp"
+#include "../Constants.hpp"
 #include "StageControl.hpp"
 #include "StageTransitionControl.hpp"
 #include "TitleScreenControl.hpp"

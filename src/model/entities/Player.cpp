@@ -2,7 +2,7 @@
 #include <memory>
 
 #include "Player.hpp"
-#include "../Constants.hpp"
+#include "../../Constants.hpp"
 #include "../util/EntityVisitor.hpp"
 #include "../Stage.hpp"
 

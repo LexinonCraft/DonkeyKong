@@ -1,5 +1,6 @@
 #include "StageView.hpp"
 #include "../model/PlayerData.hpp"
+#include "../util/Positions.hpp"
 
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
     : AbstractSceneView(window, texture_registry),
@@ -17,13 +18,13 @@ void StageView::draw() {
     score.setCharacterSize(24);
     sf::FloatRect score_bounds = score.getLocalBounds();
     score.setOrigin({score_bounds.size.x / 2.f, score_bounds.size.y / 2.f});
-    score.setPosition({300.f, -550.f});
+    score.setPosition(get_absolute_position({0.f, 50.f}, AnchorPosition::TopCenter));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(score);
 
     int lives_count = stage.get_player_data().get_lives();
     for (int i = 0; i < lives_count; ++i) {
         sf::Sprite life_sprite(assets_manager.get_texture(AssetsManager::TextureId::Jumpman));
-        life_sprite.setPosition({50.f + (i * 20.f), -520.f});
+        life_sprite.setPosition(get_absolute_position({50.f + (i * 20.f), 80.f}, AnchorPosition::TopLeft));
         sf::FloatRect sprite_bounds = life_sprite.getLocalBounds();
         life_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});
         // life_sprite.setScale({0.5f, 0.5f});
@@ -37,7 +38,7 @@ void StageView::draw() {
         game_over_text.setCharacterSize(48);
         sf::FloatRect text_bounds = game_over_text.getLocalBounds();
         game_over_text.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
-        game_over_text.setPosition({300.f, -300.f});
+        game_over_text.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
         layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(game_over_text);
     }
 

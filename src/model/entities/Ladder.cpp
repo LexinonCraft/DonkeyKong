@@ -1,5 +1,5 @@
 #include "Ladder.hpp"
-#include "../Constants.hpp"
+#include "../../Constants.hpp"
 
 Ladder::Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos) :
         BaseEntity(ref),

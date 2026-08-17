@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics/Color.hpp>
 
-#include "../Constants.hpp"
+#include "../../Constants.hpp"
 
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right) :
     BaseEntity(ref),

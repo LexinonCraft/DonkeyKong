@@ -37,6 +37,11 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/GameOverView.cpp
     )
 
+# Utility
+set(UtilSources
+    ${CMAKE_CURRENT_SOURCE_DIR}/util/Positions.cpp
+    )
+
 # add src code to target
 add_executable(DonkeyKong
         ${ModelSources}

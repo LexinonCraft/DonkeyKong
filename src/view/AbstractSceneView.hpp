@@ -8,7 +8,7 @@
 
 #include "LayerStack.hpp"
 #include "AssetsManager.hpp"
-#include "../model/Constants.hpp"
+#include "../Constants.hpp"
 
 class AbstractSceneView {
 public:

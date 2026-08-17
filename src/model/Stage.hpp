@@ -9,7 +9,7 @@
 #include "components/ClimbableComponentRepository.hpp"
 #include "components/EnemyComponentRepository.hpp"
 #include "Declarations.hpp"
-#include "Constants.hpp"
+#include "../Constants.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.

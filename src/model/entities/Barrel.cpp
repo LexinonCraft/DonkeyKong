@@ -5,7 +5,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
-#include "../Constants.hpp"
+#include "../../Constants.hpp"
 #include "../Stage.hpp"
 #include "../components/Platform.hpp"
 #include "../components/PlatformComponentRepository.hpp"
