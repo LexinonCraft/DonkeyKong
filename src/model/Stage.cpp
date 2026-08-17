@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Stage.hpp"
 #include "PlayerData.hpp"
 
@@ -14,9 +16,6 @@ void Stage::update(float dt) {
     if (state != StageState::Running) {
         time_since_state_change += dt;
     }
-    if (state == StageState::PlayerDying && time_since_state_change >= constants::PLAYER_DEATH_DURATION) {
-        state = StageState::PlayerDead;
-    }
 
     entities.handle_deletions();
 
@@ -31,7 +30,33 @@ void Stage::on_player_dying() {
     
     state = StageState::PlayerDying;
     time_since_state_change = 0.f;
-    player_data.lose_life();
+}
+
+void Stage::on_completed() {
+    if (state != StageState::Running)
+        return;
+
+    state = StageState::Completed;
+    time_since_state_change = 0.f;
+}
+
+bool Stage::on_exit() {
+    switch (state) {
+        case StageState::Running:
+            throw std::runtime_error("Cannot exit stage while running");
+        case StageState::PlayerDying:
+            if (player_data.lose_life()) {
+                return true;
+            } else {
+                player_data.reset();
+                return false;
+            }
+        case StageState::Completed:
+            advance_stage_id(player_data);
+            return true;
+        default:
+            throw std::runtime_error("Unknown stage state");
+    }
 }
 
 void Stage::update_while_running(float dt) {

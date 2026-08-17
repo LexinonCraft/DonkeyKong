@@ -7,8 +7,24 @@
 void StageTransitionView::draw() {
     pre_draw();
 
+    std::string stage_label;
+    switch (player_data.get_stage()) {
+        case StageId::Stage25M:
+            stage_label = "25M";
+            break;
+        case StageId::Stage50M:
+            stage_label = "50M";
+            break;
+        case StageId::Stage75M:
+            stage_label = "75M";
+            break;
+        case StageId::Stage100M:
+            stage_label = "100M";
+            break;
+    }
+
     sf::Text title(assets_manager.get_font());
-    title.setString("How high can you go?");
+    title.setString("How high can you go? (" + stage_label + ")");
     title.setCharacterSize(24);
     sf::FloatRect text_bounds = title.getLocalBounds();
     title.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});

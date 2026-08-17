@@ -7,7 +7,8 @@
 
 class StageTransitionControl : public AbstractSceneControl {
 public:
-    StageTransitionControl(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneControl(window), stage_transition_view(window, assets_manager) {}
+    StageTransitionControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager) 
+        : AbstractSceneControl(window), stage_transition_view(window, assets_manager, player_data) {}
 
     void handle_event(sf::Event *event) override;
 

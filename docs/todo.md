@@ -5,13 +5,15 @@
 - [x] Adapt the `Ladder` and `Player` classes to the ECS architecture
 - [x] Add code comments
 - [ ] Add unit tests
+- [ ] Add hammer power-up
+- [ ] Add other stages
 
 ## Medium priority
 
-- [ ] Add hammer power-up
-- [ ] Implement level transitions and manage player data across levels
+- [x] Implement level transitions and manage player data across levels
 - [x] Make sure that entities are deleted only at the end of the update cycle, not during it
 - [ ] Revisit code comments
+- [ ] Polish physics
 
 ## Low priority
 

@@ -3,19 +3,18 @@
 
 #include <cstdlib>
 #include <memory>
-#include <stdexcept>
 
 #include "AbstractSceneControl.hpp"
 #include "../model/Stage.hpp"
 #include "../view/StageView.hpp"
-#include "../model/DemoStage.hpp"
+#include "../model/StageSequence.hpp"
 #include "../view/AssetsManager.hpp"
 #include "../model/PlayerData.hpp"
 
 class StageControl : public AbstractSceneControl {
 public:
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), stage(std::unique_ptr<Stage>(new DemoStage(std::rand, player_data))), stage_view(window, *stage.get(), assets_manager), player_data(player_data) {}
+        : AbstractSceneControl(window), stage(create_stage(std::rand, player_data)), stage_view(window, *stage.get(), assets_manager), player_data(player_data) {}
 
     virtual ~StageControl() {}
 

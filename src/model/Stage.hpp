@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "../Constants.hpp"
 #include "util/EntityRepository.hpp"
 #include "components/UpdatableComponentRepository.hpp"
 #include "components/PlatformComponentRepository.hpp"
@@ -19,17 +20,9 @@
  */
 class Stage {
 public:
-    enum class StageId {
-        Stage25M,
-        Stage50M,
-        Stage75M,
-        Stage100M,
-    };
-
     enum class StageState {
         Running,
         PlayerDying,
-        PlayerDead,
         Completed,
     };
 
@@ -78,6 +71,12 @@ public:
     virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
 
     virtual void on_player_dying();
+
+    virtual void on_completed();
+
+    virtual bool on_exit();
+
+    bool is_over() const { return (state == StageState::PlayerDying && time_since_state_change > constants::PLAYER_DEATH_DURATION) || (state == StageState::Completed && time_since_state_change > 5.f); }
 
     StageState get_state() const { return state; }
 

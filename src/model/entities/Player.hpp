@@ -112,6 +112,8 @@ public:
 
     bool is_facing_right() const { return facing_right; }
 
+    std::shared_ptr<Platform> get_current_platform() const { return current_platform; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;

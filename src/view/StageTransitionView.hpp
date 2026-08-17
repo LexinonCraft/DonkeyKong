@@ -5,12 +5,17 @@
 
 #include "AssetsManager.hpp"
 #include "AbstractSceneView.hpp"
+#include "../model/PlayerData.hpp"
 
 class StageTransitionView : public AbstractSceneView {
 public:
-    StageTransitionView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {};
+    StageTransitionView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) 
+        : AbstractSceneView(window, assets_manager), player_data(player_data) {};
 
     void draw();
+
+private:
+    PlayerData &player_data;
 };
 
 #endif

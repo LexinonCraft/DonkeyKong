@@ -55,20 +55,9 @@ void StageControl::draw() {
 }
 
 AbstractSceneControl::NextScene StageControl::get_next_scene() const {
-    switch (stage->get_state()) {
-        case Stage::StageState::Running:
-            return NextScene::Stay;
-        case Stage::StageState::PlayerDying:
-            return NextScene::Stay;
-        case Stage::StageState::PlayerDead:
-            if (player_data.get_lives() > 0) {
-                return NextScene::StageTransition;
-            } else {
-                return NextScene::GameOver;
-            }
-        case Stage::StageState::Completed:
-            return NextScene::StageTransition;
-        default:
-            throw std::runtime_error("Unknown stage state");
+    if (!stage->is_over()) {
+        return AbstractSceneControl::NextScene::Stay;
     }
+
+    return stage->on_exit() ? AbstractSceneControl::NextScene::StageTransition : AbstractSceneControl::NextScene::GameOver;
 }

@@ -1,6 +1,7 @@
 #include "StageView.hpp"
 #include "../model/PlayerData.hpp"
 #include "../util/Positions.hpp"
+#include <SFML/Graphics/Color.hpp>
 
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
     : AbstractSceneView(window, texture_registry),
@@ -41,6 +42,15 @@ void StageView::draw() {
         game_over_text.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
         layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(game_over_text);
     }
+
+    sf::Text level_text(assets_manager.get_font());
+    level_text.setString("L=" + std::to_string(stage.get_player_data().get_level()));
+    level_text.setCharacterSize(24);
+    sf::FloatRect level_text_bounds = level_text.getLocalBounds();
+    level_text.setOrigin({level_text_bounds.size.x / 2.f, level_text_bounds.size.y / 2.f});
+    level_text.setPosition(get_absolute_position({-100.f, 100.f}, AnchorPosition::TopRight));
+    level_text.setFillColor(sf::Color::Blue);
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(level_text);
 
     post_draw();
 }
