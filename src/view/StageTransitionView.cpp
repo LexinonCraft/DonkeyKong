@@ -25,7 +25,7 @@ void StageTransitionView::draw() {
 
     sf::Text title(assets_manager.get_font());
     title.setString("How high can you go? (" + stage_label + ")");
-    title.setCharacterSize(24);
+    title.setCharacterSize(18);
     sf::FloatRect text_bounds = title.getLocalBounds();
     title.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
     title.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));

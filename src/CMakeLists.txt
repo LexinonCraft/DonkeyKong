@@ -16,6 +16,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/PlayerData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/EnemyComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/StageSequence.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage25M.cpp
     )
 
 # Controller
