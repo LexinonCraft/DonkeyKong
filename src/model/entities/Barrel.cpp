@@ -53,10 +53,15 @@ void Barrel::update(float dt, Stage &level) {
                     }
                 }
             } else {
-                // rolled off the lower end -> drop straight down off the ledge.
-                state = State::Falling;
-                vx = 0.f;
-                vy = 0.f;
+                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
+                if (platform_below) {
+                    set_on_platform(platform_below);
+                    position.y = current_platform->surface_y_at(position.x);
+                } else {
+                    state = State::Falling;
+                    vx = 0.f;
+                    vy = 0.f;
+                }
             }
             break;
         case State::Falling:
