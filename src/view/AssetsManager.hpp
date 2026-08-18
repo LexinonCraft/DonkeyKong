@@ -21,6 +21,8 @@ public:
         BarrelFront2,
         BarrelSide1,
         BarrelSide2,
+        LadderCyan,
+        LadderYellow
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -44,6 +46,8 @@ private:
     sf::Texture barrel_front2_texture;
     sf::Texture barrel_side1_texture;
     sf::Texture barrel_side2_texture;
+    sf::Texture ladder_cyan_texture;
+    sf::Texture ladder_yellow_texture;
 
     sf::Font font;
 

@@ -48,7 +48,7 @@ private:
     }
 
     void visit(Ladder &ladder) override {
-        component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()));
+        component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()), assets_manager);
     }
 };
 

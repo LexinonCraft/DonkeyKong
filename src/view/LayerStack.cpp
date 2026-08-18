@@ -29,8 +29,8 @@ Layer &LayerStack::get_layer(LayerId id) {
 
 void LayerStack::draw_all() {
     background_layer.draw();
-    platforms_layer.draw();
     ladders_layer.draw();
+    platforms_layer.draw();
     objects_layer.draw();
     player_layer.draw();
     ui_layer.draw();
