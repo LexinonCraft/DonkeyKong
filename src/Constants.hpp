@@ -19,6 +19,7 @@ namespace constants {
     constexpr float ROLL_SPEED = 160.f;       // px/sec, constant horizontal roll on a girder
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 12.f;  // px
+    constexpr float SEAM_SNAP_DISTANCE = GIRDER_THICKNESS;
 
     constexpr float PLAYER_WIDTH = 20.f;        // px
     constexpr float PLAYER_HEIGHT = 32.f;       // px
