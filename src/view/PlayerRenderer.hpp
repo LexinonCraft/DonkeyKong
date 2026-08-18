@@ -46,7 +46,7 @@ public:
 
         player_sprite.setPosition(player->get_position());
         player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
-        layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite); // TODO: add walking/climbing animation
+layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
     }
 
 private:
