@@ -37,15 +37,14 @@ public:
         } else if (climbing_time > 0.0f) {
             texture_id = AssetsManager::TextureId::JumpmanClimbing;
             flip_sprite = static_cast<int>(climbing_time / constants::PLAYER_CLIMBING_ANIMATION_INTERVAL) % 2 == 0;
-        }
-        else {
+        } else {
             texture_id = AssetsManager::TextureId::JumpmanStill;
         }
         player_sprite.setTexture(assets_manager.get_texture(texture_id));
 
         player_sprite.setPosition(player->get_position());
         player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
-layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
+        layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
     }
 
 private:
