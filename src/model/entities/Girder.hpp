@@ -91,6 +91,12 @@ public:
      */
     BaseEntity &get_entity() override { return *this; }
 
+    float get_width() const { return right.x - left.x; }
+
+    sf::Vector2f get_left() const { return left; }
+
+    sf::Vector2f get_right() const { return right; }
+
     /**
      * @brief Creates the platform component for this girder.
      * @return Unique pointer to the platform component wrapper.
