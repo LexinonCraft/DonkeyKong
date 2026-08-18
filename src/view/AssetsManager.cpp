@@ -8,6 +8,7 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
     load("jumpman_walking1.png", jumpman_walking1_texture);
     load("jumpman_walking2.png", jumpman_walking2_texture);
     load("jumpman_jumping.png", jumpman_jumping_texture);
+    load("jumpman_climbing.png", jumpman_climbing_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
@@ -22,6 +23,8 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return jumpman_walking2_texture;
         case TextureId::JumpmanJumping:
             return jumpman_jumping_texture;
+        case TextureId::JumpmanClimbing:
+            return jumpman_climbing_texture;
         case TextureId::GirderRed:
             return girder_red_texture;
         case TextureId::GirderBlue:

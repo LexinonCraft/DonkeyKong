@@ -116,6 +116,8 @@ public:
 
     float get_walking_time() const { return walking_time; }
 
+    float get_climbing_time() const { return climbing_time; }
+
     bool has_jumped() const { return has_jumped_flag; }
 
 private:
@@ -129,6 +131,7 @@ private:
     HorizontalDirection horizontal_direction = HorizontalDirection::None;
     VerticalDirection vertical_direction = VerticalDirection::None;
     float walking_time = 0.0f;
+    float climbing_time = 0.0f;
     bool has_jumped_flag = false;
 
     sf::RectangleShape shape;

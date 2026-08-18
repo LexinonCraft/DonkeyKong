@@ -149,6 +149,14 @@ void Player::update(float dt, Stage &stage) {
         walking_time = 0.0f;
     }
 
+    if (state == State::Climbing) {
+        if (vertical_direction != VerticalDirection::None) {
+            climbing_time += dt;
+        }
+    } else {
+        climbing_time = 0.0f;
+    }
+
     if (state != State::InAir) {
         has_jumped_flag = false;
     }

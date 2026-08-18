@@ -14,6 +14,7 @@ public:
         JumpmanWalking1,
         JumpmanWalking2,
         JumpmanJumping,
+        JumpmanClimbing,
         GirderRed,
         GirderBlue,
     };
@@ -31,6 +32,7 @@ private:
     sf::Texture jumpman_walking1_texture;
     sf::Texture jumpman_walking2_texture;
     sf::Texture jumpman_jumping_texture;
+    sf::Texture jumpman_climbing_texture;
     sf::Texture girder_red_texture;
     sf::Texture girder_blue_texture;
     sf::Font font;
