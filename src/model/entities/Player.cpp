@@ -149,6 +149,10 @@ void Player::update(float dt, Stage &stage) {
         walking_time = 0.0f;
     }
 
+    if (state != State::InAir) {
+        has_jumped_flag = false;
+    }
+
     if (stage.get_enemies().find_touching_enemy(shape)) {
         state = State::Dying;
         stage.on_player_dying();
@@ -169,6 +173,7 @@ void Player::jump() {
     if (state == State::OnPlatform) {
         state = State::InAir;
         velocity.y = -constants::PLAYER_JUMP_SPEED;
+        has_jumped_flag = true;
     }
 }
 

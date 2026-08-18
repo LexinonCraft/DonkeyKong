@@ -28,7 +28,9 @@ public:
     void draw(LayerStack &layer_stack) override {
         AssetsManager::TextureId texture_id;
         float walking_time = player->get_walking_time();
-        if (walking_time > 0.0f) {
+        if (player->has_jumped()) {
+            texture_id = AssetsManager::TextureId::JumpmanJumping;
+        } else if (walking_time > 0.0f) {
             texture_id = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0 ? AssetsManager::TextureId::JumpmanWalking1 : AssetsManager::TextureId::JumpmanWalking2;
         } else {
             texture_id = AssetsManager::TextureId::JumpmanStill;
