@@ -6,7 +6,7 @@
 - [x] Add code comments
 - [ ] Add hammer power-up
 - [ ] Add other stages
-- [ ] Fix bug where player/barrels can fall through two connected girders
+- [x] Fix bug where player/barrels can fall through two connected girders
 
 ## Medium priority
 

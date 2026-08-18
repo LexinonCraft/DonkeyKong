@@ -28,7 +28,7 @@ public:
      * @param snap_distance Vertical search distance.
      * @return Matching platform or an empty pointer if nothing is found.
      */
-    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance, float snap_distance);
+    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right, float snap_distance);
 };
 
 #endif

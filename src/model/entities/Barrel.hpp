@@ -122,6 +122,10 @@ private:
      * @param platforms Repository of all platform objects in the level.
      */
     void check_platform_intersection(PlatformComponentRepository &platforms, float dt);
+
+    float platform_h_tolerance_left() const;
+    float platform_h_tolerance_right() const;
+    float platform_snap_distance(float dt) const;
 };
 
 #endif

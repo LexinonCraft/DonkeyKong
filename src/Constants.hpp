@@ -25,6 +25,9 @@ namespace constants {
     constexpr float PLAYER_JUMP_SPEED = 300.f;  // px/sec, initial jump
     constexpr float PLAYER_WALKING_SPEED = 120.f;  // px/sec, horizontal speed while on a girder
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
+    
+    constexpr float PLATFORM_H_TOLERANCE_FACTOR = 0.1f;  // factor of horizontal speed used to determine if an object is still on a platform
+    constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 5.f;  // px, minimum distance to snap to a platform when falling onto it
 
     constexpr float LADDER_WIDTH = 10.f;  // px
 
