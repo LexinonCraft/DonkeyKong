@@ -12,6 +12,7 @@ public:
         DonkeyKong,
         Jumpman,
         GirderRed,
+        GirderBlue,
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -25,6 +26,7 @@ private:
     sf::Texture donkey_kong_texture;
     sf::Texture jumpman_texture;
     sf::Texture girder_red_texture;
+    sf::Texture girder_blue_texture;
     sf::Font font;
 
     void load(const std::string &filename, sf::Texture &texture);

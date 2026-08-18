@@ -26,8 +26,18 @@ public:
         float step_width = width / num_steps;
         float x = girder->get_left().x;
 
+        AssetsManager::TextureId texture_id;
+        switch (girder->get_color()) {
+            case Girder::Color::Red:
+                texture_id = AssetsManager::TextureId::GirderRed;
+                break;
+            case Girder::Color::Blue:
+                texture_id = AssetsManager::TextureId::GirderBlue;
+                break;
+        }
+
         for (unsigned int i = 0; i < num_steps; ++i) {
-            sf::Sprite sprite(assets_manager.get_texture(AssetsManager::TextureId::GirderRed));
+            sf::Sprite sprite(assets_manager.get_texture(texture_id));
             sprite.setPosition({x + i * step_width, girder->surface_y_at(x + (i + 0.5f) * step_width)});
             auto sprite_bounds = sprite.getLocalBounds();
             sprite.setScale({step_width / sprite_bounds.size.x, 20.0f / sprite_bounds.size.y});
