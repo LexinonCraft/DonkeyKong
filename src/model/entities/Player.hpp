@@ -114,6 +114,8 @@ public:
 
     std::shared_ptr<Platform> get_current_platform() const { return current_platform; }
 
+    float get_walking_time() const { return walking_time; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
@@ -124,6 +126,7 @@ private:
     sf::Vector2f velocity;
     HorizontalDirection horizontal_direction = HorizontalDirection::None;
     VerticalDirection vertical_direction = VerticalDirection::None;
+    float walking_time = 0.0f;
 
     sf::RectangleShape shape;
 

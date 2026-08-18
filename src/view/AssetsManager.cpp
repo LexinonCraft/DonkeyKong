@@ -2,17 +2,23 @@
 
 AssetsManager::AssetsManager(std::string base_path, std::string font_file) : textures_base_path(base_path), font(font_file) {
     load("DonkeyKong.png", donkey_kong_texture);
-    load("jumpman.png", jumpman_texture);
+    load("jumpman_still.png", jumpman_still_texture);
     load("girder_red.png", girder_red_texture);
     load("girder_blue.png", girder_blue_texture);
+    load("jumpman_walking1.png", jumpman_walking1_texture);
+    load("jumpman_walking2.png", jumpman_walking2_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
     switch (id) {
         case TextureId::DonkeyKong:
             return donkey_kong_texture;
-        case TextureId::Jumpman:
-            return jumpman_texture;
+        case TextureId::JumpmanStill:
+            return jumpman_still_texture;
+        case TextureId::JumpmanWalking1:
+            return jumpman_walking1_texture;
+        case TextureId::JumpmanWalking2:
+            return jumpman_walking2_texture;
         case TextureId::GirderRed:
             return girder_red_texture;
         case TextureId::GirderBlue:

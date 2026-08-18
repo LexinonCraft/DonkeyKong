@@ -143,6 +143,12 @@ void Player::update(float dt, Stage &stage) {
         }
     }
 
+    if (state == State::OnPlatform && horizontal_direction != HorizontalDirection::None) {
+        walking_time += dt;
+    } else {
+        walking_time = 0.0f;
+    }
+
     if (stage.get_enemies().find_touching_enemy(shape)) {
         state = State::Dying;
         stage.on_player_dying();

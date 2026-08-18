@@ -24,7 +24,7 @@ void StageView::draw() {
 
     int lives_count = stage.get_player_data().get_lives();
     for (int i = 0; i < lives_count; ++i) {
-        sf::Sprite life_sprite(assets_manager.get_texture(AssetsManager::TextureId::Jumpman));
+        sf::Sprite life_sprite(assets_manager.get_texture(AssetsManager::TextureId::JumpmanStill));
         life_sprite.setPosition(get_absolute_position({50.f + (i * 20.f), 80.f}, AnchorPosition::TopLeft));
         sf::FloatRect sprite_bounds = life_sprite.getLocalBounds();
         life_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});
