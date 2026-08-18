@@ -86,8 +86,10 @@ void Barrel::update(float dt, Stage &level) {
             break; // TODO
     }
 
-    // No respawn here: once the barrel rolls off the last girder it just keeps
-    // falling. BarrelControl notices it has left the stage and replaces it.
+    if (position.y > constants::BARREL_RADIUS) {
+        destroy();
+    }
+
     shape.setPosition(position);
 }
 
