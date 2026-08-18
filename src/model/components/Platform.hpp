@@ -14,7 +14,7 @@
  */
 class Platform : public EntityFromComponentAux {
 public:
-    ~Platform() {}
+    virtual ~Platform() = default;
 
     /**
      * @brief Returns whether the platform spans the given world x position.

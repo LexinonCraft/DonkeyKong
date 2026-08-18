@@ -11,7 +11,7 @@
  */
 class DrawableComponent {
 public:
-    ~DrawableComponent() {}
+    virtual ~DrawableComponent() = default;
 
     /**
      * @brief Draws this component into the supplied layer stack.
