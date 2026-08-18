@@ -17,6 +17,10 @@ public:
         JumpmanClimbing,
         GirderRed,
         GirderBlue,
+        BarrelFront1,
+        BarrelFront2,
+        BarrelSide1,
+        BarrelSide2,
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -27,6 +31,7 @@ public:
 
 private:
     std::string textures_base_path;
+
     sf::Texture donkey_kong_texture;
     sf::Texture jumpman_still_texture;
     sf::Texture jumpman_walking1_texture;
@@ -35,6 +40,11 @@ private:
     sf::Texture jumpman_climbing_texture;
     sf::Texture girder_red_texture;
     sf::Texture girder_blue_texture;
+    sf::Texture barrel_front1_texture;
+    sf::Texture barrel_front2_texture;
+    sf::Texture barrel_side1_texture;
+    sf::Texture barrel_side2_texture;
+
     sf::Font font;
 
     void load(const std::string &filename, sf::Texture &texture);

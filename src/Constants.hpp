@@ -36,6 +36,8 @@ namespace constants {
 
     constexpr float PLAYER_WALKING_ANIMATION_INTERVAL = 0.1f;  // seconds between walking animation frames
     constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
+    constexpr float BARREL_PLATFORM_ROLL_DISTANCE_FACTOR = 0.05f;
+    constexpr float BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR = 0.1f;
 }
 
 #endif

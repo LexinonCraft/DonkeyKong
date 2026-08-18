@@ -105,6 +105,8 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
+    float get_roll_distance() const { return roll_distance; }
+
 private:
     sf::Vector2f position;
     float vx = 0.f;
@@ -114,6 +116,7 @@ private:
     std::shared_ptr<Platform> current_platform = nullptr;
     std::shared_ptr<Climbable> current_climbable = nullptr;
     bool roll_down_climbable;
+    float roll_distance = 0.f;
     
     sf::CircleShape shape;
 
