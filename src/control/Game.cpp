@@ -1,7 +1,5 @@
 #include "Game.hpp"
 
-#include <SFML/Window/Keyboard.hpp>
-
 #include "../Constants.hpp"
 #include "StageControl.hpp"
 #include "StageTransitionControl.hpp"

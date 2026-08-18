@@ -1,44 +1,82 @@
 #include "StageControl.hpp"
 
+#include <SFML/Window/Keyboard.hpp>
+
 void StageControl::handle_event(sf::Event *event) {
-    if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-        if (keyPressed->code == sf::Keyboard::Key::Space) {
-            stage->get_player()->jump();
-            stage->get_player_data().add_to_score(10);  // add points for jumping (only for demonstration purposes)
+    if (const auto *key_pressed = event->getIf<sf::Event::KeyPressed>()) {
+        switch (key_pressed->code) {
+            case sf::Keyboard::Key::Space:
+                stage->get_player()->jump();
+                break;
+            case sf::Keyboard::Key::Left:
+                left_pressed = true;
+                break;
+            case sf::Keyboard::Key::Right:
+                right_pressed = true;
+                break;
+            case sf::Keyboard::Key::Up:
+                up_pressed = true;
+                break;
+            case sf::Keyboard::Key::Down:
+                down_pressed = true;
+                break;
+            default:
+                break;
         }
+    }
+
+    if (const auto *key_released = event->getIf<sf::Event::KeyReleased>()) {
+        switch (key_released->code) {
+            case sf::Keyboard::Key::Left:
+                left_pressed = false;
+                break;
+            case sf::Keyboard::Key::Right:
+                right_pressed = false;
+                break;
+            case sf::Keyboard::Key::Up:
+                up_pressed = false;
+                break;
+            case sf::Keyboard::Key::Down:
+                down_pressed = false;
+                break;
+            default:
+                break;
+        }
+    }
+
+    if (event->is<sf::Event::FocusLost>()) {
+        left_pressed = false;
+        right_pressed = false;
+        up_pressed = false;
+        down_pressed = false;
     }
 }
 
 void StageControl::handle_input() {
     auto player = stage->get_player();
 
-    // handle continuous key presses (for smooth movement)
-    bool leftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left);
-    bool rightPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right);
-    if (leftPressed) {
-        if (rightPressed) {
+    if (left_pressed) {
+        if (right_pressed) {
             player->set_horizontal_direction(Player::HorizontalDirection::None);
         } else {
             player->set_horizontal_direction(Player::HorizontalDirection::Left);
         }
     } else {
-        if (rightPressed) {
+        if (right_pressed) {
             player->set_horizontal_direction(Player::HorizontalDirection::Right);
         } else {
             player->set_horizontal_direction(Player::HorizontalDirection::None);
         }
     }
 
-    bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up);
-    bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down);
-    if (upPressed) {
-        if (downPressed) {
+    if (up_pressed) {
+        if (down_pressed) {
             player->set_vertical_direction(Player::VerticalDirection::None);
         } else {
             player->set_vertical_direction(Player::VerticalDirection::Up);
         }
     } else {
-        if (downPressed) {
+        if (down_pressed) {
             player->set_vertical_direction(Player::VerticalDirection::Down);
         } else {
             player->set_vertical_direction(Player::VerticalDirection::None);
