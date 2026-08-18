@@ -40,7 +40,7 @@ private:
     }
 
     void visit(Girder &girder) override {
-        component = std::make_unique<GirderRenderer>(std::static_pointer_cast<Girder>(girder.shared_from_this()));
+        component = std::make_unique<GirderRenderer>(std::static_pointer_cast<Girder>(girder.shared_from_this()), assets_manager);
     }
 
     void visit(Player &player) override {

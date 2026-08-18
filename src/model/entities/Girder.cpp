@@ -7,10 +7,14 @@
 #include "../../Constants.hpp"
 
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right) :
+    Girder(ref, left, right, Color::Red) {}
+
+Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right, Color color) :
     BaseEntity(ref),
     left(left),
     right(right),
-    shape() {
+    shape(),
+    color(color) {
         // build the tilted bar: a rectangle from `left` to `right`, rotated to match
         float dx = right.x - left.x;
         float dy = right.y - left.y;

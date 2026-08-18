@@ -49,6 +49,16 @@ public:
     }
 
     /**
+     * @brief Adds a girder entity spanning the two endpoints.
+     * @param left Left endpoint of the girder.
+     * @param right Right endpoint of the girder.
+     * @return Shared pointer to the created girder.
+     */
+    std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right, Girder::Color color) {
+        return add_entity(std::make_shared<Girder>(gen_ref(), left, right, color));
+    }
+
+    /**
      * @brief Adds the player entity.
      * @return Shared pointer to the created player.
      */
