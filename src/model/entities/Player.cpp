@@ -161,12 +161,12 @@ void Player::update(float dt, Stage &stage) {
         has_jumped_flag = false;
     }
 
+    shape.setPosition(position);
+
     if (stage.get_enemies().find_touching_enemy(shape)) {
         state = State::Dying;
         stage.on_player_dying();
     }
-
-    shape.setPosition(position);
 }
 
 void Player::set_horizontal_direction(HorizontalDirection dir) {
