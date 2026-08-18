@@ -48,7 +48,6 @@ bool Stage::on_exit() {
             if (player_data.lose_life()) {
                 return true;
             } else {
-                player_data.reset();
                 return false;
             }
         case StageState::Completed:
