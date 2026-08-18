@@ -7,7 +7,7 @@
  * @param id_generator Function used to create unique entity ids.
  */
 DemoStage2::DemoStage2(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
-    auto p4 = entities.add_girder({-100, -140}, {605, -200});
+    entities.add_girder({-100, -140}, {605, -200});
 }
 
 void DemoStage2::update_while_running(float dt) {
