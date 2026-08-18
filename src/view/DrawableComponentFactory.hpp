@@ -36,7 +36,7 @@ private:
     AssetsManager &assets_manager;
 
     void visit(Barrel &barrel) override {
-        component = std::make_unique<BarrelRenderer>(std::static_pointer_cast<Barrel>(barrel.shared_from_this()));
+        component = std::make_unique<BarrelRenderer>(std::static_pointer_cast<Barrel>(barrel.shared_from_this()), assets_manager);
     }
 
     void visit(Girder &girder) override {
@@ -48,7 +48,7 @@ private:
     }
 
     void visit(Ladder &ladder) override {
-        component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()));
+        component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()), assets_manager);
     }
 };
 

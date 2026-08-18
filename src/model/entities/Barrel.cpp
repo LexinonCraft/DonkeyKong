@@ -34,6 +34,7 @@ void Barrel::update(float dt, Stage &level) {
     switch (state) {
         case State::OnGirder:
             position.x += vx * dt;
+            roll_distance += vx * dt * constants::BARREL_PLATFORM_ROLL_DISTANCE_FACTOR;
             if (current_platform && current_platform->covers_x(position.x, platform_h_tolerance_left(), platform_h_tolerance_right())) {
                 // stay glued to the surface: height follows the slope (tan angle)
                 position.y = current_platform->surface_y_at(position.x);
@@ -45,6 +46,7 @@ void Barrel::update(float dt, Stage &level) {
                         position.x = current_climbable->get_x_pos();
                         position.y = current_climbable->get_upper_y_pos();
                         state = State::RollingDownClimbable;
+                        roll_distance = 0.f;
                     }
                 } else {
                     current_climbable = level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
@@ -68,13 +70,15 @@ void Barrel::update(float dt, Stage &level) {
         case State::RollingDownClimbable:
             if (position.y < current_climbable->get_lower_y_pos()) {
                 position.y += vy * dt;
+                roll_distance += vy * dt * constants::BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR;
             } else {
                 set_on_platform(current_climbable->get_lower_end());
                 current_climbable.reset();
                 position.x += vx * dt;
                 position.y += vy * dt;
+                roll_distance = 0.f;
             }
-            break; // TODO
+            break;
     }
 
     // No respawn here: once the barrel rolls off the last girder it just keeps

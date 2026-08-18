@@ -78,6 +78,18 @@ public:
     }
 
     /**
+     * @brief Adds a ladder connecting two platform endpoints at an x-position.
+     * @param lower_end Lower platform endpoint.
+     * @param upper_end Upper platform endpoint.
+     * @param x_position Horizontal x-position of the ladder.
+     * @param color Color of the ladder.
+     * @return Shared pointer to the created ladder.
+     */
+    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken, Ladder::Color color) {
+        return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
+    }
+
+    /**
      * @brief Schedules an entity for deletion in the next repository cleanup pass.
      * @param id Entity id to remove.
      */
