@@ -26,7 +26,6 @@ public:
     void run();
 
 private:
-    sf::Clock clock;
     sf::RenderWindow window;
     AssetsManager assets_manager;
     std::unique_ptr<AbstractSceneControl> scene_control;
