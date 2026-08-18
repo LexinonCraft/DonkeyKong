@@ -33,6 +33,9 @@ namespace constants {
 
     constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
     constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
+
+    constexpr float PLAYER_WALKING_ANIMATION_INTERVAL = 0.1f;  // seconds between walking animation frames
+    constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
 }
 
 #endif

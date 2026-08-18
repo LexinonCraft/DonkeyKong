@@ -143,12 +143,30 @@ void Player::update(float dt, Stage &stage) {
         }
     }
 
+    if (state == State::OnPlatform && horizontal_direction != HorizontalDirection::None) {
+        walking_time += dt;
+    } else {
+        walking_time = 0.0f;
+    }
+
+    if (state == State::Climbing) {
+        if (vertical_direction != VerticalDirection::None) {
+            climbing_time += dt;
+        }
+    } else {
+        climbing_time = 0.0f;
+    }
+
+    if (state != State::InAir) {
+        has_jumped_flag = false;
+    }
+
+    shape.setPosition(position);
+
     if (stage.get_enemies().find_touching_enemy(shape)) {
         state = State::Dying;
         stage.on_player_dying();
     }
-
-    shape.setPosition(position);
 }
 
 void Player::set_horizontal_direction(HorizontalDirection dir) {
@@ -163,6 +181,7 @@ void Player::jump() {
     if (state == State::OnPlatform) {
         state = State::InAir;
         velocity.y = -constants::PLAYER_JUMP_SPEED;
+        has_jumped_flag = true;
     }
 }
 
