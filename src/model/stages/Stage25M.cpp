@@ -40,7 +40,7 @@ void Stage25M::update_while_running(float dt) {
     time_since_last_spawn += dt;
 
     if (time_since_last_spawn > 2.0f) {
-        //entities.add_barrel({300, -500});
+        entities.add_barrel({300, -500});
         time_since_last_spawn = 0.f;
     }
 
