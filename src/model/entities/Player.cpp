@@ -61,6 +61,7 @@ void Player::update(float dt, Stage &stage) {
             velocity.x = walking_dir;
             position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
+            y_before_jump = position.y;
 
             if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f) || !current_platform->is_active()) {
                 const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE, last_fall_through_platform);
@@ -113,6 +114,10 @@ void Player::update(float dt, Stage &stage) {
         }
         case State::InAir:
             velocity.y += constants::GRAVITY * dt;
+
+            if (position.y - y_before_jump > constants::PLAYER_MAX_FALL_HEIGHT) {
+                die(stage);
+            }
 
             if (velocity.y > 0.0f) {
                 const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, platform_snap_distance(dt), last_fall_through_platform);
@@ -173,8 +178,7 @@ void Player::update(float dt, Stage &stage) {
     shape.setPosition(position);
 
     if (stage.get_enemies().find_touching_enemy(shape)) {
-        state = State::Dying;
-        stage.on_player_dying();
+        die(stage);
     }
 }
 
@@ -243,4 +247,9 @@ bool Player::handle_platform_fall_through() {
         return true;
     }
     return false;
+}
+
+void Player::die(Stage &stage) {
+    state = State::Dying;
+    stage.on_player_dying();
 }
