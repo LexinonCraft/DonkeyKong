@@ -12,9 +12,9 @@ bool PlayerData::lose_life() {
     return lives > 0;
 }
 
-void PlayerData::set_level_and_stage(unsigned int new_level, StageId new_stage) {
+void PlayerData::set_level_and_stage_in_level(unsigned int new_level, unsigned int new_stage_in_level) {
     level = new_level;
-    stage = new_stage;
+    stage_in_level = new_stage_in_level;
 }
 
 void PlayerData::reset() {
@@ -22,5 +22,5 @@ void PlayerData::reset() {
     // do not reset highscore
     lives = constants::INITIAL_LIVES;
     level = 0;
-    stage = StageId::Stage25M;
+    stage_in_level = 0;
 }

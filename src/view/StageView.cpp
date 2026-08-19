@@ -33,10 +33,21 @@ void StageView::draw() {
     }
 
     if (stage.get_state() == Stage::StageState::PlayerDying) {
-        sf::Text game_over_text(assets_manager.get_font()); // TODO: restart stage if player has enough lifes left, otherwise go to game over screen
-        game_over_text.setString("you died!");
+        sf::Text game_over_text(assets_manager.get_font());
+        game_over_text.setString("You died!");
         game_over_text.setFillColor(sf::Color::Red);
         game_over_text.setCharacterSize(48);
+        sf::FloatRect text_bounds = game_over_text.getLocalBounds();
+        game_over_text.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
+        game_over_text.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
+        layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(game_over_text);
+    }
+
+    if (stage.get_state() == Stage::StageState::Completed) {
+        sf::Text game_over_text(assets_manager.get_font());
+        game_over_text.setString("Stage completed!");
+        game_over_text.setFillColor(sf::Color::Green);
+        game_over_text.setCharacterSize(36);
         sf::FloatRect text_bounds = game_over_text.getLocalBounds();
         game_over_text.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
         game_over_text.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));

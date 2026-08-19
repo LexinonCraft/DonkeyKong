@@ -16,6 +16,7 @@
 #include "../entities/DonkeyKong.hpp"
 #include "../entities/BarrelStack.hpp"
 #include "../entities/Pauline.hpp"
+#include "../entities/DissolvingPlatform.hpp"
 #include "Ref.hpp"
 
 /**
@@ -102,6 +103,10 @@ public:
 
     std::shared_ptr<Pauline> add_pauline(std::shared_ptr<Platform> platform, float x_position) {
         return add_entity(std::make_shared<Pauline>(gen_ref(), platform, x_position));
+    }
+        
+    std::shared_ptr<DissolvingPlatform> add_dissolving_platform(sf::Vector2f position, float width) {
+        return add_entity(std::make_shared<DissolvingPlatform>(gen_ref(), position, width));
     }
 
     /**

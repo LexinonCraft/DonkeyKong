@@ -24,5 +24,6 @@ class Enemy;
 class DonkeyKong;
 class BarrelStack;
 class Pauline;
+class DissolvingPlatform;
 
 #endif

@@ -27,6 +27,8 @@ public:
     virtual void visit(BarrelStack &barrel_stack) = 0;
     /** @brief Visits a Pauline entity. */
     virtual void visit(Pauline &pauline) = 0;
+    /** @brief Visits a dissolving platform entity. */
+    virtual void visit(DissolvingPlatform &dissolving_platform) = 0;
 };
 
 #endif
