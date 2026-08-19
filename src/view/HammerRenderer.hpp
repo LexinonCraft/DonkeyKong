@@ -15,11 +15,20 @@ public:
     HammerRenderer(std::shared_ptr<HammerPowerUp> hammer) : hammer(hammer) {}
 
     void draw(LayerStack &layer_stack) override {
-        sf::RectangleShape shape({constants::HAMMER_WIDTH, constants::HAMMER_HEIGHT});
-        shape.setOrigin({constants::HAMMER_WIDTH / 2.f, constants::HAMMER_HEIGHT});
-        shape.setPosition(hammer->get_position());
-        shape.setFillColor(sf::Color(240, 200, 60));
-        layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(shape);
+        const sf::Vector2f position = hammer->get_position();
+
+        sf::RectangleShape handle({4.f, 15.f});
+        handle.setOrigin({2.f, 15.f});
+        handle.setPosition(position);
+        handle.setFillColor(sf::Color(130, 75, 35));
+
+        sf::RectangleShape head({constants::HAMMER_WIDTH, 7.f});
+        head.setOrigin({constants::HAMMER_WIDTH / 2.f, 7.f});
+        head.setPosition({position.x, position.y - 13.f});
+        head.setFillColor(sf::Color(240, 200, 60));
+
+        layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(handle);
+        layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(head);
     }
 
 private:
