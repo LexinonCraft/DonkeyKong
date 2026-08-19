@@ -9,10 +9,12 @@
 #include "BarrelRenderer.hpp"
 #include "PlayerRenderer.hpp"
 #include "LadderRenderer.hpp"
+#include "DissolvingPlatformRenderer.hpp"
 #include "../model/entities/Barrel.hpp"
 #include "../model/entities/Girder.hpp"
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
+#include "../model/entities/DissolvingPlatform.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.
@@ -49,6 +51,10 @@ private:
 
     void visit(Ladder &ladder) override {
         component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()), assets_manager);
+    }
+
+    void visit(DissolvingPlatform &dissolving_platform) override {
+        component = std::make_unique<DissolvingPlatformRenderer>(std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()), assets_manager);
     }
 };
 

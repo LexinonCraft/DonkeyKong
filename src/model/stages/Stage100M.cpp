@@ -11,6 +11,8 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     auto p1 = entities.add_girder({20, -130}, {145, -130}, Girder::Color::Blue);
     auto p2 = entities.add_girder({175, -130}, {constants::VIEW_WIDTH - 175, -130}, Girder::Color::Blue);
     auto p3 = entities.add_girder({constants::VIEW_WIDTH - 145, -130}, {constants::VIEW_WIDTH - 20, -130}, Girder::Color::Blue);
+
+    entities.add_dissolving_platform({160, -130}, 30);
 }
 
 void Stage100M::update_while_running(float dt) {

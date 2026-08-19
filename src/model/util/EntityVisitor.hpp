@@ -21,6 +21,8 @@ public:
     virtual void visit(Player &player) = 0;
     /** @brief Visits a ladder entity. */
     virtual void visit(Ladder &ladder) = 0;
+    /** @brief Visits a dissolving platform entity. */
+    virtual void visit(DissolvingPlatform &dissolving_platform) = 0;
 };
 
 #endif

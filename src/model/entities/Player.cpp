@@ -56,11 +56,10 @@ void Player::update(float dt, Stage &stage) {
             position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
 
-            if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f)) {
+            if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f) || !current_platform->is_active()) {
                 const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
-                    current_platform = platform_below;
-                    position.y = current_platform->surface_y_at(position.x);
+                    enter_platform(platform_below);
                 } else {
                     state = State::InAir;
                 }
@@ -111,10 +110,7 @@ void Player::update(float dt, Stage &stage) {
             if (velocity.y > 0.0f) {
                 const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, platform_snap_distance(dt));
                 if (platform_below) {
-                    state = State::OnPlatform;
-                    current_platform = platform_below;
-                    velocity.y = 0.0f;
-                    position.y = current_platform->surface_y_at(position.x);
+                    enter_platform(platform_below);
                 }
             }
             break;
@@ -214,5 +210,18 @@ float Player::platform_snap_distance(float dt) const {
         return distance;
     } else {
         return constants::PLATFORM_MINIMUM_SNAP_DISTANCE;
+    }
+}
+
+void Player::enter_platform(std::shared_ptr<Platform> platform) {
+    current_platform = platform;
+    velocity.y = 0.f;
+    position.y = current_platform->surface_y_at(position.x);
+    bool reset_movement = platform->on_enter_player();
+    if (reset_movement) {
+        velocity.x = 0.f;
+        state = State::InAir;
+    } else {
+        state = State::OnPlatform;
     }
 }

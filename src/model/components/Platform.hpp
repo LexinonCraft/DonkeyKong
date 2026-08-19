@@ -62,6 +62,8 @@ public:
      * @return World-space endpoint with smaller y coordinate.
      */
     virtual sf::Vector2f high_end() const = 0;
+
+    virtual bool on_enter_player() { return false; }
 };
 
 #endif

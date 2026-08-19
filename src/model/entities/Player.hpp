@@ -137,6 +137,8 @@ private:
     sf::RectangleShape shape;
 
     float platform_snap_distance(float dt) const;
+
+    void enter_platform(std::shared_ptr<Platform> platform);
 };
 
 #endif

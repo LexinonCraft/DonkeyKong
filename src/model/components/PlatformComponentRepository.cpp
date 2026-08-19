@@ -7,7 +7,7 @@ std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(
     for (auto it = begin(); it != end(); ++it) {
         auto platform = it->second->get_entity();
         
-        if (platform->covers_x(position.x, h_tolerance_left, h_tolerance_right)) {
+        if (platform->is_active() && platform->covers_x(position.x, h_tolerance_left, h_tolerance_right)) {
             float surface_y = platform->surface_y_at(position.x);
             if (position.y > surface_y && position.y < surface_y + snap_distance) {  // remember that y increases downward in SFML coordinates // TODO: change origin of Barrel
                 return platform;
