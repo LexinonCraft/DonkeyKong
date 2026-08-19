@@ -4,7 +4,7 @@
 
 - [x] Adapt the `Ladder` and `Player` classes to the ECS architecture
 - [x] Add code comments
-- [ ] Add hammer power-up
+- [x] Add hammer power-up
 - [ ] Add other stages
 - [x] Fix bug where player/barrels can fall through two connected girders
 
