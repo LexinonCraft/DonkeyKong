@@ -56,8 +56,8 @@ void Player::update(float dt, Stage &stage) {
             position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
 
-            if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f)) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE);
+            if (!current_platform->covers_x(position.x, platform_h_tolerance_left(), platform_h_tolerance_right())) {
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
                     current_platform = platform_below;
                     position.y = current_platform->surface_y_at(position.x);
@@ -109,7 +109,7 @@ void Player::update(float dt, Stage &stage) {
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, velocity.y * dt);
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), platform_snap_distance(dt));
                 if (platform_below) {
                     state = State::OnPlatform;
                     current_platform = platform_below;
@@ -149,12 +149,30 @@ void Player::update(float dt, Stage &stage) {
         }
     }
 
+    if (state == State::OnPlatform && horizontal_direction != HorizontalDirection::None) {
+        walking_time += dt;
+    } else {
+        walking_time = 0.0f;
+    }
+
+    if (state == State::Climbing) {
+        if (vertical_direction != VerticalDirection::None) {
+            climbing_time += dt;
+        }
+    } else {
+        climbing_time = 0.0f;
+    }
+
+    if (state != State::InAir) {
+        has_jumped_flag = false;
+    }
+
+    shape.setPosition(position);
+
     if (stage.get_enemies().find_touching_enemy(shape)) {
         state = State::Dying;
         stage.on_player_dying();
     }
-
-    shape.setPosition(position);
 }
 
 void Player::set_horizontal_direction(HorizontalDirection dir) {
@@ -169,6 +187,7 @@ void Player::jump() {
     if (state == State::OnPlatform) {
         state = State::InAir;
         velocity.y = -constants::PLAYER_JUMP_SPEED;
+        has_jumped_flag = true;
     }
 }
 
@@ -187,4 +206,29 @@ void Player::check_referenced_entities() {
 
 void Player::accept(EntityVisitor &visitor) {
     visitor.visit(*this);
+}
+
+float Player::platform_h_tolerance_left() const {
+    if (velocity.x > 0.f) {
+        return constants::PLAYER_WIDTH / 2.f + velocity.x * constants::PLATFORM_H_TOLERANCE_FACTOR;
+    } else {
+        return constants::PLAYER_WIDTH / 2.f;
+    }
+}
+
+float Player::platform_h_tolerance_right() const {
+    if (velocity.x < 0.f) {
+        return constants::PLAYER_WIDTH / 2.f + -velocity.x * constants::PLATFORM_H_TOLERANCE_FACTOR;
+    } else {
+        return constants::PLAYER_WIDTH / 2.f;
+    }
+}
+
+float Player::platform_snap_distance(float dt) const {
+    float distance = velocity.y * dt;
+    if (distance > constants::PLATFORM_MINIMUM_SNAP_DISTANCE) {
+        return distance;
+    } else {
+        return constants::PLATFORM_MINIMUM_SNAP_DISTANCE;
+    }
 }

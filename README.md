@@ -9,3 +9,5 @@ See the documentation:
 1. [Architecture](docs/architecture.md)
 1. [Development](docs/development.md)
 1. [To-do](docs/todo.md)
+
+![Screenshot](screenshot.png)

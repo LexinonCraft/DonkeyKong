@@ -13,7 +13,7 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     auto p3 = entities.add_girder({50, -200}, {constants::VIEW_WIDTH, -240});
     auto p4 = entities.add_girder({0, -350}, {constants::VIEW_WIDTH - 50, -310});
     auto p5 = entities.add_girder({50, -410}, {constants::VIEW_WIDTH, -450});
-    auto p6 = entities.add_girder({380, -520}, {constants::VIEW_WIDTH - 50, -520});
+    auto p6 = entities.add_girder({380, -520}, {constants::VIEW_WIDTH - 50, -510});
     auto p7 = entities.add_girder({0, -520}, {380, -520});
     auto p8 = entities.add_girder({230, -610}, {360, -610});
 

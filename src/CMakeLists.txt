@@ -43,6 +43,7 @@ set(ViewSources
 # Utility
 set(UtilSources
     ${CMAKE_CURRENT_SOURCE_DIR}/util/Positions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/util/Math.cpp
     )
 
 # add src code to target

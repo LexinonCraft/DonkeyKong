@@ -18,6 +18,11 @@
  */
 class Girder : public BaseEntity, public Platform {
 public:
+    enum class Color {
+        Red,
+        Blue,
+    };
+
     /**
      * @brief Creates a girder between its left and right endpoints.
      * @param ref Repository reference assigned to the girder.
@@ -25,6 +30,15 @@ public:
      * @param right Second endpoint of the line segment.
      */
     Girder(Ref ref, sf::Vector2f left, sf::Vector2f right);
+
+    /**
+     * @brief Creates a girder between its left and right endpoints.
+     * @param ref Repository reference assigned to the girder.
+     * @param left First endpoint of the line segment.
+     * @param right Second endpoint of the line segment.
+     * @param color Color of the girder for rendering purposes.
+     */
+    Girder(Ref ref, sf::Vector2f left, sf::Vector2f right, Color color);
 
     /**
      * @brief Returns the slope of the girder surface at a given x position.
@@ -45,7 +59,7 @@ public:
      * @param x Horizontal position.
      * @return True if x lies within the girder's horizontal span.
      */
-    bool covers_x(float x, float h_tolerance) const override;
+    bool covers_x(float x, float h_tolerance_left, float h_tolerance_right) const override;
 
     /**
      * @brief Returns the direction in which a barrel should roll on this girder.
@@ -91,6 +105,14 @@ public:
      */
     BaseEntity &get_entity() override { return *this; }
 
+    float get_width() const { return right.x - left.x; }
+
+    sf::Vector2f get_left() const { return left; }
+
+    sf::Vector2f get_right() const { return right; }
+
+    Color get_color() const { return color; }
+
     /**
      * @brief Creates the platform component for this girder.
      * @return Unique pointer to the platform component wrapper.
@@ -103,6 +125,7 @@ private:
     sf::Vector2f left;
     sf::Vector2f right;
     sf::RectangleShape shape;
+    Color color;
 };
 
 #endif

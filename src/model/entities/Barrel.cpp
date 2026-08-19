@@ -34,7 +34,8 @@ void Barrel::update(float dt, Stage &level) {
     switch (state) {
         case State::OnGirder:
             position.x += vx * dt;
-            if (current_platform && current_platform->covers_x(position.x, constants::BARREL_RADIUS)) {
+            roll_distance += vx * dt * constants::BARREL_PLATFORM_ROLL_DISTANCE_FACTOR;
+            if (current_platform && current_platform->covers_x(position.x, platform_h_tolerance_left(), platform_h_tolerance_right())) {
                 // stay glued to the surface: height follows the slope (tan angle)
                 position.y = current_platform->surface_y_at(position.x);
 
@@ -45,6 +46,7 @@ void Barrel::update(float dt, Stage &level) {
                         position.x = current_climbable->get_x_pos();
                         position.y = current_climbable->get_upper_y_pos();
                         state = State::RollingDownClimbable;
+                        roll_distance = 0.f;
                     } else if ((vx < 0 && position.x < current_climbable->get_x_pos() - constants::BARREL_RADIUS) || (vx > 0 && position.x > current_climbable->get_x_pos() + constants::BARREL_RADIUS)) {
                         current_climbable.reset();
                     }
@@ -55,7 +57,7 @@ void Barrel::update(float dt, Stage &level) {
                     }
                 }
             } else {
-                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
+                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
                     set_on_platform(platform_below);
                     current_climbable.reset();
@@ -77,13 +79,15 @@ void Barrel::update(float dt, Stage &level) {
         case State::RollingDownClimbable:
             if (position.y < current_climbable->get_lower_y_pos()) {
                 position.y += vy * dt;
+                roll_distance += vy * dt * constants::BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR;
             } else {
                 set_on_platform(current_climbable->get_lower_end());
                 current_climbable.reset();
                 position.x += vx * dt;
                 position.y += vy * dt;
+                roll_distance = 0.f;
             }
-            break; // TODO
+            break;
     }
 
     if (position.y > constants::BARREL_RADIUS) {
@@ -102,9 +106,34 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
 }
 
 void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt) {
-    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, vy * dt));
+    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, platform_h_tolerance_left(), platform_h_tolerance_right(), platform_snap_distance(dt)));
 }
 
 void Barrel::check_referenced_entities() {
     handle_destroyed_indirect(current_platform);
+}
+
+float Barrel::platform_h_tolerance_left() const {
+    if (vx > 0.f) {
+        return constants::BARREL_RADIUS + vx * constants::PLATFORM_H_TOLERANCE_FACTOR;
+    } else {
+        return constants::BARREL_RADIUS;
+    }
+}
+
+float Barrel::platform_h_tolerance_right() const {
+    if (vx < 0.f) {
+        return constants::BARREL_RADIUS + -vx * constants::PLATFORM_H_TOLERANCE_FACTOR;
+    } else {
+        return constants::BARREL_RADIUS;
+    }
+}
+
+float Barrel::platform_snap_distance(float dt) const {
+    float distance = vy * dt;
+    if (distance > constants::PLATFORM_MINIMUM_SNAP_DISTANCE) {
+        return distance;
+    } else {
+        return constants::PLATFORM_MINIMUM_SNAP_DISTANCE;
+    }
 }

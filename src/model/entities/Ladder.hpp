@@ -12,7 +12,14 @@
 /// @brief Represents a ladder connecting two girders at a specific x position.
 class Ladder : public BaseEntity, public Climbable {
 public:
+    enum class Color {
+        Cyan,
+        Yellow,
+    };
+
     Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos, bool broken);
+
+    Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos, bool broken, Color color);
 
     bool is_active_for_player() const override {
         return !broken;
@@ -34,8 +41,17 @@ public:
         return std::make_unique<Component<Climbable>>(std::static_pointer_cast<Ladder>(shared_from_this()));
     }
 
+    Color get_color() const {
+        return color;
+    }
+
+    bool is_broken() const {
+        return broken;
+    }
+
 private:
     sf::RectangleShape shape;
     bool broken;
+    Color color;
 };
 #endif

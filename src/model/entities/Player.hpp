@@ -114,6 +114,12 @@ public:
 
     std::shared_ptr<Platform> get_current_platform() const { return current_platform; }
 
+    float get_walking_time() const { return walking_time; }
+
+    float get_climbing_time() const { return climbing_time; }
+
+    bool has_jumped() const { return has_jumped_flag; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
@@ -124,8 +130,15 @@ private:
     sf::Vector2f velocity;
     HorizontalDirection horizontal_direction = HorizontalDirection::None;
     VerticalDirection vertical_direction = VerticalDirection::None;
+    float walking_time = 0.0f;
+    float climbing_time = 0.0f;
+    bool has_jumped_flag = false;
 
     sf::RectangleShape shape;
+
+    float platform_h_tolerance_left() const;
+    float platform_h_tolerance_right() const;
+    float platform_snap_distance(float dt) const;
 };
 
 #endif

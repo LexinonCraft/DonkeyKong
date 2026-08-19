@@ -49,6 +49,16 @@ public:
     }
 
     /**
+     * @brief Adds a girder entity spanning the two endpoints.
+     * @param left Left endpoint of the girder.
+     * @param right Right endpoint of the girder.
+     * @return Shared pointer to the created girder.
+     */
+    std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right, Girder::Color color) {
+        return add_entity(std::make_shared<Girder>(gen_ref(), left, right, color));
+    }
+
+    /**
      * @brief Adds the player entity.
      * @return Shared pointer to the created player.
      */
@@ -65,6 +75,18 @@ public:
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken));
+    }
+
+    /**
+     * @brief Adds a ladder connecting two platform endpoints at an x-position.
+     * @param lower_end Lower platform endpoint.
+     * @param upper_end Upper platform endpoint.
+     * @param x_position Horizontal x-position of the ladder.
+     * @param color Color of the ladder.
+     * @return Shared pointer to the created ladder.
+     */
+    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken, Ladder::Color color) {
+        return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
     }
 
     /**

@@ -27,10 +27,18 @@ namespace constants {
     constexpr float PLAYER_WALKING_SPEED = 120.f;  // px/sec, horizontal speed while on a girder
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
 
+    constexpr float PLATFORM_H_TOLERANCE_FACTOR = 0.1f;  // factor of horizontal speed used to determine if an object is still on a platform
+    constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 5.f;  // px, minimum distance to snap to a platform when falling onto it
+
     constexpr float LADDER_WIDTH = 10.f;  // px
 
     constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
     constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
+
+    constexpr float PLAYER_WALKING_ANIMATION_INTERVAL = 0.1f;  // seconds between walking animation frames
+    constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
+    constexpr float BARREL_PLATFORM_ROLL_DISTANCE_FACTOR = 0.05f;
+    constexpr float BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR = 0.1f;
 }
 
 #endif
