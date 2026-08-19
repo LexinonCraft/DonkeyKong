@@ -9,10 +9,12 @@
 #include "BarrelRenderer.hpp"
 #include "PlayerRenderer.hpp"
 #include "LadderRenderer.hpp"
+#include "DonkeyKongRenderer.hpp"
 #include "../model/entities/Barrel.hpp"
 #include "../model/entities/Girder.hpp"
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
+#include "../model/entities/DonkeyKong.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.
@@ -49,6 +51,10 @@ private:
 
     void visit(Ladder &ladder) override {
         component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()), assets_manager);
+    }
+
+    void visit(DonkeyKong &donkey_kong) override {
+        component = std::make_unique<DonkeyKongRenderer>(std::static_pointer_cast<DonkeyKong>(donkey_kong.shared_from_this()), assets_manager);
     }
 };
 

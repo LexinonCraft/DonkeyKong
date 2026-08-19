@@ -13,6 +13,7 @@
 #include "../entities/Girder.hpp"
 #include "../entities/Player.hpp"
 #include "../entities/Ladder.hpp"
+#include "../entities/DonkeyKong.hpp"
 #include "Ref.hpp"
 
 /**
@@ -87,6 +88,10 @@ public:
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken, Ladder::Color color) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
+    }
+
+    std::shared_ptr<DonkeyKong> add_donkey_kong(std::shared_ptr<Platform> platform, float x_position, bool throw_barrels) {
+        return add_entity(std::make_shared<DonkeyKong>(gen_ref(), platform, x_position, throw_barrels));
     }
 
     /**

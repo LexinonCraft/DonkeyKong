@@ -1,7 +1,10 @@
 #include "AssetsManager.hpp"
 
 AssetsManager::AssetsManager(std::string base_path, std::string font_file) : textures_base_path(base_path), font(font_file) {
-    load("DonkeyKong.png", donkey_kong_texture);
+    load("donkey_kong_still.png", donkey_kong_still_texture);
+    load("donkey_kong_angry.png", donkey_kong_angry_texture);
+    load("donkey_kong_throwing_side.png", donkey_kong_throwing_side_texture);
+    load("donkey_kong_throwing_front.png", donkey_kong_throwing_front_texture);
     load("jumpman_still.png", jumpman_still_texture);
     load("girder_red.png", girder_red_texture);
     load("girder_blue.png", girder_blue_texture);
@@ -19,8 +22,14 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
     switch (id) {
-        case TextureId::DonkeyKong:
-            return donkey_kong_texture;
+        case TextureId::DonkeyKongStill:
+            return donkey_kong_still_texture;
+        case TextureId::DonkeyKongAngry:
+            return donkey_kong_angry_texture;
+        case TextureId::DonkeyKongThrowingSide:
+            return donkey_kong_throwing_side_texture;
+        case TextureId::DonkeyKongThrowingFront:
+            return donkey_kong_throwing_front_texture;
         case TextureId::JumpmanStill:
             return jumpman_still_texture;
         case TextureId::JumpmanWalking1:

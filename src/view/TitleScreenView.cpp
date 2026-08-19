@@ -23,7 +23,7 @@ void TitleScreenView::draw() {
     subtitle.setPosition(get_absolute_position({0.f, 100.f}, AnchorPosition::Center));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(subtitle);
 
-    sf::Sprite donkey_kong_sprite(assets_manager.get_texture(AssetsManager::TextureId::DonkeyKong));
+    sf::Sprite donkey_kong_sprite(assets_manager.get_texture(AssetsManager::TextureId::DonkeyKongStill));
     donkey_kong_sprite.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
     sf::FloatRect sprite_bounds = donkey_kong_sprite.getLocalBounds();
     donkey_kong_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});

@@ -16,7 +16,7 @@ namespace constants {
     // barrel / girder physics (increment 2). Remember: the view is y-inverted,
     // so +y points downward (toward the bottom of the screen) = gravity direction.
     constexpr float BARREL_RADIUS = 12.f;     // px
-    constexpr float ROLL_SPEED = 160.f;       // px/sec, constant horizontal roll on a girder
+    constexpr float ROLL_SPEED = 130.f;       // px/sec, constant horizontal roll on a girder
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 12.f;  // px
     constexpr float SEAM_SNAP_DISTANCE = GIRDER_THICKNESS;
@@ -39,6 +39,17 @@ namespace constants {
     constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
     constexpr float BARREL_PLATFORM_ROLL_DISTANCE_FACTOR = 0.05f;
     constexpr float BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR = 0.1f;
+
+    constexpr float BARREL_THROW_ANIMATION_INTERVAL = 0.5f;  // seconds between barrel throwing animation frames
+    constexpr float BARREL_THROW_OFFSET_X = 20.f;  // px, horizontal offset from Donkey Kong's position when throwing a barrel
+    constexpr unsigned int MAX_BARRELS_THROWN = 3;  // maximum number of barrels Donkey Kong can throw in one action
+    constexpr float DONKEY_KONG_MIN_IDLE_DURATION = 1.f;  // seconds, minimum duration Donkey Kong stays idle before taking an action
+    constexpr float DONKEY_KONG_MAX_IDLE_DURATION = 3.f;  // seconds, maximum duration Donkey Kong stays idle before taking an action
+    constexpr unsigned int DONKEY_KONG_IDLE_DURATION_STEPS = 5;  // number of discrete steps for idle duration randomization
+    constexpr float DONKEY_KONG_ANGRY_ANIMATION_INTERVAL = 0.75f;  // seconds between angry animation frames
+    constexpr unsigned int DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES = 2; // minimum number of angry animation frames before switching back to idle
+    constexpr unsigned int DONKEY_KONG_MAX_ANGRY_ANIMATION_FRAMES = 5; // maximum number of angry animation frames before switching back to idle
+    constexpr unsigned int DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS = 1; // maximum number of consecutive angry actions before forcing a barrel throw
 }
 
 #endif

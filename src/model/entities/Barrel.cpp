@@ -1,5 +1,6 @@
 #include "Barrel.hpp"
 
+#include <cmath>
 #include <memory>
 
 #include <SFML/Graphics/Color.hpp>
@@ -21,10 +22,11 @@ Barrel::Barrel(Ref ref, sf::Vector2f position) :
         shape.setPosition(position);
 }
 
-void Barrel::set_on_platform(std::shared_ptr<Platform> platform) {
+void Barrel::set_on_platform(std::shared_ptr<Platform> platform, int roll_direction) {
     if (!platform)
         return;
-    vx = constants::ROLL_SPEED * static_cast<float>(platform->downhill_sign());
+    int platform_sign = platform->downhill_sign();
+    vx = constants::ROLL_SPEED * static_cast<float>(platform_sign != 0 ? platform_sign : roll_direction);
     state = State::OnGirder;
     current_platform = platform;
     vy = 0.f;
@@ -59,7 +61,7 @@ void Barrel::update(float dt, Stage &level) {
             } else {
                 const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
-                    set_on_platform(platform_below);
+                    set_on_platform(platform_below, std::signbit(vx) ? -1 : 1);
                     current_climbable.reset();
                     position.y = current_platform->surface_y_at(position.x);
                 } else {
