@@ -10,6 +10,7 @@ class AssetsManager {
 public:
     enum class TextureId {
         DonkeyKong,
+        DonkeyKongNice,
         JumpmanStill,
         JumpmanWalking1,
         JumpmanWalking2,
@@ -36,6 +37,7 @@ private:
     std::string textures_base_path;
 
     sf::Texture donkey_kong_texture;
+    sf::Texture donkey_kong_nice_texture;
     sf::Texture jumpman_still_texture;
     sf::Texture jumpman_walking1_texture;
     sf::Texture jumpman_walking2_texture;
