@@ -20,8 +20,8 @@ void StageTransitionView::draw() {
         sf::Sprite donkey_kong_sprite(assets_manager.get_texture(AssetsManager::TextureId::DonkeyKongNice));
         sf::FloatRect donkey_kong_bounds = donkey_kong_sprite.getLocalBounds();
         donkey_kong_sprite.setOrigin({donkey_kong_bounds.size.x / 2, donkey_kong_bounds.size.y / 2});
-        donkey_kong_sprite.setPosition(get_absolute_position({0.f, -150.f - i * 75.f}, AnchorPosition::BottomCenter));
-        donkey_kong_sprite.setScale({0.5f, 0.5f});
+        donkey_kong_sprite.setPosition(get_absolute_position({0.f, -150.f - i * 100.f}, AnchorPosition::BottomCenter));
+        donkey_kong_sprite.setScale({0.7f, 0.7f});
         layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(donkey_kong_sprite);
 
         sf::Text stage_text(assets_manager.get_font());
@@ -38,7 +38,7 @@ void StageTransitionView::draw() {
         stage_text.setCharacterSize(18);
         sf::FloatRect stage_bounds = stage_text.getLocalBounds();
         stage_text.setOrigin({stage_bounds.size.x / 2, stage_bounds.size.y / 2});
-        stage_text.setPosition(get_absolute_position({-100.f, -150.f - i * 75.f}, AnchorPosition::BottomCenter));
+        stage_text.setPosition(get_absolute_position({-150.f, -150.f - i * 100.f}, AnchorPosition::BottomCenter));
         layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(stage_text);
     }
 
