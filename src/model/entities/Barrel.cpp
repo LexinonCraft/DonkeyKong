@@ -26,7 +26,10 @@ void Barrel::set_on_platform(std::shared_ptr<Platform> platform, int roll_direct
     if (!platform)
         return;
     int platform_sign = platform->downhill_sign();
-    vx = constants::ROLL_SPEED * static_cast<float>(platform_sign != 0 ? platform_sign : roll_direction);
+    int direction = platform_sign != 0 ? platform_sign : roll_direction;
+    if (direction == 0)
+        direction = 1;
+    vx = constants::ROLL_SPEED * static_cast<float>(direction);
     state = State::OnGirder;
     current_platform = platform;
     vy = 0.f;
