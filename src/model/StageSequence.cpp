@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "StageSequence.hpp"
 #include "stages/Stage100M.hpp"
 #include "DemoStage.hpp"
@@ -34,5 +36,7 @@ std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) 
             return std::make_unique<DemoStage>(id_generator, player_data);
         case StageId::Stage100M:
             return std::make_unique<DemoStage>(id_generator, player_data);
+        default:
+            throw std::logic_error("Unknown stage id");
     }
 }
