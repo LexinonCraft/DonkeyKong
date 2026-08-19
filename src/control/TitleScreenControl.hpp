@@ -22,6 +22,7 @@ public:
 private:
     TitleScreenView title_screen_view;
     NextScene next_scene = NextScene::Stay;
+    float animation_timer = 0.0f;
 };
 
 #endif
