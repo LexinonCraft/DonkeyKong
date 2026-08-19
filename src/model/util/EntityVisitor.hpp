@@ -23,6 +23,8 @@ public:
     virtual void visit(Ladder &ladder) = 0;
     /** @brief Visits a Donkey Kong entity. */
     virtual void visit(DonkeyKong &donkey_kong) = 0;
+    /** @brief Visits a barrel stack entity. */
+    virtual void visit(BarrelStack &barrel_stack) = 0;
 };
 
 #endif

@@ -22,5 +22,6 @@ class SceneVisitor;
 class PlayerData;
 class Enemy;
 class DonkeyKong;
+class BarrelStack;
 
 #endif

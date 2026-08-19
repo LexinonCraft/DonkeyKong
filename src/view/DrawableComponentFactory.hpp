@@ -10,6 +10,7 @@
 #include "PlayerRenderer.hpp"
 #include "LadderRenderer.hpp"
 #include "DonkeyKongRenderer.hpp"
+#include "BarrelStackRenderer.hpp"
 #include "../model/entities/Barrel.hpp"
 #include "../model/entities/Girder.hpp"
 #include "../model/entities/Player.hpp"
@@ -55,6 +56,10 @@ private:
 
     void visit(DonkeyKong &donkey_kong) override {
         component = std::make_unique<DonkeyKongRenderer>(std::static_pointer_cast<DonkeyKong>(donkey_kong.shared_from_this()), assets_manager);
+    }
+
+    void visit(BarrelStack &barrel_stack) override {
+        component = std::make_unique<BarrelStackRenderer>(std::static_pointer_cast<BarrelStack>(barrel_stack.shared_from_this()), assets_manager);
     }
 };
 

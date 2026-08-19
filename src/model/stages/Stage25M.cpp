@@ -34,6 +34,7 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     final_girder = p8;
 
     entities.add_donkey_kong(p7, 100, true);
+    entities.add_barrel_stack(p7, 30);
 }
 
 void Stage25M::update_while_running(float dt) {

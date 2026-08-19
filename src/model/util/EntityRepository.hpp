@@ -14,6 +14,7 @@
 #include "../entities/Player.hpp"
 #include "../entities/Ladder.hpp"
 #include "../entities/DonkeyKong.hpp"
+#include "../entities/BarrelStack.hpp"
 #include "Ref.hpp"
 
 /**
@@ -92,6 +93,10 @@ public:
 
     std::shared_ptr<DonkeyKong> add_donkey_kong(std::shared_ptr<Platform> platform, float x_position, bool throw_barrels) {
         return add_entity(std::make_shared<DonkeyKong>(gen_ref(), platform, x_position, throw_barrels));
+    }
+
+    std::shared_ptr<BarrelStack> add_barrel_stack(std::shared_ptr<Platform> platform, float x_position) {
+        return add_entity(std::make_shared<BarrelStack>(gen_ref(), platform, x_position));
     }
 
     /**
