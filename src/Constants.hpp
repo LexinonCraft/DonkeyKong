@@ -27,6 +27,11 @@ namespace constants {
     constexpr float PLAYER_WALKING_SPEED = 120.f;  // px/sec, horizontal speed while on a girder
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
 
+    constexpr float HAMMER_WIDTH = 16.f;
+    constexpr float HAMMER_HEIGHT = 20.f;
+    constexpr float HAMMER_DURATION = 10.f;
+    constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
+
     constexpr float PLATFORM_H_TOLERANCE_FACTOR = 0.1f;  // factor of horizontal speed used to determine if an object is still on a platform
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 5.f;  // px, minimum distance to snap to a platform when falling onto it
 

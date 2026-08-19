@@ -9,10 +9,12 @@
 #include "BarrelRenderer.hpp"
 #include "PlayerRenderer.hpp"
 #include "LadderRenderer.hpp"
+#include "HammerRenderer.hpp"
 #include "../model/entities/Barrel.hpp"
 #include "../model/entities/Girder.hpp"
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
+#include "../model/entities/HammerPowerUp.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.
@@ -49,6 +51,10 @@ private:
 
     void visit(Ladder &ladder) override {
         component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()), assets_manager);
+    }
+
+    void visit(HammerPowerUp &hammer) override {
+        component = std::make_unique<HammerRenderer>(std::static_pointer_cast<HammerPowerUp>(hammer.shared_from_this()));
     }
 };
 

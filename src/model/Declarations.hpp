@@ -21,5 +21,7 @@ class Updatable;
 class SceneVisitor;
 class PlayerData;
 class Enemy;
+class Pickable;
+class HammerPowerUp;
 
 #endif
