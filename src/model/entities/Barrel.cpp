@@ -47,6 +47,8 @@ void Barrel::update(float dt, Stage &level) {
                         position.y = current_climbable->get_upper_y_pos();
                         state = State::RollingDownClimbable;
                         roll_distance = 0.f;
+                    } else if ((vx < 0 && position.x < current_climbable->get_x_pos() - constants::BARREL_RADIUS) || (vx > 0 && position.x > current_climbable->get_x_pos() + constants::BARREL_RADIUS)) {
+                        current_climbable.reset();
                     }
                 } else {
                     current_climbable = level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
@@ -55,10 +57,17 @@ void Barrel::update(float dt, Stage &level) {
                     }
                 }
             } else {
-                // rolled off the lower end -> drop straight down off the ledge.
-                state = State::Falling;
-                vx = 0.f;
-                vy = 0.f;
+                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), constants::SEAM_SNAP_DISTANCE);
+                if (platform_below) {
+                    set_on_platform(platform_below);
+                    current_climbable.reset();
+                    position.y = current_platform->surface_y_at(position.x);
+                } else {
+                    state = State::Falling;
+                    current_climbable.reset();
+                    vx = 0.f;
+                    vy = 0.f;
+                }
             }
             break;
         case State::Falling:
@@ -81,8 +90,10 @@ void Barrel::update(float dt, Stage &level) {
             break;
     }
 
-    // No respawn here: once the barrel rolls off the last girder it just keeps
-    // falling. BarrelControl notices it has left the stage and replaces it.
+    if (position.y > constants::BARREL_RADIUS) {
+        destroy();
+    }
+
     shape.setPosition(position);
 }
 

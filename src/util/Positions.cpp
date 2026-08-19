@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Positions.hpp"
 #include "../Constants.hpp"
 
@@ -21,5 +23,7 @@ sf::Vector2f get_absolute_position(const sf::Vector2f &relative_position, Anchor
             return {relative_position.x + constants::VIEW_WIDTH / 2.f, relative_position.y};
         case AnchorPosition::BottomRight:
             return {relative_position.x + constants::VIEW_WIDTH, relative_position.y};
+        default:
+            throw std::logic_error("Unknown anchor position");
     }
 }

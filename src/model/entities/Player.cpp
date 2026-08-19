@@ -57,7 +57,13 @@ void Player::update(float dt, Stage &stage) {
             velocity.y = 0.f;
 
             if (!current_platform->covers_x(position.x, platform_h_tolerance_left(), platform_h_tolerance_right())) {
-                state = State::InAir;
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), constants::SEAM_SNAP_DISTANCE);
+                if (platform_below) {
+                    current_platform = platform_below;
+                    position.y = current_platform->surface_y_at(position.x);
+                } else {
+                    state = State::InAir;
+                }
                 break;
             }
 
