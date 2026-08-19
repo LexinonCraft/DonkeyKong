@@ -35,6 +35,8 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     entities.add_hammer_power_up({100.f, p7->surface_y_at(100.f)});
 
     final_girder = p8;
+
+    player->enter_platform(p0, 50);
 }
 
 void Stage25M::update_while_running(float dt) {

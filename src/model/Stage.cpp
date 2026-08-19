@@ -2,6 +2,7 @@
 
 #include "Stage.hpp"
 #include "PlayerData.hpp"
+#include "StageSequence.hpp"
 
 /**
  * @brief Creates a level and initializes the tracked repositories.
@@ -51,7 +52,7 @@ bool Stage::on_exit() {
                 return false;
             }
         case StageState::Completed:
-            advance_stage_id(player_data);
+            advance_stage(player_data);
             return true;
         default:
             throw std::runtime_error("Unknown stage state");

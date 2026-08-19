@@ -124,10 +124,15 @@ public:
 
     float get_hammer_time_remaining() const { return hammer_time_remaining; }
 
+    void enter_platform(std::shared_ptr<Platform> platform);
+
+    void enter_platform(std::shared_ptr<Platform> platform, float x_pos);
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
     std::shared_ptr<Climbable> current_ladder;
+    std::shared_ptr<Platform> last_fall_through_platform;
     bool facing_right = true;
 
     sf::Vector2f position;
@@ -138,12 +143,15 @@ private:
     float climbing_time = 0.0f;
     float hammer_time_remaining;
     bool has_jumped_flag = false;
+    float y_before_jump = 0.0f;
 
     sf::RectangleShape shape;
 
-    float platform_h_tolerance_left() const;
-    float platform_h_tolerance_right() const;
     float platform_snap_distance(float dt) const;
+
+    bool handle_platform_fall_through();
+
+    void die(Stage &stage);
 };
 
 #endif

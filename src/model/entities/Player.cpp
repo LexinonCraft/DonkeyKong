@@ -12,7 +12,7 @@
 Player::Player(Ref ref) :
     BaseEntity(ref),
     state(State::InAir),
-    position(100.f, -200.f),
+    position(0.f, 0.f),
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
     vertical_direction(VerticalDirection::None),
@@ -55,16 +55,21 @@ void Player::update(float dt, Stage &stage) {
     position.y += velocity.y * dt;
 
     switch (state) {
-        case State::OnPlatform:
+        case State::OnPlatform: {
+            if (handle_platform_fall_through()) {
+                break;
+            }
+            last_fall_through_platform = nullptr;
+
             velocity.x = walking_dir;
             position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
+            y_before_jump = position.y;
 
-            if (!current_platform->covers_x(position.x, platform_h_tolerance_left(), platform_h_tolerance_right())) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), constants::SEAM_SNAP_DISTANCE);
+            if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f) || !current_platform->is_active()) {
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE, last_fall_through_platform);
                 if (platform_below) {
-                    current_platform = platform_below;
-                    position.y = current_platform->surface_y_at(position.x);
+                    enter_platform(platform_below);
                 } else {
                     state = State::InAir;
                 }
@@ -109,16 +114,18 @@ void Player::update(float dt, Stage &stage) {
                     break;
             }
             break;
+        }
         case State::InAir:
             velocity.y += constants::GRAVITY * dt;
 
+            if (position.y - y_before_jump > constants::PLAYER_MAX_FALL_HEIGHT) {
+                die(stage);
+            }
+
             if (velocity.y > 0.0f) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, platform_h_tolerance_left(), platform_h_tolerance_right(), platform_snap_distance(dt));
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, platform_snap_distance(dt), last_fall_through_platform);
                 if (platform_below) {
-                    state = State::OnPlatform;
-                    current_platform = platform_below;
-                    velocity.y = 0.0f;
-                    position.y = current_platform->surface_y_at(position.x);
+                    enter_platform(platform_below);
                 }
             }
             break;
@@ -175,13 +182,15 @@ void Player::update(float dt, Stage &stage) {
 
     shape.setPosition(position);
 
-    if (auto pickable = stage.get_pickables().find_touching_pickable(shape)) {
-        switch (pickable->get_type()) {
-            case Pickable::Type::Hammer:
-                hammer_time_remaining = constants::HAMMER_DURATION;
-                break;
+    if (state == State::OnPlatform || state == State::InAir) {
+        if (auto pickable = stage.get_pickables().find_touching_pickable(shape)) {
+            switch (pickable->get_type()) {
+                case Pickable::Type::Hammer:
+                    hammer_time_remaining = constants::HAMMER_DURATION;
+                    break;
+            }
+            pickable->on_picked_up();
         }
-        pickable->on_picked_up();
     }
 
     if (has_hammer()) {
@@ -190,8 +199,7 @@ void Player::update(float dt, Stage &stage) {
             stage.get_player_data().add_to_score(constants::HAMMER_BARREL_SCORE);
         }
     } else if (stage.get_enemies().find_touching_enemy(shape)) {
-        state = State::Dying;
-        stage.on_player_dying();
+        die(stage);
     }
 }
 
@@ -228,22 +236,6 @@ void Player::accept(EntityVisitor &visitor) {
     visitor.visit(*this);
 }
 
-float Player::platform_h_tolerance_left() const {
-    if (velocity.x > 0.f) {
-        return constants::PLAYER_WIDTH / 2.f + velocity.x * constants::PLATFORM_H_TOLERANCE_FACTOR;
-    } else {
-        return constants::PLAYER_WIDTH / 2.f;
-    }
-}
-
-float Player::platform_h_tolerance_right() const {
-    if (velocity.x < 0.f) {
-        return constants::PLAYER_WIDTH / 2.f + -velocity.x * constants::PLATFORM_H_TOLERANCE_FACTOR;
-    } else {
-        return constants::PLAYER_WIDTH / 2.f;
-    }
-}
-
 float Player::platform_snap_distance(float dt) const {
     float distance = velocity.y * dt;
     if (distance > constants::PLATFORM_MINIMUM_SNAP_DISTANCE) {
@@ -251,4 +243,34 @@ float Player::platform_snap_distance(float dt) const {
     } else {
         return constants::PLATFORM_MINIMUM_SNAP_DISTANCE;
     }
+}
+
+void Player::enter_platform(std::shared_ptr<Platform> platform) {
+    state = State::OnPlatform;
+    current_platform = platform;
+    position.y = current_platform->surface_y_at(position.x);
+}
+
+void Player::enter_platform(std::shared_ptr<Platform> platform, float x_pos) {
+    position.x = x_pos;
+    enter_platform(platform);
+}
+
+bool Player::handle_platform_fall_through() {
+    if (!current_platform) {
+        return false;
+    }
+    bool fall_through = current_platform->fall_through(std::static_pointer_cast<Player>(shared_from_this()));
+    if (fall_through) {
+        state = State::InAir;
+        velocity.x = 0.f;
+        last_fall_through_platform = current_platform;
+        return true;
+    }
+    return false;
+}
+
+void Player::die(Stage &stage) {
+    state = State::Dying;
+    stage.on_player_dying();
 }

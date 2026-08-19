@@ -6,8 +6,6 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ladder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/HammerPowerUp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Stage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoStage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoStage2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/ClimbableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PlatformComponentRepository.cpp
@@ -19,6 +17,8 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PickableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/StageSequence.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage25M.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage100M.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DissolvingPlatform.cpp
     )
 
 # Controller

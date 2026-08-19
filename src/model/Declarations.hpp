@@ -23,5 +23,6 @@ class PlayerData;
 class Enemy;
 class Pickable;
 class HammerPowerUp;
+class DissolvingPlatform;
 
 #endif

@@ -5,7 +5,7 @@
 - [x] Adapt the `Ladder` and `Player` classes to the ECS architecture
 - [x] Add code comments
 - [x] Add hammer power-up
-- [ ] Add other stages
+- [x] Add other stages
 - [x] Fix bug where player/barrels can fall through two connected girders
 
 ## Medium priority
@@ -16,10 +16,11 @@
 - [x] Add broken ladders
 - [x] Allow barrels to roll down ladders
 - [x] Seed for RNG
+- [ ] Add fireballs to 100M stage
 
 ## Low priority
 
-- [ ] Add textures
+- [x] Add textures
 - [ ] Perform useful generalizations
 - [ ] Add a main menu
 

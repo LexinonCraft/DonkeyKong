@@ -14,6 +14,7 @@
 #include "../entities/HammerPowerUp.hpp"
 #include "../entities/Player.hpp"
 #include "../entities/Ladder.hpp"
+#include "../entities/DissolvingPlatform.hpp"
 #include "Ref.hpp"
 
 /**
@@ -92,6 +93,10 @@ public:
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken, Ladder::Color color) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
+    }
+
+    std::shared_ptr<DissolvingPlatform> add_dissolving_platform(sf::Vector2f position, float width) {
+        return add_entity(std::make_shared<DissolvingPlatform>(gen_ref(), position, width));
     }
 
     /**
