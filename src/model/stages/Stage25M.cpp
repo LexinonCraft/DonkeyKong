@@ -32,6 +32,8 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     entities.add_ladder(p7, p8, 340, false);
 
     final_girder = p8;
+
+    player->enter_platform(p0, 50);
 }
 
 void Stage25M::update_while_running(float dt) {
