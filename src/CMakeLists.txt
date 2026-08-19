@@ -5,8 +5,6 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ladder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Stage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoStage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/model/DemoStage2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/ClimbableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PlatformComponentRepository.cpp

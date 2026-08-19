@@ -3,8 +3,6 @@
 #include "StageSequence.hpp"
 #include "stages/Stage100M.hpp"
 #include "stages/Stage25M.hpp"
-#include "DemoStage.hpp"
-#include "DemoStage2.hpp"
 #include "PlayerData.hpp"
 
 unsigned int get_number_of_stages_in_level(unsigned level) {
@@ -46,10 +44,10 @@ std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) 
     switch (stage_id) {
         case StageId::Stage25M:
             return std::make_unique<Stage25M>(id_generator, player_data);
-        case StageId::Stage50M:
-            return std::make_unique<DemoStage2>(id_generator, player_data);
-        case StageId::Stage75M:
-            return std::make_unique<DemoStage>(id_generator, player_data);
+//        case StageId::Stage50M:
+//            return std::make_unique<DemoStage2>(id_generator, player_data);
+//        case StageId::Stage75M:
+//            return std::make_unique<DemoStage>(id_generator, player_data);
         case StageId::Stage100M:
             return std::make_unique<Stage100M>(id_generator, player_data);
         default:
