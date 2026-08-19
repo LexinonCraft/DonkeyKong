@@ -27,6 +27,7 @@ public:
     void draw(LayerStack &layer_stack) override {
         AssetsManager::TextureId texture_id;
         bool flip;
+        bool render_barrel = false;
         switch (donkey_kong->get_state()) {
             case DonkeyKong::State::Idle:
                 texture_id = AssetsManager::TextureId::DonkeyKongStill;
@@ -41,6 +42,7 @@ public:
                     case 1:
                         texture_id = AssetsManager::TextureId::DonkeyKongThrowingFront;
                         flip = false;
+                        render_barrel = true;
                         break;
                     case 2:
                         texture_id = AssetsManager::TextureId::DonkeyKongThrowingSide;
@@ -60,12 +62,21 @@ public:
                 break;
         }
 
-        sf::Sprite sprite(assets_manager.get_texture(texture_id));
-        sf::FloatRect bounds = sprite.getLocalBounds();
-        sprite.setOrigin({bounds.size.x / 2.f, bounds.size.y});
-        sprite.setPosition(donkey_kong->get_position());
-        sprite.setScale({flip ? -2.f : 2.f, 2.f});
-        layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(sprite);
+        sf::Sprite donkey_kong_sprite(assets_manager.get_texture(texture_id));
+        sf::FloatRect donkey_kong_bounds = donkey_kong_sprite.getLocalBounds();
+        donkey_kong_sprite.setOrigin({donkey_kong_bounds.size.x / 2.f, donkey_kong_bounds.size.y});
+        donkey_kong_sprite.setPosition(donkey_kong->get_position());
+        donkey_kong_sprite.setScale({flip ? -2.f : 2.f, 2.f});
+        layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(donkey_kong_sprite);
+
+        if (render_barrel) {
+            sf::Sprite barrel_sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelSide1));
+            sf::FloatRect barrel_bounds = barrel_sprite.getLocalBounds();
+            barrel_sprite.setOrigin({barrel_bounds.size.x / 2.f, barrel_bounds.size.y});
+            barrel_sprite.setPosition({donkey_kong->get_position().x, donkey_kong->get_position().y - constants::DONKEY_KONG_HOLDED_BARREL_OFFSET_Y});
+            barrel_sprite.setScale({constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.x, constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.y});
+            layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(barrel_sprite);
+        }
     }
 
 private:

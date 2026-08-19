@@ -50,6 +50,7 @@ namespace constants {
     constexpr unsigned int DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES = 2; // minimum number of angry animation frames before switching back to idle
     constexpr unsigned int DONKEY_KONG_MAX_ANGRY_ANIMATION_FRAMES = 5; // maximum number of angry animation frames before switching back to idle
     constexpr unsigned int DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS = 1; // maximum number of consecutive angry actions before forcing a barrel throw
+    constexpr float DONKEY_KONG_HOLDED_BARREL_OFFSET_Y = 10.f;  // px, vertical offset from Donkey Kong's position when holding a barrel
 }
 
 #endif
