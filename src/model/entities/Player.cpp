@@ -87,31 +87,33 @@ void Player::update(float dt, Stage &stage) {
                     break;
             }
 
-            switch (vertical_direction) {
-                case VerticalDirection::Up:
-                    {
-                        std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                        if (ladder) {
-                            state = State::Climbing;
-                            current_ladder = ladder;
-                            velocity.x = 0.f;
-                            velocity.y = climbing_dir;
+            if (!has_hammer()) {
+                switch (vertical_direction) {
+                    case VerticalDirection::Up:
+                        {
+                            std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                            if (ladder) {
+                                state = State::Climbing;
+                                current_ladder = ladder;
+                                velocity.x = 0.f;
+                                velocity.y = climbing_dir;
+                            }
                         }
-                    }
-                    break;
-                case VerticalDirection::Down:
-                    {
-                        std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                        if (ladder) {
-                            state = State::Climbing;
-                            current_ladder = ladder;
-                            velocity.x = 0.f;
-                            velocity.y = climbing_dir;
+                        break;
+                    case VerticalDirection::Down:
+                        {
+                            std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                            if (ladder) {
+                                state = State::Climbing;
+                                current_ladder = ladder;
+                                velocity.x = 0.f;
+                                velocity.y = climbing_dir;
+                            }
                         }
-                    }
-                    break;
-                case VerticalDirection::None:
-                    break;
+                        break;
+                    case VerticalDirection::None:
+                        break;
+                }
             }
             break;
         }
@@ -212,7 +214,7 @@ void Player::set_vertical_direction(VerticalDirection dir) {
 }
 
 void Player::jump() {
-    if (state == State::OnPlatform) {
+    if (state == State::OnPlatform && !has_hammer()) {
         state = State::InAir;
         velocity.y = -constants::PLAYER_JUMP_SPEED;
         has_jumped_flag = true;
