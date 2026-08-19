@@ -10,7 +10,7 @@
 Player::Player(Ref ref) :
     BaseEntity(ref),
     state(State::InAir),
-    position(100.f, -200.f),
+    position(0.f, 0.f),
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
     vertical_direction(VerticalDirection::None),
@@ -224,6 +224,11 @@ void Player::enter_platform(std::shared_ptr<Platform> platform) {
     state = State::OnPlatform;
     current_platform = platform;
     position.y = current_platform->surface_y_at(position.x);
+}
+
+void Player::enter_platform(std::shared_ptr<Platform> platform, float x_pos) {
+    position.x = x_pos;
+    enter_platform(platform);
 }
 
 bool Player::handle_platform_fall_through() {
