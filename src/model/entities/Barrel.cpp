@@ -65,7 +65,6 @@ void Barrel::update(float dt, Stage &level) {
                 } else {
                     state = State::Falling;
                     current_climbable.reset();
-                    vx = 0.f;
                     vy = 0.f;
                 }
             }
@@ -75,6 +74,21 @@ void Barrel::update(float dt, Stage &level) {
             check_platform_intersection(level.get_platforms(), dt);
             position.x += vx * dt;
             position.y += vy * dt;
+
+            if (state == State::Falling) {
+                if (auto left_boundary = level.get_left_boundary()) {
+                    if (position.x < *left_boundary) {
+                        position.x = *left_boundary;
+                        vx = -vx;
+                    }
+                }
+                if (auto right_boundary = level.get_right_boundary()) {
+                    if (position.x > *right_boundary) {
+                        position.x = *right_boundary;
+                        vx = -vx;
+                    }
+                }
+            }
             break;
         case State::RollingDownClimbable:
             if (position.y < current_climbable->get_lower_y_pos()) {
