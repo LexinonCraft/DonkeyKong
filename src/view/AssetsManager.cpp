@@ -18,6 +18,10 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
     load("barrel_side2.png", barrel_side2_texture);
     load("ladder_cyan.png", ladder_cyan_texture);
     load("ladder_yellow.png", ladder_yellow_texture);
+    load("pauline_still.png", pauline_still_texture);
+    load("pauline_scream1.png", pauline_scream1_texture);
+    load("pauline_scream2.png", pauline_scream2_texture);
+    load("help.png", help_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
@@ -56,6 +60,14 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return ladder_cyan_texture;
         case TextureId::LadderYellow:
             return ladder_yellow_texture;
+        case TextureId::PaulineStill:
+            return pauline_still_texture;
+        case TextureId::PaulineScream1:
+            return pauline_scream1_texture;
+        case TextureId::PaulineScream2:
+            return pauline_scream2_texture;
+        case TextureId::Help:
+            return help_texture;
         default:
             throw std::runtime_error("Unknown texture ID");
     }

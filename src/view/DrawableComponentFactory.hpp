@@ -11,11 +11,13 @@
 #include "LadderRenderer.hpp"
 #include "DonkeyKongRenderer.hpp"
 #include "BarrelStackRenderer.hpp"
+#include "PaulineRenderer.hpp"
 #include "../model/entities/Barrel.hpp"
 #include "../model/entities/Girder.hpp"
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
 #include "../model/entities/DonkeyKong.hpp"
+#include "../model/entities/Pauline.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.
@@ -60,6 +62,10 @@ private:
 
     void visit(BarrelStack &barrel_stack) override {
         component = std::make_unique<BarrelStackRenderer>(std::static_pointer_cast<BarrelStack>(barrel_stack.shared_from_this()), assets_manager);
+    }
+
+    void visit(Pauline &pauline) override {
+        component = std::make_unique<PaulineRenderer>(std::static_pointer_cast<Pauline>(pauline.shared_from_this()), assets_manager);
     }
 };
 

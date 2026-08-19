@@ -25,6 +25,8 @@ public:
     virtual void visit(DonkeyKong &donkey_kong) = 0;
     /** @brief Visits a barrel stack entity. */
     virtual void visit(BarrelStack &barrel_stack) = 0;
+    /** @brief Visits a Pauline entity. */
+    virtual void visit(Pauline &pauline) = 0;
 };
 
 #endif

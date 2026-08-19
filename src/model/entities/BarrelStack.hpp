@@ -12,12 +12,6 @@
 
 class BarrelStack : public BaseEntity {
 public:
-    enum class State {
-        Idle,
-        ThrowingBarrel,
-        Angry,
-    };
-
     BarrelStack(Ref ref, std::shared_ptr<Platform> platform, float x_position) : BaseEntity(ref), position({x_position, platform->surface_y_at(x_position)}) {}
 
     void accept(EntityVisitor &visitor) override {

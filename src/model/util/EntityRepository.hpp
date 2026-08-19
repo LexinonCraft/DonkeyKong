@@ -15,6 +15,7 @@
 #include "../entities/Ladder.hpp"
 #include "../entities/DonkeyKong.hpp"
 #include "../entities/BarrelStack.hpp"
+#include "../entities/Pauline.hpp"
 #include "Ref.hpp"
 
 /**
@@ -97,6 +98,10 @@ public:
 
     std::shared_ptr<BarrelStack> add_barrel_stack(std::shared_ptr<Platform> platform, float x_position) {
         return add_entity(std::make_shared<BarrelStack>(gen_ref(), platform, x_position));
+    }
+
+    std::shared_ptr<Pauline> add_pauline(std::shared_ptr<Platform> platform, float x_position) {
+        return add_entity(std::make_shared<Pauline>(gen_ref(), platform, x_position));
     }
 
     /**
