@@ -105,6 +105,10 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
+void Barrel::on_hammer_hit() {
+    destroy();
+}
+
 void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt) {
     set_on_platform(platforms.find_platform_underneath({position.x, position.y}, platform_h_tolerance_left(), platform_h_tolerance_right(), platform_snap_distance(dt)));
 }

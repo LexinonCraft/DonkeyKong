@@ -41,6 +41,9 @@ public:
             texture_id = AssetsManager::TextureId::JumpmanStill;
         }
         player_sprite.setTexture(assets_manager.get_texture(texture_id));
+        if (player->has_hammer()) {
+            player_sprite.setColor(sf::Color(255, 210, 120));
+        }
 
         player_sprite.setPosition(player->get_position());
         player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});

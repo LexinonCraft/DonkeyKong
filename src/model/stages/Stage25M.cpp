@@ -31,6 +31,8 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     entities.add_ladder(p5, p6, 490, false);
     entities.add_ladder(p7, p8, 340, false);
 
+    entities.add_hammer_power_up({140.f, p0->surface_y_at(140.f)});
+
     final_girder = p8;
 }
 

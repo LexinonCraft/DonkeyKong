@@ -1,8 +1,11 @@
-#include <SFML/System/Angle.hpp>
+#include <algorithm>
 #include <memory>
+
+#include <SFML/System/Angle.hpp>
 
 #include "Player.hpp"
 #include "../../Constants.hpp"
+#include "../PlayerData.hpp"
 #include "../util/EntityVisitor.hpp"
 #include "../Stage.hpp"
 
@@ -13,6 +16,7 @@ Player::Player(Ref ref) :
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
     vertical_direction(VerticalDirection::None),
+    hammer_time_remaining(0.f),
     shape({constants::PLAYER_WIDTH, constants::PLAYER_HEIGHT}) {
         // origin at the rectangle's centre so `position` is the player's centre
         shape.setOrigin({constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT}); // origin at the bottom centre of the rectangle
@@ -167,9 +171,25 @@ void Player::update(float dt, Stage &stage) {
         has_jumped_flag = false;
     }
 
+    hammer_time_remaining = std::max(0.f, hammer_time_remaining - dt);
+
     shape.setPosition(position);
 
-    if (stage.get_enemies().find_touching_enemy(shape)) {
+    if (auto pickable = stage.get_pickables().find_touching_pickable(shape)) {
+        switch (pickable->get_type()) {
+            case Pickable::Type::Hammer:
+                hammer_time_remaining = constants::HAMMER_DURATION;
+                break;
+        }
+        pickable->on_picked_up();
+    }
+
+    if (has_hammer()) {
+        if (auto enemy = stage.get_enemies().find_touching_enemy(shape)) {
+            enemy->on_hammer_hit();
+            stage.get_player_data().add_to_score(constants::HAMMER_BARREL_SCORE);
+        }
+    } else if (stage.get_enemies().find_touching_enemy(shape)) {
         state = State::Dying;
         stage.on_player_dying();
     }

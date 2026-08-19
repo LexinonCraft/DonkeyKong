@@ -120,6 +120,8 @@ public:
 
     bool has_jumped() const { return has_jumped_flag; }
 
+    bool has_hammer() const { return hammer_time_remaining > 0.f; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
@@ -132,6 +134,7 @@ private:
     VerticalDirection vertical_direction = VerticalDirection::None;
     float walking_time = 0.0f;
     float climbing_time = 0.0f;
+    float hammer_time_remaining;
     bool has_jumped_flag = false;
 
     sf::RectangleShape shape;
