@@ -122,6 +122,8 @@ public:
 
     bool has_hammer() const { return hammer_time_remaining > 0.f; }
 
+    float get_hammer_time_remaining() const { return hammer_time_remaining; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;

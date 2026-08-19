@@ -30,6 +30,7 @@ namespace constants {
     constexpr float HAMMER_WIDTH = 16.f;
     constexpr float HAMMER_HEIGHT = 20.f;
     constexpr float HAMMER_DURATION = 10.f;
+    constexpr float HAMMER_SWING_ANIMATION_INTERVAL = 0.2f;
     constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
 
     constexpr float PLATFORM_H_TOLERANCE_FACTOR = 0.1f;  // factor of horizontal speed used to determine if an object is still on a platform
