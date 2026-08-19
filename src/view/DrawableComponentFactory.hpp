@@ -56,7 +56,7 @@ private:
     }
 
     void visit(HammerPowerUp &hammer) override {
-        component = std::make_unique<HammerRenderer>(std::static_pointer_cast<HammerPowerUp>(hammer.shared_from_this()));
+        component = std::make_unique<HammerRenderer>(std::static_pointer_cast<HammerPowerUp>(hammer.shared_from_this()), assets_manager);
     }
 
     void visit(DissolvingPlatform &dissolving_platform) override {
