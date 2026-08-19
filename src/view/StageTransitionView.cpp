@@ -3,12 +3,13 @@
 
 #include "StageTransitionView.hpp"
 #include "../util/Positions.hpp"
+#include "../model/StageSequence.hpp"
 
 void StageTransitionView::draw() {
     pre_draw();
 
     std::string stage_label;
-    switch (player_data.get_stage()) {
+    switch (get_stage_id(player_data)) {
         case StageId::Stage25M:
             stage_label = "25M";
             break;

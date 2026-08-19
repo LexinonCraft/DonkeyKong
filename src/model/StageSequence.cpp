@@ -7,26 +7,41 @@
 #include "DemoStage2.hpp"
 #include "PlayerData.hpp"
 
-void advance_stage_id(PlayerData &player_data) {
+unsigned int get_number_of_stages_in_level(unsigned level) {
     // TODO
-    switch (player_data.get_stage()) {
-        case StageId::Stage25M:
-            player_data.set_level_and_stage(player_data.get_level(), StageId::Stage50M);
-            break;
-        case StageId::Stage50M:
-            player_data.set_level_and_stage(player_data.get_level(), StageId::Stage75M);
-            break;
-        case StageId::Stage75M:
-            player_data.set_level_and_stage(player_data.get_level(), StageId::Stage100M);
-            break;
-        case StageId::Stage100M:
-            player_data.set_level_and_stage(player_data.get_level() + 1, StageId::Stage25M);
-            break;
+    return 2;
+}
+
+void advance_stage(PlayerData &player_data) {
+    unsigned int current_stage_in_level = player_data.get_stage_in_level();
+    unsigned int current_level = player_data.get_level();
+    unsigned int number_of_stages_in_level = get_number_of_stages_in_level(current_level);
+
+    if (current_stage_in_level + 1 < number_of_stages_in_level) {
+        player_data.set_level_and_stage_in_level(current_level, current_stage_in_level + 1);
+    } else {
+        player_data.set_level_and_stage_in_level(current_level + 1, 0);
     }
 }
 
+StageId get_stage_id(unsigned int level, unsigned int stage_in_level) {
+    // TODO
+    switch (stage_in_level) {
+        case 0:
+            return StageId::Stage25M;
+        case 1:
+            return StageId::Stage100M;
+        default:
+            throw std::logic_error("Unknown stage in level");
+    }
+}
+
+StageId get_stage_id(PlayerData &player_data) {
+    return get_stage_id(player_data.get_level(), player_data.get_stage_in_level());
+}
+
 std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) {
-    StageId stage_id = player_data.get_stage();
+    StageId stage_id = get_stage_id(player_data);
     // TODO
     switch (stage_id) {
         case StageId::Stage25M:
@@ -36,7 +51,7 @@ std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) 
         case StageId::Stage75M:
             return std::make_unique<DemoStage>(id_generator, player_data);
         case StageId::Stage100M:
-            return std::make_unique<DemoStage>(id_generator, player_data);
+            return std::make_unique<Stage100M>(id_generator, player_data);
         default:
             throw std::logic_error("Unknown stage id");
     }
