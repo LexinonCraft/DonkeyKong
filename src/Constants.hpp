@@ -19,7 +19,7 @@ namespace constants {
     constexpr float ROLL_SPEED = 160.f;       // px/sec, constant horizontal roll on a girder
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 12.f;  // px
-    constexpr float SEAM_SNAP_DISTANCE = GIRDER_THICKNESS;
+    constexpr float SEAM_SNAP_DISTANCE = GIRDER_THICKNESS / 4.f;  // px, distance to snap to a girder when falling onto it
 
     constexpr float PLAYER_WIDTH = 20.f;        // px
     constexpr float PLAYER_HEIGHT = 32.f;       // px
@@ -27,7 +27,6 @@ namespace constants {
     constexpr float PLAYER_WALKING_SPEED = 120.f;  // px/sec, horizontal speed while on a girder
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
 
-    constexpr float PLATFORM_H_TOLERANCE_FACTOR = 0.1f;  // factor of horizontal speed used to determine if an object is still on a platform
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 5.f;  // px, minimum distance to snap to a platform when falling onto it
 
     constexpr float LADDER_WIDTH = 10.f;  // px

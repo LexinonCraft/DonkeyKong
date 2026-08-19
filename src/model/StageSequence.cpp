@@ -2,6 +2,7 @@
 
 #include "StageSequence.hpp"
 #include "stages/Stage100M.hpp"
+#include "stages/Stage25M.hpp"
 #include "DemoStage.hpp"
 #include "DemoStage2.hpp"
 #include "PlayerData.hpp"

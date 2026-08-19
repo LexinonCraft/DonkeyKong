@@ -136,8 +136,6 @@ private:
 
     sf::RectangleShape shape;
 
-    float platform_h_tolerance_left() const;
-    float platform_h_tolerance_right() const;
     float platform_snap_distance(float dt) const;
 };
 

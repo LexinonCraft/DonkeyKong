@@ -8,9 +8,9 @@
  */
 Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     auto p0 = entities.add_girder({0, -20}, {constants::VIEW_WIDTH, -20}, Girder::Color::Blue);
-    auto p1 = entities.add_girder({20, -130}, {150, -130}, Girder::Color::Blue);
-    auto p2 = entities.add_girder({170, -130}, {constants::VIEW_WIDTH - 170, -130}, Girder::Color::Blue);
-    auto p3 = entities.add_girder({constants::VIEW_WIDTH - 150, -130}, {constants::VIEW_WIDTH - 20, -130}, Girder::Color::Blue);
+    auto p1 = entities.add_girder({20, -130}, {145, -130}, Girder::Color::Blue);
+    auto p2 = entities.add_girder({175, -130}, {constants::VIEW_WIDTH - 175, -130}, Girder::Color::Blue);
+    auto p3 = entities.add_girder({constants::VIEW_WIDTH - 145, -130}, {constants::VIEW_WIDTH - 20, -130}, Girder::Color::Blue);
 }
 
 void Stage100M::update_while_running(float dt) {
