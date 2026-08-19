@@ -118,6 +118,11 @@ public:
     }
 
     /**
+     * @brief Adds all entities queued for insertion and notifies observers.
+     */
+    void handle_additions();
+
+    /**
      * @brief Removes all entities queued for deletion and validates remaining references.
      */
     void handle_deletions();
@@ -174,18 +179,13 @@ private:
      */
     template <typename E>
     std::shared_ptr<E> add_entity(std::shared_ptr<E> entity) {
-        Id id = entity->get_ref().get_id();
-        entities[id] = entity;
-
-        for (auto it = observers.begin(); it != observers.end(); ++it) {
-            it->second->on_entity_added(std::static_pointer_cast<BaseEntity>(entity));
-        }
-
+        pending_additions.push(std::static_pointer_cast<BaseEntity>(entity));
         return entity;
     }
 
     std::unordered_map<Id, std::shared_ptr<BaseEntity>> entities;
     std::unordered_map<Id, EntityRepositoryObserver *> observers;
+    std::queue<std::shared_ptr<BaseEntity>> pending_additions;
     std::queue<Id> pending_deletions;
     Id (*id_generator)();
 };

@@ -18,6 +18,7 @@ void Stage::update(float dt) {
         time_since_state_change += dt;
     }
 
+    entities.handle_additions();
     entities.handle_deletions();
 
     if (state == StageState::Running) {
