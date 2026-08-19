@@ -10,6 +10,7 @@
 #include "../Declarations.hpp"
 #include "../util/BaseEntity.hpp"
 #include "../../Constants.hpp"
+#include "Player.hpp"
 
 /**
  * @brief Dissolving platform entity that forms the walkable floors of the level.
@@ -101,13 +102,6 @@ public:
         if (is_dissolving && dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
             dissolve_timer += dt;
         }
-        if (player_falling_through) {
-            fall_through_timer += dt;
-            if (fall_through_timer >= constants::DISSOLVING_PLATFORM_FALL_THROUGH_DURATION) {
-                player_falling_through = false;
-                fall_through_timer = 0.f;
-            }
-        }
     }
 
     /**
@@ -122,17 +116,13 @@ public:
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DissolvingPlatform>(shared_from_this()));
     }
 
-    bool on_enter_player() override {
-        if (!is_dissolving) {
+    bool fall_through(std::shared_ptr<Player> player) override {
+        float player_x_pos = player->get_position().x;
+        if (!is_dissolving && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE)) {
             is_dissolving = true;
             dissolve_timer = 0.f;
         }
-        if (has_dissolved()) {
-            player_falling_through = true;
-            fall_through_timer = 0.f;
-            return true;
-        }
-        return false;
+        return has_dissolved() && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
     }
 
     bool has_dissolved() const {
@@ -144,8 +134,6 @@ private:
     float width;
     bool is_dissolving = false;
     float dissolve_timer = 0.f;
-    bool player_falling_through = false;
-    float fall_through_timer = 0.f;
     sf::RectangleShape shape;
 };
 

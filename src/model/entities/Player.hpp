@@ -124,6 +124,7 @@ private:
     State state;
     std::shared_ptr<Platform> current_platform;
     std::shared_ptr<Climbable> current_ladder;
+    std::shared_ptr<Platform> last_fall_through_platform;
     bool facing_right = true;
 
     sf::Vector2f position;
@@ -139,6 +140,8 @@ private:
     float platform_snap_distance(float dt) const;
 
     void enter_platform(std::shared_ptr<Platform> platform);
+
+    bool handle_platform_fall_through();
 };
 
 #endif

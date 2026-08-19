@@ -27,7 +27,7 @@ namespace constants {
     constexpr float PLAYER_WALKING_SPEED = 120.f;  // px/sec, horizontal speed while on a girder
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
 
-    constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 5.f;  // px, minimum distance to snap to a platform when falling onto it
+    constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 2.f;  // px, minimum distance to snap to a platform when falling onto it
 
     constexpr float LADDER_WIDTH = 10.f;  // px
 
@@ -40,7 +40,9 @@ namespace constants {
     constexpr float BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR = 0.1f;
 
     constexpr float DISSOLVING_PLATFORM_DISSOLVE_DURATION = 0.5f;  // seconds until the platform fully dissolves
-    constexpr float DISSOLVING_PLATFORM_FALL_THROUGH_DURATION = 5.f;  // seconds until the platform reappears after dissolving
+    constexpr float DISSOLVING_PLATFORM_FALL_THROUGH_DURATION = 5.f;  // duration of the fall through in seconds
+    constexpr float DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE = 5.f; // px, inwards horizontal tolerance for the player to be considered on the platform for dissolving
+    constexpr float DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE = 0.f; // px, inwards horizontal tolerance for the player to be considered on the platform for fall-through
 }
 
 #endif

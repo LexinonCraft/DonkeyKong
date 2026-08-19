@@ -30,7 +30,7 @@ std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) 
     // TODO
     switch (stage_id) {
         case StageId::Stage25M:
-            return std::make_unique<Stage100M>(id_generator, player_data);
+            return std::make_unique<Stage25M>(id_generator, player_data);
         case StageId::Stage50M:
             return std::make_unique<DemoStage2>(id_generator, player_data);
         case StageId::Stage75M:

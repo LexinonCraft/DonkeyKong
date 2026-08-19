@@ -2,6 +2,7 @@
 #define PLATFORM_HPP
 
 #include <SFML/System/Vector2.hpp>
+#include <memory>
 #include "../Declarations.hpp"
 #include "../util/EntityFromComponentAux.hpp"
 
@@ -63,7 +64,7 @@ public:
      */
     virtual sf::Vector2f high_end() const = 0;
 
-    virtual bool on_enter_player() { return false; }
+    virtual bool fall_through(std::shared_ptr<Player> player) { return false; }
 };
 
 #endif

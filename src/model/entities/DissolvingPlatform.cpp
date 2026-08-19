@@ -24,7 +24,7 @@ float DissolvingPlatform::surface_y_at(float x) const {
 }
 
 bool DissolvingPlatform::covers_x(float x, float h_tolerance_left, float h_tolerance_right) const {
-    return x >= position.x - h_tolerance_left && x <= position.x + width + h_tolerance_right;
+    return x >= position.x - width / 2.f - h_tolerance_left && x <= position.x + width / 2.f + h_tolerance_right;
 }
 
 int DissolvingPlatform::downhill_sign() const {
@@ -37,7 +37,7 @@ sf::Vector2f DissolvingPlatform::high_end() const {
 }
 
 bool DissolvingPlatform::is_active() const {
-    return !player_falling_through;
+    return true;
 }
 
 sf::Vector2f DissolvingPlatform::displacement_at(float x, float dt) const {

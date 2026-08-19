@@ -1,5 +1,6 @@
-#include <SFML/System/Angle.hpp>
 #include <memory>
+
+#include <SFML/System/Angle.hpp>
 
 #include "Player.hpp"
 #include "../../Constants.hpp"
@@ -51,13 +52,18 @@ void Player::update(float dt, Stage &stage) {
     position.y += velocity.y * dt;
 
     switch (state) {
-        case State::OnPlatform:
+        case State::OnPlatform: {
+            if (handle_platform_fall_through()) {
+                break;
+            }
+            last_fall_through_platform = nullptr;
+
             velocity.x = walking_dir;
             position.y = current_platform->surface_y_at(position.x);
             velocity.y = 0.f;
 
             if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f) || !current_platform->is_active()) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE);
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE, last_fall_through_platform);
                 if (platform_below) {
                     enter_platform(platform_below);
                 } else {
@@ -104,11 +110,12 @@ void Player::update(float dt, Stage &stage) {
                     break;
             }
             break;
+        }
         case State::InAir:
             velocity.y += constants::GRAVITY * dt;
 
             if (velocity.y > 0.0f) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, platform_snap_distance(dt));
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, platform_snap_distance(dt), last_fall_through_platform);
                 if (platform_below) {
                     enter_platform(platform_below);
                 }
@@ -214,14 +221,21 @@ float Player::platform_snap_distance(float dt) const {
 }
 
 void Player::enter_platform(std::shared_ptr<Platform> platform) {
+    state = State::OnPlatform;
     current_platform = platform;
-    velocity.y = 0.f;
     position.y = current_platform->surface_y_at(position.x);
-    bool reset_movement = platform->on_enter_player();
-    if (reset_movement) {
-        velocity.x = 0.f;
-        state = State::InAir;
-    } else {
-        state = State::OnPlatform;
+}
+
+bool Player::handle_platform_fall_through() {
+    if (!current_platform) {
+        return false;
     }
+    bool fall_through = current_platform->fall_through(std::static_pointer_cast<Player>(shared_from_this()));
+    if (fall_through) {
+        state = State::InAir;
+        velocity.x = 0.f;
+        last_fall_through_platform = current_platform;
+        return true;
+    }
+    return false;
 }
