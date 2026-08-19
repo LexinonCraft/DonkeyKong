@@ -45,6 +45,8 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     entities.add_ladder(p8, p11, 190.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p8, p11, constants::VIEW_WIDTH - 190.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p9, p12, constants::VIEW_WIDTH - 90.f, false, Ladder::Color::Yellow);
+
+    player->enter_platform(p0, 50);
 }
 
 void Stage100M::update_while_running(float dt) {

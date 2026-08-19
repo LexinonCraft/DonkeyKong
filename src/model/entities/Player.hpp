@@ -120,6 +120,10 @@ public:
 
     bool has_jumped() const { return has_jumped_flag; }
 
+    void enter_platform(std::shared_ptr<Platform> platform);
+
+    void enter_platform(std::shared_ptr<Platform> platform, float x_pos);
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
@@ -138,8 +142,6 @@ private:
     sf::RectangleShape shape;
 
     float platform_snap_distance(float dt) const;
-
-    void enter_platform(std::shared_ptr<Platform> platform);
 
     bool handle_platform_fall_through();
 };
