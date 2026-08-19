@@ -21,5 +21,6 @@ class Updatable;
 class SceneVisitor;
 class PlayerData;
 class Enemy;
+class DissolvingPlatform;
 
 #endif
