@@ -40,14 +40,14 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     spawn_suitable_girders.push_back(p12);
     // not p13, because it is not reachable by the player and thus not suitable for spawning.
 
-    entities.add_dissolving_platform({160, -130}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30);
-    entities.add_dissolving_platform({160, -230}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -230}, 30);
-    entities.add_dissolving_platform({160, -330}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -330}, 30);
-    entities.add_dissolving_platform({160, -430}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -430}, 30);
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -130}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -230}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -230}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -330}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -330}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -430}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -430}, 30));
 
     entities.add_ladder(p0, p1, 30.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p0, p2, 300.f, false, Ladder::Color::Yellow);
@@ -79,6 +79,17 @@ void Stage100M::update_while_running(float dt) {
             spawn_ghost();
         }
         time_since_last_spawn = 0.f;
+    }
+
+    bool all_dissolved = true;
+    for (auto it = dissolving_platforms.begin(); all_dissolved && it != dissolving_platforms.end(); ++it) {
+        auto platform = *it;
+        if (!platform->has_dissolved()) {
+            all_dissolved = false;
+        }
+    }
+    if (all_dissolved) {
+        on_completed();
     }
 
     Stage::update_while_running(dt);
