@@ -17,6 +17,7 @@
 #include "../entities/BarrelStack.hpp"
 #include "../entities/Pauline.hpp"
 #include "../entities/DissolvingPlatform.hpp"
+#include "../../util/ObserverRegistry.hpp"
 #include "Ref.hpp"
 
 /**
@@ -31,7 +32,7 @@ public:
      * @brief Creates a repository bound to an id-generating function.
      * @param id_generator Callback used to allocate fresh entity ids.
      */
-    EntityRepository(Id (*id_generator)()) : id_generator(id_generator) {}
+    EntityRepository(Id (*id_generator)()) : observer_registry(id_generator), id_generator(id_generator) {}
 
     /**
      * @brief Adds a barrel entity at the given coordinates.
@@ -143,23 +144,8 @@ public:
         return entities.end();
     }
 
-    /**
-     * @brief Registers an observer for repository events.
-     * @param observer Observer to notify when entities are added or removed.
-     * @return Observer id used to unregister this observer later.
-     */
-    Id register_observer(EntityRepositoryObserver &observer) {
-        Id id = id_generator();
-        observers[id] = &observer;
-        return id;
-    }
-
-    /**
-     * @brief Unregisters an observer from future repository events.
-     * @param id Observer id returned by register_observer().
-     */
-    void unregister_observer(Id id) {
-        observers.erase(id);
+    ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() {
+        return observer_registry;
     }
 
 private:
@@ -184,7 +170,7 @@ private:
     }
 
     std::unordered_map<Id, std::shared_ptr<BaseEntity>> entities;
-    std::unordered_map<Id, EntityRepositoryObserver *> observers;
+    ObserverRegistry<EntityRepositoryObserver> observer_registry;
     std::queue<std::shared_ptr<BaseEntity>> pending_additions;
     std::queue<Id> pending_deletions;
     Id (*id_generator)();
