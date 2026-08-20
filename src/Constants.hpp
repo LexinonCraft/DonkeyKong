@@ -33,7 +33,7 @@ namespace constants {
     constexpr float LADDER_WIDTH = 10.f;  // px
 
     constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
-    constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
+    constexpr float PLAYER_DEATH_DURATION = 4.f;  // seconds until the player is considered dead after dying
 
     constexpr float PLAYER_WALKING_ANIMATION_INTERVAL = 0.1f;  // seconds between walking animation frames
     constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
@@ -62,6 +62,10 @@ namespace constants {
     constexpr float DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE = 0.f; // px, inwards horizontal tolerance for the player to be considered on the platform for fall-through
 
     constexpr float TITLE_SCREEN_ANIMATION_LENGTH = 5.f;  // length of the donkey kong animation on the title screen in seconds
+
+    constexpr float PLAYER_DYING_ANIMATION_INTERVAL = 0.075f;  // seconds between dying animation frames
+    constexpr float PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION = 0.5f;  // seconds until the player starts rotating during the dying animation
+    constexpr float PLAYER_DYING_ANIMATION_ROTATION_LENGTH = 1.2f;  // duration of the rotation in seconds during the dying animation
 }
 
 #endif

@@ -19,6 +19,9 @@ public:
         JumpmanWalking2,
         JumpmanJumping,
         JumpmanClimbing,
+        JumpmanDying1,
+        JumpmanDying2,
+        JumpmanDead,
         GirderRed,
         GirderBlue,
         BarrelFront1,
@@ -53,6 +56,9 @@ private:
     sf::Texture jumpman_walking2_texture;
     sf::Texture jumpman_jumping_texture;
     sf::Texture jumpman_climbing_texture;
+    sf::Texture jumpman_dying1_texture;
+    sf::Texture jumpman_dying2_texture;
+    sf::Texture jumpman_dead_texture;
     sf::Texture girder_red_texture;
     sf::Texture girder_blue_texture;
     sf::Texture barrel_front1_texture;

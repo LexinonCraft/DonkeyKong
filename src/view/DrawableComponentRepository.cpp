@@ -9,3 +9,9 @@ void DrawableComponentRepository::draw_all(LayerStack &layer) {
         it->second->draw(layer);
     }
 }
+
+void DrawableComponentRepository::update_all(float dt) {
+    for (auto it = begin(); it != end(); ++it) {
+        it->second->update(dt);
+    }
+}

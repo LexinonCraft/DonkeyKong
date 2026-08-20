@@ -94,3 +94,7 @@ void StageView::draw() {
 
     post_draw();
 }
+
+void StageView::update(float dt) {
+    drawable_components.update_all(dt);
+}

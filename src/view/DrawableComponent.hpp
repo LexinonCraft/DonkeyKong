@@ -18,6 +18,8 @@ public:
      * @param layer_stack Stack of render layers used by the current view.
      */
     virtual void draw(LayerStack &layer_stack) = 0;
+
+    virtual void update(float dt) {}
 };
 
 #endif

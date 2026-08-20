@@ -7,12 +7,15 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
     load("donkey_kong_throwing_front.png", donkey_kong_throwing_front_texture);
     load("donkey_kong_nice.png", donkey_kong_nice_texture);
     load("jumpman_still.png", jumpman_still_texture);
-    load("girder_red.png", girder_red_texture);
-    load("girder_blue.png", girder_blue_texture);
     load("jumpman_walking1.png", jumpman_walking1_texture);
     load("jumpman_walking2.png", jumpman_walking2_texture);
     load("jumpman_jumping.png", jumpman_jumping_texture);
     load("jumpman_climbing.png", jumpman_climbing_texture);
+    load("jumpman_dying1.png", jumpman_dying1_texture);
+    load("jumpman_dying2.png", jumpman_dying2_texture);
+    load("jumpman_dead.png", jumpman_dead_texture);
+    load("girder_red.png", girder_red_texture);
+    load("girder_blue.png", girder_blue_texture);
     load("barrel_front1.png", barrel_front1_texture);
     load("barrel_front2.png", barrel_front2_texture);
     load("barrel_side1.png", barrel_side1_texture);
@@ -48,6 +51,12 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return jumpman_jumping_texture;
         case TextureId::JumpmanClimbing:
             return jumpman_climbing_texture;
+        case TextureId::JumpmanDying1:
+            return jumpman_dying1_texture;
+        case TextureId::JumpmanDying2:
+            return jumpman_dying2_texture;
+        case TextureId::JumpmanDead:
+            return jumpman_dead_texture;
         case TextureId::GirderRed:
             return girder_red_texture;
         case TextureId::GirderBlue:
