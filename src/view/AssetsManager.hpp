@@ -13,6 +13,7 @@ public:
         DonkeyKongAngry,
         DonkeyKongThrowingSide,
         DonkeyKongThrowingFront,
+        DonkeyKongNice,
         JumpmanStill,
         JumpmanWalking1,
         JumpmanWalking2,
@@ -46,6 +47,7 @@ private:
     sf::Texture donkey_kong_angry_texture;
     sf::Texture donkey_kong_throwing_side_texture;
     sf::Texture donkey_kong_throwing_front_texture;
+    sf::Texture donkey_kong_nice_texture;
     sf::Texture jumpman_still_texture;
     sf::Texture jumpman_walking1_texture;
     sf::Texture jumpman_walking2_texture;

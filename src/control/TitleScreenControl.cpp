@@ -13,11 +13,14 @@ void TitleScreenControl::handle_input() {
 }
 
 void TitleScreenControl::update(float dt) {
-    // No update logic for the title screen
+    animation_timer += dt;
+    if (animation_timer >= constants::TITLE_SCREEN_ANIMATION_LENGTH) {
+        animation_timer -= constants::TITLE_SCREEN_ANIMATION_LENGTH;
+    }
 }
 
 void TitleScreenControl::draw() {
-    title_screen_view.draw();
+    title_screen_view.draw(animation_timer);
 }
 
 AbstractSceneControl::NextScene TitleScreenControl::get_next_scene() const {

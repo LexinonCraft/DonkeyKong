@@ -2,6 +2,7 @@
 #define STAGE_SEQUENCE_HPP
 
 #include <memory>
+#include <vector>
 
 #include "Declarations.hpp"
 
@@ -11,6 +12,8 @@ enum class StageId {
 //    Stage75M,
     Stage100M,
 };
+
+std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level);
 
 unsigned int get_number_of_stages_in_level(unsigned level);
 

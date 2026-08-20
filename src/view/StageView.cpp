@@ -1,7 +1,10 @@
+#include <format>
+
+#include <SFML/Graphics/Color.hpp>
+
 #include "StageView.hpp"
 #include "../model/PlayerData.hpp"
 #include "../util/Positions.hpp"
-#include <SFML/Graphics/Color.hpp>
 
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
     : AbstractSceneView(window, texture_registry),
@@ -14,21 +17,47 @@ void StageView::draw() {
 
     drawable_components.draw_all(layer_stack);
 
+    sf::Text score_label(assets_manager.get_font());
+    score_label.setString("1 UP");
+    score_label.setFillColor(sf::Color::Red);
+    score_label.setCharacterSize(24);
+    sf::FloatRect score_label_bounds = score_label.getLocalBounds();
+    score_label.setOrigin({score_label_bounds.size.x / 2.f, 0.f});
+    score_label.setPosition(get_absolute_position({70.f, 0.f}, AnchorPosition::TopLeft));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(score_label);
+
     sf::Text score(assets_manager.get_font());
-    score.setString(std::to_string(stage.get_player_data().get_score()));
+    score.setString(std::format("{:06d}", stage.get_player_data().get_score()));
     score.setCharacterSize(24);
     sf::FloatRect score_bounds = score.getLocalBounds();
-    score.setOrigin({score_bounds.size.x / 2.f, score_bounds.size.y / 2.f});
-    score.setPosition(get_absolute_position({0.f, 50.f}, AnchorPosition::TopCenter));
+    score.setOrigin({score_bounds.size.x / 2.f, 0.f});
+    score.setPosition(get_absolute_position({70.f, 24.f}, AnchorPosition::TopLeft));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(score);
+
+    sf::Text highscore_label(assets_manager.get_font());
+    highscore_label.setString("HIGH SCORE");
+    highscore_label.setFillColor(sf::Color::Red);
+    highscore_label.setCharacterSize(24);
+    sf::FloatRect highscore_label_bounds = highscore_label.getLocalBounds();
+    highscore_label.setOrigin({highscore_label_bounds.size.x / 2.f, 0.f});
+    highscore_label.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::TopCenter));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore_label);
+
+    sf::Text highscore(assets_manager.get_font());
+    highscore.setString(std::format("{:06d}", stage.get_player_data().get_highscore()));
+    highscore.setCharacterSize(24);
+    sf::FloatRect highscore_bounds = highscore.getLocalBounds();
+    highscore.setOrigin({highscore_bounds.size.x / 2.f, 0.f});
+    highscore.setPosition(get_absolute_position({0.f, 24.f}, AnchorPosition::TopCenter));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore);
 
     int lives_count = stage.get_player_data().get_lives();
     for (int i = 0; i < lives_count; ++i) {
         sf::Sprite life_sprite(assets_manager.get_texture(AssetsManager::TextureId::JumpmanStill));
-        life_sprite.setPosition(get_absolute_position({50.f + (i * 20.f), 80.f}, AnchorPosition::TopLeft));
+        life_sprite.setPosition(get_absolute_position({30.f + (i * 30.f), 80.f}, AnchorPosition::TopLeft));
         sf::FloatRect sprite_bounds = life_sprite.getLocalBounds();
         life_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});
-        // life_sprite.setScale({0.5f, 0.5f});
+        life_sprite.setScale({2.f, 2.f});
         layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(life_sprite);
     }
 
@@ -55,7 +84,7 @@ void StageView::draw() {
     }
 
     sf::Text level_text(assets_manager.get_font());
-    level_text.setString("L=" + std::to_string(stage.get_player_data().get_level()));
+    level_text.setString(std::format("L={:02d}", stage.get_player_data().get_level() + 1));
     level_text.setCharacterSize(24);
     sf::FloatRect level_text_bounds = level_text.getLocalBounds();
     level_text.setOrigin({level_text_bounds.size.x / 2.f, level_text_bounds.size.y / 2.f});
