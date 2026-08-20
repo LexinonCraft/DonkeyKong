@@ -5,9 +5,15 @@
 #include "stages/Stage25M.hpp"
 #include "PlayerData.hpp"
 
+std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level) {
+    auto stage_sequence = std::make_unique<std::vector<StageId>>();
+    stage_sequence->push_back(StageId::Stage25M);
+    stage_sequence->push_back(StageId::Stage100M);
+    return stage_sequence;
+}
+
 unsigned int get_number_of_stages_in_level(unsigned level) {
-    // TODO
-    return 2;
+    return get_stage_sequence(level)->size();
 }
 
 void advance_stage(PlayerData &player_data) {
@@ -23,15 +29,7 @@ void advance_stage(PlayerData &player_data) {
 }
 
 StageId get_stage_id(unsigned int level, unsigned int stage_in_level) {
-    // TODO
-    switch (stage_in_level) {
-        case 0:
-            return StageId::Stage25M;
-        case 1:
-            return StageId::Stage100M;
-        default:
-            throw std::logic_error("Unknown stage in level");
-    }
+    return get_stage_sequence(level)->at(stage_in_level);
 }
 
 StageId get_stage_id(PlayerData &player_data) {

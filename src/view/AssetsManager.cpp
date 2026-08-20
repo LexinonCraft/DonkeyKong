@@ -1,7 +1,11 @@
 #include "AssetsManager.hpp"
 
 AssetsManager::AssetsManager(std::string base_path, std::string font_file) : textures_base_path(base_path), font(font_file) {
-    load("DonkeyKong.png", donkey_kong_texture);
+    load("donkey_kong_still.png", donkey_kong_still_texture);
+    load("donkey_kong_angry.png", donkey_kong_angry_texture);
+    load("donkey_kong_throwing_side.png", donkey_kong_throwing_side_texture);
+    load("donkey_kong_throwing_front.png", donkey_kong_throwing_front_texture);
+    load("donkey_kong_nice.png", donkey_kong_nice_texture);
     load("jumpman_still.png", jumpman_still_texture);
     load("girder_red.png", girder_red_texture);
     load("girder_blue.png", girder_blue_texture);
@@ -15,13 +19,25 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
     load("barrel_side2.png", barrel_side2_texture);
     load("ladder_cyan.png", ladder_cyan_texture);
     load("ladder_yellow.png", ladder_yellow_texture);
+    load("pauline_still.png", pauline_still_texture);
+    load("pauline_scream1.png", pauline_scream1_texture);
+    load("pauline_scream2.png", pauline_scream2_texture);
+    load("help.png", help_texture);
     load("hammer.png", hammer_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
     switch (id) {
-        case TextureId::DonkeyKong:
-            return donkey_kong_texture;
+        case TextureId::DonkeyKongStill:
+            return donkey_kong_still_texture;
+        case TextureId::DonkeyKongAngry:
+            return donkey_kong_angry_texture;
+        case TextureId::DonkeyKongThrowingSide:
+            return donkey_kong_throwing_side_texture;
+        case TextureId::DonkeyKongThrowingFront:
+            return donkey_kong_throwing_front_texture;
+        case TextureId::DonkeyKongNice:
+            return donkey_kong_nice_texture;
         case TextureId::JumpmanStill:
             return jumpman_still_texture;
         case TextureId::JumpmanWalking1:
@@ -48,6 +64,14 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return ladder_cyan_texture;
         case TextureId::LadderYellow:
             return ladder_yellow_texture;
+        case TextureId::PaulineStill:
+            return pauline_still_texture;
+        case TextureId::PaulineScream1:
+            return pauline_scream1_texture;
+        case TextureId::PaulineScream2:
+            return pauline_scream2_texture;
+        case TextureId::Help:
+            return help_texture;
         case TextureId::Hammer:
             return hammer_texture;
         default:

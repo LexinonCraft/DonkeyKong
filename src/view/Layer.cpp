@@ -1,6 +1,8 @@
 #include "Layer.hpp"
 #include "../Constants.hpp"
 
+#include <stdexcept>
+
 /**
  * @brief Creates an off-screen render layer for one part of the game scene.
  * @param window Window displaying the final scene.
@@ -33,6 +35,7 @@ void Layer::draw() {
  * @brief Clears all objects currently added to the layer.
  */
 void Layer::clear() {
+    resize_to_viewport();
     target.clear({0,0,0,0});
 }
 
@@ -42,4 +45,26 @@ void Layer::clear() {
  */
 void Layer::set_view(const sf::View &view) {
     target.setView(view);
+}
+
+void Layer::resize_to_viewport() {
+    const sf::Vector2i viewport_size = window.getViewport(window.getView()).size;
+    if (viewport_size.x <= 0 || viewport_size.y <= 0) {
+        return;
+    }
+
+    const sf::Vector2u target_size{static_cast<unsigned int>(viewport_size.x), static_cast<unsigned int>(viewport_size.y)};
+    if (target.getSize() == target_size) {
+        return;
+    }
+
+    const sf::View view = target.getView();
+    if (!target.resize(target_size)) {
+        throw std::runtime_error("Failed to resize render layer");
+    }
+
+    target.setView(view);
+    sprite.setTexture(target.getTexture(), true);
+    sprite.setScale({static_cast<float>(constants::VIEW_WIDTH) / static_cast<float>(target_size.x),
+                     static_cast<float>(constants::VIEW_HEIGHT) / static_cast<float>(target_size.y)});
 }

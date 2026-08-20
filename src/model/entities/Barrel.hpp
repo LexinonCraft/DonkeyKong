@@ -34,8 +34,9 @@ public:
     /**
      * @brief Places the barrel on a platform and sets its rolling direction.
      * @param platform Platform surface to rest on.
+     * @param roll_direction Optional direction to roll: -1 for left, 1 for right, or 0 to use the platform's slope.
      */
-    void set_on_platform(std::shared_ptr<Platform> platform, float roll_speed);
+    void set_on_platform(std::shared_ptr<Platform> platform, int roll_direction = 0);
 
     /**
      * @brief Advances the barrel simulation by one time step.
