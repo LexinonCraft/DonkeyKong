@@ -17,6 +17,7 @@ public:
         Background,
         Platforms,
         Ladders,
+        DonkeyKong,
         Objects,
         Player,
         UI,
@@ -51,6 +52,7 @@ private:
     Layer background_layer;
     Layer platforms_layer;
     Layer ladders_layer;
+    Layer donkey_kong_layer;
     Layer objects_layer;
     Layer player_layer;
     Layer ui_layer;

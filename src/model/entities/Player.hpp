@@ -138,12 +138,15 @@ private:
     float walking_time = 0.0f;
     float climbing_time = 0.0f;
     bool has_jumped_flag = false;
+    float y_before_jump = 0.0f;
 
     sf::RectangleShape shape;
 
     float platform_snap_distance(float dt) const;
 
     bool handle_platform_fall_through();
+
+    void die(Stage &stage);
 };
 
 #endif

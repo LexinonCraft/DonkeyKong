@@ -21,6 +21,9 @@ class Updatable;
 class SceneVisitor;
 class PlayerData;
 class Enemy;
+class DonkeyKong;
+class BarrelStack;
+class Pauline;
 class DissolvingPlatform;
 
 #endif

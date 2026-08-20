@@ -27,29 +27,33 @@ void TitleScreenView::draw(float animation_timer) {
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(subtitle);
 
     AssetsManager::TextureId donkey_kong_texture_id;
-    if (animation_timer < 3 * 0.5f) { // TODO: use constant for frame length once available
-        switch (mod(floor_to_int(animation_timer / 0.5f), 3)) { // TODO: see above
+    bool flip;
+    if (animation_timer < 3 * constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL) {
+        switch (mod(floor_to_int(animation_timer / constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL), 3)) {
             case 0:
-                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKong; // TODO: switch to specific texture once available
+                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry;
+                flip = false;
                 break;
             case 1:
-                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKong; // TODO: see above
+                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry;
+                flip = true;
                 break;
             case 2:
-                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKong; // TODO: see above
+                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry;
+                flip = false;
                 break;
             default:
                 throw std::logic_error("Unexpected case in donkey kong animation switch statement");
         }
-        donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKong; // TODO: see above
     } else {
-        donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKong; // TODO: see above
+        donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongStill;
+        flip = false;
     }
     sf::Sprite donkey_kong_sprite(assets_manager.get_texture(donkey_kong_texture_id));
     donkey_kong_sprite.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
     sf::FloatRect sprite_bounds = donkey_kong_sprite.getLocalBounds();
     donkey_kong_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});
-    donkey_kong_sprite.setScale({3.f, 3.f});
+    donkey_kong_sprite.setScale({flip ? -3.f : 3.f, 3.f});
     layer_stack.get_layer(LayerStack::LayerId::Background).add_to_layer(donkey_kong_sprite);
 
     post_draw();
