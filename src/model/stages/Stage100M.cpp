@@ -22,14 +22,14 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     auto p12 = entities.add_girder({constants::VIEW_WIDTH - 145, -430}, {constants::VIEW_WIDTH - 80, -430}, Girder::Color::Blue);
     auto p13 = entities.add_girder({145, -550}, {constants::VIEW_WIDTH - 145, -550}, Girder::Color::Blue);
 
-    entities.add_dissolving_platform({160, -130}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30);
-    entities.add_dissolving_platform({160, -230}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -230}, 30);
-    entities.add_dissolving_platform({160, -330}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -330}, 30);
-    entities.add_dissolving_platform({160, -430}, 30);
-    entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -430}, 30);
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -130}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -230}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -230}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -330}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -330}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -430}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -430}, 30));
 
     entities.add_ladder(p0, p1, 30.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p0, p2, 300.f, false, Ladder::Color::Yellow);
@@ -50,11 +50,14 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
 }
 
 void Stage100M::update_while_running(float dt) {
-    time_since_last_spawn += dt;
-
-    if (time_since_last_spawn > 2.0f) {
-        // entities.add_barrel({300, -500});
-        time_since_last_spawn = 0.f;
+    bool all_dissolved = true;
+    for (auto it = dissolving_platforms.begin(); all_dissolved && it != dissolving_platforms.end(); ++it) {
+        if (!(*it)->has_dissolved()) {
+            all_dissolved = false;
+        }
+    }
+    if (all_dissolved) {
+        on_completed();
     }
 
     Stage::update_while_running(dt);
