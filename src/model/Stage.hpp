@@ -84,6 +84,10 @@ public:
         return rng();
     }
 
+    float get_barrel_roll_speed() const;
+
+    float get_barrel_spawn_interval() const;
+
 protected:
     /**
      * @brief Creates a level and registers the behaviour repositories with the entity repository.

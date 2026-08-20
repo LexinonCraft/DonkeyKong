@@ -39,7 +39,7 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
 void Stage25M::update_while_running(float dt) {
     time_since_last_spawn += dt;
 
-    if (time_since_last_spawn > 2.0f) {
+    if (time_since_last_spawn > get_barrel_spawn_interval() && entities.get_barrel_count() < constants::BARREL_MAX_ACTIVE_COUNT) {
         entities.add_barrel({300, -500});
         time_since_last_spawn = 0.f;
     }

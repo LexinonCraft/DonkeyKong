@@ -39,6 +39,16 @@ public:
         return add_entity(std::make_shared<Barrel>(gen_ref(), position));
     }
 
+    unsigned int get_barrel_count() const {
+        unsigned int barrel_count = 0;
+        for (const auto &entry : entities) {
+            if (std::dynamic_pointer_cast<Barrel>(entry.second)) {
+                ++barrel_count;
+            }
+        }
+        return barrel_count;
+    }
+
     /**
      * @brief Adds a girder entity spanning the two endpoints.
      * @param left Left endpoint of the girder.
