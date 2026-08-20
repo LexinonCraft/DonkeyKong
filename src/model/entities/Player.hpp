@@ -139,6 +139,7 @@ private:
     float climbing_time = 0.0f;
     bool has_jumped_flag = false;
     float y_before_jump = 0.0f;
+    std::shared_ptr<Barrel> last_jumped_over_barrel;
 
     sf::RectangleShape shape;
 

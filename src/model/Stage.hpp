@@ -9,6 +9,7 @@
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "components/EnemyComponentRepository.hpp"
+#include "components/JumpableComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "../Constants.hpp"
 #include "../util/ObserverRegistry.hpp"
@@ -61,6 +62,12 @@ public:
     EnemyComponentRepository &get_enemies() { return enemy_components; }
 
     /**
+     * @brief Returns the jumpable repository for this level.
+     * @return Repository containing jumpable behaviour components.
+     */
+    JumpableComponentRepository &get_jumpables() { return jumpable_components; }
+
+    /**
      * @brief Returns the player associated with this level.
      * @return Shared pointer to the player entity.
      */
@@ -104,6 +111,7 @@ protected:
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
     EnemyComponentRepository enemy_components;
+    JumpableComponentRepository jumpable_components;
 
     ObserverRegistry<StageObserver> observer_registry;
 

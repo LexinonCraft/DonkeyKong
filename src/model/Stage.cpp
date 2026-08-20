@@ -7,7 +7,7 @@
 /**
  * @brief Creates a level and initializes the tracked repositories.
  */
-Stage::Stage(int rng(), PlayerData &player_data) : rng(rng), entities(rng), updatable_components(entities), platform_components(entities), climbable_components(entities), enemy_components(entities), observer_registry(rng), player(entities.add_player()), player_data(player_data) {}
+Stage::Stage(int rng(), PlayerData &player_data) : rng(rng), entities(rng), updatable_components(entities), platform_components(entities), climbable_components(entities), enemy_components(entities), jumpable_components(entities), observer_registry(rng), player(entities.add_player()), player_data(player_data) {}
 
 /**
  * @brief Advances the level simulation by one tick.

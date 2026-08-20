@@ -1,6 +1,8 @@
 #include "Barrel.hpp"
 
+#include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <cstdlib>
 #include <memory>
 
 #include <SFML/Graphics/Color.hpp>
@@ -100,6 +102,7 @@ void Barrel::update(float dt, Stage &level) {
     }
 
     shape.setPosition(position);
+    Jumpable::update(dt);
 }
 
 void Barrel::accept(EntityVisitor &visitor) {
@@ -124,5 +127,17 @@ float Barrel::platform_snap_distance(float dt) const {
         return distance;
     } else {
         return constants::PLATFORM_MINIMUM_SNAP_DISTANCE;
+    }
+}
+
+void Barrel::check_jumps_over(sf::Vector2f player_position, Stage &stage) {
+    if (is_on_cooldown()) {
+        return;
+    }
+
+    float y_diff = (position.y - 2 * constants::BARREL_RADIUS) - player_position.y;
+    if (std::abs(player_position.x - position.x) < constants::BARREL_JUMP_H_TOLERANCE && 0 < y_diff && y_diff < constants::BARREL_JUMP_MAX_Y_DIFF) {
+        stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
+        on_jump_over();
     }
 }

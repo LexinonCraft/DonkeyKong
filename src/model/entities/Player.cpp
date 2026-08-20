@@ -180,6 +180,8 @@ void Player::update(float dt, Stage &stage) {
     if (stage.get_enemies().find_touching_enemy(shape)) {
         die(stage);
     }
+
+    stage.get_jumpables().check_all_jumpables(position, stage);
 }
 
 void Player::set_horizontal_direction(HorizontalDirection dir) {

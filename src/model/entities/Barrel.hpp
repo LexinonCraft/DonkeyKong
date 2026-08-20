@@ -10,6 +10,7 @@
 #include "../util/BaseEntity.hpp"
 #include "../components/Updatable.hpp"
 #include "../components/Enemy.hpp"
+#include "../components/Jumpable.hpp"
 
 /**
  * @brief Barrel entity that rolls down sloped platforms and falls between them.
@@ -17,7 +18,7 @@
  * The barrel is a small two-state simulation: it either sticks to a platform and
  * rolls downhill, or it is in free fall until it intersects another platform.
  */
-class Barrel : public BaseEntity, public Updatable, public Enemy {
+class Barrel : public BaseEntity, public Updatable, public Enemy, public Jumpable {
 public:
     /**
      * @brief Current barrel state.
@@ -104,9 +105,15 @@ public:
         return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Barrel>(shared_from_this()));
     }
 
+    std::unique_ptr<Component<Jumpable>> create_jumpable_component() override {
+        return std::make_unique<Component<Jumpable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+    }
+
     bool touches(const sf::RectangleShape &player_shape) const override;
 
     float get_roll_distance() const { return roll_distance; }
+
+    void check_jumps_over(sf::Vector2f player_position, Stage &stage) override;
 
 private:
     sf::Vector2f position;
