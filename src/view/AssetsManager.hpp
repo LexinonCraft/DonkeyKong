@@ -32,6 +32,8 @@ public:
         PaulineScream2,
         Help,
         Hammer,
+        Ghost1,
+        Ghost2,
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -66,6 +68,8 @@ private:
     sf::Texture pauline_scream2_texture;
     sf::Texture help_texture;
     sf::Texture hammer_texture;
+    sf::Texture ghost1_texture;
+    sf::Texture ghost2_texture;
 
     sf::Font font;
 

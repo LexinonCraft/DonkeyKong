@@ -17,6 +17,7 @@
 #include "../entities/BarrelStack.hpp"
 #include "../entities/Pauline.hpp"
 #include "../entities/DissolvingPlatform.hpp"
+#include "../entities/Ghost.hpp"
 #include "Ref.hpp"
 
 /**
@@ -107,6 +108,10 @@ public:
         
     std::shared_ptr<DissolvingPlatform> add_dissolving_platform(sf::Vector2f position, float width) {
         return add_entity(std::make_shared<DissolvingPlatform>(gen_ref(), position, width));
+    }
+
+    std::shared_ptr<Ghost> add_ghost(std::shared_ptr<Platform> platform, float x_pos) {
+        return add_entity(std::make_shared<Ghost>(gen_ref(), platform, x_pos));
     }
 
     /**

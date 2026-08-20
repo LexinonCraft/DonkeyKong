@@ -1,6 +1,9 @@
+#include <memory>
+
 #include <SFML/System/Vector2.hpp>
 
 #include "Stage100M.hpp"
+#include "../../util/Math.hpp"
 
 /**
  * @brief Builds the prototype scene used for the current game demo.
@@ -21,6 +24,21 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     auto p11 = entities.add_girder({175, -430}, {constants::VIEW_WIDTH - 175, -430}, Girder::Color::Blue);
     auto p12 = entities.add_girder({constants::VIEW_WIDTH - 145, -430}, {constants::VIEW_WIDTH - 80, -430}, Girder::Color::Blue);
     auto p13 = entities.add_girder({145, -550}, {constants::VIEW_WIDTH - 145, -550}, Girder::Color::Blue);
+
+    spawn_suitable_girders.push_back(p0);
+    spawn_suitable_girders.push_back(p1);
+    spawn_suitable_girders.push_back(p2);
+    spawn_suitable_girders.push_back(p3);
+    spawn_suitable_girders.push_back(p4);
+    spawn_suitable_girders.push_back(p5);
+    spawn_suitable_girders.push_back(p6);
+    spawn_suitable_girders.push_back(p7);
+    spawn_suitable_girders.push_back(p8);
+    spawn_suitable_girders.push_back(p9);
+    spawn_suitable_girders.push_back(p10);
+    spawn_suitable_girders.push_back(p11);
+    spawn_suitable_girders.push_back(p12);
+    // not p13, because it is not reachable by the player and thus not suitable for spawning.
 
     entities.add_dissolving_platform({160, -130}, 30);
     entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30);
@@ -46,16 +64,39 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     entities.add_ladder(p8, p11, constants::VIEW_WIDTH - 190.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p9, p12, constants::VIEW_WIDTH - 90.f, false, Ladder::Color::Yellow);
 
+    for (unsigned int i = 0; i < constants::STAGE_100M_INITIAL_GHOST_COUNT; ++i) {
+        spawn_ghost();
+    }
+
     player->enter_platform(p0, 50);
 }
 
 void Stage100M::update_while_running(float dt) {
     time_since_last_spawn += dt;
 
-    if (time_since_last_spawn > 2.0f) {
-        // entities.add_barrel({300, -500});
+    if (time_since_last_spawn > constants::GHOST_SPAWN_INTERVAL) {
+        if (ghost_count < constants::STAGE_100M_MAX_GHOST_COUNT) {
+            spawn_ghost();
+        }
         time_since_last_spawn = 0.f;
     }
 
     Stage::update_while_running(dt);
+}
+
+void Stage100M::spawn_ghost() {
+    while (true) {
+        std::shared_ptr<Girder> random_girder = spawn_suitable_girders[mod(random_int(), spawn_suitable_girders.size())];
+        float x = random_girder->get_left().x + mod(random_int(), constants::GHOST_SPAWN_X_POS_STEPS) * (random_girder->get_right().x - random_girder->get_left().x) / constants::GHOST_SPAWN_X_POS_STEPS;
+
+        auto diff = sf::Vector2f{x, random_girder->surface_y_at(x)} - player->get_position();
+        float distance = diff.length();
+        if (distance < constants::GHOST_SPAWN_MIN_DISTANCE) {
+            continue;
+        }
+
+        entities.add_ghost(random_girder, x);
+        ghost_count++;
+        break;
+    }
 }

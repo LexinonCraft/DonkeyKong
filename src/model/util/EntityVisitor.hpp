@@ -29,6 +29,8 @@ public:
     virtual void visit(Pauline &pauline) = 0;
     /** @brief Visits a dissolving platform entity. */
     virtual void visit(DissolvingPlatform &dissolving_platform) = 0;
+    /** @brief Visits a ghost entity. */
+    virtual void visit(Ghost &ghost) = 0;
 };
 
 #endif

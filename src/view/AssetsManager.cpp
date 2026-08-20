@@ -24,6 +24,8 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
     load("pauline_scream2.png", pauline_scream2_texture);
     load("help.png", help_texture);
     load("hammer.png", hammer_texture);
+    load("ghost1.png", ghost1_texture);
+    load("ghost2.png", ghost2_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
@@ -74,6 +76,10 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return help_texture;
         case TextureId::Hammer:
             return hammer_texture;
+        case TextureId::Ghost1:
+            return ghost1_texture;
+        case TextureId::Ghost2:
+            return ghost2_texture;
         default:
             throw std::runtime_error("Unknown texture ID");
     }
