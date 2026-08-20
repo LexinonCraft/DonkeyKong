@@ -1,3 +1,5 @@
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <stdexcept>
 
 #include "DonkeyKong.hpp"
@@ -62,6 +64,15 @@ void DonkeyKong::update(float dt, Stage &stage) {
             }
             break;
     }
+}
+
+bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
+    sf::RectangleShape hitbox;
+    hitbox.setSize({constants::DONKEY_KONG_HITBOX_WIDTH, constants::DONKEY_KONG_HITBOX_HEIGHT});
+    sf::FloatRect hitbox_bounds = hitbox.getLocalBounds();
+    hitbox.setOrigin({hitbox_bounds.size.x / 2.f, hitbox_bounds.size.y});
+    hitbox.setPosition(position);
+    return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
 void DonkeyKong::switch_to_idle(int random_int) {

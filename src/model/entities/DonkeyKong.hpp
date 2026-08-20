@@ -1,6 +1,7 @@
 #ifndef DONKEYKONG_HPP
 #define DONKEYKONG_HPP
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
 
 #include "../util/BaseEntity.hpp"
@@ -21,7 +22,7 @@ public:
 
     void update(float dt, Stage &stage) override;
 
-    bool touches(const sf::RectangleShape &player_shape) const override { return false; } // TODO
+    bool touches(const sf::RectangleShape &player_shape) const override;
 
     void accept(EntityVisitor &visitor) override {
         visitor.visit(*this);
