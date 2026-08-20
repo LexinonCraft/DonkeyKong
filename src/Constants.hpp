@@ -62,6 +62,9 @@ namespace constants {
     constexpr float DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE = 0.f; // px, inwards horizontal tolerance for the player to be considered on the platform for fall-through
 
     constexpr float TITLE_SCREEN_ANIMATION_LENGTH = 5.f;  // length of the donkey kong animation on the title screen in seconds
+
+    constexpr float SCORE_EFFECT_RISE_SPEED = 50.f;  // px/sec, speed at which the score effect rises
+    constexpr float SCORE_EFFECT_DURATION = 1.f;  // seconds, duration of the score effect
 }
 
 #endif

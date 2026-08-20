@@ -86,6 +86,7 @@ void StageControl::handle_input() {
 
 void StageControl::update(float dt) {
     stage->update(dt);
+    stage_view.update(dt);
 }
 
 void StageControl::draw() {

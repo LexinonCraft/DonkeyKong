@@ -39,6 +39,7 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/AbstractSceneView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/StageTransitionView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/GameOverView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/ScoreEffect.cpp
     )
 
 # Utility

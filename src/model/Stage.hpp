@@ -11,6 +11,8 @@
 #include "components/EnemyComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "../Constants.hpp"
+#include "../util/ObserverRegistry.hpp"
+#include "StageObserver.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -76,6 +78,8 @@ public:
 
     virtual bool on_exit();
 
+    void add_to_score(sf::Vector2f position, int score_to_add);
+
     bool is_over() const { return (state == StageState::PlayerDying && time_since_state_change > constants::PLAYER_DEATH_DURATION) || (state == StageState::Completed && time_since_state_change > 5.f); }
 
     StageState get_state() const { return state; }
@@ -83,6 +87,8 @@ public:
     int random_int() {
         return rng();
     }
+
+    ObserverRegistry<StageObserver> &get_observer_registry() { return observer_registry; }
 
 protected:
     /**
@@ -98,6 +104,8 @@ protected:
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
     EnemyComponentRepository enemy_components;
+
+    ObserverRegistry<StageObserver> observer_registry;
 
     StageState state = StageState::Running;
     float time_elapsed = 0.f;
