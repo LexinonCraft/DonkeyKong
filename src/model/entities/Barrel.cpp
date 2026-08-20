@@ -77,13 +77,13 @@ void Barrel::update(float dt, Stage &level) {
 
             if (state == State::Falling) {
                 if (auto left_boundary = level.get_left_boundary()) {
-                    if (position.x < *left_boundary) {
+                    if (position.x < *left_boundary && !level.is_barrel_boundary_gap(position)) {
                         position.x = *left_boundary;
                         vx = -vx;
                     }
                 }
                 if (auto right_boundary = level.get_right_boundary()) {
-                    if (position.x > *right_boundary) {
+                    if (position.x > *right_boundary && !level.is_barrel_boundary_gap(position)) {
                         position.x = *right_boundary;
                         vx = -vx;
                     }
