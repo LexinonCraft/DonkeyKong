@@ -34,12 +34,12 @@ public:
                 } else {
                     texture_id = AssetsManager::TextureId::JumpmanStill;
                 }
-                flip_sprite = !player->is_facing_right();
+                flip_sprite = !player->is_facing_right() || force_face_left;
                 break;
             }
             case Player::State::InAir:
                 texture_id = player->has_jumped() ? AssetsManager::TextureId::JumpmanJumping : AssetsManager::TextureId::JumpmanStill;
-                flip_sprite = !player->is_facing_right();
+                flip_sprite = !player->is_facing_right() || force_face_left;
                 break;
             case Player::State::Climbing:
                 texture_id = AssetsManager::TextureId::JumpmanClimbing;
@@ -80,9 +80,13 @@ public:
         layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
     }
 
-    void update(float dt) override {
+    void update(float dt, Stage &stage) override {
         if (player->get_state() == Player::State::Dying) {
             dying_time += dt;
+        }
+
+        if (stage.get_state() == Stage::StageState::Completed) {
+            force_face_left = true;
         }
     }
 
@@ -90,6 +94,7 @@ private:
     std::shared_ptr<Player> player;
     AssetsManager &assets_manager;
     float dying_time = 0.0f;
+    bool force_face_left = false;
 };
 
 #endif

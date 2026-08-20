@@ -10,7 +10,8 @@ class AssetsManager {
 public:
     enum class TextureId {
         DonkeyKongStill,
-        DonkeyKongAngry,
+        DonkeyKongAngry1,
+        DonkeyKongAngry2,
         DonkeyKongThrowingSide,
         DonkeyKongThrowingFront,
         DonkeyKongNice,
@@ -35,6 +36,8 @@ public:
         PaulineScream2,
         Help,
         Hammer,
+        HeartNormal,
+        HeartBroken,
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -47,7 +50,8 @@ private:
     std::string textures_base_path;
 
     sf::Texture donkey_kong_still_texture;
-    sf::Texture donkey_kong_angry_texture;
+    sf::Texture donkey_kong_angry1_texture;
+    sf::Texture donkey_kong_angry2_texture;
     sf::Texture donkey_kong_throwing_side_texture;
     sf::Texture donkey_kong_throwing_front_texture;
     sf::Texture donkey_kong_nice_texture;
@@ -72,6 +76,8 @@ private:
     sf::Texture pauline_scream2_texture;
     sf::Texture help_texture;
     sf::Texture hammer_texture;
+    sf::Texture heart_normal_texture;
+    sf::Texture heart_broken_texture;
 
     sf::Font font;
 

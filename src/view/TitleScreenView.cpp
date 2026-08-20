@@ -31,15 +31,15 @@ void TitleScreenView::draw(float animation_timer) {
     if (animation_timer < 3 * constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL) {
         switch (mod(floor_to_int(animation_timer / constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL), 3)) {
             case 0:
-                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry;
+                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry1;
                 flip = false;
                 break;
             case 1:
-                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry;
+                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry1;
                 flip = true;
                 break;
             case 2:
-                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry;
+                donkey_kong_texture_id = AssetsManager::TextureId::DonkeyKongAngry1;
                 flip = false;
                 break;
             default:

@@ -2,6 +2,7 @@
 #define DRAWABLE_COMPONENT_HPP
 
 #include "LayerStack.hpp"
+#include "../model/Stage.hpp"
 
 /**
  * @brief Abstract render adapter for a world entity.
@@ -19,7 +20,7 @@ public:
      */
     virtual void draw(LayerStack &layer_stack) = 0;
 
-    virtual void update(float dt) {}
+    virtual void update(float dt, Stage &stage) {}
 };
 
 #endif

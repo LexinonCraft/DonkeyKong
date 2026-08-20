@@ -9,6 +9,8 @@ public:
 
 private:
     std::shared_ptr<Girder> final_girder;
+    std::shared_ptr<Pauline> pauline;
+    std::shared_ptr<DonkeyKong> donkey_kong;
 
     void update_while_running(float dt) override;
 };

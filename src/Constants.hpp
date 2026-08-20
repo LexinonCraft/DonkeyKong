@@ -66,6 +66,11 @@ namespace constants {
     constexpr float PLAYER_DYING_ANIMATION_INTERVAL = 0.075f;  // seconds between dying animation frames
     constexpr float PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION = 0.5f;  // seconds until the player starts rotating during the dying animation
     constexpr float PLAYER_DYING_ANIMATION_ROTATION_LENGTH = 1.2f;  // duration of the rotation in seconds during the dying animation
+
+    constexpr float HEART_BREAKING_DURATION = 1.5f;  // seconds until the heart breaks after the stage is completed
+    constexpr float DONKEY_KONG_SHOW_TEETH_INTERVAL = 0.3f;  // seconds between Donkey Kong showing his teeth after the stage is completed
+    constexpr unsigned int DONKEY_KONG_SHOW_TEETH_TIMES = 3;  // number of times Donkey Kong shows his teeth after the stage is completed
+    constexpr float DONKEY_KONG_JUMP_SPEED = 450.f;  // px/sec, initial jump speed for Donkey Kong after the stage is completed
 }
 
 #endif
