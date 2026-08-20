@@ -23,7 +23,7 @@ public:
     /**
      * @brief Renders the current state of the stage.
      */
-    void draw() override;
+    void draw();
 
 private:
     DrawableComponentRepository drawable_components;

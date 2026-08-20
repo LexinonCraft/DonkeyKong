@@ -17,6 +17,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PickableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/StageSequence.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage25M.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DonkeyKong.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage100M.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DissolvingPlatform.cpp
     )

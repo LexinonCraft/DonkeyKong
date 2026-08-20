@@ -23,6 +23,9 @@ class PlayerData;
 class Enemy;
 class Pickable;
 class HammerPowerUp;
+class DonkeyKong;
+class BarrelStack;
+class Pauline;
 class DissolvingPlatform;
 
 #endif

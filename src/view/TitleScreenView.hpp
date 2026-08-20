@@ -10,7 +10,7 @@ class TitleScreenView : public AbstractSceneView {
 public:
     TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {};
 
-    void draw();
+    void draw(float animation_timer);
 };
 
 #endif

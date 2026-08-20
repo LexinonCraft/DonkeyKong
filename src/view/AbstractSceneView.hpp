@@ -21,8 +21,6 @@ public:
 
     virtual ~AbstractSceneView() {}
 
-    virtual void draw() = 0;
-
 protected:
     LayerStack layer_stack;
     sf::RenderWindow &window;
