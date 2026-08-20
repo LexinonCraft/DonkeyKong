@@ -40,6 +40,8 @@ private:
     sf::RenderWindow &window;
     sf::RenderTexture target;
     sf::Sprite sprite;
+
+    void resize_to_viewport();
 };
 
 #endif

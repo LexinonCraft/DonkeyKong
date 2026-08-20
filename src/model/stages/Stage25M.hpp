@@ -10,7 +10,6 @@ public:
     bool is_barrel_boundary_gap(const sf::Vector2f &position) const override;
 
 private:
-    float time_since_last_spawn = 0.f;
     float barrel_exit_y;
     std::shared_ptr<Girder> final_girder;
 

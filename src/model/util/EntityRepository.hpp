@@ -13,6 +13,9 @@
 #include "../entities/Girder.hpp"
 #include "../entities/Player.hpp"
 #include "../entities/Ladder.hpp"
+#include "../entities/DonkeyKong.hpp"
+#include "../entities/BarrelStack.hpp"
+#include "../entities/Pauline.hpp"
 #include "../entities/DissolvingPlatform.hpp"
 #include "Ref.hpp"
 
@@ -90,6 +93,18 @@ public:
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
     }
 
+    std::shared_ptr<DonkeyKong> add_donkey_kong(std::shared_ptr<Platform> platform, float x_position, bool throw_barrels) {
+        return add_entity(std::make_shared<DonkeyKong>(gen_ref(), platform, x_position, throw_barrels));
+    }
+
+    std::shared_ptr<BarrelStack> add_barrel_stack(std::shared_ptr<Platform> platform, float x_position) {
+        return add_entity(std::make_shared<BarrelStack>(gen_ref(), platform, x_position));
+    }
+
+    std::shared_ptr<Pauline> add_pauline(std::shared_ptr<Platform> platform, float x_position) {
+        return add_entity(std::make_shared<Pauline>(gen_ref(), platform, x_position));
+    }
+
     std::shared_ptr<DissolvingPlatform> add_dissolving_platform(sf::Vector2f position, float width) {
         return add_entity(std::make_shared<DissolvingPlatform>(gen_ref(), position, width));
     }
@@ -101,6 +116,11 @@ public:
     void prepare_for_deletion(Id id) {
         pending_deletions.push(id);
     }
+
+    /**
+     * @brief Adds all entities queued for insertion and notifies observers.
+     */
+    void handle_additions();
 
     /**
      * @brief Removes all entities queued for deletion and validates remaining references.
@@ -159,18 +179,13 @@ private:
      */
     template <typename E>
     std::shared_ptr<E> add_entity(std::shared_ptr<E> entity) {
-        Id id = entity->get_ref().get_id();
-        entities[id] = entity;
-
-        for (auto it = observers.begin(); it != observers.end(); ++it) {
-            it->second->on_entity_added(std::static_pointer_cast<BaseEntity>(entity));
-        }
-
+        pending_additions.push(std::static_pointer_cast<BaseEntity>(entity));
         return entity;
     }
 
     std::unordered_map<Id, std::shared_ptr<BaseEntity>> entities;
     std::unordered_map<Id, EntityRepositoryObserver *> observers;
+    std::queue<std::shared_ptr<BaseEntity>> pending_additions;
     std::queue<Id> pending_deletions;
     Id (*id_generator)();
 };

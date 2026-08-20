@@ -1,6 +1,7 @@
 #ifndef COMPONENT_REPOSITORY_HPP
 #define COMPONENT_REPOSITORY_HPP
 
+#include <cassert>
 #include <memory>
 #include <unordered_map>
 
@@ -54,6 +55,9 @@ public:
         return components.end();
     }
 
+protected:
+    bool iterating = false;
+
 private:
     std::unordered_map<Id, std::shared_ptr<C>> components;
     EntityRepository &entity_repo;
@@ -65,6 +69,7 @@ private:
      * @param entity Added entity.
      */
     void on_entity_added(std::shared_ptr<BaseEntity> entity) override {
+        assert(!iterating);
         auto component = component_factory->create_component_for(entity);
         if (component != nullptr) {
             components[entity->get_id()] = std::move(component);
@@ -76,6 +81,7 @@ private:
      * @param entity Removed entity.
      */
     void on_entity_removed(std::shared_ptr<BaseEntity> entity) override {
+        assert(!iterating);
         components.erase(entity->get_id());
     }
 };

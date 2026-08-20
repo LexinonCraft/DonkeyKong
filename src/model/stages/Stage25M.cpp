@@ -35,17 +35,14 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
 
     final_girder = p8;
 
+    entities.add_donkey_kong(p7, 100, true);
+    entities.add_barrel_stack(p7, 30);
+    entities.add_pauline(p8, 275);
+
     player->enter_platform(p0, 50);
 }
 
 void Stage25M::update_while_running(float dt) {
-    time_since_last_spawn += dt;
-
-    if (time_since_last_spawn > 2.0f) {
-        entities.add_barrel({300, -500});
-        time_since_last_spawn = 0.f;
-    }
-
     if (player->get_current_platform() == final_girder) {
         on_completed();
     }
