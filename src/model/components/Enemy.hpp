@@ -3,6 +3,7 @@
 
 #include "../util/EntityFromComponentAux.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
 
 /**
  * @brief Behaviour interface for vertical structures that a player can climb.
@@ -15,6 +16,7 @@ public:
     virtual ~Enemy() {}
 
     virtual bool touches(const sf::RectangleShape &player_shape) const = 0;
+    virtual sf::Vector2f get_position() const = 0;
     virtual void on_hammer_hit() = 0;
 };
 

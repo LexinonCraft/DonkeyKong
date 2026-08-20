@@ -54,7 +54,7 @@ public:
      * @brief Returns the barrel's world position.
      * @return Current position vector.
      */
-    sf::Vector2f get_position() const { return position; }
+    sf::Vector2f get_position() const override { return position; }
 
     /**
      * @brief Returns the current horizontal velocity.

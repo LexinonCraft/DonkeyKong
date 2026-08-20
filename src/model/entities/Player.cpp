@@ -195,13 +195,14 @@ void Player::update(float dt, Stage &stage) {
         }
     }
 
-    if (has_hammer()) {
-        if (auto enemy = stage.get_enemies().find_touching_enemy(shape)) {
+    if (auto enemy = stage.get_enemies().find_touching_enemy(shape)) {
+        const bool enemy_in_front = facing_right ? enemy->get_position().x >= position.x : enemy->get_position().x <= position.x;
+        if (has_hammer() && enemy_in_front) {
             enemy->on_hammer_hit();
             stage.get_player_data().add_to_score(constants::HAMMER_BARREL_SCORE);
+        } else {
+            die(stage);
         }
-    } else if (stage.get_enemies().find_touching_enemy(shape)) {
-        die(stage);
     }
 }
 
