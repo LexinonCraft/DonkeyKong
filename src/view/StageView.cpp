@@ -116,3 +116,7 @@ void StageView::update(float dt) {
 void StageView::on_score_added(sf::Vector2f position, int score_to_add) {
     current_score_effects.emplace_back(position, score_to_add);
 }
+
+void StageView::on_player_died() {
+    current_score_effects.clear();
+}

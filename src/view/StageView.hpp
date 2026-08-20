@@ -39,6 +39,8 @@ private:
     Id stage_observer_id;
 
     void on_score_added(sf::Vector2f position, int score_to_add) override;
+
+    void on_player_died() override;
 };
 
 #endif

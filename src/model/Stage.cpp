@@ -32,6 +32,9 @@ void Stage::on_player_dying() {
     
     state = StageState::PlayerDying;
     time_since_state_change = 0.f;
+    for (auto it = observer_registry.begin(); it != observer_registry.end(); ++it) {
+        it->second->on_player_died();
+    }
 }
 
 void Stage::on_completed() {
