@@ -6,7 +6,7 @@
 #include "StageSequence.hpp"
 
 namespace {
-float get_barrel_difficulty_multiplier(unsigned int level) {
+float calculate_barrel_difficulty_multiplier(unsigned int level) {
     return std::min(
         1.f + static_cast<float>(level) * constants::BARREL_DIFFICULTY_INCREASE_PER_LEVEL,
         constants::BARREL_MAX_DIFFICULTY_MULTIPLIER);
@@ -70,11 +70,11 @@ bool Stage::on_exit() {
 }
 
 float Stage::get_barrel_roll_speed() const {
-    return constants::ROLL_SPEED * get_barrel_difficulty_multiplier(player_data.get_level());
+    return constants::ROLL_SPEED * get_barrel_difficulty_multiplier();
 }
 
-float Stage::get_barrel_spawn_interval() const {
-    return constants::BARREL_SPAWN_INTERVAL / get_barrel_difficulty_multiplier(player_data.get_level());
+float Stage::get_barrel_difficulty_multiplier() const {
+    return calculate_barrel_difficulty_multiplier(player_data.get_level());
 }
 
 void Stage::update_while_running(float dt) {

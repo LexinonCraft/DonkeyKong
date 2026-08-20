@@ -86,7 +86,7 @@ public:
 
     float get_barrel_roll_speed() const;
 
-    float get_barrel_spawn_interval() const;
+    float get_barrel_difficulty_multiplier() const;
 
 protected:
     /**

@@ -22,14 +22,14 @@ Barrel::Barrel(Ref ref, sf::Vector2f position) :
         shape.setPosition(position);
 }
 
-void Barrel::set_on_platform(std::shared_ptr<Platform> platform, int roll_direction) {
+void Barrel::set_on_platform(std::shared_ptr<Platform> platform, float roll_speed, int roll_direction) {
     if (!platform)
         return;
     int platform_sign = platform->downhill_sign();
     int direction = platform_sign != 0 ? platform_sign : roll_direction;
     if (direction == 0)
         direction = 1;
-    vx = constants::ROLL_SPEED * static_cast<float>(direction);
+    vx = roll_speed * static_cast<float>(direction);
     state = State::OnGirder;
     current_platform = platform;
     vy = 0.f;
@@ -63,7 +63,7 @@ void Barrel::update(float dt, Stage &level) {
             } else {
                 const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
-                    set_on_platform(platform_below, std::signbit(vx) ? -1 : 1);
+                    set_on_platform(platform_below, level.get_barrel_roll_speed(), std::signbit(vx) ? -1 : 1);
                     current_climbable.reset();
                     position.y = current_platform->surface_y_at(position.x);
                 } else {
