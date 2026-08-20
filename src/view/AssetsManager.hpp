@@ -9,7 +9,10 @@
 class AssetsManager {
 public:
     enum class TextureId {
-        DonkeyKong,
+        DonkeyKongStill,
+        DonkeyKongAngry,
+        DonkeyKongThrowingSide,
+        DonkeyKongThrowingFront,
         JumpmanStill,
         JumpmanWalking1,
         JumpmanWalking2,
@@ -23,6 +26,10 @@ public:
         BarrelSide2,
         LadderCyan,
         LadderYellow,
+        PaulineStill,
+        PaulineScream1,
+        PaulineScream2,
+        Help,
         Hammer,
     };
 
@@ -35,7 +42,10 @@ public:
 private:
     std::string textures_base_path;
 
-    sf::Texture donkey_kong_texture;
+    sf::Texture donkey_kong_still_texture;
+    sf::Texture donkey_kong_angry_texture;
+    sf::Texture donkey_kong_throwing_side_texture;
+    sf::Texture donkey_kong_throwing_front_texture;
     sf::Texture jumpman_still_texture;
     sf::Texture jumpman_walking1_texture;
     sf::Texture jumpman_walking2_texture;
@@ -49,6 +59,10 @@ private:
     sf::Texture barrel_side2_texture;
     sf::Texture ladder_cyan_texture;
     sf::Texture ladder_yellow_texture;
+    sf::Texture pauline_still_texture;
+    sf::Texture pauline_scream1_texture;
+    sf::Texture pauline_scream2_texture;
+    sf::Texture help_texture;
     sf::Texture hammer_texture;
 
     sf::Font font;

@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include <SFML/Graphics/Color.hpp>
+#include <cstdlib>
 
 #include "../../Constants.hpp"
 
@@ -41,6 +42,9 @@ bool Girder::covers_x(float x, float h_tolerance_left, float h_tolerance_right) 
 
 int Girder::downhill_sign() const {
     // the lower end has the larger y; roll toward it
+    if (std::abs(right.y - left.y) < 1e-6f) {
+        return 0; // flat
+    }
     return (right.y > left.y) ? 1 : -1;
 }
 
