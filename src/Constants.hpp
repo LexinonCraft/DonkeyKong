@@ -17,6 +17,8 @@ namespace constants {
     // so +y points downward (toward the bottom of the screen) = gravity direction.
     constexpr float BARREL_RADIUS = 12.f;     // px
     constexpr float ROLL_SPEED = 130.f;       // px/sec, constant horizontal roll on a girder
+    constexpr float BARREL_DIFFICULTY_INCREASE_PER_LEVEL = 0.1f;
+    constexpr float BARREL_MAX_DIFFICULTY_MULTIPLIER = 2.f;
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 20.f;  // px
     constexpr float SEAM_SNAP_DISTANCE = 5.f;  // px, distance to snap to a girder when falling onto it
@@ -27,6 +29,12 @@ namespace constants {
     constexpr float PLAYER_WALKING_SPEED = 120.f;  // px/sec, horizontal speed while on a girder
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
     constexpr float PLAYER_MAX_FALL_HEIGHT = 80.f;  // px, maximum height the player can fall before dying
+
+    constexpr float HAMMER_WIDTH = 16.f;
+    constexpr float HAMMER_HEIGHT = 20.f;
+    constexpr float HAMMER_DURATION = 10.f;
+    constexpr float HAMMER_SWING_ANIMATION_INTERVAL = 0.2f;
+    constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
 
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 2.f;  // px, minimum distance to snap to a platform when falling onto it
 
@@ -71,6 +79,8 @@ namespace constants {
     constexpr float DONKEY_KONG_SHOW_TEETH_INTERVAL = 0.3f;  // seconds between Donkey Kong showing his teeth after the stage is completed
     constexpr unsigned int DONKEY_KONG_SHOW_TEETH_TIMES = 3;  // number of times Donkey Kong shows his teeth after the stage is completed
     constexpr float DONKEY_KONG_JUMP_SPEED = 450.f;  // px/sec, initial jump speed for Donkey Kong after the stage is completed
+    constexpr float DONKEY_KONG_HITBOX_WIDTH = 64.f;  // px, width of Donkey Kong's hitbox
+    constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;  // px, height of Donkey Kong's hitbox
 }
 
 #endif

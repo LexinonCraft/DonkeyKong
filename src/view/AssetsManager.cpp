@@ -30,6 +30,12 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file) : tex
     load("hammer.png", hammer_texture);
     load("heart_normal.png", heart_normal_texture);
     load("heart_broken.png", heart_broken_texture);
+    load("jumpman_hammer_up_still.png", jumpman_hammer_up_still_texture);
+    load("jumpman_hammer_up_walking1.png", jumpman_hammer_up_walking1_texture);
+    load("jumpman_hammer_up_walking2.png", jumpman_hammer_up_walking2_texture);
+    load("jumpman_hammer_down_still.png", jumpman_hammer_down_still_texture);
+    load("jumpman_hammer_down_walking1.png", jumpman_hammer_down_walking1_texture);
+    load("jumpman_hammer_down_walking2.png", jumpman_hammer_down_walking2_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
@@ -92,6 +98,18 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return heart_normal_texture;
         case TextureId::HeartBroken:
             return heart_broken_texture;
+        case TextureId::JumpmanHammerUpStill:
+            return jumpman_hammer_up_still_texture;
+        case TextureId::JumpmanHammerUpWalking1:
+            return jumpman_hammer_up_walking1_texture;
+        case TextureId::JumpmanHammerUpWalking2:
+            return jumpman_hammer_up_walking2_texture;
+        case TextureId::JumpmanHammerDownStill:
+            return jumpman_hammer_down_still_texture;
+        case TextureId::JumpmanHammerDownWalking1:
+            return jumpman_hammer_down_walking1_texture;
+        case TextureId::JumpmanHammerDownWalking2:
+            return jumpman_hammer_down_walking2_texture;
         default:
             throw std::runtime_error("Unknown texture ID");
     }

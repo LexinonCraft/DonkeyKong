@@ -4,6 +4,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Barrel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ladder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/HammerPowerUp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Stage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/ClimbableComponentRepository.cpp
@@ -13,6 +14,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/DrawableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/PlayerData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/EnemyComponentRepository.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PickableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/StageSequence.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage25M.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DonkeyKong.cpp

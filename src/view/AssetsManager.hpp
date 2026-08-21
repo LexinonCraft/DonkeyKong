@@ -38,6 +38,12 @@ public:
         Hammer,
         HeartNormal,
         HeartBroken,
+        JumpmanHammerUpStill,
+        JumpmanHammerUpWalking1,
+        JumpmanHammerUpWalking2,
+        JumpmanHammerDownStill,
+        JumpmanHammerDownWalking1,
+        JumpmanHammerDownWalking2,
     };
 
     AssetsManager(std::string textures_base_path, std::string font_file);
@@ -78,6 +84,12 @@ private:
     sf::Texture hammer_texture;
     sf::Texture heart_normal_texture;
     sf::Texture heart_broken_texture;
+    sf::Texture jumpman_hammer_up_still_texture;
+    sf::Texture jumpman_hammer_up_walking1_texture;
+    sf::Texture jumpman_hammer_up_walking2_texture;
+    sf::Texture jumpman_hammer_down_still_texture;
+    sf::Texture jumpman_hammer_down_walking1_texture;
+    sf::Texture jumpman_hammer_down_walking2_texture;
 
     sf::Font font;
 

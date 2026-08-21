@@ -29,7 +29,17 @@ public:
         switch (player->get_state()) {
             case Player::State::OnPlatform: {
                 float walking_time = player->get_walking_time();
-                if (walking_time > 0.0f) {
+                if (player->has_hammer()) {
+                    const float swing_time = constants::HAMMER_DURATION - player->get_hammer_time_remaining();
+                    const bool hammer_up = static_cast<int>(swing_time / constants::HAMMER_SWING_ANIMATION_INTERVAL) % 2 == 0;
+                    if (walking_time > 0.0f) {
+                        const bool first_stride = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0;
+                        texture_id = hammer_up ? (first_stride ? AssetsManager::TextureId::JumpmanHammerUpWalking1 : AssetsManager::TextureId::JumpmanHammerUpWalking2)
+                                            : (first_stride ? AssetsManager::TextureId::JumpmanHammerDownWalking1 : AssetsManager::TextureId::JumpmanHammerDownWalking2);
+                    } else {
+                        texture_id = hammer_up ? AssetsManager::TextureId::JumpmanHammerUpStill : AssetsManager::TextureId::JumpmanHammerDownStill;
+                    }
+                } else if (walking_time > 0.0f) {
                     texture_id = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0 ? AssetsManager::TextureId::JumpmanWalking1 : AssetsManager::TextureId::JumpmanWalking2;
                 } else {
                     texture_id = AssetsManager::TextureId::JumpmanStill;
