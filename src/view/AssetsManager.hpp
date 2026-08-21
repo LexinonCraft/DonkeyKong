@@ -48,11 +48,13 @@ public:
         JumpmanHammerDownWalking2,
     };
 
-    AssetsManager(std::string textures_base_path, std::string font_file);
+    AssetsManager(std::string textures_base_path, std::string font_file, std::string contributors_file);
 
     const sf::Texture &get_texture(TextureId id) const;
 
     const sf::Font &get_font() const;
+
+    const std::string &get_contributors() const;
 
 private:
     std::string textures_base_path;
@@ -96,8 +98,11 @@ private:
     sf::Texture jumpman_hammer_down_walking2_texture;
 
     sf::Font font;
+    std::string contributors;
 
     void load(const std::string &filename, sf::Texture &texture);
+
+    std::string read_contributors(const std::string &filename) const;
 };
 
 #endif

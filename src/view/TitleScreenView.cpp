@@ -56,5 +56,13 @@ void TitleScreenView::draw(float animation_timer) {
     donkey_kong_sprite.setScale({flip ? -3.f : 3.f, 3.f});
     layer_stack.get_layer(LayerStack::LayerId::Background).add_to_layer(donkey_kong_sprite);
 
+    sf::Text contributors(assets_manager.get_font());
+    contributors.setString(assets_manager.get_contributors());
+    contributors.setCharacterSize(6);
+    sf::FloatRect contributors_bounds = contributors.getLocalBounds();
+    contributors.setOrigin({contributors_bounds.size.x / 2.f, contributors_bounds.size.y / 2.f});
+    contributors.setPosition(get_absolute_position({0.f, -50.f}, AnchorPosition::BottomCenter));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(contributors);
+
     post_draw();
 }
