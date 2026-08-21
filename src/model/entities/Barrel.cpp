@@ -12,6 +12,7 @@
 #include "../Stage.hpp"
 #include "../components/Platform.hpp"
 #include "../components/PlatformComponentRepository.hpp"
+#include "Player.hpp"
 #include "../util/EntityVisitor.hpp"
 
 Barrel::Barrel(Ref ref, sf::Vector2f position) :
@@ -116,7 +117,6 @@ void Barrel::update(float dt, Stage &level) {
     }
 
     shape.setPosition(position);
-    Jumpable::update(dt, level);
 }
 
 void Barrel::accept(EntityVisitor &visitor) {
@@ -148,17 +148,52 @@ float Barrel::platform_snap_distance(float dt) const {
     }
 }
 
-void Barrel::check_jumps_over(sf::Vector2f player_position, Stage &stage) {
-    if (is_on_cooldown()) {
+void Barrel::check_jumps_over(const Player &player, Stage &stage) {
+    if (!player.has_jumped() || stage.get_state() != Stage::StageState::Running) {
+        tracking_player_jump = false;
+        crossed_above_barrel = false;
+        scored_for_player_jump = false;
+        player_jump_start_side = 0;
         return;
     }
 
-    float y_diff = (position.y - 2 * constants::BARREL_RADIUS) - player_position.y;
-    if (std::abs(player_position.x - position.x) < constants::BARREL_JUMP_H_TOLERANCE && 0 < y_diff && y_diff < constants::BARREL_JUMP_MAX_Y_DIFF) {
-        on_jump_over();
-    }
-}
+    const sf::Vector2f player_position = player.get_position();
+    const float player_x_difference = player_position.x - position.x;
+    const float player_y_difference = (position.y - 2 * constants::BARREL_RADIUS) - player_position.y;
+    const float horizontal_clearance = constants::BARREL_RADIUS + constants::PLAYER_WIDTH / 2.f;
 
-void Barrel::on_cooldown_end(Stage &stage) {
-    stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
+    if (!tracking_player_jump) {
+        tracking_player_jump = true;
+        previous_player_x_difference = player_x_difference;
+        previous_player_y_difference = player_y_difference;
+        if (player_x_difference < -horizontal_clearance) {
+            player_jump_start_side = -1;
+        } else if (player_x_difference > horizontal_clearance) {
+            player_jump_start_side = 1;
+        }
+        return;
+    }
+
+    const bool crossed_barrel =
+        (previous_player_x_difference < 0.f && player_x_difference >= 0.f) ||
+        (previous_player_x_difference > 0.f && player_x_difference <= 0.f);
+    if (!crossed_above_barrel && player_jump_start_side != 0 && crossed_barrel) {
+        const float crossing_progress = previous_player_x_difference /
+            (previous_player_x_difference - player_x_difference);
+        const float crossing_y_difference = previous_player_y_difference +
+            (player_y_difference - previous_player_y_difference) * crossing_progress;
+        crossed_above_barrel = 0.f < crossing_y_difference &&
+            crossing_y_difference < constants::BARREL_JUMP_MAX_Y_DIFF;
+    }
+
+    previous_player_x_difference = player_x_difference;
+    previous_player_y_difference = player_y_difference;
+
+    const bool cleared_opposite_side =
+        (player_jump_start_side < 0 && player_x_difference > horizontal_clearance) ||
+        (player_jump_start_side > 0 && player_x_difference < -horizontal_clearance);
+    if (crossed_above_barrel && cleared_opposite_side && !scored_for_player_jump) {
+        scored_for_player_jump = true;
+        stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
+    }
 }

@@ -1,7 +1,6 @@
 #ifndef JUMPABLE_COMPONENT_REPOSITORY_HPP
 #define JUMPABLE_COMPONENT_REPOSITORY_HPP
 
-#include <SFML/System/Vector2.hpp>
 #include <memory>
 
 #include "../util/ComponentRepository.hpp"
@@ -20,7 +19,7 @@ public:
      */
     JumpableComponentRepository(EntityRepository &entity_repo) : ComponentRepository<Component<Jumpable>>(entity_repo, std::make_unique<JumpableComponentFactory>()) {}
 
-    void check_all_jumpables(sf::Vector2f player_position, Stage &stage);
+    void check_all_jumpables(const Player &player, Stage &stage);
 };
 
 #endif

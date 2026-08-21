@@ -176,10 +176,6 @@ void Player::update(float dt, Stage &stage) {
         climbing_time = 0.0f;
     }
 
-    if (state != State::InAir) {
-        has_jumped_flag = false;
-    }
-
     hammer_time_remaining = std::max(0.f, hammer_time_remaining - dt);
 
     shape.setPosition(position);
@@ -205,7 +201,11 @@ void Player::update(float dt, Stage &stage) {
         }
     }
 
-    stage.get_jumpables().check_all_jumpables(position, stage);
+    stage.get_jumpables().check_all_jumpables(*this, stage);
+
+    if (state != State::InAir) {
+        has_jumped_flag = false;
+    }
 }
 
 void Player::set_horizontal_direction(HorizontalDirection dir) {

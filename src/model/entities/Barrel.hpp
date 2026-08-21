@@ -115,10 +115,7 @@ public:
 
     float get_roll_distance() const { return roll_distance; }
 
-    void check_jumps_over(sf::Vector2f player_position, Stage &stage) override;
-
-protected:
-    void on_cooldown_end(Stage &stage) override;
+    void check_jumps_over(const Player &player, Stage &stage) override;
 
 private:
     sf::Vector2f position;
@@ -130,6 +127,12 @@ private:
     std::shared_ptr<Climbable> current_climbable = nullptr;
     bool roll_down_climbable;
     float roll_distance = 0.f;
+    bool tracking_player_jump = false;
+    bool crossed_above_barrel = false;
+    bool scored_for_player_jump = false;
+    int player_jump_start_side = 0;
+    float previous_player_x_difference = 0.f;
+    float previous_player_y_difference = 0.f;
     
     sf::CircleShape shape;
 

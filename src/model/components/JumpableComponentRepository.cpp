@@ -1,7 +1,7 @@
 #include "JumpableComponentRepository.hpp"
 
-void JumpableComponentRepository::check_all_jumpables(sf::Vector2f player_position, Stage &stage) {
+void JumpableComponentRepository::check_all_jumpables(const Player &player, Stage &stage) {
     for (auto it = begin(); it != end(); ++it) {
-        it->second->get_entity()->check_jumps_over(player_position, stage);
+        it->second->get_entity()->check_jumps_over(player, stage);
     }
 }

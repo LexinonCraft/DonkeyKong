@@ -74,9 +74,7 @@ namespace constants {
     constexpr float SCORE_EFFECT_RISE_SPEED = 50.f;  // px/sec, speed at which the score effect rises
     constexpr float SCORE_EFFECT_DURATION = 1.f;  // seconds, duration of the score effect
 
-    constexpr float JUMPABLE_COOLDOWN_TIME = 0.3f;  // seconds, cooldown time for jumpable entities after being jumped over
-    constexpr float BARREL_JUMP_H_TOLERANCE = BARREL_RADIUS / 4.f;  // px, horizontal tolerance for the player to be considered jumping over a barrel
-    constexpr float BARREL_JUMP_MAX_Y_DIFF = 30.f;  // px, maximum vertical difference between the top of the barrel and the player's position for the player to be considered jumping over a barrel
+    constexpr float BARREL_JUMP_MAX_Y_DIFF = 30.f;  // px, maximum height of the player's feet above the barrel
 
     constexpr unsigned int BARREL_JUMP_SCORE = 100;  // points awarded for jumping over a barrel
     constexpr float PLAYER_DYING_ANIMATION_INTERVAL = 0.075f;  // seconds between dying animation frames
