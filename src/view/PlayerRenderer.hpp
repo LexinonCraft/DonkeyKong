@@ -6,11 +6,13 @@
 #include "AssetsManager.hpp"
 #include "../Constants.hpp"
 #include "../util/Math.hpp"
+#include "../model/animations/AnimationVisitor.hpp"
+#include "../model/animations/PlayerDeathAnimation.hpp"
 
 /**
  * @brief Renderer for the player entity.
  */
-class PlayerRenderer : public DrawableComponent {
+class PlayerRenderer : public DrawableComponent, private AnimationVisitor {
 public:
     /**
      * @brief Creates the player renderer for a concrete entity.
@@ -23,10 +25,9 @@ public:
      * @param layer_stack Layer stack used for rendering.
      */
     void draw(LayerStack &layer_stack) override {
-        AssetsManager::TextureId texture_id;
-        bool flip_sprite = false;
-        bool rotate_sprite = false;
-        bool hammer_origin = false;
+        flip_sprite = false;
+        rotate_sprite = false;
+        hammer_origin = false;
         switch (player->get_state()) {
             case Player::State::OnPlatform: {
                 float walking_time = player->get_walking_time();
@@ -46,40 +47,19 @@ public:
                 } else {
                     texture_id = AssetsManager::TextureId::JumpmanStill;
                 }
-                flip_sprite = !player->is_facing_right() || force_face_left;
+                flip_sprite = !player->is_facing_right();
                 break;
             }
             case Player::State::InAir:
                 texture_id = player->has_jumped() ? AssetsManager::TextureId::JumpmanJumping : AssetsManager::TextureId::JumpmanStill;
-                flip_sprite = !player->is_facing_right() || force_face_left;
+                flip_sprite = !player->is_facing_right();
                 break;
             case Player::State::Climbing:
                 texture_id = AssetsManager::TextureId::JumpmanClimbing;
                 flip_sprite = static_cast<int>(player->get_climbing_time() / constants::PLAYER_CLIMBING_ANIMATION_INTERVAL) % 2 == 0;
                 break;
-            case Player::State::Dying:
-                if (dying_time < constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION) {
-                    texture_id = AssetsManager::TextureId::JumpmanDying1;
-                } else if (dying_time < constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION + constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) {
-                    switch(mod(floor_to_int(dying_time / constants::PLAYER_DYING_ANIMATION_INTERVAL), 4)) {
-                        case 0:
-                            texture_id = AssetsManager::TextureId::JumpmanDying1;
-                            break;
-                        case 1:
-                            texture_id = AssetsManager::TextureId::JumpmanDying2;
-                            break;
-                        case 2:
-                            texture_id = AssetsManager::TextureId::JumpmanDying1;
-                            rotate_sprite = true;
-                            break;
-                        case 3:
-                            texture_id = AssetsManager::TextureId::JumpmanDying2;
-                            rotate_sprite = true;
-                            break;
-                    } 
-                } else {
-                    texture_id = AssetsManager::TextureId::JumpmanDead;
-                }
+            case Player::State::Animated:
+                player->get_current_animation()->accept(*this);
                 break;
         }
 
@@ -92,17 +72,50 @@ public:
         layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
     }
 
-    void update(float dt, Stage &stage) override {
-        if (player->get_state() == Player::State::Dying) {
-            dying_time += dt;
-        }
-    }
-
 private:
     std::shared_ptr<Player> player;
     AssetsManager &assets_manager;
-    float dying_time = 0.0f;
-    bool force_face_left = false;
+    AssetsManager::TextureId texture_id;
+    bool flip_sprite = false;
+    bool rotate_sprite = false;
+    bool hammer_origin = false;
+
+    void visit(PlayerDeathAnimation &animation) override {
+        switch (animation.get_state()) {
+            case PlayerDeathAnimation::State::NotStarted:
+            case PlayerDeathAnimation::State::BeforeRotating:
+                texture_id = AssetsManager::TextureId::JumpmanDying1;
+                rotate_sprite = false;
+                break;
+            case PlayerDeathAnimation::State::Rotating:
+                switch (mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::PLAYER_DYING_ANIMATION_INTERVAL), 4)) {
+                    case 0:
+                        texture_id = AssetsManager::TextureId::JumpmanDying1;
+                        rotate_sprite = false;
+                        break;
+                    case 1:
+                        texture_id = AssetsManager::TextureId::JumpmanDying2;
+                        rotate_sprite = false;
+                        break;
+                    case 2:
+                        texture_id = AssetsManager::TextureId::JumpmanDying1;
+                        rotate_sprite = true;
+                        break;
+                    case 3:
+                        texture_id = AssetsManager::TextureId::JumpmanDying2;
+                        rotate_sprite = true;
+                        break;
+                }
+                break;
+            case PlayerDeathAnimation::State::AfterRotating:
+            case PlayerDeathAnimation::State::Finished:
+                texture_id = AssetsManager::TextureId::JumpmanDead;
+                rotate_sprite = false;
+                break;
+        }
+        flip_sprite = false;
+        hammer_origin = false;
+    }
 };
 
 #endif

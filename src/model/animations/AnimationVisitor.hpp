@@ -5,7 +5,8 @@
 
 class AnimationVisitor {
 public:
-    virtual void visit(Stage25MCompletionAnimation &animation) = 0;
+    virtual void visit(Stage25MCompletionAnimation &animation) {}
+    virtual void visit(PlayerDeathAnimation &animation) {}
 };
 
 #endif

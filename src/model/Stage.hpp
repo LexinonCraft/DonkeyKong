@@ -106,7 +106,7 @@ protected:
 
     const std::shared_ptr<Player> player;
     PlayerData &player_data;
-    bool payer_died = false;
+    bool player_died = false;
 
     std::unique_ptr<AbstractAnimation> current_animation;
 

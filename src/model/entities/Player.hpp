@@ -26,7 +26,7 @@ public:
         OnPlatform,
         InAir,
         Climbing,
-        Dying,
+        Animated,
     };
 
     /**
@@ -131,6 +131,12 @@ public:
 
     State get_state() const { return state; }
 
+    void start_animation(AbstractAnimation *animation) { current_animation = animation; state = State::Animated; }
+
+    void stop_animation() { current_animation = nullptr; state = State::InAir; }
+
+    AbstractAnimation *get_current_animation() const { return current_animation; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;
@@ -147,6 +153,8 @@ private:
     float hammer_time_remaining;
     bool has_jumped_flag = false;
     float y_before_jump = 0.0f;
+
+    AbstractAnimation *current_animation = nullptr;
 
     sf::RectangleShape shape;
 

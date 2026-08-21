@@ -1,9 +1,9 @@
 #include <algorithm>
-#include <stdexcept>
 
 #include "Stage.hpp"
 #include "PlayerData.hpp"
 #include "StageSequence.hpp"
+#include "animations/PlayerDeathAnimation.hpp"
 
 namespace {
 float calculate_barrel_difficulty_multiplier(unsigned int level) {
@@ -40,7 +40,8 @@ void Stage::on_player_dying() {
     if (current_animation)
         return;
     
-    // TODO: player death animation
+    player_died = true;
+    current_animation = std::make_unique<PlayerDeathAnimation>(*this, player);
 }
 
 void Stage::on_completed() {
@@ -66,7 +67,7 @@ bool Stage::check_over() {
         return false;
     }
 
-    if (payer_died) {
+    if (player_died) {
         player_data.lose_life();
     } else {
         advance_stage(player_data);

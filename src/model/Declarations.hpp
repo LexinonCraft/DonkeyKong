@@ -28,5 +28,7 @@ class BarrelStack;
 class Pauline;
 class DissolvingPlatform;
 class Stage25MCompletionAnimation;
+class PlayerDeathAnimation;
+class AbstractAnimation;
 
 #endif
