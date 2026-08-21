@@ -24,14 +24,14 @@ Barrel::Barrel(Ref ref, sf::Vector2f position) :
         shape.setPosition(position);
 }
 
-void Barrel::set_on_platform(std::shared_ptr<Platform> platform, int roll_direction) {
+void Barrel::set_on_platform(std::shared_ptr<Platform> platform, float roll_speed, int roll_direction) {
     if (!platform)
         return;
     int platform_sign = platform->downhill_sign();
     int direction = platform_sign != 0 ? platform_sign : roll_direction;
     if (direction == 0)
         direction = 1;
-    vx = constants::ROLL_SPEED * static_cast<float>(direction);
+    vx = roll_speed * static_cast<float>(direction);
     state = State::OnGirder;
     current_platform = platform;
     vy = 0.f;
@@ -49,7 +49,6 @@ void Barrel::update(float dt, Stage &level) {
                 if (current_climbable) {
                     if (roll_down_climbable && ((vx < 0 && position.x < current_climbable->get_x_pos()) || (vx > 0 && position.x > current_climbable->get_x_pos()))) {
                         vx = 0;
-                        vy = constants::ROLL_SPEED;
                         position.x = current_climbable->get_x_pos();
                         position.y = current_climbable->get_upper_y_pos();
                         state = State::RollingDownClimbable;
@@ -66,29 +65,44 @@ void Barrel::update(float dt, Stage &level) {
             } else {
                 const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
-                    set_on_platform(platform_below, std::signbit(vx) ? -1 : 1);
+                    set_on_platform(platform_below, level.get_barrel_roll_speed(), std::signbit(vx) ? -1 : 1);
                     current_climbable.reset();
                     position.y = current_platform->surface_y_at(position.x);
                 } else {
                     state = State::Falling;
                     current_climbable.reset();
-                    vx = 0.f;
                     vy = 0.f;
                 }
             }
             break;
         case State::Falling:
             vy += constants::GRAVITY * dt;
-            check_platform_intersection(level.get_platforms(), dt);
+            check_platform_intersection(level.get_platforms(), dt, level.get_barrel_roll_speed());
             position.x += vx * dt;
             position.y += vy * dt;
+
+            if (state == State::Falling) {
+                if (auto left_boundary = level.get_left_boundary()) {
+                    if (position.x < *left_boundary && !level.is_barrel_boundary_gap(position)) {
+                        position.x = *left_boundary;
+                        vx = -vx;
+                    }
+                }
+                if (auto right_boundary = level.get_right_boundary()) {
+                    if (position.x > *right_boundary && !level.is_barrel_boundary_gap(position)) {
+                        position.x = *right_boundary;
+                        vx = -vx;
+                    }
+                }
+            }
             break;
         case State::RollingDownClimbable:
+            vy = level.get_barrel_roll_speed();
             if (position.y < current_climbable->get_lower_y_pos()) {
                 position.y += vy * dt;
                 roll_distance += vy * dt * constants::BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR;
             } else {
-                set_on_platform(current_climbable->get_lower_end());
+                set_on_platform(current_climbable->get_lower_end(), level.get_barrel_roll_speed());
                 current_climbable.reset();
                 position.x += vx * dt;
                 position.y += vy * dt;
@@ -113,8 +127,12 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
-void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt) {
-    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, constants::BARREL_RADIUS, platform_snap_distance(dt)));
+void Barrel::on_hammer_hit() {
+    destroy();
+}
+
+void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt, float roll_speed) {
+    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, constants::BARREL_RADIUS, platform_snap_distance(dt)), roll_speed);
 }
 
 void Barrel::check_referenced_entities() {

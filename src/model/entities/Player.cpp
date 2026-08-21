@@ -1,9 +1,11 @@
+#include <algorithm>
 #include <memory>
 
 #include <SFML/System/Angle.hpp>
 
 #include "Player.hpp"
 #include "../../Constants.hpp"
+#include "../PlayerData.hpp"
 #include "../util/EntityVisitor.hpp"
 #include "../Stage.hpp"
 
@@ -14,6 +16,7 @@ Player::Player(Ref ref) :
     velocity(0.f, 0.f),
     horizontal_direction(HorizontalDirection::None),
     vertical_direction(VerticalDirection::None),
+    hammer_time_remaining(0.f),
     shape({constants::PLAYER_WIDTH, constants::PLAYER_HEIGHT}) {
         // origin at the rectangle's centre so `position` is the player's centre
         shape.setOrigin({constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT}); // origin at the bottom centre of the rectangle
@@ -84,31 +87,33 @@ void Player::update(float dt, Stage &stage) {
                     break;
             }
 
-            switch (vertical_direction) {
-                case VerticalDirection::Up:
-                    {
-                        std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                        if (ladder) {
-                            state = State::Climbing;
-                            current_ladder = ladder;
-                            velocity.x = 0.f;
-                            velocity.y = climbing_dir;
+            if (!has_hammer()) {
+                switch (vertical_direction) {
+                    case VerticalDirection::Up:
+                        {
+                            std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                            if (ladder) {
+                                state = State::Climbing;
+                                current_ladder = ladder;
+                                velocity.x = 0.f;
+                                velocity.y = climbing_dir;
+                            }
                         }
-                    }
-                    break;
-                case VerticalDirection::Down:
-                    {
-                        std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                        if (ladder) {
-                            state = State::Climbing;
-                            current_ladder = ladder;
-                            velocity.x = 0.f;
-                            velocity.y = climbing_dir;
+                        break;
+                    case VerticalDirection::Down:
+                        {
+                            std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                            if (ladder) {
+                                state = State::Climbing;
+                                current_ladder = ladder;
+                                velocity.x = 0.f;
+                                velocity.y = climbing_dir;
+                            }
                         }
-                    }
-                    break;
-                case VerticalDirection::None:
-                    break;
+                        break;
+                    case VerticalDirection::None:
+                        break;
+                }
             }
             break;
         }
@@ -175,10 +180,29 @@ void Player::update(float dt, Stage &stage) {
         has_jumped_flag = false;
     }
 
+    hammer_time_remaining = std::max(0.f, hammer_time_remaining - dt);
+
     shape.setPosition(position);
 
-    if (stage.get_enemies().find_touching_enemy(shape)) {
-        die(stage);
+    if (state == State::OnPlatform || state == State::InAir) {
+        if (auto pickable = stage.get_pickables().find_touching_pickable(shape)) {
+            switch (pickable->get_type()) {
+                case Pickable::Type::Hammer:
+                    hammer_time_remaining = constants::HAMMER_DURATION;
+                    break;
+            }
+            pickable->on_picked_up();
+        }
+    }
+
+    if (auto enemy = stage.get_enemies().find_touching_enemy(shape)) {
+        const bool enemy_in_front = facing_right ? enemy->get_position().x >= position.x : enemy->get_position().x <= position.x;
+        if (has_hammer() && enemy_in_front) {
+            enemy->on_hammer_hit();
+            stage.get_player_data().add_to_score(constants::HAMMER_BARREL_SCORE);
+        } else {
+            die(stage);
+        }
     }
 
     stage.get_jumpables().check_all_jumpables(position, stage);
@@ -193,7 +217,7 @@ void Player::set_vertical_direction(VerticalDirection dir) {
 }
 
 void Player::jump() {
-    if (state == State::OnPlatform) {
+    if (state == State::OnPlatform && !has_hammer()) {
         state = State::InAir;
         velocity.y = -constants::PLAYER_JUMP_SPEED;
         has_jumped_flag = true;

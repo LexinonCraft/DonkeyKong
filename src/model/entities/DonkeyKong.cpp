@@ -1,3 +1,5 @@
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <stdexcept>
 
 #include "DonkeyKong.hpp"
@@ -8,12 +10,12 @@ DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_posi
     : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform), throw_barrels(throw_barrels) {
     state = State::Idle;
     idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION;
-} 
+}
 
 void DonkeyKong::update(float dt, Stage &stage) {
     switch (state) {
         case State::Idle:
-            idle_countdown -= dt;
+            idle_countdown -= dt * stage.get_barrel_difficulty_multiplier();
             if (idle_countdown <= 0.f) {
                 unsigned int next_action;
                 if (consecutive_angry_actions >= constants::DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS) {
@@ -46,7 +48,7 @@ void DonkeyKong::update(float dt, Stage &stage) {
             if (num_barrels_to_be_thrown > 0 && action_timer >= constants::BARREL_THROW_ANIMATION_INTERVAL * 2) {
                 float barrel_x_pos = position.x + constants::BARREL_THROW_OFFSET_X;
                 auto barrel = stage.get_entities().add_barrel({barrel_x_pos, platform->surface_y_at(barrel_x_pos)});
-                barrel->set_on_platform(platform, 1);
+                barrel->set_on_platform(platform, stage.get_barrel_roll_speed(), 1);
                 num_barrels_to_be_thrown--;
                 action_timer -= constants::BARREL_THROW_ANIMATION_INTERVAL * 4;
             }
@@ -64,8 +66,17 @@ void DonkeyKong::update(float dt, Stage &stage) {
     }
 }
 
+bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
+    sf::RectangleShape hitbox;
+    hitbox.setSize({constants::DONKEY_KONG_HITBOX_WIDTH, constants::DONKEY_KONG_HITBOX_HEIGHT});
+    sf::FloatRect hitbox_bounds = hitbox.getLocalBounds();
+    hitbox.setOrigin({hitbox_bounds.size.x / 2.f, hitbox_bounds.size.y});
+    hitbox.setPosition(position);
+    return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
+}
+
 void DonkeyKong::switch_to_idle(int random_int) {
     state = State::Idle;
-    idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (random_int % constants::DONKEY_KONG_IDLE_DURATION_STEPS) * 
+    idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (random_int % constants::DONKEY_KONG_IDLE_DURATION_STEPS) *
                      ((constants::DONKEY_KONG_MAX_IDLE_DURATION - constants::DONKEY_KONG_MIN_IDLE_DURATION) / constants::DONKEY_KONG_IDLE_DURATION_STEPS);
 }

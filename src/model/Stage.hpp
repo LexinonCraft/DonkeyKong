@@ -10,6 +10,7 @@
 #include "components/ClimbableComponentRepository.hpp"
 #include "components/EnemyComponentRepository.hpp"
 #include "components/JumpableComponentRepository.hpp"
+#include "components/PickableComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "../Constants.hpp"
 #include "../util/ObserverRegistry.hpp"
@@ -61,6 +62,8 @@ public:
      */
     EnemyComponentRepository &get_enemies() { return enemy_components; }
 
+    PickableComponentRepository &get_pickables() { return pickable_components; }
+
     /**
      * @brief Returns the jumpable repository for this level.
      * @return Repository containing jumpable behaviour components.
@@ -79,6 +82,8 @@ public:
 
     virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
 
+    virtual bool is_barrel_boundary_gap(const sf::Vector2f &position) const { return false; }
+
     virtual void on_player_dying();
 
     virtual void on_completed();
@@ -96,6 +101,9 @@ public:
     }
 
     ObserverRegistry<StageObserver> &get_observer_registry() { return observer_registry; }
+    float get_barrel_roll_speed() const;
+
+    float get_barrel_difficulty_multiplier() const;
 
 protected:
     /**
@@ -112,6 +120,7 @@ protected:
     ClimbableComponentRepository climbable_components;
     EnemyComponentRepository enemy_components;
     JumpableComponentRepository jumpable_components;
+    PickableComponentRepository pickable_components;
 
     ObserverRegistry<StageObserver> observer_registry;
 

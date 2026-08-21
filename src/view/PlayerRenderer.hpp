@@ -23,14 +23,22 @@ public:
      */
     void draw(LayerStack &layer_stack) override {
         sf::Sprite player_sprite(assets_manager.get_texture(AssetsManager::TextureId::JumpmanStill));
-        sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
-        player_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y});
         bool flip_sprite = !player->is_facing_right();
 
         AssetsManager::TextureId texture_id;
         float walking_time = player->get_walking_time();
         float climbing_time = player->get_climbing_time();
-        if (player->has_jumped()) {
+        if (player->has_hammer()) {
+            const float swing_time = constants::HAMMER_DURATION - player->get_hammer_time_remaining();
+            const bool hammer_up = static_cast<int>(swing_time / constants::HAMMER_SWING_ANIMATION_INTERVAL) % 2 == 0;
+            if (walking_time > 0.0f) {
+                const bool first_stride = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0;
+                texture_id = hammer_up ? (first_stride ? AssetsManager::TextureId::JumpmanHammerUpWalking1 : AssetsManager::TextureId::JumpmanHammerUpWalking2)
+                                       : (first_stride ? AssetsManager::TextureId::JumpmanHammerDownWalking1 : AssetsManager::TextureId::JumpmanHammerDownWalking2);
+            } else {
+                texture_id = hammer_up ? AssetsManager::TextureId::JumpmanHammerUpStill : AssetsManager::TextureId::JumpmanHammerDownStill;
+            }
+        } else if (player->has_jumped()) {
             texture_id = AssetsManager::TextureId::JumpmanJumping;
         } else if (walking_time > 0.0f) {
             texture_id = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0 ? AssetsManager::TextureId::JumpmanWalking1 : AssetsManager::TextureId::JumpmanWalking2;
@@ -40,7 +48,9 @@ public:
         } else {
             texture_id = AssetsManager::TextureId::JumpmanStill;
         }
-        player_sprite.setTexture(assets_manager.get_texture(texture_id));
+        player_sprite.setTexture(assets_manager.get_texture(texture_id), true);
+        sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
+        player_sprite.setOrigin({8.f, sprite_bounds.size.y});
 
         player_sprite.setPosition(player->get_position());
         player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
