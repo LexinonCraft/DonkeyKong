@@ -23,4 +23,6 @@ void PlayerData::reset() {
     lives = constants::INITIAL_LIVES;
     level = 0;
     stage_in_level = 0;
+    jumped_over_barrels_count = 0;
+    hammer_use_count = 0;
 }

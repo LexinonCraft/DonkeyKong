@@ -17,7 +17,7 @@ public:
 
     virtual bool touches(const sf::RectangleShape &player_shape) const = 0;
     virtual sf::Vector2f get_position() const = 0;
-    virtual void on_hammer_hit() = 0;
+    virtual void on_hammer_hit(Stage &stage) = 0;
 };
 
 #endif

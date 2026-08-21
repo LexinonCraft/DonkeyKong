@@ -55,6 +55,36 @@ void StageView::draw() {
     highscore.setPosition(get_absolute_position({0.f, 24.f}, AnchorPosition::TopCenter));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore);
 
+    sf::Sprite hammer_sprite(assets_manager.get_texture(AssetsManager::TextureId::Hammer));
+    sf::FloatRect hammer_bounds = hammer_sprite.getLocalBounds();
+    hammer_sprite.setOrigin({hammer_bounds.size.x / 2.f, hammer_bounds.size.y / 2.f});
+    hammer_sprite.setPosition(get_absolute_position({30.f, 104.f}, AnchorPosition::TopLeft));
+    hammer_sprite.setScale({2.f, 2.f});
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(hammer_sprite);
+
+    sf::Text hammer_count(assets_manager.get_font());
+    hammer_count.setString(std::format("{:d}", stage.get_player_data().get_hammer_use_count()));
+    hammer_count.setCharacterSize(24);
+    sf::FloatRect hammer_count_bounds = hammer_count.getLocalBounds();
+    hammer_count.setOrigin({0.f, hammer_count_bounds.size.y / 2.f});
+    hammer_count.setPosition(get_absolute_position({50.f, 110.f}, AnchorPosition::TopLeft));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(hammer_count);
+
+    sf::Sprite barrel_sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelFront1));
+    sf::FloatRect barrel_bounds = barrel_sprite.getLocalBounds();
+    barrel_sprite.setOrigin({barrel_bounds.size.x / 2.f, barrel_bounds.size.y / 2.f});
+    barrel_sprite.setPosition(get_absolute_position({30.f, 140.f}, AnchorPosition::TopLeft));
+    barrel_sprite.setScale({2.f, 2.f});
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(barrel_sprite);
+
+    sf::Text barrel_count(assets_manager.get_font());
+    barrel_count.setString(std::format("{:d}", stage.get_player_data().get_jumped_over_barrels_count()));
+    barrel_count.setCharacterSize(24);
+    sf::FloatRect barrel_count_bounds = barrel_count.getLocalBounds();
+    barrel_count.setOrigin({0.f, barrel_count_bounds.size.y / 2.f});
+    barrel_count.setPosition(get_absolute_position({50.f, 140.f}, AnchorPosition::TopLeft));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(barrel_count);
+
     int lives_count = stage.get_player_data().get_lives();
     for (int i = 0; i < lives_count; ++i) {
         sf::Sprite life_sprite(assets_manager.get_texture(AssetsManager::TextureId::JumpmanStill));

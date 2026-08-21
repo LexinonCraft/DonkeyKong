@@ -24,7 +24,7 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
-    void on_hammer_hit() override {}
+    void on_hammer_hit(Stage &stage) override {}
 
     void accept(EntityVisitor &visitor) override {
         visitor.visit(*this);
