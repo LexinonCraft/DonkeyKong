@@ -128,6 +128,8 @@ public:
 
     void enter_platform(std::shared_ptr<Platform> platform, float x_pos);
 
+    State get_state() const { return state; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;

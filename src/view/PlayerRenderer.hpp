@@ -5,6 +5,7 @@
 #include "../model/entities/Player.hpp"
 #include "AssetsManager.hpp"
 #include "../Constants.hpp"
+#include "../util/Math.hpp"
 
 /**
  * @brief Renderer for the player entity.
@@ -22,44 +23,90 @@ public:
      * @param layer_stack Layer stack used for rendering.
      */
     void draw(LayerStack &layer_stack) override {
-        sf::Sprite player_sprite(assets_manager.get_texture(AssetsManager::TextureId::JumpmanStill));
-        bool flip_sprite = !player->is_facing_right();
-
         AssetsManager::TextureId texture_id;
-        float walking_time = player->get_walking_time();
-        float climbing_time = player->get_climbing_time();
-        if (player->has_hammer()) {
-            const float swing_time = constants::HAMMER_DURATION - player->get_hammer_time_remaining();
-            const bool hammer_up = static_cast<int>(swing_time / constants::HAMMER_SWING_ANIMATION_INTERVAL) % 2 == 0;
-            if (walking_time > 0.0f) {
-                const bool first_stride = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0;
-                texture_id = hammer_up ? (first_stride ? AssetsManager::TextureId::JumpmanHammerUpWalking1 : AssetsManager::TextureId::JumpmanHammerUpWalking2)
-                                       : (first_stride ? AssetsManager::TextureId::JumpmanHammerDownWalking1 : AssetsManager::TextureId::JumpmanHammerDownWalking2);
-            } else {
-                texture_id = hammer_up ? AssetsManager::TextureId::JumpmanHammerUpStill : AssetsManager::TextureId::JumpmanHammerDownStill;
+        bool flip_sprite = false;
+        bool rotate_sprite = false;
+        bool hammer_origin = false;
+        switch (player->get_state()) {
+            case Player::State::OnPlatform: {
+                float walking_time = player->get_walking_time();
+                if (player->has_hammer()) {
+                    const float swing_time = constants::HAMMER_DURATION - player->get_hammer_time_remaining();
+                    const bool hammer_up = static_cast<int>(swing_time / constants::HAMMER_SWING_ANIMATION_INTERVAL) % 2 == 0;
+                    if (walking_time > 0.0f) {
+                        const bool first_stride = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0;
+                        texture_id = hammer_up ? (first_stride ? AssetsManager::TextureId::JumpmanHammerUpWalking1 : AssetsManager::TextureId::JumpmanHammerUpWalking2)
+                                            : (first_stride ? AssetsManager::TextureId::JumpmanHammerDownWalking1 : AssetsManager::TextureId::JumpmanHammerDownWalking2);
+                    } else {
+                        texture_id = hammer_up ? AssetsManager::TextureId::JumpmanHammerUpStill : AssetsManager::TextureId::JumpmanHammerDownStill;
+                    }
+                    hammer_origin = true;
+                } else if (walking_time > 0.0f) {
+                    texture_id = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0 ? AssetsManager::TextureId::JumpmanWalking1 : AssetsManager::TextureId::JumpmanWalking2;
+                } else {
+                    texture_id = AssetsManager::TextureId::JumpmanStill;
+                }
+                flip_sprite = !player->is_facing_right() || force_face_left;
+                break;
             }
-        } else if (player->has_jumped()) {
-            texture_id = AssetsManager::TextureId::JumpmanJumping;
-        } else if (walking_time > 0.0f) {
-            texture_id = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0 ? AssetsManager::TextureId::JumpmanWalking1 : AssetsManager::TextureId::JumpmanWalking2;
-        } else if (climbing_time > 0.0f) {
-            texture_id = AssetsManager::TextureId::JumpmanClimbing;
-            flip_sprite = static_cast<int>(climbing_time / constants::PLAYER_CLIMBING_ANIMATION_INTERVAL) % 2 == 0;
-        } else {
-            texture_id = AssetsManager::TextureId::JumpmanStill;
+            case Player::State::InAir:
+                texture_id = player->has_jumped() ? AssetsManager::TextureId::JumpmanJumping : AssetsManager::TextureId::JumpmanStill;
+                flip_sprite = !player->is_facing_right() || force_face_left;
+                break;
+            case Player::State::Climbing:
+                texture_id = AssetsManager::TextureId::JumpmanClimbing;
+                flip_sprite = static_cast<int>(player->get_climbing_time() / constants::PLAYER_CLIMBING_ANIMATION_INTERVAL) % 2 == 0;
+                break;
+            case Player::State::Dying:
+                if (dying_time < constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION) {
+                    texture_id = AssetsManager::TextureId::JumpmanDying1;
+                } else if (dying_time < constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION + constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) {
+                    switch(mod(floor_to_int(dying_time / constants::PLAYER_DYING_ANIMATION_INTERVAL), 4)) {
+                        case 0:
+                            texture_id = AssetsManager::TextureId::JumpmanDying1;
+                            break;
+                        case 1:
+                            texture_id = AssetsManager::TextureId::JumpmanDying2;
+                            break;
+                        case 2:
+                            texture_id = AssetsManager::TextureId::JumpmanDying1;
+                            rotate_sprite = true;
+                            break;
+                        case 3:
+                            texture_id = AssetsManager::TextureId::JumpmanDying2;
+                            rotate_sprite = true;
+                            break;
+                    } 
+                } else {
+                    texture_id = AssetsManager::TextureId::JumpmanDead;
+                }
+                break;
         }
-        player_sprite.setTexture(assets_manager.get_texture(texture_id), true);
-        sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
-        player_sprite.setOrigin({8.f, sprite_bounds.size.y});
 
+        sf::Sprite player_sprite(assets_manager.get_texture(texture_id));
+        sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
+        player_sprite.setOrigin({sprite_bounds.size.x / (hammer_origin ? 4.f : 2.f), rotate_sprite ? 0.f : sprite_bounds.size.y});
         player_sprite.setPosition(player->get_position());
         player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
+        player_sprite.setRotation(sf::degrees(rotate_sprite ? 180.f : 0.f));
         layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
+    }
+
+    void update(float dt, Stage &stage) override {
+        if (player->get_state() == Player::State::Dying) {
+            dying_time += dt;
+        }
+
+        if (stage.get_state() == Stage::StageState::Completed) {
+            force_face_left = true;
+        }
     }
 
 private:
     std::shared_ptr<Player> player;
     AssetsManager &assets_manager;
+    float dying_time = 0.0f;
+    bool force_face_left = false;
 };
 
 #endif

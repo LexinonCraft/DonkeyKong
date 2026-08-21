@@ -63,6 +63,8 @@ void DonkeyKong::update(float dt, Stage &stage) {
                 switch_to_idle(stage.random_int());
             }
             break;
+        default:
+            throw std::logic_error("Invalid state for DonkeyKong");
     }
 }
 
