@@ -14,6 +14,7 @@
 #include "../components/PlatformComponentRepository.hpp"
 #include "Player.hpp"
 #include "../util/EntityVisitor.hpp"
+#include "../PlayerData.hpp"
 
 Barrel::Barrel(Ref ref, sf::Vector2f position) :
     BaseEntity(ref),
@@ -195,5 +196,6 @@ void Barrel::check_jumps_over(const Player &player, Stage &stage) {
     if (crossed_above_barrel && cleared_opposite_side && !scored_for_player_jump) {
         scored_for_player_jump = true;
         stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
+        stage.get_player_data().increment_jumped_over_barrels_count();
     }
 }
