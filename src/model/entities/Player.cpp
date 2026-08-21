@@ -194,9 +194,7 @@ void Player::update(float dt, Stage &stage) {
     if (auto enemy = stage.get_enemies().find_touching_enemy(shape)) {
         const bool enemy_in_front = facing_right ? enemy->get_position().x >= position.x : enemy->get_position().x <= position.x;
         if (has_hammer() && enemy_in_front) {
-            enemy->on_hammer_hit();
-            stage.add_to_score(position, constants::HAMMER_BARREL_SCORE);
-            stage.get_player_data().increment_hammer_use_count();
+            enemy->on_hammer_hit(stage);
         } else {
             die(stage);
         }

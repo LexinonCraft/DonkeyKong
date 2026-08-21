@@ -35,6 +35,7 @@ namespace constants {
     constexpr float HAMMER_DURATION = 10.f;
     constexpr float HAMMER_SWING_ANIMATION_INTERVAL = 0.2f;
     constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
+    constexpr unsigned int HAMMER_GHOST_SCORE = 500u;
 
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 2.f;  // px, minimum distance to snap to a platform when falling onto it
 

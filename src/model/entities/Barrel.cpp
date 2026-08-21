@@ -128,7 +128,9 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
-void Barrel::on_hammer_hit() {
+void Barrel::on_hammer_hit(Stage &stage) {
+    stage.add_to_score(position, constants::HAMMER_BARREL_SCORE);
+    stage.get_player_data().increment_hammer_use_count();
     destroy();
 }
 

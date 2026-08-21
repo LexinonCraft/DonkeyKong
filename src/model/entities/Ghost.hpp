@@ -47,9 +47,7 @@ public:
         return moving_right;
     }
 
-    void on_hammer_hit() override {
-        destroy();
-    }
+    void on_hammer_hit(Stage &stage) override;
 
 private:
     sf::Vector2f position;
