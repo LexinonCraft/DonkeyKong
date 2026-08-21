@@ -1,6 +1,8 @@
+#include <fstream>
+
 #include "AssetsManager.hpp"
 
-AssetsManager::AssetsManager(std::string base_path, std::string font_file) : textures_base_path(base_path), font(font_file) {
+AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::string contributors_file) : textures_base_path(base_path), font(font_file), contributors(read_contributors(contributors_file)) {
     load("donkey_kong_still.png", donkey_kong_still_texture);
     load("donkey_kong_angry1.png", donkey_kong_angry1_texture);
     load("donkey_kong_angry2.png", donkey_kong_angry2_texture);
@@ -131,8 +133,21 @@ const sf::Font &AssetsManager::get_font() const {
     return font;
 }
 
+const std::string &AssetsManager::get_contributors() const {
+    return contributors;
+}
+
 void AssetsManager::load(const std::string &filename, sf::Texture &texture) {
     if (!texture.loadFromFile(textures_base_path + filename)) {
         throw std::runtime_error("Failed to load texture: " + filename);
     }
+}
+
+std::string AssetsManager::read_contributors(const std::string &filename) const {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        return "By Muvels and Lexinon";
+    }
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    return content;
 }

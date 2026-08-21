@@ -5,6 +5,7 @@
 #include "../../Constants.hpp"
 #include "../Stage.hpp"
 #include "../../util/Math.hpp"
+#include "../PlayerData.hpp"
 
 Ghost::Ghost(Ref ref, std::shared_ptr<Platform> platform, float x_pos)
     : BaseEntity(ref), position({x_pos, platform->surface_y_at(x_pos)}), current_platform(platform) {
@@ -103,4 +104,10 @@ float Ghost::get_horizontal_speed() const {
         default:
             return 0.f;
     }
+}
+
+void Ghost::on_hammer_hit(Stage &stage) {
+    stage.add_to_score(position, constants::HAMMER_GHOST_SCORE);
+    stage.get_player_data().increment_hammer_use_count();
+    destroy();
 }

@@ -1,5 +1,6 @@
 #include "Barrel.hpp"
 
+#include <algorithm>
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include <cstdlib>
@@ -14,13 +15,15 @@
 #include "../components/PlatformComponentRepository.hpp"
 #include "Player.hpp"
 #include "../util/EntityVisitor.hpp"
+#include "../PlayerData.hpp"
+#include "../../util/Math.hpp"
 
 Barrel::Barrel(Ref ref, sf::Vector2f position) :
     BaseEntity(ref),
     position(position),
-    shape(constants::BARREL_RADIUS) {
+    shape(constants::BARREL_HITBOX_RADIUS) {
         // origin at the circle's centre so `position` is the barrel's centre
-        shape.setOrigin({constants::BARREL_RADIUS, 2 * constants::BARREL_RADIUS});
+        shape.setOrigin({constants::BARREL_HITBOX_RADIUS, 2 * constants::BARREL_HITBOX_RADIUS});
         shape.setFillColor(sf::Color(120, 200, 230)); // light blue, stands out on the red girders
         shape.setPosition(position);
 }
@@ -60,7 +63,12 @@ void Barrel::update(float dt, Stage &level) {
                 } else {
                     current_climbable = level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
                     if (current_climbable) {
-                        roll_down_climbable = level.random_int() % 2 == 0;
+                        const float player_vertical_distance = level.get_player()->get_position().y - position.y;
+                        const float descent_chance = std::clamp(
+                            constants::BARREL_LADDER_DESCENT_BASE_CHANCE + player_vertical_distance / constants::BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT,
+                            constants::BARREL_LADDER_DESCENT_BASE_CHANCE,
+                            constants::BARREL_LADDER_DESCENT_MAX_CHANCE);
+                        roll_down_climbable = mod(level.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance;
                     }
                 }
             } else {
@@ -127,7 +135,9 @@ bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
-void Barrel::on_hammer_hit() {
+void Barrel::on_hammer_hit(Stage &stage) {
+    stage.add_to_score(position, constants::HAMMER_BARREL_SCORE);
+    stage.get_player_data().increment_hammer_use_count();
     destroy();
 }
 
@@ -195,5 +205,6 @@ void Barrel::check_jumps_over(const Player &player, Stage &stage) {
     if (crossed_above_barrel && cleared_opposite_side && !scored_for_player_jump) {
         scored_for_player_jump = true;
         stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
+        stage.get_player_data().increment_jumped_over_barrels_count();
     }
 }

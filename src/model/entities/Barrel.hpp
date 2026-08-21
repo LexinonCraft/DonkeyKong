@@ -111,7 +111,7 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
-    void on_hammer_hit() override;
+    void on_hammer_hit(Stage &stage) override;
 
     float get_roll_distance() const { return roll_distance; }
 
