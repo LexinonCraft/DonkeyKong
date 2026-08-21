@@ -89,7 +89,7 @@ void Ghost::update(float dt, Stage &stage) {
 
 bool Ghost::touches(const sf::RectangleShape &player_shape) const {
     sf::RectangleShape ghost_shape;
-    ghost_shape.setSize(sf::Vector2f(constants::GHOST_WIDTH, constants::GHOST_HEIGHT));
+    ghost_shape.setSize(sf::Vector2f(constants::GHOST_WIDTH / 2.f, constants::GHOST_HEIGHT * 0.75f));
     sf::FloatRect ghost_bounds = ghost_shape.getLocalBounds();
     ghost_shape.setOrigin({ghost_bounds.size.x / 2.f, ghost_bounds.size.y});
     ghost_shape.setPosition(position - sf::Vector2f{0.f, constants::GHOST_LIFT}); // Adjust for ghost lift
