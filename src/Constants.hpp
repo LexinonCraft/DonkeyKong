@@ -107,6 +107,8 @@ namespace constants {
     constexpr float DONKEY_KONG_JUMP_SPEED = 450.f;  // px/sec, initial jump speed for Donkey Kong after the stage is completed
     constexpr float DONKEY_KONG_HITBOX_WIDTH = 64.f;  // px, width of Donkey Kong's hitbox
     constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;  // px, height of Donkey Kong's hitbox
+
+    constexpr float HAMMER_Y_OFFSET = 50.f;  // px, vertical offset from the platform's surface to place the hammer power-up
 }
 
 #endif
