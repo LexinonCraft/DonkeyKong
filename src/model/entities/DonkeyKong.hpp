@@ -9,6 +9,7 @@
 #include "../components/Enemy.hpp"
 #include "../util/EntityVisitor.hpp"
 #include "../Declarations.hpp"
+#include "../animations/AbstractAnimation.hpp"
 
 class DonkeyKong : public BaseEntity, public Updatable, public Enemy {
 public:
@@ -16,6 +17,7 @@ public:
         Idle,
         ThrowingBarrel,
         Angry,
+        Animated,
     };
 
     DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_position, bool throw_barrels);
@@ -58,6 +60,22 @@ public:
         return action_timer;
     }
 
+    void set_state(State new_state, Stage &stage);
+
+    void start_animation(AbstractAnimation *animation) {
+        current_animation = animation;
+        set_state(State::Animated, animation->get_stage());
+    }
+
+    void stop_animation() {
+        set_state(State::Idle, current_animation->get_stage());
+        current_animation = nullptr;
+    }
+
+    void set_position(const sf::Vector2f &new_position) {
+        position = new_position;
+    }
+
 private:
     sf::Vector2f position;
     std::shared_ptr<Platform> platform;
@@ -70,7 +88,7 @@ private:
 
     bool throw_barrels;
 
-    void switch_to_idle(int random_int);
+    AbstractAnimation *current_animation = nullptr;
 };
 
 #endif

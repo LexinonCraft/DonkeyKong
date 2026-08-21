@@ -9,9 +9,15 @@
 #include "../util/EntityVisitor.hpp"
 #include "../Declarations.hpp"
 #include "../components/Platform.hpp"
+#include "../animations/AbstractAnimation.hpp"
 
 class Pauline : public BaseEntity {
 public:
+    enum class State {
+        Normal,
+        Animated,
+    };
+
     Pauline(Ref ref, std::shared_ptr<Platform> platform, float x_position) : BaseEntity(ref), position({x_position, platform->surface_y_at(x_position)}) {}
 
     void accept(EntityVisitor &visitor) override {
@@ -22,8 +28,31 @@ public:
         return position;
     }
 
+    State get_state() const {
+        return state;
+    }
+    void set_state(State new_state) {
+        state = new_state;
+    }
+
+    void start_animation(AbstractAnimation *animation) {
+        current_animation = animation;
+        set_state(State::Animated);
+    }
+
+    void stop_animation() {
+        current_animation = nullptr;
+        set_state(State::Normal);
+    }
+
+    AbstractAnimation *get_current_animation() const {
+        return current_animation;
+    }
+
 private:
     sf::Vector2f position;
+    State state = State::Normal;
+    AbstractAnimation *current_animation = nullptr;
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "../Constants.hpp"
+#include "animations/AbstractAnimation.hpp"
 #include "util/EntityRepository.hpp"
 #include "components/UpdatableComponentRepository.hpp"
 #include "components/PlatformComponentRepository.hpp"
@@ -81,9 +82,9 @@ public:
 
     virtual bool on_exit();
 
-    bool is_over() const { return (state == StageState::PlayerDying && time_since_state_change > constants::PLAYER_DEATH_DURATION) || (state == StageState::Completed && time_since_state_change > 5.f); }
+    bool is_over() const { return false; }
 
-    StageState get_state() const { return state; }
+    StageState get_state() const { return current_animation ? StageState::Completed : StageState::Running; }
 
     int random_int() {
         return rng();
@@ -109,12 +110,13 @@ protected:
     EnemyComponentRepository enemy_components;
     PickableComponentRepository pickable_components;
 
-    StageState state = StageState::Running;
     float time_elapsed = 0.f;
     float time_since_state_change = 0.f;
 
     const std::shared_ptr<Player> player;
     PlayerData &player_data;
+
+    std::unique_ptr<AbstractAnimation> current_animation;
 
     virtual void update_while_running(float dt);
 };

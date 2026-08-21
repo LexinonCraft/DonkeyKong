@@ -23,36 +23,43 @@ Stage::Stage(int rng(), PlayerData &player_data) : rng(rng), entities(rng), upda
  * @param dt Time step in seconds.
  */
 void Stage::update(float dt) {
-    if (state != StageState::Running) {
+    if (get_state() != StageState::Running) {
         time_since_state_change += dt;
     }
 
     entities.handle_additions();
     entities.handle_deletions();
 
-    if (state == StageState::Running) {
+    if (get_state() == StageState::Running) {
         update_while_running(dt);
+    }
+
+    if (current_animation) {
+        current_animation->update(dt);
+        if (current_animation->is_finished()) {
+            current_animation.reset();
+        }
     }
 }
 
 void Stage::on_player_dying() {
-    if (state != StageState::Running)
+    if (get_state() != StageState::Running)
         return;
     
-    state = StageState::PlayerDying;
+    // state = StageState::PlayerDying;
     time_since_state_change = 0.f;
 }
 
 void Stage::on_completed() {
-    if (state != StageState::Running)
+    if (get_state() != StageState::Running)
         return;
 
-    state = StageState::Completed;
+    // state = StageState::Completed;
     time_since_state_change = 0.f;
 }
 
 bool Stage::on_exit() {
-    switch (state) {
+    switch (get_state()) {
         case StageState::Running:
             throw std::runtime_error("Cannot exit stage while running");
         case StageState::PlayerDying:

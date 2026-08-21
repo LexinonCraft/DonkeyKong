@@ -111,6 +111,7 @@ public:
     sf::Vector2f get_position() const { return position; }
 
     bool is_facing_right() const { return facing_right; }
+    void set_facing_right(bool facing_right) { this->facing_right = facing_right; }
 
     std::shared_ptr<Platform> get_current_platform() const { return current_platform; }
 
