@@ -30,8 +30,8 @@ void Stage::update(float dt) {
         update_while_running(dt);
     } else {
         current_animation->update(dt);
-        if (current_animation->check_finished()) {
-            // TODO
+        if (current_animation->is_finished() && !current_animation->is_exit_animation()) {
+            current_animation.reset();
         }
     }
 }
@@ -76,7 +76,7 @@ void Stage::update_while_running(float dt) {
 }
 
 bool Stage::check_over() {
-    if (!(current_animation && current_animation->is_exit_animation() && current_animation->check_finished())) {
+    if (!(current_animation && current_animation->is_exit_animation() && current_animation->is_finished())) {
         return false;
     }
 

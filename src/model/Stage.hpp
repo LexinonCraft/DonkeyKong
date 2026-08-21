@@ -85,6 +85,7 @@ public:
 
     virtual void on_exit() {}
 
+    // repeatedly called by StageControl to see if the stage is over (player died or completed), if yes returns true and the method should not be called again (maybe refactor this)
     bool check_over();
 
     void add_to_score(sf::Vector2f position, int score_to_add);

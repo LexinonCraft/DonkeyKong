@@ -17,7 +17,7 @@ public:
         return stage;
     }
 
-    virtual bool check_finished() = 0;
+    virtual bool is_finished() = 0;
 
     virtual void accept(class AnimationVisitor &visitor) = 0;
 

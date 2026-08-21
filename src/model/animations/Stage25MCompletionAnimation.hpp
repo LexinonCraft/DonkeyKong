@@ -55,7 +55,7 @@ public:
         }
     }
 
-    bool check_finished() override {
+    bool is_finished() override {
         return state == State::Finished;
     }
 
