@@ -17,6 +17,8 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     auto p7 = entities.add_girder({0, -520}, {380, -520});
     auto p8 = entities.add_girder({230, -610}, {360, -610});
 
+    barrel_exit_y = p0->surface_y_at(0.f);
+
     entities.add_ladder(p0, p2, 220, true);
     entities.add_ladder(p1, p2, 500, false);
     entities.add_ladder(p2, p3, 260, false);
@@ -46,4 +48,9 @@ void Stage25M::update_while_running(float dt) {
     }
 
     Stage::update_while_running(dt);
+}
+
+bool Stage25M::is_barrel_boundary_gap(const sf::Vector2f &position) const {
+    const auto left_boundary = get_left_boundary();
+    return left_boundary && position.x < *left_boundary && position.y >= barrel_exit_y;
 }

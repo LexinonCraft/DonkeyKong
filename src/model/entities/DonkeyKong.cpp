@@ -10,7 +10,7 @@ DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_posi
     : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform), throw_barrels(throw_barrels) {
     state = State::Idle;
     idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION;
-} 
+}
 
 void DonkeyKong::update(float dt, Stage &stage) {
     switch (state) {
@@ -77,6 +77,6 @@ bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
 
 void DonkeyKong::switch_to_idle(int random_int) {
     state = State::Idle;
-    idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (random_int % constants::DONKEY_KONG_IDLE_DURATION_STEPS) * 
+    idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (random_int % constants::DONKEY_KONG_IDLE_DURATION_STEPS) *
                      ((constants::DONKEY_KONG_MAX_IDLE_DURATION - constants::DONKEY_KONG_MIN_IDLE_DURATION) / constants::DONKEY_KONG_IDLE_DURATION_STEPS);
 }
