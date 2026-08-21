@@ -2,6 +2,7 @@
 #define DRAWABLE_COMPONENT_HPP
 
 #include "LayerStack.hpp"
+#include "../model/Stage.hpp"
 
 /**
  * @brief Abstract render adapter for a world entity.
@@ -18,6 +19,8 @@ public:
      * @param layer_stack Stack of render layers used by the current view.
      */
     virtual void draw(LayerStack &layer_stack) = 0;
+
+    virtual void update(float dt, Stage &stage) {}
 };
 
 #endif

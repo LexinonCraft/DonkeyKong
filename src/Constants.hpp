@@ -41,7 +41,7 @@ namespace constants {
     constexpr float LADDER_WIDTH = 10.f;  // px
 
     constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
-    constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
+    constexpr float PLAYER_DEATH_DURATION = 4.f;  // seconds until the player is considered dead after dying
 
     constexpr float PLAYER_WALKING_ANIMATION_INTERVAL = 0.1f;  // seconds between walking animation frames
     constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
@@ -71,6 +71,14 @@ namespace constants {
 
     constexpr float TITLE_SCREEN_ANIMATION_LENGTH = 5.f;  // length of the donkey kong animation on the title screen in seconds
 
+    constexpr float PLAYER_DYING_ANIMATION_INTERVAL = 0.075f;  // seconds between dying animation frames
+    constexpr float PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION = 0.5f;  // seconds until the player starts rotating during the dying animation
+    constexpr float PLAYER_DYING_ANIMATION_ROTATION_LENGTH = 1.2f;  // duration of the rotation in seconds during the dying animation
+
+    constexpr float HEART_BREAKING_DURATION = 1.5f;  // seconds until the heart breaks after the stage is completed
+    constexpr float DONKEY_KONG_SHOW_TEETH_INTERVAL = 0.3f;  // seconds between Donkey Kong showing his teeth after the stage is completed
+    constexpr unsigned int DONKEY_KONG_SHOW_TEETH_TIMES = 3;  // number of times Donkey Kong shows his teeth after the stage is completed
+    constexpr float DONKEY_KONG_JUMP_SPEED = 450.f;  // px/sec, initial jump speed for Donkey Kong after the stage is completed
     constexpr float DONKEY_KONG_HITBOX_WIDTH = 64.f;  // px, width of Donkey Kong's hitbox
     constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;  // px, height of Donkey Kong's hitbox
 }
