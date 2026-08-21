@@ -64,6 +64,9 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     entities.add_ladder(p8, p11, constants::VIEW_WIDTH - 190.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p9, p12, constants::VIEW_WIDTH - 90.f, false, Ladder::Color::Yellow);
 
+    entities.add_hammer_power_up(p4->get_left() - sf::Vector2f(0.f, constants::HAMMER_Y_OFFSET));
+    entities.add_hammer_power_up(sf::Vector2f(300.f, -330 - constants::HAMMER_Y_OFFSET));
+
     player->enter_platform(p0, 50);
 
     for (unsigned int i = 0; i < constants::STAGE_100M_INITIAL_GHOST_COUNT; ++i) {

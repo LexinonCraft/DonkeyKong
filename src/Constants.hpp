@@ -35,6 +35,7 @@ namespace constants {
     constexpr float HAMMER_DURATION = 10.f;
     constexpr float HAMMER_SWING_ANIMATION_INTERVAL = 0.2f;
     constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
+    constexpr unsigned int HAMMER_GHOST_SCORE = 500u;
 
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 2.f;  // px, minimum distance to snap to a platform when falling onto it
 
@@ -109,6 +110,7 @@ namespace constants {
     constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;  // px, height of Donkey Kong's hitbox
 
     constexpr float DONKEY_KONG_CLIMBING_FRAME_INTERVAL = 0.25f;  // seconds between Donkey Kong's climbing animation frames
+    constexpr float HAMMER_Y_OFFSET = 50.f;  // px, vertical offset from the platform's surface to place the hammer power-up
 }
 
 #endif
