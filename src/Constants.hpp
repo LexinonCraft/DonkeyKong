@@ -71,6 +71,13 @@ namespace constants {
 
     constexpr float TITLE_SCREEN_ANIMATION_LENGTH = 5.f;  // length of the donkey kong animation on the title screen in seconds
 
+    constexpr float SCORE_EFFECT_RISE_SPEED = 50.f;  // px/sec, speed at which the score effect rises
+    constexpr float SCORE_EFFECT_DURATION = 1.f;  // seconds, duration of the score effect
+
+    constexpr float BARREL_JUMP_MAX_Y_DIFF = 30.f;  // px, maximum height of the player's feet above the barrel
+
+    constexpr unsigned int BARREL_JUMP_SCORE = 100;  // points awarded for jumping over a barrel
+
     constexpr float GHOST_WIDTH = 32.f;  // px, width of the ghost entity
     constexpr float GHOST_HEIGHT = 32.f;  // px, height of the ghost entity
     constexpr float GHOST_MINIMUM_MOVING_DURATION = 5.f;  // seconds, minimum duration the ghost moves on a platform before changing state

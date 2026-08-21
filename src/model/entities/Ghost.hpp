@@ -16,7 +16,7 @@ public:
         MovingOnPlatform,
         Climbing,
     };
-    
+
     Ghost(Ref ref, std::shared_ptr<Platform> platform, float x_pos);
 
     void update(float dt, Stage &stage) override;
@@ -39,7 +39,7 @@ public:
         return *this;
     }
 
-    sf::Vector2f get_position() const {
+    sf::Vector2f get_position() const override {
         return position;
     }
 

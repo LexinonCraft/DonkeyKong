@@ -9,7 +9,11 @@
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
     : AbstractSceneView(window, texture_registry),
       drawable_components(stage.get_entities(), assets_manager), stage(stage) {
-    // Use the texture_registry as needed
+    stage_observer_id = stage.get_observer_registry().register_observer(*this);
+}
+
+StageView::~StageView() {
+    stage.get_observer_registry().unregister_observer(stage_observer_id);
 }
 
 void StageView::draw() {
@@ -70,9 +74,29 @@ void StageView::draw() {
     level_text.setFillColor(sf::Color::Blue);
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(level_text);
 
+    for (auto it = current_score_effects.begin(); it != current_score_effects.end(); ++it) {
+        it->draw(layer_stack, assets_manager);
+    }
+
     post_draw();
 }
 
 void StageView::update(float dt, Stage &stage) {
+    for (auto it = current_score_effects.begin(); it != current_score_effects.end();) {
+        if (!it->update(dt)) {
+            it = current_score_effects.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
     drawable_components.update_all(dt, stage);
+}
+
+void StageView::on_score_added(sf::Vector2f position, int score_to_add) {
+    current_score_effects.emplace_back(position, score_to_add);
+}
+
+void StageView::on_player_died() {
+    current_score_effects.clear();
 }
