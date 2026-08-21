@@ -42,13 +42,13 @@ public:
                     set_state(State::Rotating, flag);
                     break;
                 case State::Rotating:
-                    if(get_time_elapsed() < constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) {
+                    if(get_time_elapsed_in_state() < constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) {
                         break;
                     }
                     set_state(State::AfterRotating, flag);
                     break;
                 case State::AfterRotating:
-                    if (get_time_elapsed() < constants::PLAYER_DEATH_DURATION - constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION - constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) { // TODO
+                    if (get_time_elapsed() < constants::PLAYER_DEATH_DURATION) { // TODO
                         break;
                     }
                     set_state(State::Finished, flag);
