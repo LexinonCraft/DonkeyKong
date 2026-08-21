@@ -159,7 +159,7 @@ float Barrel::platform_snap_distance(float dt) const {
 }
 
 void Barrel::check_jumps_over(const Player &player, Stage &stage) {
-    if (!player.has_jumped() || stage.get_state() != Stage::StageState::Running) {
+    if (!player.has_jumped() || !stage.is_running()) {
         tracking_player_jump = false;
         crossed_above_barrel = false;
         scored_for_player_jump = false;

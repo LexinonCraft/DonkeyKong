@@ -1,4 +1,5 @@
 #include <SFML/System/Vector2.hpp>
+#include <iostream>
 
 #include "Stage25M.hpp"
 
@@ -38,9 +39,12 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
 
     final_girder = p8;
 
-    entities.add_donkey_kong(p7, 100, true);
+    donkey_kong = entities.add_donkey_kong(p7, 100, true);
     entities.add_barrel_stack(p7, 30);
-    entities.add_pauline(p8, 275);
+    pauline = entities.add_pauline(p8, 275);
+
+    entities.add_ladder(p7->surface_y_at(195.f), -750, 190, false, Ladder::Color::Cyan, false);
+    entities.add_ladder(p7->surface_y_at(220.f), -750, 220, false, Ladder::Color::Cyan, false);
 
     player->enter_platform(p0, 50);
 }

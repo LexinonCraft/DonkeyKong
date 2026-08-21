@@ -31,20 +31,15 @@ void DonkeyKong::update(float dt, Stage &stage) {
                 switch (next_action) {
                     case 0:
                     case 1:
-                        state = State::ThrowingBarrel;
-                        num_barrels_to_be_thrown = stage.random_int() % constants::MAX_BARRELS_THROWN + 1;
-                        consecutive_angry_actions = 0;
+                        set_state(State::ThrowingBarrel, stage);
                         break;
                     case 2:
-                        state = State::Angry;
-                        angry_animation_frames = stage.random_int() % (constants::DONKEY_KONG_MAX_ANGRY_ANIMATION_FRAMES - constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES + 1) + constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES;
-                        consecutive_angry_actions++;
+                        set_state(State::Angry, stage);
                         break;
                     default:
                         throw std::logic_error("Invalid random state for DonkeyKong");
                         break;
                 }
-                action_timer = 0.f;
             }
             break;
 
@@ -58,15 +53,18 @@ void DonkeyKong::update(float dt, Stage &stage) {
                 action_timer -= constants::BARREL_THROW_ANIMATION_INTERVAL * 4;
             }
             if (num_barrels_to_be_thrown == 0 && action_timer >= 0) {
-                switch_to_idle(stage.random_int());
+                set_state(State::Idle, stage);
             }
             break;
 
         case State::Angry:
             action_timer += dt;
             if (action_timer >= constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL * angry_animation_frames) {
-                switch_to_idle(stage.random_int());
+                set_state(State::Idle, stage);
             }
+            break;
+        case State::Animated:
+            // Do nothing, just wait for the animation to finish
             break;
         default:
             throw std::logic_error("Invalid state for DonkeyKong");
@@ -82,8 +80,24 @@ bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
     return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
-void DonkeyKong::switch_to_idle(int random_int) {
-    state = State::Idle;
-    idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (random_int % constants::DONKEY_KONG_IDLE_DURATION_STEPS) *
-                     ((constants::DONKEY_KONG_MAX_IDLE_DURATION - constants::DONKEY_KONG_MIN_IDLE_DURATION) / constants::DONKEY_KONG_IDLE_DURATION_STEPS);
+void DonkeyKong::set_state(State new_state, Stage &stage) {
+    state = new_state;
+    switch (state) {
+        case State::Idle:
+            idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (stage.random_int() % constants::DONKEY_KONG_IDLE_DURATION_STEPS) *
+                ((constants::DONKEY_KONG_MAX_IDLE_DURATION - constants::DONKEY_KONG_MIN_IDLE_DURATION) / constants::DONKEY_KONG_IDLE_DURATION_STEPS);
+            break;
+        case State::ThrowingBarrel:
+            num_barrels_to_be_thrown = stage.random_int() % constants::MAX_BARRELS_THROWN + 1;
+            consecutive_angry_actions = 0;
+            action_timer = 0.f;
+            break;
+        case State::Angry:
+            action_timer = 0.f;
+            angry_animation_frames = stage.random_int() % (constants::DONKEY_KONG_MAX_ANGRY_ANIMATION_FRAMES - constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES + 1) + constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES;
+            consecutive_angry_actions++;
+            break;
+        default:
+            break;
+    }
 }

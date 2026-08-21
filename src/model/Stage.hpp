@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "../Constants.hpp"
+#include "animations/AbstractAnimation.hpp"
 #include "util/EntityRepository.hpp"
 #include "components/UpdatableComponentRepository.hpp"
 #include "components/PlatformComponentRepository.hpp"
@@ -24,12 +25,6 @@
  */
 class Stage {
 public:
-    enum class StageState {
-        Running,
-        PlayerDying,
-        Completed,
-    };
-
     virtual ~Stage() {}
 
     /**
@@ -88,13 +83,14 @@ public:
 
     virtual void on_completed();
 
-    virtual bool on_exit();
+    virtual void on_exit() {}
+
+    // repeatedly called by StageControl to see if the stage is over (player died or completed), if yes returns true and the method should not be called again (maybe refactor this)
+    bool check_over();
 
     void add_to_score(sf::Vector2f position, int score_to_add);
 
-    bool is_over() const { return (state == StageState::PlayerDying && time_since_state_change > constants::PLAYER_DEATH_DURATION) || (state == StageState::Completed && time_since_state_change > 5.f); }
-
-    StageState get_state() const { return state; }
+    bool is_running() const { return !current_animation; }
 
     int random_int() {
         return rng();
@@ -123,13 +119,13 @@ protected:
     PickableComponentRepository pickable_components;
 
     ObserverRegistry<StageObserver> observer_registry;
-
-    StageState state = StageState::Running;
     float time_elapsed = 0.f;
-    float time_since_state_change = 0.f;
 
     const std::shared_ptr<Player> player;
     PlayerData &player_data;
+    bool player_died = false;
+
+    std::unique_ptr<AbstractAnimation> current_animation;
 
     virtual void update_while_running(float dt);
 };

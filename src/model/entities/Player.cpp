@@ -145,9 +145,7 @@ void Player::update(float dt, Stage &stage) {
                 position.y = current_platform->surface_y_at(position.x);
             }
             break;
-        case State::Dying:
-            velocity.x = 0.f;
-            velocity.y = 0.f;
+        case State::Animated:
             break;
     }
 
@@ -275,6 +273,5 @@ bool Player::handle_platform_fall_through() {
 }
 
 void Player::die(Stage &stage) {
-    state = State::Dying;
     stage.on_player_dying();
 }

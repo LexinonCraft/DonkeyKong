@@ -1,7 +1,10 @@
 #ifndef STAGE_25M_HPP
 #define STAGE_25M_HPP
 
+#include <memory>
+
 #include "../Stage.hpp"
+#include "../animations/Stage25MCompletionAnimation.hpp"
 
 class Stage25M : public Stage {
 public:
@@ -9,9 +12,16 @@ public:
 
     bool is_barrel_boundary_gap(const sf::Vector2f &position) const override;
 
+    void on_completed() override {
+        Stage::on_completed();
+        current_animation = std::make_unique<Stage25MCompletionAnimation>(*this, player, donkey_kong, pauline);
+    }
+
 private:
     float barrel_exit_y;
     std::shared_ptr<Girder> final_girder;
+    std::shared_ptr<DonkeyKong> donkey_kong;
+    std::shared_ptr<Pauline> pauline;
 
     void update_while_running(float dt) override;
 };

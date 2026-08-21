@@ -27,6 +27,10 @@ class DonkeyKong;
 class BarrelStack;
 class Pauline;
 class DissolvingPlatform;
+class Stage25MCompletionAnimation;
+class Stage100MCompletionAnimation;
+class PlayerDeathAnimation;
+class AbstractAnimation;
 class Jumpable;
 class Ghost;
 

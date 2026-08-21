@@ -21,8 +21,10 @@ public:
 
     Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos, bool broken, Color color);
 
+    Ladder(Ref ref, float lower_y, float upper_y, float x_pos, bool broken, Color color, bool active_for_player);
+
     bool is_active_for_player() const override {
-        return !broken;
+        return active_for_player;
     }
 
     const sf::RectangleShape &get_shape() const {
@@ -51,6 +53,7 @@ public:
 
 private:
     sf::RectangleShape shape;
+    bool active_for_player;
     bool broken;
     Color color;
 };

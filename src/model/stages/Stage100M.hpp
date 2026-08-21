@@ -6,10 +6,16 @@
 #include <list>
 
 #include "../Stage.hpp"
+#include "../animations/Stage100MCompletionAnimation.hpp"
 
 class Stage100M : public Stage {
 public:
     Stage100M(Id id_generator(), PlayerData &player_data);
+
+    void on_completed() override {
+        Stage::on_completed();
+        current_animation = std::make_unique<Stage100MCompletionAnimation>(*this);
+    }
 
 private:
     std::vector<std::shared_ptr<Girder>> spawn_suitable_girders;

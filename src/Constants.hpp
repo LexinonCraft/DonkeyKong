@@ -114,6 +114,7 @@ namespace constants {
     constexpr float DONKEY_KONG_HITBOX_WIDTH = 64.f;  // px, width of Donkey Kong's hitbox
     constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;  // px, height of Donkey Kong's hitbox
 
+    constexpr float DONKEY_KONG_CLIMBING_FRAME_INTERVAL = 0.25f;  // seconds between Donkey Kong's climbing animation frames
     constexpr float HAMMER_Y_OFFSET = 50.f;  // px, vertical offset from the platform's surface to place the hammer power-up
 }
 
