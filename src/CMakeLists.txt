@@ -20,6 +20,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DonkeyKong.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/stages/Stage100M.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DissolvingPlatform.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ghost.cpp
     )
 
 # Controller
