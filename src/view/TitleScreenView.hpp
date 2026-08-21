@@ -5,12 +5,16 @@
 
 #include "AssetsManager.hpp"
 #include "AbstractSceneView.hpp"
+#include "../model/PlayerData.hpp"
 
 class TitleScreenView : public AbstractSceneView {
 public:
-    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {};
+    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) : AbstractSceneView(window, assets_manager), player_data(player_data) {};
 
     void draw(float animation_timer);
+
+private:
+    PlayerData &player_data;
 };
 
 #endif

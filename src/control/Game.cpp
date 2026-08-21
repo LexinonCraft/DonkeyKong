@@ -7,7 +7,7 @@
 #include "GameOverControl.hpp"
 
 Game::Game() :
-    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager))) {
+    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data))) {
         // limit frame rate
         window.setFramerateLimit(constants::FRAME_RATE);
 
@@ -63,7 +63,7 @@ void Game::handle_next_scene(AbstractSceneControl::NextScene next_scene) {
         case AbstractSceneControl::NextScene::Stay:
             break;
         case AbstractSceneControl::NextScene::MainMenu:
-            scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager));
+            scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data));
             break;
         case AbstractSceneControl::NextScene::StageTransition:
             scene_control = std::unique_ptr<AbstractSceneControl>(new StageTransitionControl(window, player_data, assets_manager));

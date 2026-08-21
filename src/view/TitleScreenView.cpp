@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <format>
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -63,6 +64,23 @@ void TitleScreenView::draw(float animation_timer) {
     contributors.setOrigin({contributors_bounds.size.x / 2.f, contributors_bounds.size.y / 2.f});
     contributors.setPosition(get_absolute_position({0.f, -50.f}, AnchorPosition::BottomCenter));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(contributors);
+
+    sf::Text highscore_label(assets_manager.get_font());
+    highscore_label.setString("HIGH SCORE");
+    highscore_label.setFillColor(sf::Color::Red);
+    highscore_label.setCharacterSize(24);
+    sf::FloatRect highscore_label_bounds = highscore_label.getLocalBounds();
+    highscore_label.setOrigin({highscore_label_bounds.size.x / 2.f, 0.f});
+    highscore_label.setPosition(get_absolute_position({0.f, 50.f}, AnchorPosition::TopCenter));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore_label);
+
+    sf::Text highscore(assets_manager.get_font());
+    highscore.setString(std::format("{:06d}", player_data.get_highscore()));
+    highscore.setCharacterSize(24);
+    sf::FloatRect highscore_bounds = highscore.getLocalBounds();
+    highscore.setOrigin({highscore_bounds.size.x / 2.f, 0.f});
+    highscore.setPosition(get_absolute_position({0.f, 74.f}, AnchorPosition::TopCenter));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore);
 
     post_draw();
 }
