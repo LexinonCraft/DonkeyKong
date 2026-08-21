@@ -116,7 +116,7 @@ void Barrel::update(float dt, Stage &level) {
     }
 
     shape.setPosition(position);
-    Jumpable::update(dt);
+    Jumpable::update(dt, level);
 }
 
 void Barrel::accept(EntityVisitor &visitor) {
@@ -155,7 +155,10 @@ void Barrel::check_jumps_over(sf::Vector2f player_position, Stage &stage) {
 
     float y_diff = (position.y - 2 * constants::BARREL_RADIUS) - player_position.y;
     if (std::abs(player_position.x - position.x) < constants::BARREL_JUMP_H_TOLERANCE && 0 < y_diff && y_diff < constants::BARREL_JUMP_MAX_Y_DIFF) {
-        stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
         on_jump_over();
     }
+}
+
+void Barrel::on_cooldown_end(Stage &stage) {
+    stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);
 }

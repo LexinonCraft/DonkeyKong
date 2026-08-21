@@ -117,6 +117,9 @@ public:
 
     void check_jumps_over(sf::Vector2f player_position, Stage &stage) override;
 
+protected:
+    void on_cooldown_end(Stage &stage) override;
+
 private:
     sf::Vector2f position;
     float vx = 0.f;
