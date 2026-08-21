@@ -23,57 +23,29 @@ Stage::Stage(int rng(), PlayerData &player_data) : rng(rng), entities(rng), upda
  * @param dt Time step in seconds.
  */
 void Stage::update(float dt) {
-    if (get_state() != StageState::Running) {
-        time_since_state_change += dt;
-    }
-
     entities.handle_additions();
     entities.handle_deletions();
 
-    if (get_state() == StageState::Running) {
+    if (!current_animation) {
         update_while_running(dt);
-    }
-
-    if (current_animation) {
+    } else {
         current_animation->update(dt);
-        if (current_animation->is_finished()) {
-            current_animation.reset();
+        if (current_animation->check_finished()) {
+            // TODO
         }
     }
 }
 
 void Stage::on_player_dying() {
-    if (get_state() != StageState::Running)
+    if (current_animation)
         return;
     
-    // state = StageState::PlayerDying;
-    time_since_state_change = 0.f;
+    // TODO: player death animation
 }
 
 void Stage::on_completed() {
-    if (get_state() != StageState::Running)
+    if (current_animation)
         return;
-
-    // state = StageState::Completed;
-    time_since_state_change = 0.f;
-}
-
-bool Stage::on_exit() {
-    switch (get_state()) {
-        case StageState::Running:
-            throw std::runtime_error("Cannot exit stage while running");
-        case StageState::PlayerDying:
-            if (player_data.lose_life()) {
-                return true;
-            } else {
-                return false;
-            }
-        case StageState::Completed:
-            advance_stage(player_data);
-            return true;
-        default:
-            throw std::runtime_error("Unknown stage state");
-    }
 }
 
 float Stage::get_barrel_roll_speed() const {
@@ -87,4 +59,18 @@ float Stage::get_barrel_difficulty_multiplier() const {
 void Stage::update_while_running(float dt) {
     time_elapsed += dt;
     updatable_components.update_all(dt, *this);
+}
+
+bool Stage::check_over() {
+    if (!(current_animation && current_animation->is_exit_animation() && current_animation->check_finished())) {
+        return false;
+    }
+
+    if (payer_died) {
+        player_data.lose_life();
+    } else {
+        advance_stage(player_data);
+    }
+    on_exit();
+    return true;
 }

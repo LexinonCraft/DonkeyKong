@@ -8,11 +8,13 @@
 #include "AssetsManager.hpp"
 #include "../Constants.hpp"
 #include "../util/Math.hpp"
+#include "../model/animations/AnimationVisitor.hpp"
+#include "../model/animations/Stage25MCompletionAnimation.hpp"
 
 /**
  * @brief Renderer for the Donkey Kong entity.
  */
-class DonkeyKongRenderer : public DrawableComponent {
+class DonkeyKongRenderer : public DrawableComponent, private AnimationVisitor {
 public:
     /**
      * @brief Creates the Donkey Kong renderer for a concrete entity.
@@ -25,9 +27,7 @@ public:
      * @param layer_stack Layer stack used for rendering.
      */
     void draw(LayerStack &layer_stack) override {
-        AssetsManager::TextureId texture_id;
-        bool flip;
-        bool render_barrel = false;
+        render_barrel = false;
         switch (donkey_kong->get_state()) {
             case DonkeyKong::State::Idle:
                 texture_id = AssetsManager::TextureId::DonkeyKongStill;
@@ -61,8 +61,7 @@ public:
                 flip = floor_to_int(donkey_kong->get_action_timer() / constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL) % 2 == 0;
                 break;
             case DonkeyKong::State::Animated:
-                texture_id = AssetsManager::TextureId::DonkeyKongStill;
-                flip = false;
+                donkey_kong->get_current_animation()->accept(*this);
                 break;
         }
 
@@ -86,6 +85,23 @@ public:
 private:
     std::shared_ptr<DonkeyKong> donkey_kong;
     AssetsManager &assets_manager;
+    AssetsManager::TextureId texture_id;
+    bool flip;
+    bool render_barrel;
+
+    void visit(Stage25MCompletionAnimation &animation) override {
+        flip = false;
+        switch (animation.get_state()) {
+            case Stage25MCompletionAnimation::State::NotStarted:
+            case Stage25MCompletionAnimation::State::United:
+                texture_id = AssetsManager::TextureId::DonkeyKongStill;
+                break;
+            case Stage25MCompletionAnimation::State::Climbing:
+            case Stage25MCompletionAnimation::State::Finished:
+                texture_id = mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::DONKEY_KONG_CLIMBING_FRAME_INTERVAL), 2) == 0 ? AssetsManager::TextureId::DonkeyKongClimbing1 : AssetsManager::TextureId::DonkeyKongClimbing2;
+                break;
+        }
+    }
 };
 
 #endif

@@ -72,6 +72,10 @@ public:
         current_animation = nullptr;
     }
 
+    AbstractAnimation *get_current_animation() const {
+        return current_animation;
+    }
+
     void set_position(const sf::Vector2f &new_position) {
         position = new_position;
     }

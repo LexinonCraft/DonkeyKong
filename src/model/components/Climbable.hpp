@@ -73,7 +73,7 @@ public:
      * @return Surface height of the lower platform at x_pos.
      */
     float get_lower_y_pos() const {
-        return lower_end->surface_y_at(x_pos);
+        return lower_y_pos;
     }
 
     /**
@@ -81,13 +81,15 @@ public:
      * @return Surface height of the upper platform at x_pos.
      */
     float get_upper_y_pos() const {
-        return upper_end->surface_y_at(x_pos);
+        return upper_y_pos;
     }
 
 protected:
     const std::shared_ptr<Platform> lower_end;
     const std::shared_ptr<Platform> upper_end;
     const float x_pos;
+    const float upper_y_pos;
+    const float lower_y_pos;
 
     /**
      * @brief Creates a climbable connection between two platforms.
@@ -96,7 +98,10 @@ protected:
      * @param x_pos Horizontal position of the climbable.
      */
     Climbable(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos)
-        : lower_end(lower_end), upper_end(upper_end), x_pos(x_pos) {}
+        : lower_end(lower_end), upper_end(upper_end), x_pos(x_pos), upper_y_pos(upper_end->surface_y_at(x_pos)), lower_y_pos(lower_end->surface_y_at(x_pos)) {}
+
+    Climbable(float lower_y, float upper_y, float x_pos)
+        : lower_end(nullptr), upper_end(nullptr), x_pos(x_pos), upper_y_pos(upper_y), lower_y_pos(lower_y) {}
 
 private:
     /**

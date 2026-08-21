@@ -40,16 +40,14 @@ public:
                         break;
                     }
                     set_state(State::Climbing, flag);
-                    donkey_kong->set_position({200.f, -600.f});
+                    donkey_kong->set_position({205.f, -550.f});
                     break;
                 case State::Climbing:
-                    donkey_kong->set_position(donkey_kong->get_position() - sf::Vector2f(0.f, 100.f * dt));
-                    if (get_time_elapsed() < 6.0f) {
+                    donkey_kong->set_position(donkey_kong->get_position() - sf::Vector2f(0.f, 75.f * dt));
+                    if (get_time_elapsed() < 5.0f) {
                         break;
                     }
                     set_state(State::Finished, flag);
-                    donkey_kong->stop_animation();
-                    pauline->stop_animation();
                     break;
                 case State::Finished:
                     return;
@@ -57,7 +55,7 @@ public:
         }
     }
 
-    bool is_finished() const override {
+    bool check_finished() override {
         return state == State::Finished;
     }
 
@@ -71,6 +69,10 @@ public:
 
     float get_time_elapsed_in_state() const {
         return time_elapsed_in_state;
+    }
+
+    bool is_exit_animation() const override {
+        return true;
     }
 
 private:

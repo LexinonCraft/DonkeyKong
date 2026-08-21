@@ -98,6 +98,10 @@ public:
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
     }
 
+    std::shared_ptr<Ladder> add_ladder(float lower_y, float upper_y, float x_pos, bool broken, Ladder::Color color, bool active_for_player) {
+        return add_entity(std::make_shared<Ladder>(gen_ref(), lower_y, upper_y, x_pos, broken, color, active_for_player));
+    }
+
     std::shared_ptr<DonkeyKong> add_donkey_kong(std::shared_ptr<Platform> platform, float x_position, bool throw_barrels) {
         return add_entity(std::make_shared<DonkeyKong>(gen_ref(), platform, x_position, throw_barrels));
     }

@@ -94,9 +94,9 @@ void StageControl::draw() {
 }
 
 AbstractSceneControl::NextScene StageControl::get_next_scene() const {
-    if (!stage->is_over()) {
+    if (!stage->check_over()) {
         return AbstractSceneControl::NextScene::Stay;
     }
 
-    return stage->on_exit() ? AbstractSceneControl::NextScene::StageTransition : AbstractSceneControl::NextScene::GameOver;
+    return stage->get_player_data().get_lives() > 0 ? AbstractSceneControl::NextScene::StageTransition : AbstractSceneControl::NextScene::GameOver;
 }

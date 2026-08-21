@@ -22,12 +22,6 @@
  */
 class Stage {
 public:
-    enum class StageState {
-        Running,
-        PlayerDying,
-        Completed,
-    };
-
     virtual ~Stage() {}
 
     /**
@@ -80,11 +74,9 @@ public:
 
     virtual void on_completed();
 
-    virtual bool on_exit();
+    virtual void on_exit() {}
 
-    bool is_over() const { return false; }
-
-    StageState get_state() const { return current_animation ? StageState::Completed : StageState::Running; }
+    bool check_over();
 
     int random_int() {
         return rng();
@@ -111,10 +103,10 @@ protected:
     PickableComponentRepository pickable_components;
 
     float time_elapsed = 0.f;
-    float time_since_state_change = 0.f;
 
     const std::shared_ptr<Player> player;
     PlayerData &player_data;
+    bool payer_died = false;
 
     std::unique_ptr<AbstractAnimation> current_animation;
 

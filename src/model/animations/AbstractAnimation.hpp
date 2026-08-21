@@ -17,9 +17,13 @@ public:
         return stage;
     }
 
-    virtual bool is_finished() const = 0;
+    virtual bool check_finished() = 0;
 
     virtual void accept(class AnimationVisitor &visitor) = 0;
+
+    virtual bool is_exit_animation() const {
+        return false;
+    }
 
 protected:
     float get_time_elapsed() const {

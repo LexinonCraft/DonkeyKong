@@ -96,10 +96,6 @@ public:
         if (player->get_state() == Player::State::Dying) {
             dying_time += dt;
         }
-
-        if (stage.get_state() == Stage::StageState::Completed) {
-            force_face_left = true;
-        }
     }
 
 private:
