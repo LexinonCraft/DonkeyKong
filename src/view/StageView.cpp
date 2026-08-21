@@ -81,7 +81,7 @@ void StageView::draw() {
     post_draw();
 }
 
-void StageView::update(float dt) {
+void StageView::update(float dt, Stage &stage) {
     for (auto it = current_score_effects.begin(); it != current_score_effects.end();) {
         if (!it->update(dt)) {
             it = current_score_effects.erase(it);
