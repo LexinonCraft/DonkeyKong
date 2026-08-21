@@ -9,6 +9,7 @@
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "components/EnemyComponentRepository.hpp"
+#include "components/PickableComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "../Constants.hpp"
 
@@ -58,6 +59,8 @@ public:
      */
     EnemyComponentRepository &get_enemies() { return enemy_components; }
 
+    PickableComponentRepository &get_pickables() { return pickable_components; }
+
     /**
      * @brief Returns the player associated with this level.
      * @return Shared pointer to the player entity.
@@ -104,6 +107,7 @@ protected:
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
     EnemyComponentRepository enemy_components;
+    PickableComponentRepository pickable_components;
 
     StageState state = StageState::Running;
     float time_elapsed = 0.f;

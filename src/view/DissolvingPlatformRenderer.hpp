@@ -9,7 +9,7 @@
 
 class DissolvingPlatformRenderer : public DrawableComponent {
 public:
-    DissolvingPlatformRenderer(std::shared_ptr<DissolvingPlatform> entity, AssetsManager &assets_manager) : entity(entity), assets_manager(assets_manager) {}
+    DissolvingPlatformRenderer(std::shared_ptr<DissolvingPlatform> entity, AssetsManager &) : entity(entity) {}
 
     void draw(LayerStack &layer_stack) override {
         if (entity->has_dissolved()) {
@@ -26,7 +26,6 @@ public:
 
 private:
     std::shared_ptr<DissolvingPlatform> entity;
-    AssetsManager &assets_manager;
 };
 
 #endif

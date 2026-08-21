@@ -21,6 +21,8 @@ class Updatable;
 class SceneVisitor;
 class PlayerData;
 class Enemy;
+class Pickable;
+class HammerPowerUp;
 class DonkeyKong;
 class BarrelStack;
 class Pauline;

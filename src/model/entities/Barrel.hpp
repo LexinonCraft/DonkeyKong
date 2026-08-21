@@ -55,7 +55,7 @@ public:
      * @brief Returns the barrel's world position.
      * @return Current position vector.
      */
-    sf::Vector2f get_position() const { return position; }
+    sf::Vector2f get_position() const override { return position; }
 
     /**
      * @brief Returns the current horizontal velocity.
@@ -105,6 +105,8 @@ public:
     }
 
     bool touches(const sf::RectangleShape &player_shape) const override;
+
+    void on_hammer_hit() override;
 
     float get_roll_distance() const { return roll_distance; }
 

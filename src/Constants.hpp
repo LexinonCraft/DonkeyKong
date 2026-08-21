@@ -30,6 +30,12 @@ namespace constants {
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
     constexpr float PLAYER_MAX_FALL_HEIGHT = 80.f;  // px, maximum height the player can fall before dying
 
+    constexpr float HAMMER_WIDTH = 16.f;
+    constexpr float HAMMER_HEIGHT = 20.f;
+    constexpr float HAMMER_DURATION = 10.f;
+    constexpr float HAMMER_SWING_ANIMATION_INTERVAL = 0.2f;
+    constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
+
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 2.f;  // px, minimum distance to snap to a platform when falling onto it
 
     constexpr float LADDER_WIDTH = 10.f;  // px
