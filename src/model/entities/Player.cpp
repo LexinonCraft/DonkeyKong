@@ -200,6 +200,7 @@ void Player::update(float dt, Stage &stage) {
         if (has_hammer() && enemy_in_front) {
             enemy->on_hammer_hit();
             stage.get_player_data().add_to_score(constants::HAMMER_BARREL_SCORE);
+            stage.get_player_data().increment_hammer_use_count();
         } else {
             die(stage);
         }
