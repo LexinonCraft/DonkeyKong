@@ -37,7 +37,7 @@ public:
         bool help = false;
         switch (pauline->get_state()) {
             case Pauline::State::Normal:
-                if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES) {
+                if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES && !suppress_scream) {
                     switch (mod(floor_to_int(animation_timer / constants::PAULINE_SCREAM_ANIMATION_INTERVAL), 2)) {
                         case 0:
                             texture_id = AssetsManager::TextureId::PaulineScream1;
@@ -98,6 +98,8 @@ public:
         if (animation_timer > constants::PAULINE_ANIMATION_LENGTH) {
             animation_timer -= constants::PAULINE_ANIMATION_LENGTH;
         }
+
+        suppress_scream = !stage.is_running();
     }
 
 private:
@@ -107,6 +109,7 @@ private:
     bool draw_pauline = true;
     bool draw_heart = false;
     bool heart_broken = false;
+    bool suppress_scream = false;
 
     void visit(Stage25MCompletionAnimation &animation) override {
         switch (animation.get_state()) {
