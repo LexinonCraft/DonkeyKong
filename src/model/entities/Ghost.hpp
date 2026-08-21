@@ -47,6 +47,10 @@ public:
         return moving_right;
     }
 
+    void on_hammer_hit() override {
+        destroy();
+    }
+
 private:
     sf::Vector2f position;
     std::shared_ptr<Platform> current_platform;

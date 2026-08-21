@@ -36,7 +36,7 @@ public:
      * @param platform Platform surface to rest on.
      * @param roll_direction Optional direction to roll: -1 for left, 1 for right, or 0 to use the platform's slope.
      */
-    void set_on_platform(std::shared_ptr<Platform> platform, int roll_direction = 0);
+    void set_on_platform(std::shared_ptr<Platform> platform, float roll_speed, int roll_direction = 0);
 
     /**
      * @brief Advances the barrel simulation by one time step.
@@ -55,7 +55,7 @@ public:
      * @brief Returns the barrel's world position.
      * @return Current position vector.
      */
-    sf::Vector2f get_position() const { return position; }
+    sf::Vector2f get_position() const override { return position; }
 
     /**
      * @brief Returns the current horizontal velocity.
@@ -106,6 +106,8 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
+    void on_hammer_hit() override;
+
     float get_roll_distance() const { return roll_distance; }
 
 private:
@@ -125,7 +127,7 @@ private:
      * @brief Snaps the barrel onto a platform if it intersects the platform surface.
      * @param platforms Repository of all platform objects in the level.
      */
-    void check_platform_intersection(PlatformComponentRepository &platforms, float dt);
+    void check_platform_intersection(PlatformComponentRepository &platforms, float dt, float roll_speed);
 
     float platform_snap_distance(float dt) const;
 };

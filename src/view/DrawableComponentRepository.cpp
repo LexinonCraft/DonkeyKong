@@ -10,8 +10,8 @@ void DrawableComponentRepository::draw_all(LayerStack &layer) {
     }
 }
 
-void DrawableComponentRepository::update_all(float dt) {
+void DrawableComponentRepository::update_all(float dt, Stage &stage) {
     for (auto it = begin(); it != end(); ++it) {
-        it->second->update(dt);
+        it->second->update(dt, stage);
     }
 }

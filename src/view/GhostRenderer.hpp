@@ -35,7 +35,7 @@ public:
         layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(ghost_sprite);
     }
 
-    void update(float dt) override {
+    void update(float dt, Stage &stage) override {
         animation_timer += dt;
         if (animation_timer >= 2 * constants::GHOST_ANIMATION_INTERVAL) {
             animation_timer -= 2 * constants::GHOST_ANIMATION_INTERVAL;

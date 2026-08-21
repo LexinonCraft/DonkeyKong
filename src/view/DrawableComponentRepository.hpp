@@ -22,7 +22,7 @@ public:
      */
     void draw_all(LayerStack &layer);
 
-    void update_all(float dt);
+    void update_all(float dt, Stage &stage);
 };
 
 #endif

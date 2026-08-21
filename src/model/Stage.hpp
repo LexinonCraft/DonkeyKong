@@ -9,6 +9,7 @@
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "components/EnemyComponentRepository.hpp"
+#include "components/PickableComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "../Constants.hpp"
 
@@ -58,6 +59,8 @@ public:
      */
     EnemyComponentRepository &get_enemies() { return enemy_components; }
 
+    PickableComponentRepository &get_pickables() { return pickable_components; }
+
     /**
      * @brief Returns the player associated with this level.
      * @return Shared pointer to the player entity.
@@ -69,6 +72,8 @@ public:
     virtual std::optional<float> get_left_boundary() const { return 0.f; }
 
     virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
+
+    virtual bool is_barrel_boundary_gap(const sf::Vector2f &position) const { return false; }
 
     virtual void on_player_dying();
 
@@ -84,6 +89,10 @@ public:
         return rng();
     }
 
+    float get_barrel_roll_speed() const;
+
+    float get_barrel_difficulty_multiplier() const;
+
 protected:
     /**
      * @brief Creates a level and registers the behaviour repositories with the entity repository.
@@ -98,6 +107,7 @@ protected:
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
     EnemyComponentRepository enemy_components;
+    PickableComponentRepository pickable_components;
 
     StageState state = StageState::Running;
     float time_elapsed = 0.f;
