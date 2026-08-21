@@ -16,6 +16,7 @@ namespace constants {
     // barrel / girder physics (increment 2). Remember: the view is y-inverted,
     // so +y points downward (toward the bottom of the screen) = gravity direction.
     constexpr float BARREL_RADIUS = 12.f;     // px
+    constexpr float BARREL_HITBOX_RADIUS = 10.f;
     constexpr float ROLL_SPEED = 130.f;       // px/sec, constant horizontal roll on a girder
     constexpr float BARREL_DIFFICULTY_INCREASE_PER_LEVEL = 0.1f;
     constexpr float BARREL_MAX_DIFFICULTY_MULTIPLIER = 2.f;
