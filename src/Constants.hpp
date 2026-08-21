@@ -77,6 +77,26 @@ namespace constants {
     constexpr float BARREL_JUMP_MAX_Y_DIFF = 30.f;  // px, maximum height of the player's feet above the barrel
 
     constexpr unsigned int BARREL_JUMP_SCORE = 100;  // points awarded for jumping over a barrel
+
+    constexpr float GHOST_WIDTH = 32.f;  // px, width of the ghost entity
+    constexpr float GHOST_HEIGHT = 32.f;  // px, height of the ghost entity
+    constexpr float GHOST_MINIMUM_MOVING_DURATION = 5.f;  // seconds, minimum duration the ghost moves on a platform before changing state
+    constexpr float GHOST_MAXIMUM_MOVING_DURATION = 12.f;  // seconds, maximum duration the ghost moves on a platform before changing state
+    constexpr unsigned int GHOST_MOVING_DURATION_STEPS = 8;  // number of discrete steps for randomizing the ghost's moving duration
+    constexpr float GHOST_MINIMUM_IDLE_DURATION = 1.f;  // seconds, minimum duration the ghost idles on a platform before changing state
+    constexpr float GHOST_MAXIMUM_IDLE_DURATION = 4.f;  // seconds, maximum duration the ghost idles on a platform before changing state
+    constexpr unsigned int GHOST_IDLE_DURATION_STEPS = 5;  // number of discrete steps for randomizing the ghost's idle duration
+    constexpr float GHOST_MOVING_SPEED = 60.f;  // px/sec, speed at which the ghost moves on a platform
+    constexpr float GHOST_LIFT = 5.f;  // px, how much the ghost levitates above the platform
+    constexpr float GHOST_ANIMATION_INTERVAL = 0.3f;  // seconds between ghost animation frames
+
+    constexpr float PLATFORM_UNDERNEATH_OFFSET = 0.1f;
+
+    constexpr float GHOST_SPAWN_INTERVAL = 10.f;  // seconds between ghost spawns
+    constexpr unsigned int GHOST_SPAWN_X_POS_STEPS = 1024;  // number of discrete steps for randomizing the ghost's spawn x position
+    constexpr float GHOST_SPAWN_MIN_DISTANCE = 200.f;  // px, minimum distance from the player for a ghost to spawn
+    constexpr unsigned int STAGE_100M_INITIAL_GHOST_COUNT = 4;  // number of ghosts to spawn at the beginning of the stage
+    constexpr unsigned int STAGE_100M_MAX_GHOST_COUNT = 8;  // maximum number of ghosts allowed in the stage at any given time
     constexpr float PLAYER_DYING_ANIMATION_INTERVAL = 0.075f;  // seconds between dying animation frames
     constexpr float PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION = 0.5f;  // seconds until the player starts rotating during the dying animation
     constexpr float PLAYER_DYING_ANIMATION_ROTATION_LENGTH = 1.2f;  // duration of the rotation in seconds during the dying animation
