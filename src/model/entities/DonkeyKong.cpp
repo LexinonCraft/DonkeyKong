@@ -15,7 +15,7 @@ DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_posi
 void DonkeyKong::update(float dt, Stage &stage) {
     switch (state) {
         case State::Idle:
-            idle_countdown -= dt;
+            idle_countdown -= dt * stage.get_barrel_difficulty_multiplier();
             if (idle_countdown <= 0.f) {
                 unsigned int next_action;
                 if (consecutive_angry_actions >= constants::DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS) {
@@ -48,7 +48,7 @@ void DonkeyKong::update(float dt, Stage &stage) {
             if (num_barrels_to_be_thrown > 0 && action_timer >= constants::BARREL_THROW_ANIMATION_INTERVAL * 2) {
                 float barrel_x_pos = position.x + constants::BARREL_THROW_OFFSET_X;
                 auto barrel = stage.get_entities().add_barrel({barrel_x_pos, platform->surface_y_at(barrel_x_pos)});
-                barrel->set_on_platform(platform, 1);
+                barrel->set_on_platform(platform, stage.get_barrel_roll_speed(), 1);
                 num_barrels_to_be_thrown--;
                 action_timer -= constants::BARREL_THROW_ANIMATION_INTERVAL * 4;
             }

@@ -1,8 +1,17 @@
+#include <algorithm>
 #include <stdexcept>
 
 #include "Stage.hpp"
 #include "PlayerData.hpp"
 #include "StageSequence.hpp"
+
+namespace {
+float calculate_barrel_difficulty_multiplier(unsigned int level) {
+    return std::min(
+        1.f + static_cast<float>(level) * constants::BARREL_DIFFICULTY_INCREASE_PER_LEVEL,
+        constants::BARREL_MAX_DIFFICULTY_MULTIPLIER);
+}
+}
 
 /**
  * @brief Creates a level and initializes the tracked repositories.
@@ -58,6 +67,14 @@ bool Stage::on_exit() {
         default:
             throw std::runtime_error("Unknown stage state");
     }
+}
+
+float Stage::get_barrel_roll_speed() const {
+    return constants::ROLL_SPEED * get_barrel_difficulty_multiplier();
+}
+
+float Stage::get_barrel_difficulty_multiplier() const {
+    return calculate_barrel_difficulty_multiplier(player_data.get_level());
 }
 
 void Stage::update_while_running(float dt) {

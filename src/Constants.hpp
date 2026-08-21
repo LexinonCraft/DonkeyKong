@@ -17,6 +17,8 @@ namespace constants {
     // so +y points downward (toward the bottom of the screen) = gravity direction.
     constexpr float BARREL_RADIUS = 12.f;     // px
     constexpr float ROLL_SPEED = 130.f;       // px/sec, constant horizontal roll on a girder
+    constexpr float BARREL_DIFFICULTY_INCREASE_PER_LEVEL = 0.1f;
+    constexpr float BARREL_MAX_DIFFICULTY_MULTIPLIER = 2.f;
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 20.f;  // px
     constexpr float SEAM_SNAP_DISTANCE = 5.f;  // px, distance to snap to a girder when falling onto it

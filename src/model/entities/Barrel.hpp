@@ -36,7 +36,7 @@ public:
      * @param platform Platform surface to rest on.
      * @param roll_direction Optional direction to roll: -1 for left, 1 for right, or 0 to use the platform's slope.
      */
-    void set_on_platform(std::shared_ptr<Platform> platform, int roll_direction = 0);
+    void set_on_platform(std::shared_ptr<Platform> platform, float roll_speed, int roll_direction = 0);
 
     /**
      * @brief Advances the barrel simulation by one time step.
@@ -125,7 +125,7 @@ private:
      * @brief Snaps the barrel onto a platform if it intersects the platform surface.
      * @param platforms Repository of all platform objects in the level.
      */
-    void check_platform_intersection(PlatformComponentRepository &platforms, float dt);
+    void check_platform_intersection(PlatformComponentRepository &platforms, float dt, float roll_speed);
 
     float platform_snap_distance(float dt) const;
 };
