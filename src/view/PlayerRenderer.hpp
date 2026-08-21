@@ -26,6 +26,7 @@ public:
         AssetsManager::TextureId texture_id;
         bool flip_sprite = false;
         bool rotate_sprite = false;
+        bool hammer_origin = false;
         switch (player->get_state()) {
             case Player::State::OnPlatform: {
                 float walking_time = player->get_walking_time();
@@ -39,6 +40,7 @@ public:
                     } else {
                         texture_id = hammer_up ? AssetsManager::TextureId::JumpmanHammerUpStill : AssetsManager::TextureId::JumpmanHammerDownStill;
                     }
+                    hammer_origin = true;
                 } else if (walking_time > 0.0f) {
                     texture_id = static_cast<int>(walking_time / constants::PLAYER_WALKING_ANIMATION_INTERVAL) % 2 == 0 ? AssetsManager::TextureId::JumpmanWalking1 : AssetsManager::TextureId::JumpmanWalking2;
                 } else {
@@ -83,7 +85,7 @@ public:
 
         sf::Sprite player_sprite(assets_manager.get_texture(texture_id));
         sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
-        player_sprite.setOrigin({sprite_bounds.size.x / 2.f, rotate_sprite ? 0.f : sprite_bounds.size.y});
+        player_sprite.setOrigin({sprite_bounds.size.x / (hammer_origin ? 4.f : 2.f), rotate_sprite ? 0.f : sprite_bounds.size.y});
         player_sprite.setPosition(player->get_position());
         player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
         player_sprite.setRotation(sf::degrees(rotate_sprite ? 180.f : 0.f));
