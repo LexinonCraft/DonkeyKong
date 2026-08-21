@@ -73,6 +73,8 @@ public:
 
     virtual std::optional<float> get_right_boundary() const { return static_cast<float>(constants::VIEW_WIDTH); }
 
+    virtual bool is_barrel_boundary_gap(const sf::Vector2f &position) const { return false; }
+
     virtual void on_player_dying();
 
     virtual void on_completed();
@@ -86,6 +88,10 @@ public:
     int random_int() {
         return rng();
     }
+
+    float get_barrel_roll_speed() const;
+
+    float get_barrel_difficulty_multiplier() const;
 
 protected:
     /**
