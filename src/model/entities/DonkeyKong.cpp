@@ -8,8 +8,13 @@
 
 DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_position, bool throw_barrels)
     : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform), throw_barrels(throw_barrels) {
-    state = State::Idle;
-    idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION;
+    if (throw_barrels) {
+        state = State::ThrowingBarrel;
+        num_barrels_to_be_thrown = constants::MAX_BARRELS_THROWN;
+    } else {
+        state = State::Idle;
+        idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION;
+    }
 }
 
 void DonkeyKong::update(float dt, Stage &stage) {

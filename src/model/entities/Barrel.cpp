@@ -1,5 +1,6 @@
 #include "Barrel.hpp"
 
+#include <algorithm>
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include <cstdlib>
@@ -15,6 +16,7 @@
 #include "Player.hpp"
 #include "../util/EntityVisitor.hpp"
 #include "../PlayerData.hpp"
+#include "../../util/Math.hpp"
 
 Barrel::Barrel(Ref ref, sf::Vector2f position) :
     BaseEntity(ref),
@@ -61,7 +63,12 @@ void Barrel::update(float dt, Stage &level) {
                 } else {
                     current_climbable = level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
                     if (current_climbable) {
-                        roll_down_climbable = level.random_int() % 2 == 0;
+                        const float player_vertical_distance = level.get_player()->get_position().y - position.y;
+                        const float descent_chance = std::clamp(
+                            constants::BARREL_LADDER_DESCENT_BASE_CHANCE + player_vertical_distance / constants::BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT,
+                            constants::BARREL_LADDER_DESCENT_BASE_CHANCE,
+                            constants::BARREL_LADDER_DESCENT_MAX_CHANCE);
+                        roll_down_climbable = mod(level.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance;
                     }
                 }
             } else {

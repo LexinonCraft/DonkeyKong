@@ -19,6 +19,10 @@ namespace constants {
     constexpr float ROLL_SPEED = 130.f;       // px/sec, constant horizontal roll on a girder
     constexpr float BARREL_DIFFICULTY_INCREASE_PER_LEVEL = 0.1f;
     constexpr float BARREL_MAX_DIFFICULTY_MULTIPLIER = 2.f;
+    constexpr float BARREL_LADDER_DESCENT_BASE_CHANCE = 50.f;
+    constexpr float BARREL_LADDER_DESCENT_MAX_CHANCE = 90.f;
+    constexpr float BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT = 10.f;
+    constexpr int BARREL_LADDER_DESCENT_CHANCE_STEPS = 100;
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 20.f;  // px
     constexpr float SEAM_SNAP_DISTANCE = 5.f;  // px, distance to snap to a girder when falling onto it
@@ -51,7 +55,7 @@ namespace constants {
 
     constexpr float BARREL_THROW_ANIMATION_INTERVAL = 0.5f;  // seconds between barrel throwing animation frames
     constexpr float BARREL_THROW_OFFSET_X = 20.f;  // px, horizontal offset from Donkey Kong's position when throwing a barrel
-    constexpr unsigned int MAX_BARRELS_THROWN = 3;  // maximum number of barrels Donkey Kong can throw in one action
+    constexpr unsigned int MAX_BARRELS_THROWN = 4;  // maximum number of barrels Donkey Kong can throw in one action
     constexpr float DONKEY_KONG_MIN_IDLE_DURATION = 1.f;  // seconds, minimum duration Donkey Kong stays idle before taking an action
     constexpr float DONKEY_KONG_MAX_IDLE_DURATION = 3.f;  // seconds, maximum duration Donkey Kong stays idle before taking an action
     constexpr unsigned int DONKEY_KONG_IDLE_DURATION_STEPS = 5;  // number of discrete steps for idle duration randomization
