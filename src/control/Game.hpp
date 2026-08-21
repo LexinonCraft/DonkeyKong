@@ -28,8 +28,8 @@ public:
 private:
     sf::RenderWindow window;
     AssetsManager assets_manager;
-    std::unique_ptr<AbstractSceneControl> scene_control;
     PlayerData player_data;
+    std::unique_ptr<AbstractSceneControl> scene_control;
 
     bool input();
 
