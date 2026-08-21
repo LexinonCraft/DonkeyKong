@@ -21,6 +21,8 @@ public:
      * @param layer Layer stack receiving the rendered objects.
      */
     void draw_all(LayerStack &layer);
+
+    void update_all(float dt, Stage &stage);
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include "BarrelRenderer.hpp"
 #include "PlayerRenderer.hpp"
 #include "LadderRenderer.hpp"
+#include "HammerRenderer.hpp"
 #include "DonkeyKongRenderer.hpp"
 #include "BarrelStackRenderer.hpp"
 #include "PaulineRenderer.hpp"
@@ -17,6 +18,7 @@
 #include "../model/entities/Girder.hpp"
 #include "../model/entities/Player.hpp"
 #include "../model/entities/Ladder.hpp"
+#include "../model/entities/HammerPowerUp.hpp"
 #include "../model/entities/DonkeyKong.hpp"
 #include "../model/entities/Pauline.hpp"
 #include "../model/entities/DissolvingPlatform.hpp"
@@ -58,6 +60,10 @@ private:
         component = std::make_unique<LadderRenderer>(std::static_pointer_cast<Ladder>(ladder.shared_from_this()), assets_manager);
     }
 
+    void visit(HammerPowerUp &hammer) override {
+        component = std::make_unique<HammerRenderer>(std::static_pointer_cast<HammerPowerUp>(hammer.shared_from_this()), assets_manager);
+    }
+
     void visit(DonkeyKong &donkey_kong) override {
         component = std::make_unique<DonkeyKongRenderer>(std::static_pointer_cast<DonkeyKong>(donkey_kong.shared_from_this()), assets_manager);
     }
@@ -69,7 +75,7 @@ private:
     void visit(Pauline &pauline) override {
         component = std::make_unique<PaulineRenderer>(std::static_pointer_cast<Pauline>(pauline.shared_from_this()), assets_manager);
     }
-    
+
     void visit(DissolvingPlatform &dissolving_platform) override {
         component = std::make_unique<DissolvingPlatformRenderer>(std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()), assets_manager);
     }

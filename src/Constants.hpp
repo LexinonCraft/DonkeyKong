@@ -17,6 +17,8 @@ namespace constants {
     // so +y points downward (toward the bottom of the screen) = gravity direction.
     constexpr float BARREL_RADIUS = 12.f;     // px
     constexpr float ROLL_SPEED = 130.f;       // px/sec, constant horizontal roll on a girder
+    constexpr float BARREL_DIFFICULTY_INCREASE_PER_LEVEL = 0.1f;
+    constexpr float BARREL_MAX_DIFFICULTY_MULTIPLIER = 2.f;
     constexpr float GRAVITY = 900.f;          // px/sec^2, applied while falling
     constexpr float GIRDER_THICKNESS = 20.f;  // px
     constexpr float SEAM_SNAP_DISTANCE = 5.f;  // px, distance to snap to a girder when falling onto it
@@ -28,12 +30,18 @@ namespace constants {
     constexpr float PLAYER_CLIMBING_SPEED = 100.f; // px/sec, vertical speed while climbing a ladder
     constexpr float PLAYER_MAX_FALL_HEIGHT = 80.f;  // px, maximum height the player can fall before dying
 
+    constexpr float HAMMER_WIDTH = 16.f;
+    constexpr float HAMMER_HEIGHT = 20.f;
+    constexpr float HAMMER_DURATION = 10.f;
+    constexpr float HAMMER_SWING_ANIMATION_INTERVAL = 0.2f;
+    constexpr unsigned int HAMMER_BARREL_SCORE = 300u;
+
     constexpr float PLATFORM_MINIMUM_SNAP_DISTANCE = 2.f;  // px, minimum distance to snap to a platform when falling onto it
 
     constexpr float LADDER_WIDTH = 10.f;  // px
 
     constexpr unsigned int INITIAL_LIVES = 3;  // starting lives for the player
-    constexpr float PLAYER_DEATH_DURATION = 3.f;  // seconds until the player is considered dead after dying
+    constexpr float PLAYER_DEATH_DURATION = 4.f;  // seconds until the player is considered dead after dying
 
     constexpr float PLAYER_WALKING_ANIMATION_INTERVAL = 0.1f;  // seconds between walking animation frames
     constexpr float PLAYER_CLIMBING_ANIMATION_INTERVAL = 0.2f;  // seconds between climbing animation frames
@@ -62,6 +70,17 @@ namespace constants {
     constexpr float DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE = 0.f; // px, inwards horizontal tolerance for the player to be considered on the platform for fall-through
 
     constexpr float TITLE_SCREEN_ANIMATION_LENGTH = 5.f;  // length of the donkey kong animation on the title screen in seconds
+
+    constexpr float PLAYER_DYING_ANIMATION_INTERVAL = 0.075f;  // seconds between dying animation frames
+    constexpr float PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION = 0.5f;  // seconds until the player starts rotating during the dying animation
+    constexpr float PLAYER_DYING_ANIMATION_ROTATION_LENGTH = 1.2f;  // duration of the rotation in seconds during the dying animation
+
+    constexpr float HEART_BREAKING_DURATION = 1.5f;  // seconds until the heart breaks after the stage is completed
+    constexpr float DONKEY_KONG_SHOW_TEETH_INTERVAL = 0.3f;  // seconds between Donkey Kong showing his teeth after the stage is completed
+    constexpr unsigned int DONKEY_KONG_SHOW_TEETH_TIMES = 3;  // number of times Donkey Kong shows his teeth after the stage is completed
+    constexpr float DONKEY_KONG_JUMP_SPEED = 450.f;  // px/sec, initial jump speed for Donkey Kong after the stage is completed
+    constexpr float DONKEY_KONG_HITBOX_WIDTH = 64.f;  // px, width of Donkey Kong's hitbox
+    constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;  // px, height of Donkey Kong's hitbox
 }
 
 #endif

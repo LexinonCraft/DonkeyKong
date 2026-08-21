@@ -11,6 +11,7 @@
 #include "BaseEntity.hpp"
 #include "../entities/Barrel.hpp"
 #include "../entities/Girder.hpp"
+#include "../entities/HammerPowerUp.hpp"
 #include "../entities/Player.hpp"
 #include "../entities/Ladder.hpp"
 #include "../entities/DonkeyKong.hpp"
@@ -40,6 +41,10 @@ public:
      */
     std::shared_ptr<Barrel> add_barrel(sf::Vector2f position) {
         return add_entity(std::make_shared<Barrel>(gen_ref(), position));
+    }
+
+    std::shared_ptr<HammerPowerUp> add_hammer_power_up(sf::Vector2f position) {
+        return add_entity(std::make_shared<HammerPowerUp>(gen_ref(), position));
     }
 
     /**
@@ -104,7 +109,7 @@ public:
     std::shared_ptr<Pauline> add_pauline(std::shared_ptr<Platform> platform, float x_position) {
         return add_entity(std::make_shared<Pauline>(gen_ref(), platform, x_position));
     }
-        
+
     std::shared_ptr<DissolvingPlatform> add_dissolving_platform(sf::Vector2f position, float width) {
         return add_entity(std::make_shared<DissolvingPlatform>(gen_ref(), position, width));
     }

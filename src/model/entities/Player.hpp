@@ -120,9 +120,15 @@ public:
 
     bool has_jumped() const { return has_jumped_flag; }
 
+    bool has_hammer() const { return hammer_time_remaining > 0.f; }
+
+    float get_hammer_time_remaining() const { return hammer_time_remaining; }
+
     void enter_platform(std::shared_ptr<Platform> platform);
 
     void enter_platform(std::shared_ptr<Platform> platform, float x_pos);
+
+    State get_state() const { return state; }
 
 private:
     State state;
@@ -137,6 +143,7 @@ private:
     VerticalDirection vertical_direction = VerticalDirection::None;
     float walking_time = 0.0f;
     float climbing_time = 0.0f;
+    float hammer_time_remaining;
     bool has_jumped_flag = false;
     float y_before_jump = 0.0f;
 

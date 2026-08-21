@@ -25,6 +25,8 @@ public:
      */
     void draw();
 
+    void update(float dt, Stage &stage);
+
 private:
     DrawableComponentRepository drawable_components;
     Stage &stage;

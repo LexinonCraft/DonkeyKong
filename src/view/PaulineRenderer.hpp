@@ -18,6 +18,11 @@
  */
 class PaulineRenderer : public DrawableComponent {
 public:
+    enum class State {
+        Normal,
+        StageCompleted,
+    };
+
     /**
      * @brief Creates the Pauline renderer for a concrete entity.
      * @param pauline Pauline instance to render.
@@ -31,8 +36,7 @@ public:
     void draw(LayerStack &layer_stack) override {
         AssetsManager::TextureId texture_id;
         bool help;
-        float animation_timer = pauline->get_animation_timer();
-        if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES) {
+        if (state == State::Normal && animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES && !suppress_screaming) {
             switch (mod(floor_to_int(animation_timer / constants::PAULINE_SCREAM_ANIMATION_INTERVAL), 2)) {
                 case 0:
                     texture_id = AssetsManager::TextureId::PaulineScream1;
@@ -65,11 +69,40 @@ public:
             help_sprite.setScale({2.f, 2.f});
             layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(help_sprite);
         }
+
+        if (state == State::StageCompleted) {
+            sf::Sprite heart_sprite(assets_manager.get_texture(animation_timer < constants::HEART_BREAKING_DURATION ? AssetsManager::TextureId::HeartNormal : AssetsManager::TextureId::HeartBroken));
+            sf::FloatRect heart_bounds = heart_sprite.getLocalBounds();
+            heart_sprite.setOrigin({heart_bounds.size.x / 2.f, heart_bounds.size.y});
+            heart_sprite.setPosition({position.x + 40.f, position.y - 40.f});
+            heart_sprite.setScale({2.f, 2.f});
+            layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(heart_sprite);
+        }
+    }
+
+    void update(float dt, Stage &stage) override {
+        if (stage.get_state() == Stage::StageState::Completed && state == State::Normal) {
+            animation_timer = 0.0f;
+            state = State::StageCompleted;
+        }
+
+        if (state == State::Normal || stage.get_state() == Stage::StageState::Completed) {
+            animation_timer += dt;
+        }
+        if (stage.get_state() == Stage::StageState::PlayerDying) {
+            suppress_screaming = true;
+        }
+        if (state == State::Normal && animation_timer > constants::PAULINE_ANIMATION_LENGTH) {
+            animation_timer -= constants::PAULINE_ANIMATION_LENGTH;
+        }
     }
 
 private:
     std::shared_ptr<Pauline> pauline;
     AssetsManager &assets_manager;
+    State state = State::Normal;
+    float animation_timer = 0.0f;
+    bool suppress_screaming = false;
 };
 
 #endif
