@@ -16,7 +16,7 @@ float calculate_barrel_difficulty_multiplier(unsigned int level) {
 /**
  * @brief Creates a level and initializes the tracked repositories.
  */
-Stage::Stage(int rng(), PlayerData &player_data) : rng(rng), entities(rng), updatable_components(entities), platform_components(entities), climbable_components(entities), enemy_components(entities), pickable_components(entities), player(entities.add_player()), player_data(player_data) {}
+Stage::Stage(int rng(), PlayerData &player_data) : rng(rng), entities(rng), updatable_components(entities), platform_components(entities), climbable_components(entities), enemy_components(entities), jumpable_components(entities), pickable_components(entities), observer_registry(rng), player(entities.add_player()), player_data(player_data) {}
 
 /**
  * @brief Advances the level simulation by one tick.
@@ -42,11 +42,24 @@ void Stage::on_player_dying() {
     
     player_died = true;
     current_animation = std::make_unique<PlayerDeathAnimation>(*this, player);
+    for (auto it = observer_registry.begin(); it != observer_registry.end(); ++it) {
+        it->second->on_player_died();
+    }
 }
 
 void Stage::on_completed() {
     if (current_animation)
         return;
+}
+
+void Stage::add_to_score(sf::Vector2f position, int score_to_add) {
+    if (current_animation)
+        return;
+
+    player_data.add_to_score(score_to_add);
+    for (auto it = observer_registry.begin(); it != observer_registry.end(); ++it) {
+        it->second->on_score_added(position, score_to_add);
+    }
 }
 
 float Stage::get_barrel_roll_speed() const {

@@ -25,7 +25,7 @@ public:
      * @param entity_repo Repository whose entities are tracked.
      * @param component_factory Factory used to construct component instances.
      */
-    ComponentRepository(EntityRepository &entity_repo, std::unique_ptr<AbstractComponentFactory<C>> component_factory) : entity_repo(entity_repo), observer_id(entity_repo.register_observer(*this)), component_factory(std::move(component_factory)) {
+    ComponentRepository(EntityRepository &entity_repo, std::unique_ptr<AbstractComponentFactory<C>> component_factory) : entity_repo(entity_repo), observer_id(entity_repo.get_observer_registry().register_observer(*this)), component_factory(std::move(component_factory)) {
         for (auto it = entity_repo.begin(); it != entity_repo.end(); ++it) {
             std::shared_ptr<BaseEntity> entity = it->second;
             auto component = this->component_factory->create_component_for(entity);
@@ -36,7 +36,7 @@ public:
     }
 
     virtual ~ComponentRepository() {
-        entity_repo.unregister_observer(observer_id);
+        entity_repo.get_observer_registry().unregister_observer(observer_id);
     }
 
     /**

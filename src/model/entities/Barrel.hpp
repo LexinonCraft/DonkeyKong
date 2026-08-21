@@ -10,6 +10,7 @@
 #include "../util/BaseEntity.hpp"
 #include "../components/Updatable.hpp"
 #include "../components/Enemy.hpp"
+#include "../components/Jumpable.hpp"
 
 /**
  * @brief Barrel entity that rolls down sloped platforms and falls between them.
@@ -17,7 +18,7 @@
  * The barrel is a small two-state simulation: it either sticks to a platform and
  * rolls downhill, or it is in free fall until it intersects another platform.
  */
-class Barrel : public BaseEntity, public Updatable, public Enemy {
+class Barrel : public BaseEntity, public Updatable, public Enemy, public Jumpable {
 public:
     /**
      * @brief Current barrel state.
@@ -104,11 +105,17 @@ public:
         return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Barrel>(shared_from_this()));
     }
 
+    std::unique_ptr<Component<Jumpable>> create_jumpable_component() override {
+        return std::make_unique<Component<Jumpable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+    }
+
     bool touches(const sf::RectangleShape &player_shape) const override;
 
     void on_hammer_hit() override;
 
     float get_roll_distance() const { return roll_distance; }
+
+    void check_jumps_over(const Player &player, Stage &stage) override;
 
 private:
     sf::Vector2f position;
@@ -120,6 +127,12 @@ private:
     std::shared_ptr<Climbable> current_climbable = nullptr;
     bool roll_down_climbable;
     float roll_distance = 0.f;
+    bool tracking_player_jump = false;
+    bool crossed_above_barrel = false;
+    bool scored_for_player_jump = false;
+    int player_jump_start_side = 0;
+    float previous_player_x_difference = 0.f;
+    float previous_player_y_difference = 0.f;
     
     sf::CircleShape shape;
 

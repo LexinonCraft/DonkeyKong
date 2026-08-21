@@ -114,6 +114,8 @@ public:
 
     virtual std::unique_ptr<Component<Enemy>> create_enemy_component() { return nullptr; }
 
+    virtual std::unique_ptr<Component<Jumpable>> create_jumpable_component() { return nullptr; }
+
     virtual std::unique_ptr<Component<Pickable>> create_pickable_component() { return nullptr; }
 
 protected:

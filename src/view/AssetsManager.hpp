@@ -38,6 +38,8 @@ public:
         PaulineScream2,
         Help,
         Hammer,
+        Ghost1,
+        Ghost2,
         HeartNormal,
         HeartBroken,
         JumpmanHammerUpStill,
@@ -86,6 +88,8 @@ private:
     sf::Texture pauline_scream2_texture;
     sf::Texture help_texture;
     sf::Texture hammer_texture;
+    sf::Texture ghost1_texture;
+    sf::Texture ghost2_texture;
     sf::Texture heart_normal_texture;
     sf::Texture heart_broken_texture;
     sf::Texture jumpman_hammer_up_still_texture;

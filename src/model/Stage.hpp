@@ -10,9 +10,12 @@
 #include "components/PlatformComponentRepository.hpp"
 #include "components/ClimbableComponentRepository.hpp"
 #include "components/EnemyComponentRepository.hpp"
+#include "components/JumpableComponentRepository.hpp"
 #include "components/PickableComponentRepository.hpp"
 #include "Declarations.hpp"
 #include "../Constants.hpp"
+#include "../util/ObserverRegistry.hpp"
+#include "StageObserver.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -57,6 +60,12 @@ public:
     PickableComponentRepository &get_pickables() { return pickable_components; }
 
     /**
+     * @brief Returns the jumpable repository for this level.
+     * @return Repository containing jumpable behaviour components.
+     */
+    JumpableComponentRepository &get_jumpables() { return jumpable_components; }
+
+    /**
      * @brief Returns the player associated with this level.
      * @return Shared pointer to the player entity.
      */
@@ -78,10 +87,15 @@ public:
 
     bool check_over();
 
+    void add_to_score(sf::Vector2f position, int score_to_add);
+
+    bool is_running() const { return !current_animation; }
+
     int random_int() {
         return rng();
     }
 
+    ObserverRegistry<StageObserver> &get_observer_registry() { return observer_registry; }
     float get_barrel_roll_speed() const;
 
     float get_barrel_difficulty_multiplier() const;
@@ -100,8 +114,10 @@ protected:
     PlatformComponentRepository platform_components;
     ClimbableComponentRepository climbable_components;
     EnemyComponentRepository enemy_components;
+    JumpableComponentRepository jumpable_components;
     PickableComponentRepository pickable_components;
 
+    ObserverRegistry<StageObserver> observer_registry;
     float time_elapsed = 0.f;
 
     const std::shared_ptr<Player> player;

@@ -30,5 +30,7 @@ class DissolvingPlatform;
 class Stage25MCompletionAnimation;
 class PlayerDeathAnimation;
 class AbstractAnimation;
+class Jumpable;
+class Ghost;
 
 #endif
