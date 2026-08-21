@@ -16,7 +16,7 @@ std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(
         
         if (platform->is_active() && platform->covers_x(position.x, h_tolerance_left, h_tolerance_right)) {
             float surface_y = platform->surface_y_at(position.x);
-            if (position.y > surface_y && position.y < surface_y + snap_distance && platform != exclude_platform) {  // remember that y increases downward in SFML coordinates // TODO: change origin of Barrel
+            if (position.y + constants::PLATFORM_UNDERNEATH_OFFSET >= surface_y && position.y <= surface_y + snap_distance && platform != exclude_platform) {  // remember that y increases downward in SFML coordinates // TODO: change origin of Barrel
                 return platform;
             }
         }

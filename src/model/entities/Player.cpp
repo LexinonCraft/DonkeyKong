@@ -176,10 +176,6 @@ void Player::update(float dt, Stage &stage) {
         climbing_time = 0.0f;
     }
 
-    if (state != State::InAir) {
-        has_jumped_flag = false;
-    }
-
     hammer_time_remaining = std::max(0.f, hammer_time_remaining - dt);
 
     shape.setPosition(position);
@@ -199,11 +195,17 @@ void Player::update(float dt, Stage &stage) {
         const bool enemy_in_front = facing_right ? enemy->get_position().x >= position.x : enemy->get_position().x <= position.x;
         if (has_hammer() && enemy_in_front) {
             enemy->on_hammer_hit();
-            stage.get_player_data().add_to_score(constants::HAMMER_BARREL_SCORE);
+            stage.add_to_score(constants::HAMMER_BARREL_SCORE);
             stage.get_player_data().increment_hammer_use_count();
         } else {
             die(stage);
         }
+    }
+
+    stage.get_jumpables().check_all_jumpables(*this, stage);
+
+    if (state != State::InAir) {
+        has_jumped_flag = false;
     }
 }
 

@@ -14,14 +14,7 @@
 #include "BarrelStackRenderer.hpp"
 #include "PaulineRenderer.hpp"
 #include "DissolvingPlatformRenderer.hpp"
-#include "../model/entities/Barrel.hpp"
-#include "../model/entities/Girder.hpp"
-#include "../model/entities/Player.hpp"
-#include "../model/entities/Ladder.hpp"
-#include "../model/entities/HammerPowerUp.hpp"
-#include "../model/entities/DonkeyKong.hpp"
-#include "../model/entities/Pauline.hpp"
-#include "../model/entities/DissolvingPlatform.hpp"
+#include "GhostRenderer.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.
@@ -78,6 +71,10 @@ private:
 
     void visit(DissolvingPlatform &dissolving_platform) override {
         component = std::make_unique<DissolvingPlatformRenderer>(std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()), assets_manager);
+    }
+
+    void visit(Ghost &ghost) override {
+        component = std::make_unique<GhostRenderer>(std::static_pointer_cast<Ghost>(ghost.shared_from_this()), assets_manager);
     }
 };
 

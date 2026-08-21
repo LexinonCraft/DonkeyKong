@@ -27,5 +27,7 @@ class DonkeyKong;
 class BarrelStack;
 class Pauline;
 class DissolvingPlatform;
+class Jumpable;
+class Ghost;
 
 #endif
