@@ -140,7 +140,7 @@ void AssetsManager::load(const std::string &filename, sf::Texture &texture) {
 std::string AssetsManager::read_contributors(const std::string &filename) const {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        return "By Lexinon and Muvels";
+        return "By Muvels and Lexinon";
     }
     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     return content;
