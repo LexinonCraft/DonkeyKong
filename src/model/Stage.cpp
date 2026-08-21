@@ -73,6 +73,9 @@ bool Stage::on_exit() {
 }
 
 void Stage::add_to_score(sf::Vector2f position, int score_to_add) {
+    if (state != StageState::Running)
+        return;
+
     player_data.add_to_score(score_to_add);
     for (auto it = observer_registry.begin(); it != observer_registry.end(); ++it) {
         it->second->on_score_added(position, score_to_add);
