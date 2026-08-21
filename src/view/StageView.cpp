@@ -62,8 +62,8 @@ void StageView::draw() {
     hammer_count.setString(std::format("{:d}", stage.get_player_data().get_hammer_use_count()));
     hammer_count.setCharacterSize(24);
     sf::FloatRect hammer_count_bounds = hammer_count.getLocalBounds();
-    hammer_count.setOrigin({hammer_count_bounds.size.x / 2.f, hammer_count_bounds.size.y / 2.f});
-    hammer_count.setPosition(get_absolute_position({60.f, 110.f}, AnchorPosition::TopLeft));
+    hammer_count.setOrigin({0.f, hammer_count_bounds.size.y / 2.f});
+    hammer_count.setPosition(get_absolute_position({50.f, 110.f}, AnchorPosition::TopLeft));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(hammer_count);
 
     sf::Sprite barrel_sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelFront1));
@@ -77,8 +77,8 @@ void StageView::draw() {
     barrel_count.setString(std::format("{:d}", stage.get_player_data().get_jumped_over_barrels_count()));
     barrel_count.setCharacterSize(24);
     sf::FloatRect barrel_count_bounds = barrel_count.getLocalBounds();
-    barrel_count.setOrigin({barrel_count_bounds.size.x / 2.f, barrel_count_bounds.size.y / 2.f});
-    barrel_count.setPosition(get_absolute_position({60.f, 140.f}, AnchorPosition::TopLeft));
+    barrel_count.setOrigin({0.f, barrel_count_bounds.size.y / 2.f});
+    barrel_count.setPosition(get_absolute_position({50.f, 140.f}, AnchorPosition::TopLeft));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(barrel_count);
 
     int lives_count = stage.get_player_data().get_lives();
