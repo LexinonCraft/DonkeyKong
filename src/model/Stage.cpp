@@ -88,3 +88,11 @@ bool Stage::check_over() {
     on_exit();
     return true;
 }
+
+void Stage::clear_secondary_entities() {
+    for (auto it = entities.begin(); it != entities.end(); ++it) {
+        if (it->second->is_secondary_entity()) {
+            it->second->destroy();
+        }
+    }
+}

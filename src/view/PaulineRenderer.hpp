@@ -14,6 +14,7 @@
 #include "LayerStack.hpp"
 #include "../model/animations/AnimationVisitor.hpp"
 #include "../model/animations/Stage25MCompletionAnimation.hpp"
+#include "../model/animations/Stage100MCompletionAnimation.hpp"
 
 /**
  * @brief Renderer for the Pauline entity.
@@ -35,6 +36,9 @@ public:
 
         AssetsManager::TextureId texture_id;
         bool help = false;
+        draw_pauline = true;
+        draw_heart = false;
+        heart_broken = false;
         switch (pauline->get_state()) {
             case Pauline::State::Normal:
                 if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES && !suppress_scream) {
@@ -87,7 +91,7 @@ public:
             sf::Sprite heart_sprite(assets_manager.get_texture(!heart_broken ? AssetsManager::TextureId::HeartNormal : AssetsManager::TextureId::HeartBroken));
             sf::FloatRect heart_bounds = heart_sprite.getLocalBounds();
             heart_sprite.setOrigin({heart_bounds.size.x / 2.f, heart_bounds.size.y});
-            heart_sprite.setPosition({position.x + 40.f, position.y - 40.f});
+            heart_sprite.setPosition({constants::VIEW_WIDTH / 2.f, position.y - 40.f});
             heart_sprite.setScale({2.f, 2.f});
             layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(heart_sprite);
         }
@@ -114,14 +118,9 @@ private:
     void visit(Stage25MCompletionAnimation &animation) override {
         switch (animation.get_state()) {
             case Stage25MCompletionAnimation::State::NotStarted:
-                draw_pauline = false;
-                draw_heart = false;
-                heart_broken = false;
                 break;
             case Stage25MCompletionAnimation::State::United:
-                draw_pauline = true;
                 draw_heart = true;
-                heart_broken = false;
                 break;
             case Stage25MCompletionAnimation::State::Climbing:
             case Stage25MCompletionAnimation::State::Finished:
@@ -131,6 +130,23 @@ private:
                 break;
             default:
                 throw std::logic_error("Invalid state for Stage25MCompletionAnimation.");
+        }
+    }
+
+    void visit(Stage100MCompletionAnimation &animation) override {
+        switch (animation.get_state()) {
+            case Stage100MCompletionAnimation::State::NotStarted:
+            case Stage100MCompletionAnimation::State::BeforeFall:
+            case Stage100MCompletionAnimation::State::Falling:
+            case Stage100MCompletionAnimation::State::Impact:
+                draw_pauline = false;
+                break;
+            case Stage100MCompletionAnimation::State::United:
+            case Stage100MCompletionAnimation::State::Finished:
+                draw_heart = true;
+                break;
+            default:
+                throw std::logic_error("Invalid state for Stage100MCompletionAnimation.");
         }
     }
 };

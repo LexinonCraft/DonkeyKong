@@ -128,6 +128,8 @@ protected:
     std::unique_ptr<AbstractAnimation> current_animation;
 
     virtual void update_while_running(float dt);
+
+    void clear_secondary_entities();
 };
 
 #endif

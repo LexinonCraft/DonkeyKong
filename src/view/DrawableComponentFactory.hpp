@@ -15,6 +15,7 @@
 #include "PaulineRenderer.hpp"
 #include "DissolvingPlatformRenderer.hpp"
 #include "GhostRenderer.hpp"
+#include "BeamRenderer.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.
@@ -75,6 +76,10 @@ private:
 
     void visit(Ghost &ghost) override {
         component = std::make_unique<GhostRenderer>(std::static_pointer_cast<Ghost>(ghost.shared_from_this()), assets_manager);
+    }
+
+    void visit(Beam &beam) override {
+        component = std::make_unique<BeamRenderer>(std::static_pointer_cast<Beam>(beam.shared_from_this()));
     }
 };
 

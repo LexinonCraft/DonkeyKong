@@ -17,6 +17,9 @@ public:
         DonkeyKongNice,
         DonkeyKongClimbing1,
         DonkeyKongClimbing2,
+        DonkeyKongFalling1,
+        DonkeyKongFalling2,
+        DonkeyKongFalling3,
         JumpmanStill,
         JumpmanWalking1,
         JumpmanWalking2,
@@ -69,6 +72,9 @@ private:
     sf::Texture donkey_kong_nice_texture;
     sf::Texture donkey_kong_climbing1_texture;
     sf::Texture donkey_kong_climbing2_texture;
+    sf::Texture donkey_kong_falling1_texture;
+    sf::Texture donkey_kong_falling2_texture;
+    sf::Texture donkey_kong_falling3_texture;
     sf::Texture jumpman_still_texture;
     sf::Texture jumpman_walking1_texture;
     sf::Texture jumpman_walking2_texture;
