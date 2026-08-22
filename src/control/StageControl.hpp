@@ -9,7 +9,7 @@
 #include "DK/model/Stage.hpp"
 #include "DK/model/StageSequence.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/view/StageView.hpp"
+#include "DK/view/views/StageView.hpp"
 
 class StageControl : public AbstractSceneControl {
 public:

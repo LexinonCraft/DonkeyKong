@@ -7,7 +7,7 @@
 
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/StageSequence.hpp"
-#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/views/AbstractSceneView.hpp"
 #include "DK/view/AssetsManager.hpp"
 
 class StageTransitionView : public AbstractSceneView {

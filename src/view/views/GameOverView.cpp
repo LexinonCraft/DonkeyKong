@@ -1,4 +1,4 @@
-#include "DK/view/GameOverView.hpp"
+#include "DK/view/views/GameOverView.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>

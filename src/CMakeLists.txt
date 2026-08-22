@@ -35,14 +35,14 @@ set(ControlSources
 
 # View
 set(ViewSources
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/StageView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/StageView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/LayerStack.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/TitleScreenView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/AssetsManager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/AbstractSceneView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/StageTransitionView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/GameOverView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/AbstractSceneView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/StageTransitionView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/GameOverView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/ScoreEffect.cpp
     )
 

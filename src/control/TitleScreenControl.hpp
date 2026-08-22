@@ -3,7 +3,7 @@
 
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/view/TitleScreenView.hpp"
+#include "DK/view/views/TitleScreenView.hpp"
 
 class TitleScreenControl : public AbstractSceneControl {
 public:

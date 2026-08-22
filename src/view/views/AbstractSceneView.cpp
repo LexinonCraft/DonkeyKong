@@ -1,4 +1,4 @@
-#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/views/AbstractSceneView.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 

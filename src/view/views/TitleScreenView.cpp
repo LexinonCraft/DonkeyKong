@@ -1,4 +1,4 @@
-#include "DK/view/TitleScreenView.hpp"
+#include "DK/view/views/TitleScreenView.hpp"
 
 #include <format>
 #include <stdexcept>

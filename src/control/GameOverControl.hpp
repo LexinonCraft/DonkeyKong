@@ -4,7 +4,7 @@
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/view/GameOverView.hpp"
+#include "DK/view/views/GameOverView.hpp"
 
 class GameOverControl : public AbstractSceneControl {
 public:

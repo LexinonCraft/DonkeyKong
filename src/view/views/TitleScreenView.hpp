@@ -4,7 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "DK/model/PlayerData.hpp"
-#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/views/AbstractSceneView.hpp"
 #include "DK/view/AssetsManager.hpp"
 
 class TitleScreenView : public AbstractSceneView {

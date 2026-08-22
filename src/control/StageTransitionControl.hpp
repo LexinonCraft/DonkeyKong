@@ -3,7 +3,7 @@
 
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/view/StageTransitionView.hpp"
+#include "DK/view/views/StageTransitionView.hpp"
 
 class StageTransitionControl : public AbstractSceneControl {
 public:

@@ -6,7 +6,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "DK/model/Stage.hpp"
-#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/views/AbstractSceneView.hpp"
 #include "DK/view/AssetsManager.hpp"
 #include "DK/view/DrawableComponentRepository.hpp"
 #include "DK/view/ScoreEffect.hpp"

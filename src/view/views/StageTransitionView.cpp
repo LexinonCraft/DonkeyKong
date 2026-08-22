@@ -1,4 +1,4 @@
-#include "DK/view/StageTransitionView.hpp"
+#include "DK/view/views/StageTransitionView.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
