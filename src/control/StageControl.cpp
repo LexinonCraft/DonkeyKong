@@ -94,7 +94,7 @@ void StageControl::draw() {
 }
 
 AbstractSceneControl::NextScene StageControl::get_next_scene() const {
-    if (!stage->check_over()) {
+    if (!stage->is_over()) {
         return AbstractSceneControl::NextScene::Stay;
     }
 

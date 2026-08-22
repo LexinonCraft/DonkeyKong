@@ -34,6 +34,11 @@ void Stage::update(float dt) {
             current_animation.reset();
         }
     }
+
+    if (current_animation && current_animation->is_exit_animation() && current_animation->is_finished() && !ran_on_exit) {
+        on_exit();
+        ran_on_exit = true;
+    }
 }
 
 void Stage::on_player_dying() {
@@ -75,16 +80,14 @@ void Stage::update_while_running(float dt) {
     updatable_components.update_all(dt, *this);
 }
 
-bool Stage::check_over() {
-    if (!(current_animation && current_animation->is_exit_animation() && current_animation->is_finished())) {
-        return false;
-    }
+bool Stage::is_over() {
+    return ran_on_exit;
+}
 
+void Stage::on_exit() {
     if (player_died) {
         player_data.lose_life();
     } else {
         advance_stage(player_data);
     }
-    on_exit();
-    return true;
 }
