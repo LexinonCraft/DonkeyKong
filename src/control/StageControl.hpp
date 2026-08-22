@@ -4,12 +4,12 @@
 #include <cstdlib>
 #include <memory>
 
-#include "AbstractSceneControl.hpp"
-#include "../model/Stage.hpp"
-#include "../view/StageView.hpp"
-#include "../model/StageSequence.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../model/PlayerData.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/model/StageSequence.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/StageView.hpp"
 
 class StageControl : public AbstractSceneControl {
 public:

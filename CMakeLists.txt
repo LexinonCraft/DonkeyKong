@@ -35,6 +35,32 @@ FetchContent_MakeAvailable(GTest)
 add_subdirectory(src)
 add_subdirectory(test)
 
+# Provide include alias: DK/... -> src/...
+set(PROJECT_INCLUDE_ALIAS_DIR ${CMAKE_BINARY_DIR}/include)
+file(MAKE_DIRECTORY ${PROJECT_INCLUDE_ALIAS_DIR})
+if(POLICY CMP0205)
+    cmake_policy(SET CMP0205 NEW)
+endif()
+file(CREATE_LINK
+    ${CMAKE_SOURCE_DIR}/src
+    ${PROJECT_INCLUDE_ALIAS_DIR}/DK
+    SYMBOLIC
+    COPY_ON_ERROR
+)
+
+# Allow project-root style includes in both app and test targets.
+target_include_directories(DonkeyKong PRIVATE
+    ${PROJECT_INCLUDE_ALIAS_DIR}
+#    ${CMAKE_SOURCE_DIR}
+#    ${CMAKE_SOURCE_DIR}/src
+)
+
+target_include_directories(Test PRIVATE
+    ${PROJECT_INCLUDE_ALIAS_DIR}
+#    ${CMAKE_SOURCE_DIR}
+#    ${CMAKE_SOURCE_DIR}/src
+)
+
 target_compile_features(DonkeyKong PRIVATE cxx_std_20)
 target_compile_features(Test PRIVATE cxx_std_20)
 

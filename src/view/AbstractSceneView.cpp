@@ -1,6 +1,8 @@
-#include "AbstractSceneView.hpp"
-#include "../Constants.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+
 #include <SFML/Graphics/Rect.hpp>
+
+#include "DK/Constants.hpp"
 
 void AbstractSceneView::adjust_window_view(sf::RenderWindow &window) {
     auto window_size = window.getSize();

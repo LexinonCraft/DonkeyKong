@@ -1,7 +1,7 @@
 #ifndef ENTITY_FROM_COMPONENT_AUX_HPP
 #define ENTITY_FROM_COMPONENT_AUX_HPP
 
-#include "BaseEntity.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Common interface for component-side adapters that need access to their entity.

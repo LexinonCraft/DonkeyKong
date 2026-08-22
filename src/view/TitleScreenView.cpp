@@ -1,12 +1,13 @@
-#include <stdexcept>
+#include "DK/view/TitleScreenView.hpp"
+
 #include <format>
+#include <stdexcept>
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "TitleScreenView.hpp"
-#include "../util/Positions.hpp"
-#include "../util/Math.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/util/Positions.hpp"
 
 void TitleScreenView::draw(float animation_timer) {
     pre_draw();

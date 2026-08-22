@@ -1,9 +1,10 @@
+#include "DK/model/stages/Stage100M.hpp"
+
 #include <memory>
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Stage100M.hpp"
-#include "../../util/Math.hpp"
+#include "DK/util/Math.hpp"
 
 /**
  * @brief Builds the prototype scene used for the current game demo.
@@ -113,7 +114,9 @@ void Stage100M::update_while_running(float dt) {
 void Stage100M::spawn_ghost() {
     while (true) {
         std::shared_ptr<Girder> random_girder = spawn_suitable_girders[mod(random_int(), spawn_suitable_girders.size())];
-        float x = random_girder->get_left().x + mod(random_int(), constants::GHOST_SPAWN_X_POS_STEPS) * (random_girder->get_right().x - random_girder->get_left().x) / constants::GHOST_SPAWN_X_POS_STEPS;
+        float x = random_girder->get_left().x + mod(random_int(), constants::GHOST_SPAWN_X_POS_STEPS) *
+                                                    (random_girder->get_right().x - random_girder->get_left().x) /
+                                                    constants::GHOST_SPAWN_X_POS_STEPS;
 
         auto diff = sf::Vector2f{x, random_girder->surface_y_at(x)} - player->get_position();
         float distance = diff.length();

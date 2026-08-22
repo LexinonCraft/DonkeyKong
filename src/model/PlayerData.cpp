@@ -1,4 +1,4 @@
-#include "PlayerData.hpp"
+#include "DK/model/PlayerData.hpp"
 
 void PlayerData::add_to_score(unsigned int points) {
     score += points;

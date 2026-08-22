@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../model/PlayerData.hpp"
-#include "../control/AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 /**
  * @brief Main controller for the Donkey Kong-style game loop.

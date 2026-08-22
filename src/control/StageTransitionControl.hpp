@@ -1,13 +1,13 @@
 #ifndef STAGE_TRANSITION_CONTROL_HPP
 #define STAGE_TRANSITION_CONTROL_HPP
 
-#include "AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../view/StageTransitionView.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/StageTransitionView.hpp"
 
 class StageTransitionControl : public AbstractSceneControl {
 public:
-    StageTransitionControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager) 
+    StageTransitionControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : AbstractSceneControl(window), stage_transition_view(window, assets_manager, player_data) {}
 
     void handle_event(sf::Event *event) override;

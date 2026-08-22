@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "BaseEntity.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Abstract factory for creating component instances for a given entity.
@@ -13,8 +13,7 @@
  *
  * @tparam C The component type created by the factory.
  */
-template <typename C>
-class AbstractComponentFactory {
+template <typename C> class AbstractComponentFactory {
 public:
     virtual ~AbstractComponentFactory() = default;
 

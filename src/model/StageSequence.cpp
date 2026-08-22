@@ -1,9 +1,10 @@
+#include "DK/model/StageSequence.hpp"
+
 #include <stdexcept>
 
-#include "StageSequence.hpp"
-#include "stages/Stage100M.hpp"
-#include "stages/Stage25M.hpp"
-#include "PlayerData.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/model/stages/Stage100M.hpp"
+#include "DK/model/stages/Stage25M.hpp"
 
 std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level) {
     auto stage_sequence = std::make_unique<std::vector<StageId>>();
@@ -12,9 +13,7 @@ std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level) {
     return stage_sequence;
 }
 
-unsigned int get_number_of_stages_in_level(unsigned level) {
-    return get_stage_sequence(level)->size();
-}
+unsigned int get_number_of_stages_in_level(unsigned level) { return get_stage_sequence(level)->size(); }
 
 void advance_stage(PlayerData &player_data) {
     unsigned int current_stage_in_level = player_data.get_stage_in_level();
@@ -28,13 +27,9 @@ void advance_stage(PlayerData &player_data) {
     }
 }
 
-StageId get_stage_id(unsigned int level, unsigned int stage_in_level) {
-    return get_stage_sequence(level)->at(stage_in_level);
-}
+StageId get_stage_id(unsigned int level, unsigned int stage_in_level) { return get_stage_sequence(level)->at(stage_in_level); }
 
-StageId get_stage_id(PlayerData &player_data) {
-    return get_stage_id(player_data.get_level(), player_data.get_stage_in_level());
-}
+StageId get_stage_id(PlayerData &player_data) { return get_stage_id(player_data.get_level(), player_data.get_stage_in_level()); }
 
 std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) {
     StageId stage_id = get_stage_id(player_data);
@@ -42,10 +37,10 @@ std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) 
     switch (stage_id) {
         case StageId::Stage25M:
             return std::make_unique<Stage25M>(id_generator, player_data);
-//        case StageId::Stage50M:
-//            return std::make_unique<DemoStage2>(id_generator, player_data);
-//        case StageId::Stage75M:
-//            return std::make_unique<DemoStage>(id_generator, player_data);
+            //        case StageId::Stage50M:
+            //            return std::make_unique<DemoStage2>(id_generator, player_data);
+            //        case StageId::Stage75M:
+            //            return std::make_unique<DemoStage>(id_generator, player_data);
         case StageId::Stage100M:
             return std::make_unique<Stage100M>(id_generator, player_data);
         default:

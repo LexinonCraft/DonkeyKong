@@ -1,10 +1,12 @@
 #ifndef PLATFORM_HPP
 #define PLATFORM_HPP
 
-#include <SFML/System/Vector2.hpp>
 #include <memory>
-#include "../Declarations.hpp"
-#include "../util/EntityFromComponentAux.hpp"
+
+#include <SFML/System/Vector2.hpp>
+
+#include "DK/model/Declarations.hpp"
+#include "DK/model/util/EntityFromComponentAux.hpp"
 
 /**
  * @brief Behaviour interface for surfaces that entities can stand on.

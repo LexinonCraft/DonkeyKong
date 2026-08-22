@@ -1,7 +1,8 @@
+#include "DK/util/Positions.hpp"
+
 #include <stdexcept>
 
-#include "Positions.hpp"
-#include "../Constants.hpp"
+#include "DK/Constants.hpp"
 
 sf::Vector2f get_absolute_position(const sf::Vector2f &relative_position, AnchorPosition anchor) {
     switch (anchor) {

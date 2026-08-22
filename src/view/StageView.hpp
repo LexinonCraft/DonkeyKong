@@ -5,11 +5,11 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AssetsManager.hpp"
-#include "AbstractSceneView.hpp"
-#include "../model/Stage.hpp"
-#include "DrawableComponentRepository.hpp"
-#include "ScoreEffect.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponentRepository.hpp"
+#include "DK/view/ScoreEffect.hpp"
 
 /**
  * @brief View component that renders a whole stage using layered SFML textures.

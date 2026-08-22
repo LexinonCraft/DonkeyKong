@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Layer.hpp"
+#include "DK/view/Layer.hpp"
 
 /**
  * @brief Container holding the layered render targets for the game world.
