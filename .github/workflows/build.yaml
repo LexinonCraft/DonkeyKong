@@ -4,7 +4,7 @@ on: [push]
 env:
   APT_DEPENDENCIES: cmake libsfml-dev libx11-dev xorg-dev libudev-dev libvorbis-dev libflac-dev
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,21 +16,7 @@ jobs:
         run: |
           cmake -B build
           cmake --build build
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y $APT_DEPENDENCIES
-      - name: Test
-        run: |
-          echo "Tests are disabled for now"
-          # make getGTest
-          # make getSFML
-          # make tests
-          # ./tests
+          ./build/bin/Test
   check-format:
     runs-on: ubuntu-latest
     continue-on-error: true

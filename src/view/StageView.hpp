@@ -5,17 +5,17 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AssetsManager.hpp"
-#include "AbstractSceneView.hpp"
-#include "../model/Stage.hpp"
-#include "DrawableComponentRepository.hpp"
-#include "ScoreEffect.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponentRepository.hpp"
+#include "DK/view/ScoreEffect.hpp"
 
 /**
  * @brief View component that renders a whole stage using layered SFML textures.
  */
 class StageView : public AbstractSceneView, private StageObserver {
-public:
+  public:
     /**
      * @brief Creates the stage view and binds it to a specific stage.
      * @param window Window used for rendering.
@@ -32,7 +32,7 @@ public:
 
     void update(float dt, Stage &stage);
 
-private:
+  private:
     DrawableComponentRepository drawable_components;
     Stage &stage;
     std::list<ScoreEffect> current_score_effects;
