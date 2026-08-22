@@ -8,6 +8,7 @@
 #include "../util/Math.hpp"
 #include "../model/animations/AnimationVisitor.hpp"
 #include "../model/animations/PlayerDeathAnimation.hpp"
+#include "../model/animations/Stage100MCompletionAnimation.hpp"
 
 /**
  * @brief Renderer for the player entity.
@@ -28,6 +29,7 @@ public:
         flip_sprite = false;
         rotate_sprite = false;
         hammer_origin = false;
+        render_player = true;
         switch (player->get_state()) {
             case Player::State::OnPlatform: {
                 float walking_time = player->get_walking_time();
@@ -63,6 +65,10 @@ public:
                 break;
         }
 
+        if (!render_player) {
+            return;
+        }
+
         sf::Sprite player_sprite(assets_manager.get_texture(texture_id));
         sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
         player_sprite.setOrigin({sprite_bounds.size.x / (hammer_origin ? 4.f : 2.f), rotate_sprite ? 0.f : sprite_bounds.size.y});
@@ -79,6 +85,7 @@ private:
     bool flip_sprite = false;
     bool rotate_sprite = false;
     bool hammer_origin = false;
+    bool render_player = true;
 
     void visit(PlayerDeathAnimation &animation) override {
         switch (animation.get_state()) {
@@ -115,6 +122,22 @@ private:
         }
         flip_sprite = false;
         hammer_origin = false;
+    }
+
+    void visit(Stage100MCompletionAnimation &animation) override {
+        switch (animation.get_state()) {
+            case Stage100MCompletionAnimation::State::NotStarted:
+            case Stage100MCompletionAnimation::State::BeforeFall:
+            case Stage100MCompletionAnimation::State::Falling:
+            case Stage100MCompletionAnimation::State::Impact:
+                render_player = false;
+                break;
+            case Stage100MCompletionAnimation::State::United:
+            case Stage100MCompletionAnimation::State::Finished:
+                texture_id = AssetsManager::TextureId::JumpmanStill;
+                flip_sprite = true;
+                break;
+        }
     }
 };
 

@@ -111,6 +111,14 @@ public:
 
     sf::Vector2f get_right() const { return right; }
 
+    void set_left(sf::Vector2f new_left) {
+        left = new_left;
+    }
+
+    void set_right(sf::Vector2f new_right) {
+        right = new_right;
+    }
+
     Color get_color() const { return color; }
 
     /**
@@ -121,10 +129,14 @@ public:
         return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
     }
 
+    bool is_secondary_entity() const override {
+        return false;
+    }
+
 private:
     sf::Vector2f left;
     sf::Vector2f right;
-    sf::RectangleShape shape;
+    sf::RectangleShape shape; // TODO: Remove
     Color color;
 };
 

@@ -11,6 +11,9 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::
     load("donkey_kong_nice.png", donkey_kong_nice_texture);
     load("donkey_kong_climbing1.png", donkey_kong_climbing1_texture);
     load("donkey_kong_climbing2.png", donkey_kong_climbing2_texture);
+    load("donkey_kong_falling1.png", donkey_kong_falling1_texture);
+    load("donkey_kong_falling2.png", donkey_kong_falling2_texture);
+    load("donkey_kong_falling3.png", donkey_kong_falling3_texture);
     load("jumpman_still.png", jumpman_still_texture);
     load("jumpman_walking1.png", jumpman_walking1_texture);
     load("jumpman_walking2.png", jumpman_walking2_texture);
@@ -62,6 +65,12 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
             return donkey_kong_throwing_front_texture;
         case TextureId::DonkeyKongNice:
             return donkey_kong_nice_texture;
+        case TextureId::DonkeyKongFalling1:
+            return donkey_kong_falling1_texture;
+        case TextureId::DonkeyKongFalling2:
+            return donkey_kong_falling2_texture;
+        case TextureId::DonkeyKongFalling3:
+            return donkey_kong_falling3_texture;
         case TextureId::JumpmanStill:
             return jumpman_still_texture;
         case TextureId::JumpmanWalking1:

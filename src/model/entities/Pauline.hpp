@@ -28,6 +28,10 @@ public:
         return position;
     }
 
+    void set_position(sf::Vector2f new_position) {
+        position = new_position;
+    }
+
     State get_state() const {
         return state;
     }
@@ -47,6 +51,10 @@ public:
 
     AbstractAnimation *get_current_animation() const {
         return current_animation;
+    }
+
+    bool is_secondary_entity() const override {
+        return false;
     }
 
 private:

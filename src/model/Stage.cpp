@@ -91,3 +91,23 @@ void Stage::on_exit() {
         advance_stage(player_data);
     }
 }
+
+void Stage::clear_secondary_entities() {
+    for (auto it = entities.begin(); it != entities.end(); ++it) {
+        if (it->second->is_secondary_entity()) {
+            it->second->destroy();
+        }
+    }
+
+    // Remove all secondary entities from the pending additions queue by rebuilding it without the secondary entities
+    auto pending_additions = entities.get_pending_additions();
+    std::queue<std::shared_ptr<BaseEntity>> temp_queue;
+    while (!pending_additions.empty()) {
+        auto entity = pending_additions.front();
+        pending_additions.pop();
+        if (!entity->is_secondary_entity()) {
+            temp_queue.push(entity);
+        }
+    }
+    pending_additions = std::move(temp_queue);
+}

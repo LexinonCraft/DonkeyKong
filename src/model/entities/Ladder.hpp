@@ -51,6 +51,10 @@ public:
         return broken;
     }
 
+    bool is_secondary_entity() const override {
+        return false;
+    }
+
 private:
     sf::RectangleShape shape;
     bool active_for_player;

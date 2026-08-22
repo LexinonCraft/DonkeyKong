@@ -137,6 +137,8 @@ public:
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 
+    bool is_secondary_entity() const override { return false; }
+
 private:
     State state;
     std::shared_ptr<Platform> current_platform;

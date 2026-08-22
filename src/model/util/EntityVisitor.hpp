@@ -32,6 +32,8 @@ public:
     virtual void visit(DissolvingPlatform &dissolving_platform) = 0;
     /** @brief Visits a ghost entity. */
     virtual void visit(Ghost &ghost) = 0;
+    /** @brief Visits a beam entity. */
+    virtual void visit(Beam &beam) = 0;
 };
 
 #endif
