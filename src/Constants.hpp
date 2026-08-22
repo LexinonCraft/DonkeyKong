@@ -116,6 +116,8 @@ namespace constants {
 
     constexpr float DONKEY_KONG_CLIMBING_FRAME_INTERVAL = 0.25f;  // seconds between Donkey Kong's climbing animation frames
     constexpr float HAMMER_Y_OFFSET = 50.f;  // px, vertical offset from the platform's surface to place the hammer power-up
+
+    constexpr unsigned int DISSOLVING_PLATFORM_SCORE = 300;
 }
 
 #endif
