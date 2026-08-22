@@ -163,6 +163,10 @@ public:
         return entities.end();
     }
 
+    std::queue<std::shared_ptr<BaseEntity>>& get_pending_additions() {
+        return pending_additions;
+    }
+
     ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() {
         return observer_registry;
     }
