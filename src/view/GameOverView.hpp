@@ -8,7 +8,7 @@
 
 class GameOverView : public AbstractSceneView {
 public:
-    GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {};
+    GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {}
 
     void draw();
 };
