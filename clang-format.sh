@@ -22,12 +22,12 @@ else
     FIX_OPTION=(--dry-run --Werror)
 fi
 
+if [ ${#FILES[@]} -eq 0 ]; then
+    FILES=($(find src -regex '.*\.\(cpp\|hpp\|c\|h\)'))
+fi
+
 run_clang_format() {
-    if [ ${#FILES[@]} -gt 0 ]; then
-        clang-format -style=file "${FIX_OPTION[@]}" "${FILES[@]}"
-    else
-        find src -regex '.*\.\(cpp\|hpp\|c\|h\)' -exec clang-format -style=file "${FIX_OPTION[@]}" {} +
-    fi
+    clang-format -style=file "${FIX_OPTION[@]}" "${FILES[@]}"
 }
 
 run_clang_format
