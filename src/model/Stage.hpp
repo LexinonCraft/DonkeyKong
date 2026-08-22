@@ -127,6 +127,8 @@ protected:
 
     virtual void update_while_running(float dt);
 
+    void clear_secondary_entities();
+
     virtual void on_exit();
 };
 

@@ -23,7 +23,9 @@ void DonkeyKong::update(float dt, Stage &stage) {
             idle_countdown -= dt * stage.get_barrel_difficulty_multiplier();
             if (idle_countdown <= 0.f) {
                 unsigned int next_action;
-                if (consecutive_angry_actions >= constants::DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS) {
+                if (!throw_barrels) {
+                    next_action = 2; // Force angry state if not throwing barrels
+                } else if (consecutive_angry_actions >= constants::DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS) {
                     next_action = 0; // Force throwing barrel
                 } else {
                     next_action = stage.random_int() % 3;

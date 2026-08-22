@@ -80,6 +80,10 @@ public:
         position = new_position;
     }
 
+    bool is_secondary_entity() const override {
+        return false;
+    }
+
 private:
     sf::Vector2f position;
     std::shared_ptr<Platform> platform;

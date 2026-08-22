@@ -20,6 +20,7 @@
 #include "../entities/DissolvingPlatform.hpp"
 #include "../../util/ObserverRegistry.hpp"
 #include "../entities/Ghost.hpp"
+#include "../entities/Beam.hpp"
 #include "Ref.hpp"
 
 /**
@@ -123,6 +124,10 @@ public:
     std::shared_ptr<Ghost> add_ghost(std::shared_ptr<Platform> platform, float x_pos) {
         return add_entity(std::make_shared<Ghost>(gen_ref(), platform, x_pos));
     }
+    
+    std::shared_ptr<Beam> add_beam(std::shared_ptr<Platform> lower_platform, std::shared_ptr<Platform> upper_platform, float x_pos) {
+        return add_entity(std::make_shared<Beam>(gen_ref(), lower_platform, upper_platform, x_pos));
+    }
 
     /**
      * @brief Schedules an entity for deletion in the next repository cleanup pass.
@@ -156,6 +161,10 @@ public:
      */
     auto end() {
         return entities.end();
+    }
+
+    std::queue<std::shared_ptr<BaseEntity>>& get_pending_additions() {
+        return pending_additions;
     }
 
     ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() {

@@ -40,6 +40,12 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     spawn_suitable_girders.push_back(p12);
     // not p13, because it is not reachable by the player and thus not suitable for spawning.
 
+    lower_falling_girders.push_back(p2);
+    lower_falling_girders.push_back(p5);
+    lower_falling_girders.push_back(p8);
+    lower_falling_girders.push_back(p11);
+    upper_falling_girder = p13;
+
     dissolving_platforms.push_back(entities.add_dissolving_platform({160, -130}, 30));
     dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30));
     dissolving_platforms.push_back(entities.add_dissolving_platform({160, -230}, 30));
@@ -50,22 +56,28 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -430}, 30));
 
     entities.add_ladder(p0, p1, 30.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p0, p2, 300.f, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p0, p2, 300.f, false, Ladder::Color::Yellow));
     entities.add_ladder(p0, p3, constants::VIEW_WIDTH - 30.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p1, p4, 50.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p2, p5, 200.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p2, p5, constants::VIEW_WIDTH - 200.f, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p2, p5, 200.f, false, Ladder::Color::Yellow));
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p2, p5, constants::VIEW_WIDTH - 200.f, false, Ladder::Color::Yellow));
     entities.add_ladder(p3, p6, constants::VIEW_WIDTH - 50.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p4, p7, 70.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p5, p8, 300.f, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p5, p8, 300.f, false, Ladder::Color::Yellow));
     entities.add_ladder(p6, p9, constants::VIEW_WIDTH - 70.f, false, Ladder::Color::Yellow);
     entities.add_ladder(p7, p10, 90.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p8, p11, 190.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p8, p11, constants::VIEW_WIDTH - 190.f, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p8, p11, 190.f, false, Ladder::Color::Yellow));
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p8, p11, constants::VIEW_WIDTH - 190.f, false, Ladder::Color::Yellow));
     entities.add_ladder(p9, p12, constants::VIEW_WIDTH - 90.f, false, Ladder::Color::Yellow);
+
+    static_entities_to_be_cleared.push_back(entities.add_beam(p11, p13, 220.f));
+    static_entities_to_be_cleared.push_back(entities.add_beam(p11, p13, constants::VIEW_WIDTH - 220.f));
 
     entities.add_hammer_power_up(p4->get_left() - sf::Vector2f(0.f, constants::HAMMER_Y_OFFSET));
     entities.add_hammer_power_up(sf::Vector2f(300.f, -330 - constants::HAMMER_Y_OFFSET));
+
+    donkey_kong = entities.add_donkey_kong(p11, constants::VIEW_WIDTH / 2.f, false);
+    pauline = entities.add_pauline(p13, 200.f);
 
     player->enter_platform(p0, 50);
 

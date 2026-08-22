@@ -116,6 +116,11 @@ namespace constants {
 
     constexpr float DONKEY_KONG_CLIMBING_FRAME_INTERVAL = 0.25f;  // seconds between Donkey Kong's climbing animation frames
     constexpr float HAMMER_Y_OFFSET = 50.f;  // px, vertical offset from the platform's surface to place the hammer power-up
+
+    constexpr float DONKEY_KONG_BEFORE_FALL_FRAME_INTERVAL = 0.2f;  // seconds between Donkey Kong's before falling animation frames
+    constexpr float DONKEY_KONG_AFTER_FALL_FRAME_INTERVAL = 0.15f;  // seconds between Donkey Kong's after falling animation frames
+
+    constexpr float BEAM_WIDTH = 3.f;  // px, width of the beam entity
 }
 
 #endif

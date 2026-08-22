@@ -33,5 +33,7 @@ class PlayerDeathAnimation;
 class AbstractAnimation;
 class Jumpable;
 class Ghost;
+class Stage100M;
+class Beam;
 
 #endif

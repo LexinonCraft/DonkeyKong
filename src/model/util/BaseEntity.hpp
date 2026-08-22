@@ -118,7 +118,8 @@ public:
 
     virtual std::unique_ptr<Component<Pickable>> create_pickable_component() { return nullptr; }
 
-protected:
+    virtual bool is_secondary_entity() const { return true; }
+
     /**
      * @brief Marks the entity for deletion by the repository.
      */
