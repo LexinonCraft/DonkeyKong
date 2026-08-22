@@ -10,6 +10,8 @@
 * `UPPER_CASE` for constants
 * std imports before SFML imports before project imports (separated by a blank line)
 * new line at the end of each file
+* implement functions in header file only if they are very short (1-2 lines) or templated
+* do not use magic numbers and declare constants in `Constants.hpp` instead (except when the constant is only used in one place and very accessible, e.g. in the animation code or in the stage constructors)
 
 Structure for header file:
 
