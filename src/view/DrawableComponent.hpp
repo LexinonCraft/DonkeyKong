@@ -5,10 +5,7 @@
 #include "DK/view/LayerStack.hpp"
 
 /**
- * @brief Abstract render adapter for a world entity.
- *
- * A drawable component takes a concrete entity and writes its visual
- * representation to the correct render layer.
+ * @brief Component for drawable entities. To be extended by a class specialized to a specific entity type.
  */
 class DrawableComponent {
 public:
@@ -20,6 +17,11 @@ public:
      */
     virtual void draw(LayerStack &layer_stack) = 0;
 
+    /**
+     * @brief Updates this component.
+     * @param dt Time elapsed since the last update.
+     * @param stage The current stage of the game.
+     */
     virtual void update(float dt, Stage &stage) {}
 };
 

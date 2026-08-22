@@ -18,6 +18,7 @@ public:
     /**
      * @brief Creates the barrel stack renderer for a concrete entity.
      * @param barrel_stack Barrel stack instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     BarrelStackRenderer(std::shared_ptr<BarrelStack> barrel_stack, AssetsManager &assets_manager)
         : barrel_stack(barrel_stack), assets_manager(assets_manager) {}
@@ -37,6 +38,13 @@ private:
     std::shared_ptr<BarrelStack> barrel_stack;
     AssetsManager &assets_manager;
 
+    /**
+     * @brief Draws a single barrel of the stack into the object layer.
+     * 
+     * @param layer_stack The layer stack used for rendering.
+     * @param left true if the barrel is on the left side of the stack, false otherwise.
+     * @param bottom true if the barrel is on the bottom side of the stack, false otherwise.
+     */
     void draw_single_barrel(LayerStack &layer_stack, bool left, bool bottom) {
         sf::Sprite sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelSide1));
         sf::FloatRect bounds = sprite.getLocalBounds();

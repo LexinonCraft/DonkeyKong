@@ -15,17 +15,17 @@ public:
      */
     enum class LayerId {
         Background,
-        Platforms,
         Ladders,
+        Platforms,
+        Objects,     // e.g. barrels, ghosts, etc.
         DonkeyKong,
-        Objects,
         Player,
         UI,
     };
 
     /**
      * @brief Creates the stack and initialises all render layers.
-     * @param window Window that receives the final draw call.
+     * @param window Window where the layers will be rendered.
      */
     LayerStack(sf::RenderWindow &window);
 

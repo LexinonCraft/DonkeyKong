@@ -18,15 +18,20 @@
 #include "DK/view/renderers/PlayerRenderer.hpp"
 
 /**
- * @brief Factory that converts entities into their matching SFML renderer components.
+ * @brief Factory for creating drawable components / renderers for entities.
  */
 class DrawableComponentFactory : public AbstractComponentFactory<DrawableComponent>, private EntityVisitor {
 public:
+    /**
+     * @brief Initializes the factory.
+     *
+     * @param assets_manager The assets manager to be passed to the renderers.
+     */
     DrawableComponentFactory(AssetsManager &assets_manager) : assets_manager(assets_manager) {}
 
     /**
-     * @brief Creates the drawable component for an entity using visitor dispatch.
-     * @param entity Entity to render.
+     * @brief Creates the drawable component / renderer for an entity using visitor dispatch.
+     * @param entity Entity to create a drawable component for.
      * @return Unique pointer to the drawable component.
      */
     std::unique_ptr<DrawableComponent> create_component_for(std::shared_ptr<BaseEntity> entity) override {
@@ -74,7 +79,7 @@ private:
 
     void visit(DissolvingPlatform &dissolving_platform) override {
         component = std::make_unique<DissolvingPlatformRenderer>(
-            std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()), assets_manager);
+            std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()));
     }
 
     void visit(Ghost &ghost) override {

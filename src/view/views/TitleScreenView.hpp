@@ -4,14 +4,29 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "DK/model/PlayerData.hpp"
-#include "DK/view/views/AbstractSceneView.hpp"
 #include "DK/view/AssetsManager.hpp"
+#include "DK/view/views/AbstractSceneView.hpp"
 
+/**
+ * @brief View for the title screen.
+ */
 class TitleScreenView : public AbstractSceneView {
 public:
+    /**
+     * @brief Initializes the title screen view with the given window, assets manager, and player data.
+     * 
+     * @param window The window to draw to.
+     * @param assets_manager The assets manager to retrieve assets from.
+     * @param player_data A reference to the global player data.
+     */
     TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data)
         : AbstractSceneView(window, assets_manager), player_data(player_data) {}
 
+    /**
+     * @brief Draw the title screen.
+     * 
+     * @param animation_timer Timer for the Donkey Kong animation.
+     */
     void draw(float animation_timer);
 
 private:

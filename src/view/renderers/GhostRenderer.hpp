@@ -19,6 +19,7 @@ public:
     /**
      * @brief Creates the ghost renderer for a concrete entity.
      * @param ghost Ghost instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     GhostRenderer(std::shared_ptr<Ghost> ghost, AssetsManager &assets_manager) : ghost(ghost), assets_manager(assets_manager) {}
 
@@ -38,6 +39,12 @@ public:
         layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(ghost_sprite);
     }
 
+    /**
+     * @brief Update the ghost animation timer.
+     * 
+     * @param dt Time delta since last update.
+     * @param stage unused
+     */
     void update(float dt, Stage &stage) override {
         animation_timer += dt;
         if (animation_timer >= 2 * constants::GHOST_ANIMATION_INTERVAL) {

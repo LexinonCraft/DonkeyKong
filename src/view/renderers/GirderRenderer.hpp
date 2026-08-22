@@ -14,6 +14,7 @@ public:
     /**
      * @brief Creates the girder renderer for a concrete entity.
      * @param girder Girder instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     GirderRenderer(std::shared_ptr<Girder> girder, AssetsManager &assets_manager) : girder(girder), assets_manager(assets_manager) {}
 

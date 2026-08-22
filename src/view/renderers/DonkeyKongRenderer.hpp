@@ -20,6 +20,7 @@ public:
     /**
      * @brief Creates the Donkey Kong renderer for a concrete entity.
      * @param donkey_kong Donkey Kong instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     DonkeyKongRenderer(std::shared_ptr<DonkeyKong> donkey_kong, AssetsManager &assets_manager)
         : donkey_kong(donkey_kong), assets_manager(assets_manager) {}

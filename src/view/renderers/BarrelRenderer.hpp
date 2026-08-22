@@ -17,6 +17,7 @@ public:
     /**
      * @brief Creates the barrel renderer for a concrete entity.
      * @param barrel Barrel instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     BarrelRenderer(std::shared_ptr<Barrel> barrel, AssetsManager &assets_manager) : barrel(barrel), assets_manager(assets_manager) {}
 

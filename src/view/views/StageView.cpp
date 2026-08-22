@@ -109,7 +109,7 @@ void StageView::draw() {
     post_draw();
 }
 
-void StageView::update(float dt, Stage &stage) {
+void StageView::update(float dt) {
     for (auto it = current_score_effects.begin(); it != current_score_effects.end();) {
         if (!it->update(dt)) {
             it = current_score_effects.erase(it);
@@ -120,7 +120,3 @@ void StageView::update(float dt, Stage &stage) {
 
     drawable_components.update_all(dt, stage);
 }
-
-void StageView::on_score_added(sf::Vector2f position, int score_to_add) { current_score_effects.emplace_back(position, score_to_add); }
-
-void StageView::on_player_died() { current_score_effects.clear(); }

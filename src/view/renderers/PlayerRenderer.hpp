@@ -18,6 +18,7 @@ public:
     /**
      * @brief Creates the player renderer for a concrete entity.
      * @param player Player instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     PlayerRenderer(std::shared_ptr<Player> player, AssetsManager &assets_manager) : player(player), assets_manager(assets_manager) {}
 

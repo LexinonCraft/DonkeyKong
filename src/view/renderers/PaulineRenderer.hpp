@@ -25,6 +25,7 @@ public:
     /**
      * @brief Creates the Pauline renderer for a concrete entity.
      * @param pauline Pauline instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     PaulineRenderer(std::shared_ptr<Pauline> pauline, AssetsManager &assets_manager) : pauline(pauline), assets_manager(assets_manager) {}
 
@@ -100,6 +101,12 @@ public:
         }
     }
 
+    /**
+     * @brief Update the timer for the scream animation and check whether to suppress the scream based on the stage's running state.
+     * 
+     * @param dt Time delta since the last update.
+     * @param stage The current stage, used to determine if the scream should be suppressed.
+     */
     void update(float dt, Stage &stage) override {
         animation_timer += dt;
         if (animation_timer > constants::PAULINE_ANIMATION_LENGTH) {

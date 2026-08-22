@@ -8,8 +8,15 @@
 #include "DK/model/entities/Beam.hpp"
 #include "DK/view/DrawableComponent.hpp"
 
+/**
+ * @brief Renderer for the beam entity.
+ */
 class BeamRenderer : public DrawableComponent {
 public:
+    /**
+     * @brief Creates the beam renderer for a concrete entity.
+     * @param beam Beam instance to render.
+     */
     BeamRenderer(std::shared_ptr<Beam> beam) : beam(beam) {}
 
     void draw(LayerStack &layer_stack) override {

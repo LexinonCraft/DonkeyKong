@@ -13,6 +13,7 @@ public:
     /**
      * @brief Creates the ladder renderer for a concrete entity.
      * @param ladder Ladder instance to render.
+     * @param assets_manager Assets manager used for retrieving assets.
      */
     LadderRenderer(std::shared_ptr<Ladder> ladder, AssetsManager &assets_manager) : ladder(ladder), assets_manager(assets_manager) {}
 
@@ -34,6 +35,14 @@ private:
     std::shared_ptr<Ladder> ladder;
     AssetsManager &assets_manager;
 
+    /**
+     * @brief Draw a continuous section of the ladder into the ladder layer.
+     * 
+     * @param x The x position of the ladder.
+     * @param lower_y The lower y position of the ladder section.
+     * @param upper_y The upper y position of the ladder section.
+     * @param layer_stack Layer stack used for rendering.
+     */
     void draw_raw(float x, float lower_y, float upper_y, LayerStack &layer_stack) {
         float y_diff = lower_y - upper_y;
         int num_tiles = static_cast<int>(y_diff / 20.f);
