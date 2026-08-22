@@ -40,8 +40,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang-format
       - name: Check Format
-        run: |
-          clang-format --style=llvm -dump-config > .clang-format
-          echo "END" > .clang-format
-          cat .clang-format
+        run:
+          - clang-format --style=llvm -dump-config > .clang-format
+          - echo "END" > .clang-format
+          - cat .clang-format
           # ./clang-format.sh
