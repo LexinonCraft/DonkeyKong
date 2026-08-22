@@ -161,6 +161,25 @@ public:
 
     ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() { return observer_registry; }
 
+    void clear_secondary_entities() {
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
+            if (it->second->is_secondary_entity()) {
+                it->second->destroy();
+            }
+        }
+
+        // Remove all secondary entities from the pending additions queue by rebuilding it without the secondary entities
+        std::queue<std::shared_ptr<BaseEntity>> temp_queue;
+        while (!pending_additions.empty()) {
+            auto entity = pending_additions.front();
+            pending_additions.pop();
+            if (!entity->is_secondary_entity()) {
+                temp_queue.push(entity);
+            }
+        }
+        pending_additions = std::move(temp_queue);
+    }
+
 private:
     /**
      * @brief Generates a reference for a new entity.
