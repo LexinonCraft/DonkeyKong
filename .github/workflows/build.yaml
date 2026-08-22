@@ -38,7 +38,9 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang-format-21
+          sudo apt-get install -y clang-format
       - name: Check Format
         run: |
+          clang-format --dump-config > .clang-format-new
+          cat .clang-format-new
           ./clang-format.sh
