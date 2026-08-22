@@ -1,13 +1,15 @@
 #include "DK/view/renderers/PaulineRenderer.hpp"
 
+#include "DK/util/Math.hpp"
+
 void PaulineRenderer::draw(LayerStack &layer_stack) {
     auto position = pauline->get_position();
 
     AssetsManager::TextureId texture_id;
     bool help = false;
-    draw_pauline = true;
-    draw_heart = false;
-    heart_broken = false;
+    bool draw_pauline = true;
+    bool draw_heart = false;
+    bool heart_broken = false;
     switch (pauline->get_state()) {
         case Pauline::State::Normal:
             if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES &&
@@ -31,7 +33,13 @@ void PaulineRenderer::draw(LayerStack &layer_stack) {
             draw_heart = false;
             break;
         case Pauline::State::Animated:
-            pauline->get_current_animation()->accept(*this);
+            {
+                PaulineAnimationVisitor visitor;
+                pauline->get_current_animation()->accept(visitor);
+                draw_pauline = visitor.draw_pauline;
+                draw_heart = visitor.draw_heart;
+                heart_broken = visitor.heart_broken;
+            }
             texture_id = AssetsManager::TextureId::PaulineStill;
             break;
         default:
@@ -75,4 +83,39 @@ void PaulineRenderer::update(float dt, Stage &stage) {
     }
 
     suppress_scream = !stage.is_running();
+}
+
+void PaulineRenderer::PaulineAnimationVisitor::visit(Stage25MCompletionAnimation &animation) {
+    switch (animation.get_state()) {
+        case Stage25MCompletionAnimation::State::NotStarted:
+            break;
+        case Stage25MCompletionAnimation::State::United:
+            draw_heart = true;
+            break;
+        case Stage25MCompletionAnimation::State::Climbing:
+        case Stage25MCompletionAnimation::State::Finished:
+            draw_pauline = false;
+            draw_heart = true;
+            heart_broken = true;
+            break;
+        default:
+            throw std::logic_error("Invalid state for Stage25MCompletionAnimation.");
+    }
+}
+
+void PaulineRenderer::PaulineAnimationVisitor::visit(Stage100MCompletionAnimation &animation) {
+    switch (animation.get_state()) {
+        case Stage100MCompletionAnimation::State::NotStarted:
+        case Stage100MCompletionAnimation::State::BeforeFall:
+        case Stage100MCompletionAnimation::State::Falling:
+        case Stage100MCompletionAnimation::State::Impact:
+            draw_pauline = false;
+            break;
+        case Stage100MCompletionAnimation::State::United:
+        case Stage100MCompletionAnimation::State::Finished:
+            draw_heart = true;
+            break;
+        default:
+            throw std::logic_error("Invalid state for Stage100MCompletionAnimation.");
+    }
 }

@@ -1,10 +1,13 @@
 #include "DK/view/renderers/PlayerRenderer.hpp"
 
+#include "DK/Constants.hpp"
+#include "DK/util/Math.hpp"
+
 void PlayerRenderer::draw(LayerStack &layer_stack) {
-    flip_sprite = false;
-    rotate_sprite = false;
-    hammer_origin = false;
-    render_player = true;
+    bool flip_sprite = false;
+    bool rotate_sprite = false;
+    bool hammer_origin = false;
+    bool render_player = true;
     switch (player->get_state()) {
         case Player::State::OnPlatform:
             {
@@ -42,8 +45,15 @@ void PlayerRenderer::draw(LayerStack &layer_stack) {
             flip_sprite = static_cast<int>(player->get_climbing_time() / constants::PLAYER_CLIMBING_ANIMATION_INTERVAL) % 2 == 0;
             break;
         case Player::State::Animated:
-            player->get_current_animation()->accept(*this);
-            break;
+            {
+                PlayerAnimationVisitor visitor;
+                player->get_current_animation()->accept(visitor);
+                texture_id = visitor.texture_id;
+                flip_sprite = visitor.flip_sprite;
+                rotate_sprite = visitor.rotate_sprite;
+                render_player = visitor.render_player;
+                break;
+            }
     }
 
     if (!render_player) {
@@ -57,4 +67,56 @@ void PlayerRenderer::draw(LayerStack &layer_stack) {
     player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
     player_sprite.setRotation(sf::degrees(rotate_sprite ? 180.f : 0.f));
     layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
+}
+
+void PlayerRenderer::PlayerAnimationVisitor::visit(PlayerDeathAnimation &animation) {
+    switch (animation.get_state()) {
+        case PlayerDeathAnimation::State::NotStarted:
+        case PlayerDeathAnimation::State::BeforeRotating:
+            texture_id = AssetsManager::TextureId::JumpmanDying1;
+            rotate_sprite = false;
+            break;
+        case PlayerDeathAnimation::State::Rotating:
+            switch (mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::PLAYER_DYING_ANIMATION_INTERVAL), 4)) {
+                case 0:
+                    texture_id = AssetsManager::TextureId::JumpmanDying1;
+                    rotate_sprite = false;
+                    break;
+                case 1:
+                    texture_id = AssetsManager::TextureId::JumpmanDying2;
+                    rotate_sprite = false;
+                    break;
+                case 2:
+                    texture_id = AssetsManager::TextureId::JumpmanDying1;
+                    rotate_sprite = true;
+                    break;
+                case 3:
+                    texture_id = AssetsManager::TextureId::JumpmanDying2;
+                    rotate_sprite = true;
+                    break;
+            }
+            break;
+        case PlayerDeathAnimation::State::AfterRotating:
+        case PlayerDeathAnimation::State::Finished:
+            texture_id = AssetsManager::TextureId::JumpmanDead;
+            rotate_sprite = false;
+            break;
+    }
+    flip_sprite = false;
+}
+
+void PlayerRenderer::PlayerAnimationVisitor::visit(Stage100MCompletionAnimation &animation) {
+    switch (animation.get_state()) {
+        case Stage100MCompletionAnimation::State::NotStarted:
+        case Stage100MCompletionAnimation::State::BeforeFall:
+        case Stage100MCompletionAnimation::State::Falling:
+        case Stage100MCompletionAnimation::State::Impact:
+            render_player = false;
+            break;
+        case Stage100MCompletionAnimation::State::United:
+        case Stage100MCompletionAnimation::State::Finished:
+            texture_id = AssetsManager::TextureId::JumpmanStill;
+            flip_sprite = true;
+            break;
+    }
 }
