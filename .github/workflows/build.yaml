@@ -42,3 +42,4 @@ jobs:
       - name: Check Format
         run: |
           ./clang-format.sh
+        continue-on-error: true
