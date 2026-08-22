@@ -28,18 +28,14 @@ public:
      * @brief Returns the entity id inside the reference.
      * @return Entity id.
      */
-    Id get_id() const {
-        return id;
-    }
+    Id get_id() const { return id; }
 
     /**
      * @brief Returns the repository associated with this reference.
      * @return Owning entity repository.
      */
-    EntityRepository &get_repository() const {
-        return entity_repo;
-    }
-    
+    EntityRepository &get_repository() const { return entity_repo; }
+
 private:
     const Id id;
     EntityRepository &entity_repo;

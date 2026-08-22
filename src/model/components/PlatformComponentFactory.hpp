@@ -3,9 +3,9 @@
 
 #include <memory>
 
+#include "DK/model/components/Platform.hpp"
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
-#include "DK/model/components/Platform.hpp"
 
 /**
  * @brief Factory that creates platform components for entities that behave like surfaces.

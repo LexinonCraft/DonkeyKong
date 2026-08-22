@@ -1,31 +1,28 @@
 #include "DK/model/entities/Barrel.hpp"
 
 #include <algorithm>
-#include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include <cstdlib>
 #include <memory>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/components/PlatformComponentRepository.hpp"
 #include "DK/model/entities/Player.hpp"
 #include "DK/model/util/EntityVisitor.hpp"
-#include "DK/model/PlayerData.hpp"
 #include "DK/util/Math.hpp"
 
-Barrel::Barrel(Ref ref, sf::Vector2f position) :
-    BaseEntity(ref),
-    position(position),
-    shape(constants::BARREL_HITBOX_RADIUS) {
-        // origin at the circle's centre so `position` is the barrel's centre
-        shape.setOrigin({constants::BARREL_HITBOX_RADIUS, 2 * constants::BARREL_HITBOX_RADIUS});
-        shape.setFillColor(sf::Color(120, 200, 230)); // light blue, stands out on the red girders
-        shape.setPosition(position);
+Barrel::Barrel(Ref ref, sf::Vector2f position) : BaseEntity(ref), position(position), shape(constants::BARREL_HITBOX_RADIUS) {
+    // origin at the circle's centre so `position` is the barrel's centre
+    shape.setOrigin({constants::BARREL_HITBOX_RADIUS, 2 * constants::BARREL_HITBOX_RADIUS});
+    shape.setFillColor(sf::Color(120, 200, 230)); // light blue, stands out on the red girders
+    shape.setPosition(position);
 }
 
 void Barrel::set_on_platform(std::shared_ptr<Platform> platform, float roll_speed, int roll_direction) {
@@ -51,28 +48,32 @@ void Barrel::update(float dt, Stage &level) {
                 position.y = current_platform->surface_y_at(position.x);
 
                 if (current_climbable) {
-                    if (roll_down_climbable && ((vx < 0 && position.x < current_climbable->get_x_pos()) || (vx > 0 && position.x > current_climbable->get_x_pos()))) {
+                    if (roll_down_climbable && ((vx < 0 && position.x < current_climbable->get_x_pos()) ||
+                                                (vx > 0 && position.x > current_climbable->get_x_pos()))) {
                         vx = 0;
                         position.x = current_climbable->get_x_pos();
                         position.y = current_climbable->get_upper_y_pos();
                         state = State::RollingDownClimbable;
                         roll_distance = 0.f;
-                    } else if ((vx < 0 && position.x < current_climbable->get_x_pos() - constants::BARREL_RADIUS) || (vx > 0 && position.x > current_climbable->get_x_pos() + constants::BARREL_RADIUS)) {
+                    } else if ((vx < 0 && position.x < current_climbable->get_x_pos() - constants::BARREL_RADIUS) ||
+                               (vx > 0 && position.x > current_climbable->get_x_pos() + constants::BARREL_RADIUS)) {
                         current_climbable.reset();
                     }
                 } else {
-                    current_climbable = level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
+                    current_climbable =
+                        level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
                     if (current_climbable) {
                         const float player_vertical_distance = level.get_player()->get_position().y - position.y;
-                        const float descent_chance = std::clamp(
-                            constants::BARREL_LADDER_DESCENT_BASE_CHANCE + player_vertical_distance / constants::BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT,
-                            constants::BARREL_LADDER_DESCENT_BASE_CHANCE,
-                            constants::BARREL_LADDER_DESCENT_MAX_CHANCE);
+                        const float descent_chance =
+                            std::clamp(constants::BARREL_LADDER_DESCENT_BASE_CHANCE +
+                                           player_vertical_distance / constants::BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT,
+                                       constants::BARREL_LADDER_DESCENT_BASE_CHANCE, constants::BARREL_LADDER_DESCENT_MAX_CHANCE);
                         roll_down_climbable = mod(level.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance;
                     }
                 }
             } else {
-                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
+                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(
+                    position, constants::BARREL_RADIUS, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
                     set_on_platform(platform_below, level.get_barrel_roll_speed(), std::signbit(vx) ? -1 : 1);
                     current_climbable.reset();
@@ -127,9 +128,7 @@ void Barrel::update(float dt, Stage &level) {
     shape.setPosition(position);
 }
 
-void Barrel::accept(EntityVisitor &visitor) {
-    visitor.visit(*this);
-}
+void Barrel::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
@@ -142,12 +141,12 @@ void Barrel::on_hammer_hit(Stage &stage) {
 }
 
 void Barrel::check_platform_intersection(PlatformComponentRepository &platforms, float dt, float roll_speed) {
-    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, constants::BARREL_RADIUS, platform_snap_distance(dt)), roll_speed);
+    set_on_platform(platforms.find_platform_underneath({position.x, position.y}, constants::BARREL_RADIUS, constants::BARREL_RADIUS,
+                                                       platform_snap_distance(dt)),
+                    roll_speed);
 }
 
-void Barrel::check_referenced_entities() {
-    handle_destroyed_indirect(current_platform);
-}
+void Barrel::check_referenced_entities() { handle_destroyed_indirect(current_platform); }
 
 float Barrel::platform_snap_distance(float dt) const {
     float distance = vy * dt;
@@ -184,24 +183,20 @@ void Barrel::check_jumps_over(const Player &player, Stage &stage) {
         return;
     }
 
-    const bool crossed_barrel =
-        (previous_player_x_difference < 0.f && player_x_difference >= 0.f) ||
-        (previous_player_x_difference > 0.f && player_x_difference <= 0.f);
+    const bool crossed_barrel = (previous_player_x_difference < 0.f && player_x_difference >= 0.f) ||
+                                (previous_player_x_difference > 0.f && player_x_difference <= 0.f);
     if (!crossed_above_barrel && player_jump_start_side != 0 && crossed_barrel) {
-        const float crossing_progress = previous_player_x_difference /
-            (previous_player_x_difference - player_x_difference);
-        const float crossing_y_difference = previous_player_y_difference +
-            (player_y_difference - previous_player_y_difference) * crossing_progress;
-        crossed_above_barrel = 0.f < crossing_y_difference &&
-            crossing_y_difference < constants::BARREL_JUMP_MAX_Y_DIFF;
+        const float crossing_progress = previous_player_x_difference / (previous_player_x_difference - player_x_difference);
+        const float crossing_y_difference =
+            previous_player_y_difference + (player_y_difference - previous_player_y_difference) * crossing_progress;
+        crossed_above_barrel = 0.f < crossing_y_difference && crossing_y_difference < constants::BARREL_JUMP_MAX_Y_DIFF;
     }
 
     previous_player_x_difference = player_x_difference;
     previous_player_y_difference = player_y_difference;
 
-    const bool cleared_opposite_side =
-        (player_jump_start_side < 0 && player_x_difference > horizontal_clearance) ||
-        (player_jump_start_side > 0 && player_x_difference < -horizontal_clearance);
+    const bool cleared_opposite_side = (player_jump_start_side < 0 && player_x_difference > horizontal_clearance) ||
+                                       (player_jump_start_side > 0 && player_x_difference < -horizontal_clearance);
     if (crossed_above_barrel && cleared_opposite_side && !scored_for_player_jump) {
         scored_for_player_jump = true;
         stage.add_to_score(position - sf::Vector2f(constants::BARREL_RADIUS, 0), constants::BARREL_JUMP_SCORE);

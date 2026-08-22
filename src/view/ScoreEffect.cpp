@@ -1,7 +1,8 @@
+#include "DK/view/ScoreEffect.hpp"
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "DK/view/ScoreEffect.hpp"
 #include "DK/Constants.hpp"
 
 bool ScoreEffect::update(float dt) {

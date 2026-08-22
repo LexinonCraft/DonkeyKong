@@ -5,11 +5,11 @@
 #include <memory>
 
 #include "DK/control/AbstractSceneControl.hpp"
+#include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
-#include "DK/view/StageView.hpp"
 #include "DK/model/StageSequence.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/model/PlayerData.hpp"
+#include "DK/view/StageView.hpp"
 
 class StageControl : public AbstractSceneControl {
 public:

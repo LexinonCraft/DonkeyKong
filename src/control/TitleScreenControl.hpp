@@ -7,7 +7,8 @@
 
 class TitleScreenControl : public AbstractSceneControl {
 public:
-    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) : AbstractSceneControl(window), title_screen_view(window, assets_manager, player_data) {}
+    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data)
+        : AbstractSceneControl(window), title_screen_view(window, assets_manager, player_data) {}
 
     void handle_event(sf::Event *event) override;
 

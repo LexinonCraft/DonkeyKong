@@ -4,9 +4,9 @@
 #include <memory>
 
 #include "DK/model/Declarations.hpp"
+#include "DK/model/util/Component.hpp"
 #include "DK/model/util/EntityVisitor.hpp"
 #include "DK/model/util/Ref.hpp"
-#include "DK/model/util/Component.hpp"
 
 /**
  * @brief Base class for all game entities in the hybrid ECS model.
@@ -28,25 +28,19 @@ public:
      * @brief Returns the repository reference that identifies this entity.
      * @return The entity's reference object.
      */
-    Ref get_ref() const {
-        return ref;
-    }
+    Ref get_ref() const { return ref; }
 
     /**
      * @brief Returns the unique id of this entity.
      * @return Entity id.
      */
-    Id get_id() const {
-        return ref.get_id();
-    }
+    Id get_id() const { return ref.get_id(); }
 
     /**
      * @brief Returns whether the entity has been marked as destroyed.
      * @return True if the entity is pending destruction.
      */
-    bool is_destroyed() const {
-        return destroyed;
-    }
+    bool is_destroyed() const { return destroyed; }
 
     /**
      * @brief Clears a shared pointer when the pointed-to entity is already destroyed.
@@ -54,8 +48,7 @@ public:
      * @param entity Pointer to a possibly destroyed entity.
      * @return True if the pointer was reset because the entity was destroyed.
      */
-    template <typename E>
-    static bool handle_destroyed(std::shared_ptr<E> &entity) {
+    template <typename E> static bool handle_destroyed(std::shared_ptr<E> &entity) {
         if (entity && entity->is_destroyed()) {
             entity.reset();
             return true;
@@ -69,8 +62,7 @@ public:
      * @param part_entity Pointer to an entity adapter or dependency.
      * @return True if the pointer was cleared.
      */
-    template <typename T>
-    static bool handle_destroyed_indirect(std::shared_ptr<T> &part_entity) {
+    template <typename T> static bool handle_destroyed_indirect(std::shared_ptr<T> &part_entity) {
         if (part_entity && part_entity->get_entity().is_destroyed()) {
             part_entity.reset();
             return true;

@@ -4,19 +4,18 @@
 #include <memory>
 
 #include "DK/Constants.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/StageObserver.hpp"
 #include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/animations/PlayerDeathAnimation.hpp"
-#include "DK/model/util/EntityRepository.hpp"
-#include "DK/model/components/UpdatableComponentRepository.hpp"
-#include "DK/model/components/PlatformComponentRepository.hpp"
 #include "DK/model/components/ClimbableComponentRepository.hpp"
 #include "DK/model/components/EnemyComponentRepository.hpp"
 #include "DK/model/components/JumpableComponentRepository.hpp"
 #include "DK/model/components/PickableComponentRepository.hpp"
-#include "DK/model/Declarations.hpp"
-#include "DK/Constants.hpp"
+#include "DK/model/components/PlatformComponentRepository.hpp"
+#include "DK/model/components/UpdatableComponentRepository.hpp"
+#include "DK/model/util/EntityRepository.hpp"
 #include "DK/util/ObserverRegistry.hpp"
-#include "DK/model/StageObserver.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -90,9 +89,7 @@ public:
 
     bool is_running() const { return !current_animation; }
 
-    int random_int() {
-        return rng();
-    }
+    int random_int() { return rng(); }
 
     ObserverRegistry<StageObserver> &get_observer_registry() { return observer_registry; }
     float get_barrel_roll_speed() const;

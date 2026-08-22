@@ -8,8 +8,8 @@
 
 #include "DK/model/Declarations.hpp"
 #include "DK/model/components/Climbable.hpp"
-#include "DK/model/util/BaseEntity.hpp"
 #include "DK/model/components/Updatable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Player-controlled entity.
@@ -131,9 +131,15 @@ public:
 
     State get_state() const { return state; }
 
-    void start_animation(AbstractAnimation *animation) { current_animation = animation; state = State::Animated; }
+    void start_animation(AbstractAnimation *animation) {
+        current_animation = animation;
+        state = State::Animated;
+    }
 
-    void stop_animation() { current_animation = nullptr; state = State::InAir; }
+    void stop_animation() {
+        current_animation = nullptr;
+        state = State::InAir;
+    }
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 

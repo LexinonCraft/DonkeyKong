@@ -3,9 +3,9 @@
 
 #include <memory>
 
+#include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
-#include "DK/model/components/Updatable.hpp"
 
 /**
  * @brief Factory that creates update behaviour components for entities that move or animate.

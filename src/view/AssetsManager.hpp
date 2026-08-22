@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 class AssetsManager {
 public:

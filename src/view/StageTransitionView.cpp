@@ -1,7 +1,8 @@
+#include "DK/view/StageTransitionView.hpp"
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "DK/view/StageTransitionView.hpp"
 #include "DK/util/Positions.hpp"
 #include "DK/view/LayerStack.hpp"
 

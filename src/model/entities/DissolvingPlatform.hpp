@@ -1,16 +1,17 @@
 #ifndef DISSOLVING_PLATFORM_HPP
 #define DISSOLVING_PLATFORM_HPP
 
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <memory>
 
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include "DK/Constants.hpp"
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/components/Updatable.hpp"
-#include "DK/model/Declarations.hpp"
-#include "DK/model/util/BaseEntity.hpp"
-#include "DK/Constants.hpp"
 #include "DK/model/entities/Player.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Dissolving platform entity that forms the walkable floors of the level.
@@ -86,7 +87,7 @@ public:
      * @brief Returns the visible rectangle representing the dissolving platform.
      * @return SFML rectangle shape used for rendering.
      */
-    const sf::RectangleShape& get_shape() const;
+    const sf::RectangleShape &get_shape() const;
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
@@ -118,16 +119,16 @@ public:
 
     bool fall_through(std::shared_ptr<Player> player) override {
         float player_x_pos = player->get_position().x;
-        if (!is_dissolving && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE)) {
+        if (!is_dissolving && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE,
+                                       -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE)) {
             is_dissolving = true;
             dissolve_timer = 0.f;
         }
-        return has_dissolved() && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
+        return has_dissolved() && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE,
+                                           -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
     }
 
-    bool has_dissolved() const {
-        return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION;
-    }
+    bool has_dissolved() const { return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION; }
 
 private:
     sf::Vector2f position;

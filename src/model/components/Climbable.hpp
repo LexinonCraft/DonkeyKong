@@ -30,7 +30,8 @@ public:
      * @return True if the player is aligned with the climbable for moving upward.
      */
     bool can_climb_up(sf::Vector2f position, float h_tolerance, float v_tolerance) const {
-        return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() + v_tolerance && position.y > get_upper_y_pos() + v_tolerance;
+        return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() + v_tolerance &&
+               position.y > get_upper_y_pos() + v_tolerance;
     }
 
     /**
@@ -41,48 +42,39 @@ public:
      * @return True if the player is aligned with the climbable for moving downward.
      */
     bool can_climb_down(sf::Vector2f position, float h_tolerance, float v_tolerance) const {
-        return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() - v_tolerance && position.y > get_upper_y_pos() - v_tolerance;
+        return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() - v_tolerance &&
+               position.y > get_upper_y_pos() - v_tolerance;
     }
 
     /**
      * @brief Returns the lower platform endpoint of the climbable.
      * @return Lower end platform.
      */
-    std::shared_ptr<Platform> get_lower_end() const {
-        return lower_end;
-    }
+    std::shared_ptr<Platform> get_lower_end() const { return lower_end; }
 
     /**
      * @brief Returns the upper platform endpoint of the climbable.
      * @return Upper end platform.
      */
-    std::shared_ptr<Platform> get_upper_end() const {
-        return upper_end;
-    }
+    std::shared_ptr<Platform> get_upper_end() const { return upper_end; }
 
     /**
      * @brief Returns the climbable's horizontal position in world space.
      * @return X coordinate of the climbable center.
      */
-    float get_x_pos() const {
-        return x_pos;
-    }
+    float get_x_pos() const { return x_pos; }
 
     /**
      * @brief Returns the lower end y-coordinate at the climbable x-position.
      * @return Surface height of the lower platform at x_pos.
      */
-    float get_lower_y_pos() const {
-        return lower_y_pos;
-    }
+    float get_lower_y_pos() const { return lower_y_pos; }
 
     /**
      * @brief Returns the upper end y-coordinate at the climbable x-position.
      * @return Surface height of the upper platform at x_pos.
      */
-    float get_upper_y_pos() const {
-        return upper_y_pos;
-    }
+    float get_upper_y_pos() const { return upper_y_pos; }
 
 protected:
     const std::shared_ptr<Platform> lower_end;
@@ -98,7 +90,8 @@ protected:
      * @param x_pos Horizontal position of the climbable.
      */
     Climbable(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos)
-        : lower_end(lower_end), upper_end(upper_end), x_pos(x_pos), upper_y_pos(upper_end->surface_y_at(x_pos)), lower_y_pos(lower_end->surface_y_at(x_pos)) {}
+        : lower_end(lower_end), upper_end(upper_end), x_pos(x_pos), upper_y_pos(upper_end->surface_y_at(x_pos)),
+          lower_y_pos(lower_end->surface_y_at(x_pos)) {}
 
     Climbable(float lower_y, float upper_y, float x_pos)
         : lower_end(nullptr), upper_end(nullptr), x_pos(x_pos), upper_y_pos(upper_y), lower_y_pos(lower_y) {}

@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "DK/model/util/ComponentRepository.hpp"
-#include "DK/model/util/Component.hpp"
-#include "DK/model/components/PlatformComponentFactory.hpp"
 #include "DK/model/components/Platform.hpp"
+#include "DK/model/components/PlatformComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
 
 /**
  * @brief Repository for platform behaviour components.
@@ -20,7 +20,8 @@ public:
      * @brief Creates the repository and registers it with the entity repository.
      * @param repository Entity repository to observe.
      */
-    PlatformComponentRepository(EntityRepository &repository) : ComponentRepository<Component<Platform>>(repository, std::make_unique<PlatformComponentFactory>()) {}
+    PlatformComponentRepository(EntityRepository &repository)
+        : ComponentRepository<Component<Platform>>(repository, std::make_unique<PlatformComponentFactory>()) {}
 
     /**
      * @brief Finds a platform directly underneath a world position.
@@ -28,7 +29,8 @@ public:
      * @param snap_distance Vertical search distance.
      * @return Matching platform or an empty pointer if nothing is found.
      */
-    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right, float snap_distance);
+    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right,
+                                                       float snap_distance);
 
     /**
      * @brief Finds a platform directly underneath a world position.
@@ -37,7 +39,8 @@ public:
      * @param exclude_platform Platform to exclude from the search
      * @return Matching platform or an empty pointer if nothing is found.
      */
-    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right, float snap_distance, std::shared_ptr<Platform> exclude_platform);
+    std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right,
+                                                       float snap_distance, std::shared_ptr<Platform> exclude_platform);
 };
 
 #endif

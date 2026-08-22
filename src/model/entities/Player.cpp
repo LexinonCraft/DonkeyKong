@@ -1,27 +1,22 @@
+#include "DK/model/entities/Player.hpp"
+
 #include <algorithm>
 #include <memory>
 
 #include <SFML/System/Angle.hpp>
 
-#include "DK/model/entities/Player.hpp"
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
-#include "DK/model/util/EntityVisitor.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
-Player::Player(Ref ref) :
-    BaseEntity(ref),
-    state(State::InAir),
-    position(0.f, 0.f),
-    velocity(0.f, 0.f),
-    horizontal_direction(HorizontalDirection::None),
-    vertical_direction(VerticalDirection::None),
-    hammer_time_remaining(0.f),
-    shape({constants::PLAYER_WIDTH, constants::PLAYER_HEIGHT}) {
-        // origin at the rectangle's centre so `position` is the player's centre
-        shape.setOrigin({constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT}); // origin at the bottom centre of the rectangle
-        shape.setFillColor(sf::Color(200, 100, 100)); // light red, stands out on the girders
-        shape.setPosition(position);
+Player::Player(Ref ref)
+    : BaseEntity(ref), state(State::InAir), position(0.f, 0.f), velocity(0.f, 0.f), horizontal_direction(HorizontalDirection::None),
+      vertical_direction(VerticalDirection::None), hammer_time_remaining(0.f), shape({constants::PLAYER_WIDTH, constants::PLAYER_HEIGHT}) {
+    // origin at the rectangle's centre so `position` is the player's centre
+    shape.setOrigin({constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT}); // origin at the bottom centre of the rectangle
+    shape.setFillColor(sf::Color(200, 100, 100));                               // light red, stands out on the girders
+    shape.setPosition(position);
 }
 
 void Player::update(float dt, Stage &stage) {
@@ -55,68 +50,74 @@ void Player::update(float dt, Stage &stage) {
     position.y += velocity.y * dt;
 
     switch (state) {
-        case State::OnPlatform: {
-            if (handle_platform_fall_through()) {
-                break;
-            }
-            last_fall_through_platform = nullptr;
+        case State::OnPlatform:
+            {
+                if (handle_platform_fall_through()) {
+                    break;
+                }
+                last_fall_through_platform = nullptr;
 
-            velocity.x = walking_dir;
-            position.y = current_platform->surface_y_at(position.x);
-            velocity.y = 0.f;
-            y_before_jump = position.y;
+                velocity.x = walking_dir;
+                position.y = current_platform->surface_y_at(position.x);
+                velocity.y = 0.f;
+                y_before_jump = position.y;
 
-            if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f) || !current_platform->is_active()) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE, last_fall_through_platform);
-                if (platform_below) {
-                    enter_platform(platform_below);
-                } else {
-                    state = State::InAir;
+                if (!current_platform->covers_x(position.x, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f) ||
+                    !current_platform->is_active()) {
+                    const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(
+                        position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, constants::SEAM_SNAP_DISTANCE,
+                        last_fall_through_platform);
+                    if (platform_below) {
+                        enter_platform(platform_below);
+                    } else {
+                        state = State::InAir;
+                    }
+                    break;
+                }
+
+                switch (horizontal_direction) {
+                    case HorizontalDirection::Left:
+                        facing_right = false;
+                        break;
+                    case HorizontalDirection::Right:
+                        facing_right = true;
+                        break;
+                    case HorizontalDirection::None:
+                        break;
+                }
+
+                if (!has_hammer()) {
+                    switch (vertical_direction) {
+                        case VerticalDirection::Up:
+                            {
+                                std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(
+                                    position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                                if (ladder) {
+                                    state = State::Climbing;
+                                    current_ladder = ladder;
+                                    velocity.x = 0.f;
+                                    velocity.y = climbing_dir;
+                                }
+                            }
+                            break;
+                        case VerticalDirection::Down:
+                            {
+                                std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(
+                                    position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
+                                if (ladder) {
+                                    state = State::Climbing;
+                                    current_ladder = ladder;
+                                    velocity.x = 0.f;
+                                    velocity.y = climbing_dir;
+                                }
+                            }
+                            break;
+                        case VerticalDirection::None:
+                            break;
+                    }
                 }
                 break;
             }
-
-            switch (horizontal_direction) {
-                case HorizontalDirection::Left:
-                    facing_right = false;
-                    break;
-                case HorizontalDirection::Right:
-                    facing_right = true;
-                    break;
-                case HorizontalDirection::None:
-                    break;
-            }
-
-            if (!has_hammer()) {
-                switch (vertical_direction) {
-                    case VerticalDirection::Up:
-                        {
-                            std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_up_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                            if (ladder) {
-                                state = State::Climbing;
-                                current_ladder = ladder;
-                                velocity.x = 0.f;
-                                velocity.y = climbing_dir;
-                            }
-                        }
-                        break;
-                    case VerticalDirection::Down:
-                        {
-                            std::shared_ptr<Climbable> ladder = stage.get_climbables().find_climbable_down_at(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT / 2.f);
-                            if (ladder) {
-                                state = State::Climbing;
-                                current_ladder = ladder;
-                                velocity.x = 0.f;
-                                velocity.y = climbing_dir;
-                            }
-                        }
-                        break;
-                    case VerticalDirection::None:
-                        break;
-                }
-            }
-            break;
-        }
         case State::InAir:
             velocity.y += constants::GRAVITY * dt;
 
@@ -125,7 +126,9 @@ void Player::update(float dt, Stage &stage) {
             }
 
             if (velocity.y > 0.0f) {
-                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f, platform_snap_distance(dt), last_fall_through_platform);
+                const std::shared_ptr<Platform> platform_below =
+                    stage.get_platforms().find_platform_underneath(position, constants::PLAYER_WIDTH / 2.f, constants::PLAYER_WIDTH / 2.f,
+                                                                   platform_snap_distance(dt), last_fall_through_platform);
                 if (platform_below) {
                     enter_platform(platform_below);
                 }
@@ -205,13 +208,9 @@ void Player::update(float dt, Stage &stage) {
     }
 }
 
-void Player::set_horizontal_direction(HorizontalDirection dir) {
-    horizontal_direction = dir;
-}
+void Player::set_horizontal_direction(HorizontalDirection dir) { horizontal_direction = dir; }
 
-void Player::set_vertical_direction(VerticalDirection dir) {
-    vertical_direction = dir;
-}
+void Player::set_vertical_direction(VerticalDirection dir) { vertical_direction = dir; }
 
 void Player::jump() {
     if (state == State::OnPlatform && !has_hammer()) {
@@ -221,9 +220,7 @@ void Player::jump() {
     }
 }
 
-const sf::RectangleShape& Player::get_shape() const {
-    return shape;
-}
+const sf::RectangleShape &Player::get_shape() const { return shape; }
 
 void Player::check_referenced_entities() {
     if (handle_destroyed_indirect(current_platform) && state == State::OnPlatform) {
@@ -234,9 +231,7 @@ void Player::check_referenced_entities() {
     }
 }
 
-void Player::accept(EntityVisitor &visitor) {
-    visitor.visit(*this);
-}
+void Player::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 float Player::platform_snap_distance(float dt) const {
     float distance = velocity.y * dt;
@@ -272,6 +267,4 @@ bool Player::handle_platform_fall_through() {
     return false;
 }
 
-void Player::die(Stage &stage) {
-    stage.on_player_dying();
-}
+void Player::die(Stage &stage) { stage.on_player_dying(); }

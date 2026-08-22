@@ -1,14 +1,15 @@
 #ifndef GHOST_RENDERER_HPP
 #define GHOST_RENDERER_HPP
 
-#include "DK/view/DrawableComponent.hpp"
-#include "DK/model/entities/Ghost.hpp"
-#include "DK/view/AssetsManager.hpp"
-#include "DK/Constants.hpp"
-#include "DK/util/Math.hpp"
-#include "DK/view/LayerStack.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+
+#include "DK/Constants.hpp"
+#include "DK/model/entities/Ghost.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/LayerStack.hpp"
 
 /**
  * @brief Renderer for the ghost entity.
@@ -26,7 +27,9 @@ public:
      * @param layer_stack Layer stack used for rendering.
      */
     void draw(LayerStack &layer_stack) override {
-        AssetsManager::TextureId texture_id = mod(floor_to_int(animation_timer / constants::GHOST_ANIMATION_INTERVAL), 2) ? AssetsManager::TextureId::Ghost1 : AssetsManager::TextureId::Ghost2;
+        AssetsManager::TextureId texture_id = mod(floor_to_int(animation_timer / constants::GHOST_ANIMATION_INTERVAL), 2)
+                                                  ? AssetsManager::TextureId::Ghost1
+                                                  : AssetsManager::TextureId::Ghost2;
         sf::Sprite ghost_sprite(assets_manager.get_texture(texture_id));
         sf::FloatRect ghost_bounds = ghost_sprite.getLocalBounds();
         ghost_sprite.setOrigin({ghost_bounds.size.x / 2.f, ghost_bounds.size.y});

@@ -16,10 +16,6 @@ void GameOverControl::update(float dt) {
     }
 }
 
-void GameOverControl::draw() {
-    game_over_view.draw();
-}
+void GameOverControl::draw() { game_over_view.draw(); }
 
-AbstractSceneControl::NextScene GameOverControl::get_next_scene() const {
-    return next_scene;
-}
+AbstractSceneControl::NextScene GameOverControl::get_next_scene() const { return next_scene; }

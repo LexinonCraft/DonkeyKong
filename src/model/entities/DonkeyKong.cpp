@@ -1,13 +1,16 @@
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "DK/model/entities/DonkeyKong.hpp"
+
 #include <stdexcept>
 
-#include "DK/model/entities/DonkeyKong.hpp"
-#include "DK/model/components/Platform.hpp"
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Platform.hpp"
 
 DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_position, bool throw_barrels)
-    : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform), throw_barrels(throw_barrels) {
+    : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform),
+      throw_barrels(throw_barrels) {
     if (throw_barrels) {
         state = State::ThrowingBarrel;
         num_barrels_to_be_thrown = constants::MAX_BARRELS_THROWN;
@@ -86,8 +89,10 @@ void DonkeyKong::set_state(State new_state, Stage &stage) {
     state = new_state;
     switch (state) {
         case State::Idle:
-            idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION + (stage.random_int() % constants::DONKEY_KONG_IDLE_DURATION_STEPS) *
-                ((constants::DONKEY_KONG_MAX_IDLE_DURATION - constants::DONKEY_KONG_MIN_IDLE_DURATION) / constants::DONKEY_KONG_IDLE_DURATION_STEPS);
+            idle_countdown = constants::DONKEY_KONG_MIN_IDLE_DURATION +
+                             (stage.random_int() % constants::DONKEY_KONG_IDLE_DURATION_STEPS) *
+                                 ((constants::DONKEY_KONG_MAX_IDLE_DURATION - constants::DONKEY_KONG_MIN_IDLE_DURATION) /
+                                  constants::DONKEY_KONG_IDLE_DURATION_STEPS);
             break;
         case State::ThrowingBarrel:
             num_barrels_to_be_thrown = stage.random_int() % constants::MAX_BARRELS_THROWN + 1;
@@ -96,7 +101,9 @@ void DonkeyKong::set_state(State new_state, Stage &stage) {
             break;
         case State::Angry:
             action_timer = 0.f;
-            angry_animation_frames = stage.random_int() % (constants::DONKEY_KONG_MAX_ANGRY_ANIMATION_FRAMES - constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES + 1) + constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES;
+            angry_animation_frames = stage.random_int() % (constants::DONKEY_KONG_MAX_ANGRY_ANIMATION_FRAMES -
+                                                           constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES + 1) +
+                                     constants::DONKEY_KONG_MIN_ANGRY_ANIMATION_FRAMES;
             consecutive_angry_actions++;
             break;
         default:

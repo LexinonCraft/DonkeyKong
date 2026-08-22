@@ -1,11 +1,11 @@
 #ifndef DISSOLVING_PLATFORM_RENDERER_HPP
 #define DISSOLVING_PLATFORM_RENDERER_HPP
 
-#include "DK/view/DrawableComponent.hpp"
-#include "DK/view/LayerStack.hpp"
+#include "DK/Constants.hpp"
 #include "DK/model/entities/DissolvingPlatform.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/Constants.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/LayerStack.hpp"
 
 class DissolvingPlatformRenderer : public DrawableComponent {
 public:

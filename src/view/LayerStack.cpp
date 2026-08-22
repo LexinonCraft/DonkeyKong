@@ -1,14 +1,8 @@
 #include "DK/view/LayerStack.hpp"
 
 LayerStack::LayerStack(sf::RenderWindow &window)
-    : background_layer(window),
-      platforms_layer(window),
-      ladders_layer(window),
-      donkey_kong_layer(window),
-      objects_layer(window),
-      player_layer(window),
-      ui_layer(window),
-      window(window) {}
+    : background_layer(window), platforms_layer(window), ladders_layer(window), donkey_kong_layer(window), objects_layer(window),
+      player_layer(window), ui_layer(window), window(window) {}
 
 Layer &LayerStack::get_layer(LayerId id) {
     switch (id) {

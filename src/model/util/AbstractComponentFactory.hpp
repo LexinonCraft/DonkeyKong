@@ -13,8 +13,7 @@
  *
  * @tparam C The component type created by the factory.
  */
-template <typename C>
-class AbstractComponentFactory {
+template <typename C> class AbstractComponentFactory {
 public:
     virtual ~AbstractComponentFactory() = default;
 

@@ -1,8 +1,8 @@
 #ifndef DRAWABLE_COMPONENT_HPP
 #define DRAWABLE_COMPONENT_HPP
 
-#include "DK/view/LayerStack.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/view/LayerStack.hpp"
 
 /**
  * @brief Abstract render adapter for a world entity.

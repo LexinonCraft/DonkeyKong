@@ -19,10 +19,6 @@ void TitleScreenControl::update(float dt) {
     }
 }
 
-void TitleScreenControl::draw() {
-    title_screen_view.draw(animation_timer);
-}
+void TitleScreenControl::draw() { title_screen_view.draw(animation_timer); }
 
-AbstractSceneControl::NextScene TitleScreenControl::get_next_scene() const {
-    return next_scene;
-}
+AbstractSceneControl::NextScene TitleScreenControl::get_next_scene() const { return next_scene; }

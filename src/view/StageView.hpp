@@ -15,7 +15,7 @@
  * @brief View component that renders a whole stage using layered SFML textures.
  */
 class StageView : public AbstractSceneView, private StageObserver {
-  public:
+public:
     /**
      * @brief Creates the stage view and binds it to a specific stage.
      * @param window Window used for rendering.
@@ -32,7 +32,7 @@ class StageView : public AbstractSceneView, private StageObserver {
 
     void update(float dt, Stage &stage);
 
-  private:
+private:
     DrawableComponentRepository drawable_components;
     Stage &stage;
     std::list<ScoreEffect> current_score_effects;

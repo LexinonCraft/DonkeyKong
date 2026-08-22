@@ -3,12 +3,12 @@
 
 #include <memory>
 
+#include "DK/Constants.hpp"
 #include "DK/model/animations/AbstractAnimation.hpp"
-#include "DK/model/entities/Player.hpp"
+#include "DK/model/animations/AnimationVisitor.hpp"
 #include "DK/model/entities/DonkeyKong.hpp"
 #include "DK/model/entities/Pauline.hpp"
-#include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/Constants.hpp"
+#include "DK/model/entities/Player.hpp"
 
 class PlayerDeathAnimation : public AbstractAnimation {
 public:
@@ -20,29 +20,28 @@ public:
         Finished,
     };
 
-    PlayerDeathAnimation(Stage &stage, std::shared_ptr<Player> player)
-        : AbstractAnimation(stage), player(player) {}
+    PlayerDeathAnimation(Stage &stage, std::shared_ptr<Player> player) : AbstractAnimation(stage), player(player) {}
 
     void update(float dt) override {
         AbstractAnimation::update(dt);
         time_elapsed_in_state += dt;
-        
+
         bool flag = true;
-        while(flag) {
+        while (flag) {
             flag = false;
-            switch(state) {
+            switch (state) {
                 case State::NotStarted:
                     set_state(State::BeforeRotating, flag);
                     player->start_animation(this);
                     break;
                 case State::BeforeRotating:
-                    if(get_time_elapsed() < constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION) {
+                    if (get_time_elapsed() < constants::PLAYER_DYING_ANIMATION_TIME_BEFORE_ROTATION) {
                         break;
                     }
                     set_state(State::Rotating, flag);
                     break;
                 case State::Rotating:
-                    if(get_time_elapsed_in_state() < constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) {
+                    if (get_time_elapsed_in_state() < constants::PLAYER_DYING_ANIMATION_ROTATION_LENGTH) {
                         break;
                     }
                     set_state(State::AfterRotating, flag);
@@ -59,25 +58,15 @@ public:
         }
     }
 
-    bool is_finished() override {
-        return state == State::Finished;
-    }
+    bool is_finished() override { return state == State::Finished; }
 
-    void accept(AnimationVisitor &visitor) override {
-        visitor.visit(*this);
-    }
+    void accept(AnimationVisitor &visitor) override { visitor.visit(*this); }
 
-    State get_state() const {
-        return state;
-    }
+    State get_state() const { return state; }
 
-    float get_time_elapsed_in_state() const {
-        return time_elapsed_in_state;
-    }
+    float get_time_elapsed_in_state() const { return time_elapsed_in_state; }
 
-    bool is_exit_animation() const override {
-        return true;
-    }
+    bool is_exit_animation() const override { return true; }
 
 private:
     State state = State::NotStarted;

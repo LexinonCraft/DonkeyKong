@@ -1,6 +1,7 @@
+#include "DK/model/util/BaseEntity.hpp"
+
 #include <stdexcept>
 
-#include "DK/model/util/BaseEntity.hpp"
 #include "DK/model/util/EntityRepository.hpp"
 
 /**

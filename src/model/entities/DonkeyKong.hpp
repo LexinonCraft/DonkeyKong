@@ -1,15 +1,16 @@
 #ifndef DONKEYKONG_HPP
 #define DONKEYKONG_HPP
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
 
-#include "DK/model/util/BaseEntity.hpp"
-#include "DK/model/components/Updatable.hpp"
-#include "DK/model/components/Enemy.hpp"
-#include "DK/model/util/EntityVisitor.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
+
 #include "DK/model/Declarations.hpp"
 #include "DK/model/animations/AbstractAnimation.hpp"
+#include "DK/model/components/Enemy.hpp"
+#include "DK/model/components/Updatable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
 class DonkeyKong : public BaseEntity, public Updatable, public Enemy {
 public:
@@ -28,9 +29,7 @@ public:
 
     void on_hammer_hit(Stage &stage) override {}
 
-    void accept(EntityVisitor &visitor) override {
-        visitor.visit(*this);
-    }
+    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
     std::unique_ptr<Component<Updatable>> create_updatable_component() override {
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
@@ -40,25 +39,15 @@ public:
         return std::make_unique<Component<Enemy>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
     }
 
-    BaseEntity &get_entity() override {
-        return *this;
-    }
+    BaseEntity &get_entity() override { return *this; }
 
-    sf::Vector2f get_position() const override {
-        return position;
-    }
+    sf::Vector2f get_position() const override { return position; }
 
-    State get_state() const {
-        return state;
-    }
+    State get_state() const { return state; }
 
-    float get_idle_countdown() const {
-        return idle_countdown;
-    }
+    float get_idle_countdown() const { return idle_countdown; }
 
-    float get_action_timer() const {
-        return action_timer;
-    }
+    float get_action_timer() const { return action_timer; }
 
     void set_state(State new_state, Stage &stage);
 
@@ -72,17 +61,11 @@ public:
         current_animation = nullptr;
     }
 
-    AbstractAnimation *get_current_animation() const {
-        return current_animation;
-    }
+    AbstractAnimation *get_current_animation() const { return current_animation; }
 
-    void set_position(const sf::Vector2f &new_position) {
-        position = new_position;
-    }
+    void set_position(const sf::Vector2f &new_position) { position = new_position; }
 
-    bool is_secondary_entity() const override {
-        return false;
-    }
+    bool is_secondary_entity() const override { return false; }
 
 private:
     sf::Vector2f position;

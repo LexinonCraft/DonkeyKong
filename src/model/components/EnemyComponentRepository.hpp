@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "DK/model/util/ComponentRepository.hpp"
-#include "DK/model/util/Component.hpp"
-#include "DK/model/components/EnemyComponentFactory.hpp"
 #include "DK/model/components/Enemy.hpp"
+#include "DK/model/components/EnemyComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
 
 /**
  * @brief Repository storing enemy behaviour components.
@@ -20,7 +20,8 @@ public:
      * @brief Creates the repository and registers it with the entity repository.
      * @param repository Entity repository to observe.
      */
-    EnemyComponentRepository(EntityRepository &repository) : ComponentRepository<Component<Enemy>>(repository, std::make_unique<EnemyComponentFactory>()) {}
+    EnemyComponentRepository(EntityRepository &repository)
+        : ComponentRepository<Component<Enemy>>(repository, std::make_unique<EnemyComponentFactory>()) {}
 
     std::shared_ptr<Enemy> find_touching_enemy(const sf::RectangleShape &player_shape);
 };

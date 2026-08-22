@@ -1,9 +1,9 @@
 #ifndef LADDER_RENDERER_HPP
 #define LADDER_RENDERER_HPP
 
-#include "DK/view/DrawableComponent.hpp"
 #include "DK/model/entities/Ladder.hpp"
 #include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponent.hpp"
 
 /**
  * @brief Renderer for the ladder entity.

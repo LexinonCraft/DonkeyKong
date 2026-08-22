@@ -1,20 +1,21 @@
 #ifndef PAULINE_RENDERER_HPP
 #define PAULINE_RENDERER_HPP
 
+#include <stdexcept>
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Angle.hpp>
-#include <stdexcept>
 
-#include "DK/view/DrawableComponent.hpp"
-#include "DK/model/entities/Pauline.hpp"
-#include "DK/view/AssetsManager.hpp"
 #include "DK/Constants.hpp"
-#include "DK/util/Math.hpp"
-#include "DK/view/LayerStack.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
 #include "DK/model/animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
+#include "DK/model/entities/Pauline.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/LayerStack.hpp"
 
 /**
  * @brief Renderer for the Pauline entity.
@@ -41,7 +42,8 @@ public:
         heart_broken = false;
         switch (pauline->get_state()) {
             case Pauline::State::Normal:
-                if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES && !suppress_scream) {
+                if (animation_timer < constants::PAULINE_SCREAM_ANIMATION_INTERVAL * constants::PAULINE_SCREAM_ANIMATION_FRAMES &&
+                    !suppress_scream) {
                     switch (mod(floor_to_int(animation_timer / constants::PAULINE_SCREAM_ANIMATION_INTERVAL), 2)) {
                         case 0:
                             texture_id = AssetsManager::TextureId::PaulineScream1;
@@ -88,7 +90,8 @@ public:
         }
 
         if (draw_heart) {
-            sf::Sprite heart_sprite(assets_manager.get_texture(!heart_broken ? AssetsManager::TextureId::HeartNormal : AssetsManager::TextureId::HeartBroken));
+            sf::Sprite heart_sprite(
+                assets_manager.get_texture(!heart_broken ? AssetsManager::TextureId::HeartNormal : AssetsManager::TextureId::HeartBroken));
             sf::FloatRect heart_bounds = heart_sprite.getLocalBounds();
             heart_sprite.setOrigin({heart_bounds.size.x / 2.f, heart_bounds.size.y});
             heart_sprite.setPosition({constants::VIEW_WIDTH / 2.f, position.y - 40.f});

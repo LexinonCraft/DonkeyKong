@@ -1,7 +1,8 @@
+#include "DK/view/GameOverView.hpp"
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "DK/view/GameOverView.hpp"
 #include "DK/util/Positions.hpp"
 
 void GameOverView::draw() {

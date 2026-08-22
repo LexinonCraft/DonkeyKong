@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "DK/view/AssetsManager.hpp"
 #include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 class GameOverView : public AbstractSceneView {
 public:

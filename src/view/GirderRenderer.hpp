@@ -1,10 +1,10 @@
 #ifndef GIRDER_RENDERER_HPP
 #define GIRDER_RENDERER_HPP
 
-#include "DK/view/DrawableComponent.hpp"
+#include "DK/Constants.hpp"
 #include "DK/model/entities/Girder.hpp"
 #include "DK/view/AssetsManager.hpp"
-#include "DK/Constants.hpp"
+#include "DK/view/DrawableComponent.hpp"
 
 /**
  * @brief Renderer for the girder entity.
