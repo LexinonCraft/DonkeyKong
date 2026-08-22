@@ -2,6 +2,7 @@
 
 #include "DK/Constants.hpp"
 #include "DK/util/Math.hpp"
+#include "DK/util/Positions.hpp"
 
 void PlayerRenderer::draw(LayerStack &layer_stack) {
     bool flip_sprite = false;
@@ -62,10 +63,11 @@ void PlayerRenderer::draw(LayerStack &layer_stack) {
 
     sf::Sprite player_sprite(assets_manager.get_texture(texture_id));
     sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
-    player_sprite.setOrigin({sprite_bounds.size.x / (hammer_origin ? 4.f : 2.f), rotate_sprite ? 0.f : sprite_bounds.size.y});
+    player_sprite.setOrigin({sprite_bounds.size.x / (hammer_origin ? 4.f : 2.f), sprite_bounds.size.y});
     player_sprite.setPosition(player->get_position());
-    player_sprite.setScale({flip_sprite ? -2.f : 2.f, 2.f});
-    player_sprite.setRotation(sf::degrees(rotate_sprite ? 180.f : 0.f));
+    scale(player_sprite, 2.f);
+    flip_horizontally(player_sprite, flip_sprite);
+    rotate_180_degrees(player_sprite, AnchorPosition::Center, rotate_sprite);
     layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
 }
 

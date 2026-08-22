@@ -1,9 +1,10 @@
 #include "DK/view/renderers/BeamRenderer.hpp"
 
+#include "DK/util/Positions.hpp"
+
 void BeamRenderer::draw(LayerStack &layer_stack) {
     sf::RectangleShape shape({constants::BEAM_WIDTH, beam->get_lower_y() - beam->get_upper_y()});
-    sf::FloatRect bounds = shape.getLocalBounds();
-    shape.setOrigin({bounds.size.x / 2.f, 0.f});
+    set_origin(shape, AnchorPosition::TopCenter);
     shape.setPosition({beam->get_x(), beam->get_upper_y()});
     shape.setFillColor(sf::Color::Cyan);
 

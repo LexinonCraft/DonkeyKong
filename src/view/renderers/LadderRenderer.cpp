@@ -1,5 +1,7 @@
 #include "DK/view/renderers/LadderRenderer.hpp"
 
+#include "DK/util/Positions.hpp"
+
 void LadderRenderer::draw(LayerStack &layer_stack) {
     if (ladder->is_broken()) {
         float midway_y = (ladder->get_lower_y_pos() + ladder->get_upper_y_pos()) / 2.f;
@@ -28,9 +30,8 @@ void LadderRenderer::draw_raw(float x, float lower_y, float upper_y, LayerStack 
     for (int i = 0; i < num_tiles; ++i) {
         sf::Sprite sprite(assets_manager.get_texture(texture_id));
         sprite.setPosition({x, upper_y + i * tile_height});
-        auto sprite_bounds = sprite.getLocalBounds();
-        sprite.setScale({20.f / sprite_bounds.size.x, tile_height / sprite_bounds.size.y});
-        sprite.setOrigin({sprite_bounds.size.x / 2.f, 0.f});
+        set_to_size(sprite, {20.f, tile_height});
+        set_origin(sprite, AnchorPosition::TopCenter);
         layer_stack.get_layer(LayerStack::LayerId::Ladders).add_to_layer(sprite);
     }
 }

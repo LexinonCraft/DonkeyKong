@@ -2,6 +2,7 @@
 
 #include "DK/Constants.hpp"
 #include "DK/util/Math.hpp"
+#include "DK/util/Positions.hpp"
 
 void DonkeyKongRenderer::draw(LayerStack &layer_stack) {
     AssetsManager::TextureId texture_id;
@@ -50,20 +51,18 @@ void DonkeyKongRenderer::draw(LayerStack &layer_stack) {
     }
 
     sf::Sprite donkey_kong_sprite(assets_manager.get_texture(texture_id));
-    sf::FloatRect donkey_kong_bounds = donkey_kong_sprite.getLocalBounds();
-    donkey_kong_sprite.setOrigin({donkey_kong_bounds.size.x / 2.f, donkey_kong_bounds.size.y});
+    set_origin(donkey_kong_sprite, AnchorPosition::BottomCenter);
     donkey_kong_sprite.setPosition(donkey_kong->get_position());
-    donkey_kong_sprite.setScale({flip ? -2.f : 2.f, 2.f});
+    scale(donkey_kong_sprite, 2.f);
+    flip_horizontally(donkey_kong_sprite, flip);
     layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(donkey_kong_sprite);
 
     if (render_barrel) {
         sf::Sprite barrel_sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelSide1));
-        sf::FloatRect barrel_bounds = barrel_sprite.getLocalBounds();
-        barrel_sprite.setOrigin({barrel_bounds.size.x / 2.f, barrel_bounds.size.y});
+        set_origin(barrel_sprite, AnchorPosition::BottomCenter);
         barrel_sprite.setPosition(
             {donkey_kong->get_position().x, donkey_kong->get_position().y - constants::DONKEY_KONG_HOLDED_BARREL_OFFSET_Y});
-        barrel_sprite.setScale(
-            {constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.x, constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.y});
+        set_to_size(barrel_sprite, {constants::BARREL_RADIUS * 2.5f, constants::BARREL_RADIUS * 2.5f});
         layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(barrel_sprite);
     }
 }

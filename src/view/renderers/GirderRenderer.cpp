@@ -1,6 +1,7 @@
 #include "DK/view/renderers/GirderRenderer.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/util/Positions.hpp"
 
 void GirderRenderer::draw(LayerStack &layer_stack) {
     float width = girder->get_width();
@@ -21,8 +22,7 @@ void GirderRenderer::draw(LayerStack &layer_stack) {
     for (unsigned int i = 0; i < num_steps; ++i) {
         sf::Sprite sprite(assets_manager.get_texture(texture_id));
         sprite.setPosition({x + i * step_width, girder->surface_y_at(x + (i + 0.5f) * step_width)});
-        auto sprite_bounds = sprite.getLocalBounds();
-        sprite.setScale({step_width / sprite_bounds.size.x, constants::GIRDER_THICKNESS / sprite_bounds.size.y});
+        set_to_size(sprite, {step_width, constants::GIRDER_THICKNESS});
         layer_stack.get_layer(LayerStack::LayerId::Platforms).add_to_layer(sprite);
     }
 }
