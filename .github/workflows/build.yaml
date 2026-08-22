@@ -42,5 +42,10 @@ jobs:
       - name: Check Format
         run: |
           clang-format --style=llvm --dump-config > .clang-format
-          cat .clang-format
-          ./clang-format.sh
+          # cat .clang-format
+          # ./clang-format.sh
+      - name: adasd
+        uses: actions/upload-artifact@v4
+        with:
+          name: dasdaddad
+          path: .clang-format
