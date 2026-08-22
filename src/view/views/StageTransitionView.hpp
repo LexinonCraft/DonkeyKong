@@ -17,7 +17,7 @@ class StageTransitionView : public AbstractSceneView {
 public:
     /**
      * @brief Initializes the StageTransitionView with the given window, assets manager, and player data.
-     * 
+     *
      * @param window The window to draw to.
      * @param assets_manager The assets manager to retrieve assets.
      * @param player_data A reference to the global player data, which is used to determine the current stage and level.

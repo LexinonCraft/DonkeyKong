@@ -14,10 +14,9 @@ public:
      * @brief Creates a layer bound to a given render window.
      * @param window Window that will display the final layer content.
      */
-    Layer(sf::RenderWindow &window)
-        : window(window), target({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), sprite(target.getTexture()) {
-    target.display();
-}
+    Layer(sf::RenderWindow &window) : window(window), target({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), sprite(target.getTexture()) {
+        target.display();
+    }
 
     /**
      * @brief Adds an SFML drawable object to this layer.

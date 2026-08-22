@@ -49,10 +49,10 @@ protected:
 
 private:
     /**
-    * @brief Adjust the view of the window to maintain the target aspect ratio.
-    * 
-    * @param window 
-    */
+     * @brief Adjust the view of the window to maintain the target aspect ratio.
+     *
+     * @param window
+     */
     void adjust_window_view();
 };
 

@@ -25,13 +25,7 @@ public:
      * @brief Draws the hammer power-up into the object layer.
      * @param layer_stack Layer stack used for rendering.
      */
-    void draw(LayerStack &layer_stack) override {
-        sf::Sprite sprite(assets_manager.get_texture(AssetsManager::TextureId::Hammer));
-        sprite.setOrigin({8.f, 16.f});
-        sprite.setPosition(hammer->get_position());
-        sprite.setScale({2.f, 2.f});
-        layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(sprite);
-    }
+    void draw(LayerStack &layer_stack) override;
 
 private:
     std::shared_ptr<HammerPowerUp> hammer;

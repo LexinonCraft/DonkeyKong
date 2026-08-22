@@ -17,7 +17,7 @@ public:
         Background,
         Ladders,
         Platforms,
-        Objects,     // e.g. barrels, ghosts, etc.
+        Objects, // e.g. barrels, ghosts, etc.
         DonkeyKong,
         Player,
         UI,

@@ -14,7 +14,7 @@ class TitleScreenView : public AbstractSceneView {
 public:
     /**
      * @brief Initializes the title screen view with the given window, assets manager, and player data.
-     * 
+     *
      * @param window The window to draw to.
      * @param assets_manager The assets manager to retrieve assets from.
      * @param player_data A reference to the global player data.
@@ -24,7 +24,7 @@ public:
 
     /**
      * @brief Draw the title screen.
-     * 
+     *
      * @param animation_timer Timer for the Donkey Kong animation.
      */
     void draw(float animation_timer);

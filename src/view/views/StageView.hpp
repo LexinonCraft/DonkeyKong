@@ -33,7 +33,7 @@ public:
 
     /**
      * @brief Update the view state based on the current state of the stage.
-     * 
+     *
      * @param dt Time delta since the last update.
      */
     void update(float dt);
@@ -46,7 +46,7 @@ private:
 
     /**
      * @brief Create the score effect when the player scores points.
-     * 
+     *
      * @param position The position where the score effect should be displayed.
      * @param score_to_add The amount of score added.
      */

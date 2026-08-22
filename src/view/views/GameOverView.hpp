@@ -12,11 +12,11 @@
 class GameOverView : public AbstractSceneView {
 public:
     /**
-    * @brief Initializes the GameOverView with the given window and assets manager
-    * 
-    * @param window The window to draw to
-    * @param assets_manager The assets manager to retrieve assets from
-    */
+     * @brief Initializes the GameOverView with the given window and assets manager
+     *
+     * @param window The window to draw to
+     * @param assets_manager The assets manager to retrieve assets from
+     */
     GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {}
 
     /**
