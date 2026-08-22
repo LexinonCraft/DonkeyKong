@@ -41,6 +41,6 @@ jobs:
           sudo apt-get install -y clang-format
       - name: Check Format
         run: |
-          clang-format --dump-config > .clang-format-new
-          cat .clang-format-new
+          clang-format --style=llvm --dump-config > .clang-format
+          cat .clang-format
           ./clang-format.sh
