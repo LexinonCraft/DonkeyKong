@@ -98,11 +98,7 @@ public:
 
     float get_width() const { return width; }
 
-    void update(float dt, Stage &stage) override {
-        if (is_dissolving && dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
-            dissolve_timer += dt;
-        }
-    }
+    void update(float dt, Stage &stage) override;
 
     /**
      * @brief Creates the platform component for this dissolving platform.
@@ -126,13 +122,14 @@ public:
     }
 
     bool has_dissolved() const {
-        return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION;
+        return dissolved;
     }
 
 private:
     sf::Vector2f position;
     float width;
     bool is_dissolving = false;
+    bool dissolved = false;
     float dissolve_timer = 0.f;
     sf::RectangleShape shape;
 };
