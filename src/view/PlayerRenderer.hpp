@@ -85,7 +85,7 @@ private:
     bool flip_sprite = false;
     bool rotate_sprite = false;
     bool hammer_origin = false;
-    float render_player = true;
+    bool render_player = true;
 
     void visit(PlayerDeathAnimation &animation) override {
         switch (animation.get_state()) {
