@@ -1,4 +1,4 @@
-#include "StageControl.hpp"
+#include "DK/control/StageControl.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 
@@ -86,17 +86,16 @@ void StageControl::handle_input() {
 
 void StageControl::update(float dt) {
     stage->update(dt);
-    stage_view.update(dt, *stage);
+    stage_view.update(dt);
 }
 
-void StageControl::draw() {
-    stage_view.draw();
-}
+void StageControl::draw() { stage_view.draw(); }
 
 AbstractSceneControl::NextScene StageControl::get_next_scene() const {
     if (!stage->is_over()) {
         return AbstractSceneControl::NextScene::Stay;
     }
 
-    return stage->get_player_data().get_lives() > 0 ? AbstractSceneControl::NextScene::StageTransition : AbstractSceneControl::NextScene::GameOver;
+    return stage->get_player_data().get_lives() > 0 ? AbstractSceneControl::NextScene::StageTransition
+                                                    : AbstractSceneControl::NextScene::GameOver;
 }

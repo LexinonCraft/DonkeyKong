@@ -3,30 +3,35 @@
 
 #include <memory>
 
-#include "../model/util/AbstractComponentFactory.hpp"
-#include "DrawableComponent.hpp"
-#include "GirderRenderer.hpp"
-#include "BarrelRenderer.hpp"
-#include "PlayerRenderer.hpp"
-#include "LadderRenderer.hpp"
-#include "HammerRenderer.hpp"
-#include "DonkeyKongRenderer.hpp"
-#include "BarrelStackRenderer.hpp"
-#include "PaulineRenderer.hpp"
-#include "DissolvingPlatformRenderer.hpp"
-#include "GhostRenderer.hpp"
-#include "BeamRenderer.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/renderers/BarrelRenderer.hpp"
+#include "DK/view/renderers/BarrelStackRenderer.hpp"
+#include "DK/view/renderers/BeamRenderer.hpp"
+#include "DK/view/renderers/DissolvingPlatformRenderer.hpp"
+#include "DK/view/renderers/DonkeyKongRenderer.hpp"
+#include "DK/view/renderers/GhostRenderer.hpp"
+#include "DK/view/renderers/GirderRenderer.hpp"
+#include "DK/view/renderers/HammerRenderer.hpp"
+#include "DK/view/renderers/LadderRenderer.hpp"
+#include "DK/view/renderers/PaulineRenderer.hpp"
+#include "DK/view/renderers/PlayerRenderer.hpp"
 
 /**
- * @brief Factory that converts entities into their matching SFML renderer components.
+ * @brief Factory for creating drawable components / renderers for entities.
  */
 class DrawableComponentFactory : public AbstractComponentFactory<DrawableComponent>, private EntityVisitor {
 public:
+    /**
+     * @brief Initializes the factory.
+     *
+     * @param assets_manager The assets manager to be passed to the renderers.
+     */
     DrawableComponentFactory(AssetsManager &assets_manager) : assets_manager(assets_manager) {}
 
     /**
-     * @brief Creates the drawable component for an entity using visitor dispatch.
-     * @param entity Entity to render.
+     * @brief Creates the drawable component / renderer for an entity using visitor dispatch.
+     * @param entity Entity to create a drawable component for.
      * @return Unique pointer to the drawable component.
      */
     std::unique_ptr<DrawableComponent> create_component_for(std::shared_ptr<BaseEntity> entity) override {
@@ -59,11 +64,13 @@ private:
     }
 
     void visit(DonkeyKong &donkey_kong) override {
-        component = std::make_unique<DonkeyKongRenderer>(std::static_pointer_cast<DonkeyKong>(donkey_kong.shared_from_this()), assets_manager);
+        component =
+            std::make_unique<DonkeyKongRenderer>(std::static_pointer_cast<DonkeyKong>(donkey_kong.shared_from_this()), assets_manager);
     }
 
     void visit(BarrelStack &barrel_stack) override {
-        component = std::make_unique<BarrelStackRenderer>(std::static_pointer_cast<BarrelStack>(barrel_stack.shared_from_this()), assets_manager);
+        component =
+            std::make_unique<BarrelStackRenderer>(std::static_pointer_cast<BarrelStack>(barrel_stack.shared_from_this()), assets_manager);
     }
 
     void visit(Pauline &pauline) override {
@@ -71,16 +78,15 @@ private:
     }
 
     void visit(DissolvingPlatform &dissolving_platform) override {
-        component = std::make_unique<DissolvingPlatformRenderer>(std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()), assets_manager);
+        component = std::make_unique<DissolvingPlatformRenderer>(
+            std::static_pointer_cast<DissolvingPlatform>(dissolving_platform.shared_from_this()));
     }
 
     void visit(Ghost &ghost) override {
         component = std::make_unique<GhostRenderer>(std::static_pointer_cast<Ghost>(ghost.shared_from_this()), assets_manager);
     }
 
-    void visit(Beam &beam) override {
-        component = std::make_unique<BeamRenderer>(std::static_pointer_cast<Beam>(beam.shared_from_this()));
-    }
+    void visit(Beam &beam) override { component = std::make_unique<BeamRenderer>(std::static_pointer_cast<Beam>(beam.shared_from_this())); }
 };
 
 #endif

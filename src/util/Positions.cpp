@@ -1,29 +1,43 @@
+#include "DK/util/Positions.hpp"
+
 #include <stdexcept>
 
-#include "Positions.hpp"
-#include "../Constants.hpp"
+#include "DK/Constants.hpp"
 
-sf::Vector2f get_absolute_position(const sf::Vector2f &relative_position, AnchorPosition anchor) {
+sf::Vector2f get_position_in_normalized_coordinates(AnchorPosition anchor) {
     switch (anchor) {
         case AnchorPosition::TopLeft:
-            return {relative_position.x, relative_position.y - constants::VIEW_HEIGHT};
+            return {0.f, 0.f};
         case AnchorPosition::TopCenter:
-            return {relative_position.x + constants::VIEW_WIDTH / 2.f, relative_position.y - constants::VIEW_HEIGHT};
+            return {0.5f, 0.f};
         case AnchorPosition::TopRight:
-            return {relative_position.x + constants::VIEW_WIDTH, relative_position.y - constants::VIEW_HEIGHT};
+            return {1.f, 0.f};
         case AnchorPosition::CenterLeft:
-            return {relative_position.x, relative_position.y - constants::VIEW_HEIGHT / 2.f};
+            return {0.f, 0.5f};
         case AnchorPosition::Center:
-            return {relative_position.x + constants::VIEW_WIDTH / 2.f, relative_position.y - constants::VIEW_HEIGHT / 2.f};
+            return {0.5f, 0.5f};
         case AnchorPosition::CenterRight:
-            return {relative_position.x + constants::VIEW_WIDTH, relative_position.y - constants::VIEW_HEIGHT / 2.f};
+            return {1.f, 0.5f};
         case AnchorPosition::BottomLeft:
-            return {relative_position.x, relative_position.y};
+            return {0.f, 1.f};
         case AnchorPosition::BottomCenter:
-            return {relative_position.x + constants::VIEW_WIDTH / 2.f, relative_position.y};
+            return {0.5f, 1.f};
         case AnchorPosition::BottomRight:
-            return {relative_position.x + constants::VIEW_WIDTH, relative_position.y};
+            return {1.f, 1.f};
         default:
             throw std::logic_error("Unknown anchor position");
     }
 }
+
+sf::Vector2f get_absolute_position(const sf::Vector2f &relative_position, AnchorPosition anchor) {
+    auto normalized_position = get_position_in_normalized_coordinates(anchor);
+    return sf::Vector2f(normalized_position.x * constants::VIEW_WIDTH, (normalized_position.y - 1.f) * constants::VIEW_HEIGHT) +
+           relative_position;
+}
+
+void flip_horizontally(sf::Transformable &transformable, bool flip) {
+    sf::Vector2f scale = transformable.getScale();
+    transformable.setScale({flip ? -scale.x : scale.x, scale.y});
+}
+
+void scale(sf::Transformable &transformable, float scale) { transformable.setScale(transformable.getScale() * scale); }

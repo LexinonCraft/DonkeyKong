@@ -3,19 +3,19 @@
 
 #include <memory>
 
-#include "../Constants.hpp"
-#include "animations/AbstractAnimation.hpp"
-#include "util/EntityRepository.hpp"
-#include "components/UpdatableComponentRepository.hpp"
-#include "components/PlatformComponentRepository.hpp"
-#include "components/ClimbableComponentRepository.hpp"
-#include "components/EnemyComponentRepository.hpp"
-#include "components/JumpableComponentRepository.hpp"
-#include "components/PickableComponentRepository.hpp"
-#include "Declarations.hpp"
-#include "../Constants.hpp"
-#include "../util/ObserverRegistry.hpp"
-#include "StageObserver.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/StageObserver.hpp"
+#include "DK/model/animations/AbstractAnimation.hpp"
+#include "DK/model/animations/PlayerDeathAnimation.hpp"
+#include "DK/model/components/ClimbableComponentRepository.hpp"
+#include "DK/model/components/EnemyComponentRepository.hpp"
+#include "DK/model/components/JumpableComponentRepository.hpp"
+#include "DK/model/components/PickableComponentRepository.hpp"
+#include "DK/model/components/PlatformComponentRepository.hpp"
+#include "DK/model/components/UpdatableComponentRepository.hpp"
+#include "DK/model/util/EntityRepository.hpp"
+#include "DK/util/ObserverRegistry.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.
@@ -89,9 +89,7 @@ public:
 
     bool is_running() const { return !current_animation; }
 
-    int random_int() {
-        return rng();
-    }
+    int random_int() { return rng(); }
 
     ObserverRegistry<StageObserver> &get_observer_registry() { return observer_registry; }
     float get_barrel_roll_speed() const;

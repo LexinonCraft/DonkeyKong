@@ -5,9 +5,9 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "../util/BaseEntity.hpp"
-#include "../components/Updatable.hpp"
-#include "../components/Enemy.hpp"
+#include "DK/model/components/Enemy.hpp"
+#include "DK/model/components/Updatable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 class Ghost : public BaseEntity, public Updatable, public Enemy {
 public:
@@ -23,9 +23,7 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
-    void accept(EntityVisitor &visitor) override {
-        visitor.visit(*this);
-    }
+    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
     std::unique_ptr<Component<Updatable>> create_updatable_component() override {
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Ghost>(shared_from_this()));
@@ -35,17 +33,11 @@ public:
         return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Ghost>(shared_from_this()));
     }
 
-    BaseEntity &get_entity() override {
-        return *this;
-    }
+    BaseEntity &get_entity() override { return *this; }
 
-    sf::Vector2f get_position() const override {
-        return position;
-    }
+    sf::Vector2f get_position() const override { return position; }
 
-    bool is_moving_right() const {
-        return moving_right;
-    }
+    bool is_moving_right() const { return moving_right; }
 
     void on_hammer_hit(Stage &stage) override;
 

@@ -1,8 +1,8 @@
 #ifndef UPDATABLE_HPP
 #define UPDATABLE_HPP
 
-#include "../Declarations.hpp"
-#include "../util/EntityFromComponentAux.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/util/EntityFromComponentAux.hpp"
 
 /**
  * @brief Behaviour interface for entities that need a per-frame update step.

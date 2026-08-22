@@ -1,20 +1,18 @@
+#include "DK/view/views/StageView.hpp"
+
 #include <format>
 
 #include <SFML/Graphics/Color.hpp>
 
-#include "StageView.hpp"
-#include "../model/PlayerData.hpp"
-#include "../util/Positions.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/util/Positions.hpp"
 
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
-    : AbstractSceneView(window, texture_registry),
-      drawable_components(stage.get_entities(), assets_manager), stage(stage) {
+    : AbstractSceneView(window, texture_registry), drawable_components(stage.get_entities(), assets_manager), stage(stage) {
     stage_observer_id = stage.get_observer_registry().register_observer(*this);
 }
 
-StageView::~StageView() {
-    stage.get_observer_registry().unregister_observer(stage_observer_id);
-}
+StageView::~StageView() { stage.get_observer_registry().unregister_observer(stage_observer_id); }
 
 void StageView::draw() {
     pre_draw();
@@ -94,7 +92,7 @@ void StageView::draw() {
         life_sprite.setScale({2.f, 2.f});
         layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(life_sprite);
     }
-    
+
     sf::Text level_text(assets_manager.get_font());
     level_text.setString(std::format("L={:02d}", stage.get_player_data().get_level() + 1));
     level_text.setCharacterSize(24);
@@ -111,7 +109,7 @@ void StageView::draw() {
     post_draw();
 }
 
-void StageView::update(float dt, Stage &stage) {
+void StageView::update(float dt) {
     for (auto it = current_score_effects.begin(); it != current_score_effects.end();) {
         if (!it->update(dt)) {
             it = current_score_effects.erase(it);
@@ -121,12 +119,4 @@ void StageView::update(float dt, Stage &stage) {
     }
 
     drawable_components.update_all(dt, stage);
-}
-
-void StageView::on_score_added(sf::Vector2f position, int score_to_add) {
-    current_score_effects.emplace_back(position, score_to_add);
-}
-
-void StageView::on_player_died() {
-    current_score_effects.clear();
 }
