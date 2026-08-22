@@ -83,10 +83,7 @@ public:
 
     virtual void on_completed();
 
-    virtual void on_exit() {}
-
-    // repeatedly called by StageControl to see if the stage is over (player died or completed), if yes returns true and the method should not be called again (maybe refactor this)
-    bool check_over();
+    bool is_over();
 
     void add_to_score(sf::Vector2f position, int score_to_add);
 
@@ -124,12 +121,15 @@ protected:
     const std::shared_ptr<Player> player;
     PlayerData &player_data;
     bool player_died = false;
+    bool ran_on_exit = false;
 
     std::unique_ptr<AbstractAnimation> current_animation;
 
     virtual void update_while_running(float dt);
 
     void clear_secondary_entities();
+
+    virtual void on_exit();
 };
 
 #endif
