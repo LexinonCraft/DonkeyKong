@@ -1,9 +1,9 @@
 #ifndef TITLE_SCREEN_CONTROL_HPP
 #define TITLE_SCREEN_CONTROL_HPP
 
-#include "AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../view/TitleScreenView.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/TitleScreenView.hpp"
 
 class TitleScreenControl : public AbstractSceneControl {
 public:

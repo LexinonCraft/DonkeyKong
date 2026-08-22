@@ -1,9 +1,9 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "StageTransitionView.hpp"
-#include "../util/Positions.hpp"
-#include "LayerStack.hpp"
+#include "DK/view/StageTransitionView.hpp"
+#include "DK/util/Positions.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void StageTransitionView::draw() {
     pre_draw();

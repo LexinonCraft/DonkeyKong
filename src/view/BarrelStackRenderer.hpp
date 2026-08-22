@@ -5,10 +5,10 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Angle.hpp>
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/BarrelStack.hpp"
-#include "AssetsManager.hpp"
-#include "../Constants.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/model/entities/BarrelStack.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/Constants.hpp"
 
 /**
  * @brief Renderer for the barrel stack entity.

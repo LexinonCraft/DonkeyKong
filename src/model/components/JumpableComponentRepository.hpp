@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/ComponentRepository.hpp"
-#include "../util/Component.hpp"
-#include "JumpableComponentFactory.hpp"
-#include "Jumpable.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/JumpableComponentFactory.hpp"
+#include "DK/model/components/Jumpable.hpp"
 
 /**
  * @brief Repository for all jumpable entity behaviour components.

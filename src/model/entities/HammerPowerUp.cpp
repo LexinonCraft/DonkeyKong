@@ -1,10 +1,10 @@
-#include "HammerPowerUp.hpp"
+#include "DK/model/entities/HammerPowerUp.hpp"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
-#include "../../Constants.hpp"
-#include "../util/EntityVisitor.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
 HammerPowerUp::HammerPowerUp(Ref ref, sf::Vector2f position) :
     BaseEntity(ref),

@@ -6,10 +6,10 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "../Declarations.hpp"
-#include "../components/Climbable.hpp"
-#include "../util/BaseEntity.hpp"
-#include "../components/Updatable.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/components/Updatable.hpp"
 
 /**
  * @brief Player-controlled entity.

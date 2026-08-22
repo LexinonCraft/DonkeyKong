@@ -1,4 +1,4 @@
-#include "GameOverControl.hpp"
+#include "DK/control/GameOverControl.hpp"
 
 void GameOverControl::handle_event(sf::Event *event) {
     // No event handling for the title screen

@@ -1,12 +1,12 @@
 #ifndef GHOST_RENDERER_HPP
 #define GHOST_RENDERER_HPP
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/Ghost.hpp"
-#include "AssetsManager.hpp"
-#include "../Constants.hpp"
-#include "../util/Math.hpp"
-#include "LayerStack.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/model/entities/Ghost.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/Constants.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/view/LayerStack.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 

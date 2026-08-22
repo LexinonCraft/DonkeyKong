@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../util/AbstractComponentFactory.hpp"
-#include "../util/Component.hpp"
-#include "Enemy.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/Enemy.hpp"
 
 /**
  * @brief Factory that creates enemy components for entities that support enemies.

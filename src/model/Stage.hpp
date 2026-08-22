@@ -3,19 +3,20 @@
 
 #include <memory>
 
-#include "../Constants.hpp"
-#include "animations/AbstractAnimation.hpp"
-#include "util/EntityRepository.hpp"
-#include "components/UpdatableComponentRepository.hpp"
-#include "components/PlatformComponentRepository.hpp"
-#include "components/ClimbableComponentRepository.hpp"
-#include "components/EnemyComponentRepository.hpp"
-#include "components/JumpableComponentRepository.hpp"
-#include "components/PickableComponentRepository.hpp"
-#include "Declarations.hpp"
-#include "../Constants.hpp"
-#include "../util/ObserverRegistry.hpp"
-#include "StageObserver.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/animations/AbstractAnimation.hpp"
+#include "DK/model/animations/PlayerDeathAnimation.hpp"
+#include "DK/model/util/EntityRepository.hpp"
+#include "DK/model/components/UpdatableComponentRepository.hpp"
+#include "DK/model/components/PlatformComponentRepository.hpp"
+#include "DK/model/components/ClimbableComponentRepository.hpp"
+#include "DK/model/components/EnemyComponentRepository.hpp"
+#include "DK/model/components/JumpableComponentRepository.hpp"
+#include "DK/model/components/PickableComponentRepository.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/Constants.hpp"
+#include "DK/util/ObserverRegistry.hpp"
+#include "DK/model/StageObserver.hpp"
 
 /**
  * @brief Abstract game level that owns the entity and behaviour repositories.

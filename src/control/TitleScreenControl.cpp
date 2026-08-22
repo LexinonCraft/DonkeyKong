@@ -1,4 +1,4 @@
-#include "TitleScreenControl.hpp"
+#include "DK/control/TitleScreenControl.hpp"
 
 void TitleScreenControl::handle_event(sf::Event *event) {
     if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {

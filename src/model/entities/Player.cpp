@@ -3,11 +3,11 @@
 
 #include <SFML/System/Angle.hpp>
 
-#include "Player.hpp"
-#include "../../Constants.hpp"
-#include "../PlayerData.hpp"
-#include "../util/EntityVisitor.hpp"
-#include "../Stage.hpp"
+#include "DK/model/entities/Player.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
+#include "DK/model/Stage.hpp"
 
 Player::Player(Ref ref) :
     BaseEntity(ref),

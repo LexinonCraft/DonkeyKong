@@ -1,7 +1,7 @@
 #ifndef REF_HPP
 #define REF_HPP
 
-#include "../Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 /**
  * @brief Stable reference to an entity within a repository.

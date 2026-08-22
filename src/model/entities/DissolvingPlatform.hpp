@@ -5,12 +5,12 @@
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 
-#include "../components/Platform.hpp"
-#include "../components/Updatable.hpp"
-#include "../Declarations.hpp"
-#include "../util/BaseEntity.hpp"
-#include "../../Constants.hpp"
-#include "Player.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/components/Updatable.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/entities/Player.hpp"
 
 /**
  * @brief Dissolving platform entity that forms the walkable floors of the level.

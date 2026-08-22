@@ -2,8 +2,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Stage100M.hpp"
-#include "../../util/Math.hpp"
+#include "DK/model/stages/Stage100M.hpp"
+#include "DK/util/Math.hpp"
 
 /**
  * @brief Builds the prototype scene used for the current game demo.

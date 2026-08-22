@@ -1,4 +1,4 @@
-#include "Barrel.hpp"
+#include "DK/model/entities/Barrel.hpp"
 
 #include <algorithm>
 #include <SFML/System/Vector2.hpp>
@@ -9,14 +9,14 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
-#include "../../Constants.hpp"
-#include "../Stage.hpp"
-#include "../components/Platform.hpp"
-#include "../components/PlatformComponentRepository.hpp"
-#include "Player.hpp"
-#include "../util/EntityVisitor.hpp"
-#include "../PlayerData.hpp"
-#include "../../util/Math.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/components/PlatformComponentRepository.hpp"
+#include "DK/model/entities/Player.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/util/Math.hpp"
 
 Barrel::Barrel(Ref ref, sf::Vector2f position) :
     BaseEntity(ref),

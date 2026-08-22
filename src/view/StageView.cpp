@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics/Color.hpp>
 
-#include "StageView.hpp"
-#include "../model/PlayerData.hpp"
-#include "../util/Positions.hpp"
+#include "DK/view/StageView.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/util/Positions.hpp"
 
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
     : AbstractSceneView(window, texture_registry),

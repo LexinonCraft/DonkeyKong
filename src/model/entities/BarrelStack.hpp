@@ -5,10 +5,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../util/BaseEntity.hpp"
-#include "../util/EntityVisitor.hpp"
-#include "../Declarations.hpp"
-#include "../components/Platform.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/components/Platform.hpp"
 
 class BarrelStack : public BaseEntity {
 public:

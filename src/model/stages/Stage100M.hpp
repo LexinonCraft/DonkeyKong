@@ -5,8 +5,8 @@
 #include <vector>
 #include <list>
 
-#include "../Stage.hpp"
-#include "../animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 
 class Stage100M : public Stage {
 public:

@@ -1,7 +1,7 @@
 #include <stdexcept>
 
-#include "BaseEntity.hpp"
-#include "EntityRepository.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/util/EntityRepository.hpp"
 
 /**
  * @brief Schedules the entity for deletion in the owning repository.

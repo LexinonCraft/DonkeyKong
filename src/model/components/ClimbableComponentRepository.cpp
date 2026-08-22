@@ -1,4 +1,4 @@
-#include "ClimbableComponentRepository.hpp"
+#include "DK/model/components/ClimbableComponentRepository.hpp"
 
 /**
  * @brief Finds a climbable object that an object at the given position can climb upward from.

@@ -3,19 +3,19 @@
 
 #include <memory>
 
-#include "../model/util/AbstractComponentFactory.hpp"
-#include "DrawableComponent.hpp"
-#include "GirderRenderer.hpp"
-#include "BarrelRenderer.hpp"
-#include "PlayerRenderer.hpp"
-#include "LadderRenderer.hpp"
-#include "HammerRenderer.hpp"
-#include "DonkeyKongRenderer.hpp"
-#include "BarrelStackRenderer.hpp"
-#include "PaulineRenderer.hpp"
-#include "DissolvingPlatformRenderer.hpp"
-#include "GhostRenderer.hpp"
-#include "BeamRenderer.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/GirderRenderer.hpp"
+#include "DK/view/BarrelRenderer.hpp"
+#include "DK/view/PlayerRenderer.hpp"
+#include "DK/view/LadderRenderer.hpp"
+#include "DK/view/HammerRenderer.hpp"
+#include "DK/view/DonkeyKongRenderer.hpp"
+#include "DK/view/BarrelStackRenderer.hpp"
+#include "DK/view/PaulineRenderer.hpp"
+#include "DK/view/DissolvingPlatformRenderer.hpp"
+#include "DK/view/GhostRenderer.hpp"
+#include "DK/view/BeamRenderer.hpp"
 
 /**
  * @brief Factory that converts entities into their matching SFML renderer components.

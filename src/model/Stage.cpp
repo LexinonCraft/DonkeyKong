@@ -1,9 +1,9 @@
 #include <algorithm>
 
-#include "Stage.hpp"
-#include "PlayerData.hpp"
-#include "StageSequence.hpp"
-#include "animations/PlayerDeathAnimation.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/model/StageSequence.hpp"
+#include "DK/model/animations/PlayerDeathAnimation.hpp"
 
 namespace {
 float calculate_barrel_difficulty_multiplier(unsigned int level) {

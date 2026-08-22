@@ -1,5 +1,5 @@
-#include "AbstractSceneView.hpp"
-#include "../Constants.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+#include "DK/Constants.hpp"
 #include <SFML/Graphics/Rect.hpp>
 
 void AbstractSceneView::adjust_window_view(sf::RenderWindow &window) {

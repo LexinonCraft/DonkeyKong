@@ -1,7 +1,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 
-#include "Stage25M.hpp"
+#include "DK/model/stages/Stage25M.hpp"
 
 /**
  * @brief Builds the prototype scene used for the current game demo.

@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "BaseEntity.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Abstract factory for creating component instances for a given entity.

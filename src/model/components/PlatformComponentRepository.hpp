@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/ComponentRepository.hpp"
-#include "../util/Component.hpp"
-#include "PlatformComponentFactory.hpp"
-#include "Platform.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/PlatformComponentFactory.hpp"
+#include "DK/model/components/Platform.hpp"
 
 /**
  * @brief Repository for platform behaviour components.

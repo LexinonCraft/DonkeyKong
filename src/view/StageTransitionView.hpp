@@ -5,10 +5,10 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AssetsManager.hpp"
-#include "AbstractSceneView.hpp"
-#include "../model/PlayerData.hpp"
-#include "../model/StageSequence.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/model/StageSequence.hpp"
 
 class StageTransitionView : public AbstractSceneView {
 public:

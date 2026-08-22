@@ -1,11 +1,11 @@
-#include "Girder.hpp"
+#include "DK/model/entities/Girder.hpp"
 
 #include <cmath>
 
 #include <SFML/Graphics/Color.hpp>
 #include <cstdlib>
 
-#include "../../Constants.hpp"
+#include "DK/Constants.hpp"
 
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right) :
     Girder(ref, left, right, Color::Red) {}

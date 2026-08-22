@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/ComponentRepository.hpp"
-#include "../util/Component.hpp"
-#include "UpdatableComponentFactory.hpp"
-#include "Updatable.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/UpdatableComponentFactory.hpp"
+#include "DK/model/components/Updatable.hpp"
 
 /**
  * @brief Repository for all updatable entity behaviour components.

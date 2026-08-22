@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "../Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 /**
  * @brief Observer interface for entity creation and destruction events.

@@ -1,10 +1,10 @@
 #ifndef GAME_OVER_CONTROL_HPP
 #define GAME_OVER_CONTROL_HPP
 
-#include "AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../view/GameOverView.hpp"
-#include "../model/PlayerData.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/GameOverView.hpp"
+#include "DK/model/PlayerData.hpp"
 
 class GameOverControl : public AbstractSceneControl {
 public:

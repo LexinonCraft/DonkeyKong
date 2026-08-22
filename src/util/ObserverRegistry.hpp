@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 
-#include "../model/Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 template <typename T>
 class ObserverRegistry {

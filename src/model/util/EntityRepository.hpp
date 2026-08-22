@@ -6,22 +6,22 @@
 #include <queue>
 #include <unordered_map>
 
-#include "../Declarations.hpp"
-#include "EntityRepositoryObserver.hpp"
-#include "BaseEntity.hpp"
-#include "../entities/Barrel.hpp"
-#include "../entities/Girder.hpp"
-#include "../entities/HammerPowerUp.hpp"
-#include "../entities/Player.hpp"
-#include "../entities/Ladder.hpp"
-#include "../entities/DonkeyKong.hpp"
-#include "../entities/BarrelStack.hpp"
-#include "../entities/Pauline.hpp"
-#include "../entities/DissolvingPlatform.hpp"
-#include "../../util/ObserverRegistry.hpp"
-#include "../entities/Ghost.hpp"
-#include "../entities/Beam.hpp"
-#include "Ref.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/util/EntityRepositoryObserver.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/entities/Barrel.hpp"
+#include "DK/model/entities/Girder.hpp"
+#include "DK/model/entities/HammerPowerUp.hpp"
+#include "DK/model/entities/Player.hpp"
+#include "DK/model/entities/Ladder.hpp"
+#include "DK/model/entities/DonkeyKong.hpp"
+#include "DK/model/entities/BarrelStack.hpp"
+#include "DK/model/entities/Pauline.hpp"
+#include "DK/model/entities/DissolvingPlatform.hpp"
+#include "DK/util/ObserverRegistry.hpp"
+#include "DK/model/entities/Ghost.hpp"
+#include "DK/model/entities/Beam.hpp"
+#include "DK/model/util/Ref.hpp"
 
 /**
  * @brief Repository storing all entities and forwarding entity lifecycle events.

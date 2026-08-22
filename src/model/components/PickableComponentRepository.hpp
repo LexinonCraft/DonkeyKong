@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/Component.hpp"
-#include "../util/ComponentRepository.hpp"
-#include "Pickable.hpp"
-#include "PickableComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
+#include "DK/model/components/Pickable.hpp"
+#include "DK/model/components/PickableComponentFactory.hpp"
 
 class PickableComponentRepository : public ComponentRepository<Component<Pickable>> {
 public:

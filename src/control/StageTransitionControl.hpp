@@ -1,9 +1,9 @@
 #ifndef STAGE_TRANSITION_CONTROL_HPP
 #define STAGE_TRANSITION_CONTROL_HPP
 
-#include "AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../view/StageTransitionView.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/StageTransitionView.hpp"
 
 class StageTransitionControl : public AbstractSceneControl {
 public:

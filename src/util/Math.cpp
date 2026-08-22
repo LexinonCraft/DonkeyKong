@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "Math.hpp"
+#include "DK/util/Math.hpp"
 
 int floor_to_int(float value) {
     return static_cast<int>(std::floor(value));

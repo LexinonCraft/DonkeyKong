@@ -1,6 +1,6 @@
 #include <fstream>
 
-#include "AssetsManager.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::string contributors_file) : textures_base_path(base_path), font(font_file), contributors(read_contributors(contributors_file)) {
     load("donkey_kong_still.png", donkey_kong_still_texture);

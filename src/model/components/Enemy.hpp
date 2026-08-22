@@ -1,7 +1,7 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
 
-#include "../util/EntityFromComponentAux.hpp"
+#include "DK/model/util/EntityFromComponentAux.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 

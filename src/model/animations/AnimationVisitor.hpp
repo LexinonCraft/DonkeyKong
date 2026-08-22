@@ -1,7 +1,7 @@
 #ifndef ANIMATION_VISITOR_HPP
 #define ANIMATION_VISITOR_HPP
 
-#include "../Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 class AnimationVisitor {
 public:

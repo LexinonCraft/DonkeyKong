@@ -1,9 +1,9 @@
 #ifndef DRAWABLE_COMPONENT_REPOSITORY_HPP
 #define DRAWABLE_COMPONENT_REPOSITORY_HPP
 
-#include "DrawableComponent.hpp"
-#include "DrawableComponentFactory.hpp"
-#include "../model/util/ComponentRepository.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/DrawableComponentFactory.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
 
 /**
  * @brief Repository for drawable renderer components used by the view layer.

@@ -1,5 +1,5 @@
-#include "Layer.hpp"
-#include "../Constants.hpp"
+#include "DK/view/Layer.hpp"
+#include "DK/Constants.hpp"
 
 #include <stdexcept>
 

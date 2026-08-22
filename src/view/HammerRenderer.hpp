@@ -5,9 +5,9 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "../model/entities/HammerPowerUp.hpp"
-#include "AssetsManager.hpp"
-#include "DrawableComponent.hpp"
+#include "DK/model/entities/HammerPowerUp.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponent.hpp"
 
 class HammerRenderer : public DrawableComponent {
 public:

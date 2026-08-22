@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 enum class StageId {
     Stage25M,

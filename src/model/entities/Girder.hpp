@@ -5,9 +5,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 
-#include "../components/Platform.hpp"
-#include "../Declarations.hpp"
-#include "../util/BaseEntity.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Sloped platform entity that forms the walkable floors of the level.

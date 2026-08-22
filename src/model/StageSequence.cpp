@@ -1,9 +1,9 @@
 #include <stdexcept>
 
-#include "StageSequence.hpp"
-#include "stages/Stage100M.hpp"
-#include "stages/Stage25M.hpp"
-#include "PlayerData.hpp"
+#include "DK/model/StageSequence.hpp"
+#include "DK/model/stages/Stage100M.hpp"
+#include "DK/model/stages/Stage25M.hpp"
+#include "DK/model/PlayerData.hpp"
 
 std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level) {
     auto stage_sequence = std::make_unique<std::vector<StageId>>();

@@ -1,8 +1,8 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "ScoreEffect.hpp"
-#include "../Constants.hpp"
+#include "DK/view/ScoreEffect.hpp"
+#include "DK/Constants.hpp"
 
 bool ScoreEffect::update(float dt) {
     time_elapsed += dt;

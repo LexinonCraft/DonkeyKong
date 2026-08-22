@@ -1,11 +1,11 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "Ghost.hpp"
-#include "../../Constants.hpp"
-#include "../Stage.hpp"
-#include "../../util/Math.hpp"
-#include "../PlayerData.hpp"
+#include "DK/model/entities/Ghost.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/model/PlayerData.hpp"
 
 Ghost::Ghost(Ref ref, std::shared_ptr<Platform> platform, float x_pos)
     : BaseEntity(ref), position({x_pos, platform->surface_y_at(x_pos)}), current_platform(platform) {

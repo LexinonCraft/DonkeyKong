@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "../components/Platform.hpp"
-#include "../util/EntityFromComponentAux.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/util/EntityFromComponentAux.hpp"
 
 /**
  * @brief Behaviour interface for vertical structures that a player can climb.

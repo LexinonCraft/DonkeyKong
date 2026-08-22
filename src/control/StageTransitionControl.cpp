@@ -1,4 +1,4 @@
-#include "StageTransitionControl.hpp"
+#include "DK/control/StageTransitionControl.hpp"
 
 void StageTransitionControl::handle_event(sf::Event *event) {
     // No event handling for the title screen

@@ -6,9 +6,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/View.hpp>
 
-#include "LayerStack.hpp"
-#include "AssetsManager.hpp"
-#include "../Constants.hpp"
+#include "DK/view/LayerStack.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/Constants.hpp"
 
 class AbstractSceneView {
 public:

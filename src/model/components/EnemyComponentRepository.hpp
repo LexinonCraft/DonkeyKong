@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/ComponentRepository.hpp"
-#include "../util/Component.hpp"
-#include "EnemyComponentFactory.hpp"
-#include "Enemy.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/EnemyComponentFactory.hpp"
+#include "DK/model/components/Enemy.hpp"
 
 /**
  * @brief Repository storing enemy behaviour components.

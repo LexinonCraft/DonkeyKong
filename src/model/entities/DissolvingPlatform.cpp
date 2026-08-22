@@ -1,8 +1,8 @@
-#include "DissolvingPlatform.hpp"
+#include "DK/model/entities/DissolvingPlatform.hpp"
 
 #include <SFML/Graphics/Color.hpp>
 
-#include "../../Constants.hpp"
+#include "DK/Constants.hpp"
 
 DissolvingPlatform::DissolvingPlatform(Ref ref, sf::Vector2f position, float width) :
     BaseEntity(ref),

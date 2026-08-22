@@ -1,10 +1,10 @@
-#include "Game.hpp"
+#include "DK/control/Game.hpp"
 
-#include "../Constants.hpp"
-#include "StageControl.hpp"
-#include "StageTransitionControl.hpp"
-#include "TitleScreenControl.hpp"
-#include "GameOverControl.hpp"
+#include "DK/Constants.hpp"
+#include "DK/control/StageControl.hpp"
+#include "DK/control/StageTransitionControl.hpp"
+#include "DK/control/TitleScreenControl.hpp"
+#include "DK/control/GameOverControl.hpp"
 
 Game::Game() :
     window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data))) {

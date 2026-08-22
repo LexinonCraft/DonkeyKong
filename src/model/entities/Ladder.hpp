@@ -5,9 +5,9 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "../components/Platform.hpp"
-#include "../components/Climbable.hpp"
-#include "../util/BaseEntity.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /// @brief Represents a ladder connecting two girders at a specific x position.
 class Ladder : public BaseEntity, public Climbable {

@@ -1,4 +1,4 @@
-#include "StageControl.hpp"
+#include "DK/control/StageControl.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 

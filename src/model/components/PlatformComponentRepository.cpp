@@ -1,4 +1,4 @@
-#include "PlatformComponentRepository.hpp"
+#include "DK/model/components/PlatformComponentRepository.hpp"
 
 /**
  * @brief Finds a platform directly below the provided world position.

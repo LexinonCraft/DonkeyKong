@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/ComponentRepository.hpp"
-#include "../util/Component.hpp"
-#include "ClimbableComponentFactory.hpp"
-#include "Climbable.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/ClimbableComponentFactory.hpp"
+#include "DK/model/components/Climbable.hpp"
 
 /**
  * @brief Repository storing climbable behaviour components.

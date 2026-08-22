@@ -4,12 +4,12 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
 
-#include "../util/BaseEntity.hpp"
-#include "../components/Updatable.hpp"
-#include "../components/Enemy.hpp"
-#include "../util/EntityVisitor.hpp"
-#include "../Declarations.hpp"
-#include "../animations/AbstractAnimation.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/components/Updatable.hpp"
+#include "DK/model/components/Enemy.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/animations/AbstractAnimation.hpp"
 
 class DonkeyKong : public BaseEntity, public Updatable, public Enemy {
 public:

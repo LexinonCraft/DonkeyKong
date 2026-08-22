@@ -1,11 +1,11 @@
 #ifndef BARREL_RENDERER_HPP
 #define BARREL_RENDERER_HPP
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/Barrel.hpp"
-#include "AssetsManager.hpp"
-#include "../Constants.hpp"
-#include "../util/Math.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/model/entities/Barrel.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/Constants.hpp"
+#include "DK/util/Math.hpp"
 #include <SFML/Graphics/Rect.hpp>
 
 /**

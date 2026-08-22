@@ -5,8 +5,8 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/Beam.hpp"
+#include "DK/view/DrawableComponent.hpp"
+#include "DK/model/entities/Beam.hpp"
 
 class BeamRenderer : public DrawableComponent {
 public:

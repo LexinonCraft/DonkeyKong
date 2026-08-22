@@ -4,13 +4,13 @@
 #include <memory>
 #include <vector>
 
-#include "AbstractAnimation.hpp"
-#include "AnimationVisitor.hpp"
-#include "../entities/Player.hpp"
-#include "../entities/DonkeyKong.hpp"
-#include "../entities/Pauline.hpp"
-#include "../entities/Girder.hpp"
-#include "../../Constants.hpp"
+#include "DK/model/animations/AbstractAnimation.hpp"
+#include "DK/model/animations/AnimationVisitor.hpp"
+#include "DK/model/entities/Player.hpp"
+#include "DK/model/entities/DonkeyKong.hpp"
+#include "DK/model/entities/Pauline.hpp"
+#include "DK/model/entities/Girder.hpp"
+#include "DK/Constants.hpp"
 
 class Stage100MCompletionAnimation : public AbstractAnimation {
 public:

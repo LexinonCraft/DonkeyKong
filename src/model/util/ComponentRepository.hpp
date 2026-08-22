@@ -5,9 +5,9 @@
 #include <memory>
 #include <unordered_map>
 
-#include "EntityRepository.hpp"
-#include "BaseEntity.hpp"
-#include "AbstractComponentFactory.hpp"
+#include "DK/model/util/EntityRepository.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
 
 /**
  * @brief Repository that keeps a component map synchronized with the entity repository.

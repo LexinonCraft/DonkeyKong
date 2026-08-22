@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_ANIMATION_HPP
 #define ABSTRACT_ANIMATION_HPP
 
-#include "../Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 class AbstractAnimation {
 public:

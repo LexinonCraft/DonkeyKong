@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../util/AbstractComponentFactory.hpp"
-#include "../util/Component.hpp"
-#include "Climbable.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/components/Climbable.hpp"
 
 /**
  * @brief Factory that creates climbable components for entities that support climbing.

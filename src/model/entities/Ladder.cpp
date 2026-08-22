@@ -1,5 +1,5 @@
-#include "Ladder.hpp"
-#include "../../Constants.hpp"
+#include "DK/model/entities/Ladder.hpp"
+#include "DK/Constants.hpp"
 
 Ladder::Ladder(Ref ref, std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos, bool broken) :
         Ladder(ref, lower_end, upper_end, x_pos, broken, Color::Cyan) {}

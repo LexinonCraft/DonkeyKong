@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../Declarations.hpp"
-#include "EntityVisitor.hpp"
-#include "Ref.hpp"
-#include "Component.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
+#include "DK/model/util/Ref.hpp"
+#include "DK/model/util/Component.hpp"
 
 /**
  * @brief Base class for all game entities in the hybrid ECS model.
