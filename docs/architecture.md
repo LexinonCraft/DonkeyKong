@@ -4,9 +4,9 @@
 
 This project uses the [Model View Controller](https://de.wikipedia.org/wiki/Model_View_Controller) pattern. The source files are organized into three main directories:
 
-* `model`: Contains classes representing the game objects and implementing the game logic.
-* `view`: Contains the user interface components and rendering logic.
-* `controller`: Contains the input handling and game state management logic.
+* `model`: Representation of the logical game state, including game objects, stages and player data. Also includes the logic for updating the state. Contains utility classes for managing the relationships between entities and their components (see below).
+* `view`: Contains classes for rendering different screens and specific entities as well as some utility classes for rendering.
+* `controller`: Responsible for handling user input and synchronizing game state (model) and view. For each screen (e.g. title screen, stage screen, game over screen), there is a corresponding controller class that handles the input, updates the model, and triggers the appropriate view rendering.
 
 ## Entity Component System
 
@@ -19,3 +19,26 @@ To manage different game entities and their behaviors efficiently and flexibly, 
     * A repository class that extends `ComponentRepository<C>` and can add useful methods such as `update_all` or `find_platform_underneath`.
 
 Note that we do not use a pure ECS design, where entities are just IDs and all data is stored in components. Instead, we use a hybrid approach where each entity has its own class that can contain additional data and methods while still allowing for flexible composition of behaviors through components. Also, it simplies adhering to the MVC pattern, as we can move data relevant to the view (such as sprite or animation data) from the entity class to a dedicated component (`DrawableComponent`) whereas the game logic runs directly in the entity classes.
+
+## Directory structure
+
+```
+src/
+├── model/
+│   ├── animations/        # animation state and coordination
+│   ├── components/        # underlying classes for components as well as component factories and repositories
+│   ├── entities/          # different entity types and their properties and behaviors
+│   ├── stages/            # setup of the stages of the game
+│   ├── util/              # utility classes for managing the relationships between entities and their components
+│   ├── PlayerData.hpp     # player data and high score management
+│   ├── Stage.hpp          # base class for stages
+│   ├── StageObserver.hpp  # observer for stage events
+│   └── StageSequence.hpp  # defines the sequence of stages in the game
+├── view/                  # renderers for screens and entities as well as utility classes for rendering
+├── control/               # controllers for screens and input handling, managed by the `Game` class
+├── util/                  # more utility classes for general use
+├── main.cpp               # entry point of the program
+└── Constants.hpp          # constants used throughout the project
+test/
+└── GameTest.cpp           # unit tests for the game logic
+```
