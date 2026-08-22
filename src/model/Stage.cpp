@@ -89,6 +89,4 @@ void Stage::on_exit() {
     }
 }
 
-void Stage::clear_secondary_entities() {
-    entities.clear_secondary_entities();
-}
+void Stage::clear_secondary_entities() { entities.clear_secondary_entities(); }
