@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../util/AbstractComponentFactory.hpp"
-#include "../util/Component.hpp"
-#include "Pickable.hpp"
+#include "DK/model/components/Pickable.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
 
 class PickableComponentFactory : public AbstractComponentFactory<Component<Pickable>> {
 protected:

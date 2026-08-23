@@ -6,11 +6,11 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "../Declarations.hpp"
-#include "../util/BaseEntity.hpp"
-#include "../components/Updatable.hpp"
-#include "../components/Enemy.hpp"
-#include "../components/Jumpable.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/model/components/Enemy.hpp"
+#include "DK/model/components/Jumpable.hpp"
+#include "DK/model/components/Updatable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Barrel entity that rolls down sloped platforms and falls between them.
@@ -133,7 +133,7 @@ private:
     int player_jump_start_side = 0;
     float previous_player_x_difference = 0.f;
     float previous_player_y_difference = 0.f;
-    
+
     sf::CircleShape shape;
 
     /**

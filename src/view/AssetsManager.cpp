@@ -1,8 +1,25 @@
+#include "DK/view/AssetsManager.hpp"
+
 #include <fstream>
 
-#include "AssetsManager.hpp"
+#include "DK/Constants.hpp"
 
-AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::string contributors_file) : textures_base_path(base_path), font(font_file), contributors(read_contributors(contributors_file)) {
+AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::string contributors_file)
+    : textures_base_path(base_path), font(font_file), contributors(read_contributors(contributors_file)) {
+    load("jumpman_still.png", jumpman_still_texture);
+    load("jumpman_walking1.png", jumpman_walking1_texture);
+    load("jumpman_walking2.png", jumpman_walking2_texture);
+    load("jumpman_jumping.png", jumpman_jumping_texture);
+    load("jumpman_climbing.png", jumpman_climbing_texture);
+    load("jumpman_dying1.png", jumpman_dying1_texture);
+    load("jumpman_dying2.png", jumpman_dying2_texture);
+    load("jumpman_dead.png", jumpman_dead_texture);
+    load("jumpman_hammer_up_still.png", jumpman_hammer_up_still_texture);
+    load("jumpman_hammer_up_walking1.png", jumpman_hammer_up_walking1_texture);
+    load("jumpman_hammer_up_walking2.png", jumpman_hammer_up_walking2_texture);
+    load("jumpman_hammer_down_still.png", jumpman_hammer_down_still_texture);
+    load("jumpman_hammer_down_walking1.png", jumpman_hammer_down_walking1_texture);
+    load("jumpman_hammer_down_walking2.png", jumpman_hammer_down_walking2_texture);
     load("donkey_kong_still.png", donkey_kong_still_texture);
     load("donkey_kong_angry1.png", donkey_kong_angry1_texture);
     load("donkey_kong_angry2.png", donkey_kong_angry2_texture);
@@ -14,37 +31,23 @@ AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::
     load("donkey_kong_falling1.png", donkey_kong_falling1_texture);
     load("donkey_kong_falling2.png", donkey_kong_falling2_texture);
     load("donkey_kong_falling3.png", donkey_kong_falling3_texture);
-    load("jumpman_still.png", jumpman_still_texture);
-    load("jumpman_walking1.png", jumpman_walking1_texture);
-    load("jumpman_walking2.png", jumpman_walking2_texture);
-    load("jumpman_jumping.png", jumpman_jumping_texture);
-    load("jumpman_climbing.png", jumpman_climbing_texture);
-    load("jumpman_dying1.png", jumpman_dying1_texture);
-    load("jumpman_dying2.png", jumpman_dying2_texture);
-    load("jumpman_dead.png", jumpman_dead_texture);
-    load("girder_red.png", girder_red_texture);
-    load("girder_blue.png", girder_blue_texture);
+    load("pauline_still.png", pauline_still_texture);
+    load("pauline_scream1.png", pauline_scream1_texture);
+    load("pauline_scream2.png", pauline_scream2_texture);
     load("barrel_front1.png", barrel_front1_texture);
     load("barrel_front2.png", barrel_front2_texture);
     load("barrel_side1.png", barrel_side1_texture);
     load("barrel_side2.png", barrel_side2_texture);
-    load("ladder_cyan.png", ladder_cyan_texture);
-    load("ladder_yellow.png", ladder_yellow_texture);
-    load("pauline_still.png", pauline_still_texture);
-    load("pauline_scream1.png", pauline_scream1_texture);
-    load("pauline_scream2.png", pauline_scream2_texture);
-    load("help.png", help_texture);
-    load("hammer.png", hammer_texture);
     load("ghost1.png", ghost1_texture);
     load("ghost2.png", ghost2_texture);
+    load("girder_red.png", girder_red_texture);
+    load("girder_blue.png", girder_blue_texture);
+    load("ladder_cyan.png", ladder_cyan_texture);
+    load("ladder_yellow.png", ladder_yellow_texture);
+    load("help.png", help_texture);
+    load("hammer.png", hammer_texture);
     load("heart_normal.png", heart_normal_texture);
     load("heart_broken.png", heart_broken_texture);
-    load("jumpman_hammer_up_still.png", jumpman_hammer_up_still_texture);
-    load("jumpman_hammer_up_walking1.png", jumpman_hammer_up_walking1_texture);
-    load("jumpman_hammer_up_walking2.png", jumpman_hammer_up_walking2_texture);
-    load("jumpman_hammer_down_still.png", jumpman_hammer_down_still_texture);
-    load("jumpman_hammer_down_walking1.png", jumpman_hammer_down_walking1_texture);
-    load("jumpman_hammer_down_walking2.png", jumpman_hammer_down_walking2_texture);
 }
 
 const sf::Texture &AssetsManager::get_texture(TextureId id) const {
@@ -138,14 +141,6 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
     }
 }
 
-const sf::Font &AssetsManager::get_font() const {
-    return font;
-}
-
-const std::string &AssetsManager::get_contributors() const {
-    return contributors;
-}
-
 void AssetsManager::load(const std::string &filename, sf::Texture &texture) {
     if (!texture.loadFromFile(textures_base_path + filename)) {
         throw std::runtime_error("Failed to load texture: " + filename);
@@ -155,7 +150,7 @@ void AssetsManager::load(const std::string &filename, sf::Texture &texture) {
 std::string AssetsManager::read_contributors(const std::string &filename) const {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        return "By Muvels and Lexinon";
+        return constants::FALLBACK_CONTRIBUTORS_TEXT;
     }
     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     return content;

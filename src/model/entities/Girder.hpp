@@ -1,13 +1,14 @@
 #ifndef GIRDER_HPP
 #define GIRDER_HPP
 
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <memory>
 
-#include "../components/Platform.hpp"
-#include "../Declarations.hpp"
-#include "../util/BaseEntity.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include "DK/model/Declarations.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Sloped platform entity that forms the walkable floors of the level.
@@ -97,7 +98,7 @@ public:
      * @brief Returns the visible rectangle representing the girder.
      * @return SFML rectangle shape used for rendering.
      */
-    const sf::RectangleShape& get_shape() const;
+    const sf::RectangleShape &get_shape() const;
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
@@ -111,13 +112,9 @@ public:
 
     sf::Vector2f get_right() const { return right; }
 
-    void set_left(sf::Vector2f new_left) {
-        left = new_left;
-    }
+    void set_left(sf::Vector2f new_left) { left = new_left; }
 
-    void set_right(sf::Vector2f new_right) {
-        right = new_right;
-    }
+    void set_right(sf::Vector2f new_right) { right = new_right; }
 
     Color get_color() const { return color; }
 
@@ -129,9 +126,7 @@ public:
         return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
     }
 
-    bool is_secondary_entity() const override {
-        return false;
-    }
+    bool is_secondary_entity() const override { return false; }
 
 private:
     sf::Vector2f left;

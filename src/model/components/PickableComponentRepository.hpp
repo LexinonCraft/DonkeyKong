@@ -3,14 +3,15 @@
 
 #include <memory>
 
-#include "../util/Component.hpp"
-#include "../util/ComponentRepository.hpp"
-#include "Pickable.hpp"
-#include "PickableComponentFactory.hpp"
+#include "DK/model/components/Pickable.hpp"
+#include "DK/model/components/PickableComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
 
 class PickableComponentRepository : public ComponentRepository<Component<Pickable>> {
 public:
-    PickableComponentRepository(EntityRepository &repository) : ComponentRepository<Component<Pickable>>(repository, std::make_unique<PickableComponentFactory>()) {}
+    PickableComponentRepository(EntityRepository &repository)
+        : ComponentRepository<Component<Pickable>>(repository, std::make_unique<PickableComponentFactory>()) {}
 
     std::shared_ptr<Pickable> find_touching_pickable(const sf::RectangleShape &player_shape);
 };

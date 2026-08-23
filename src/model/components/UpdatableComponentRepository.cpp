@@ -1,4 +1,4 @@
-#include "UpdatableComponentRepository.hpp"
+#include "DK/model/components/UpdatableComponentRepository.hpp"
 
 /**
  * @brief Updates all active updatable entities in the level.

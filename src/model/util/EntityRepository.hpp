@@ -1,27 +1,28 @@
 #ifndef ENTITY_REPOSITORY_HPP
 #define ENTITY_REPOSITORY_HPP
 
-#include <SFML/System/Vector2.hpp>
 #include <memory>
 #include <queue>
 #include <unordered_map>
 
-#include "../Declarations.hpp"
-#include "EntityRepositoryObserver.hpp"
-#include "BaseEntity.hpp"
-#include "../entities/Barrel.hpp"
-#include "../entities/Girder.hpp"
-#include "../entities/HammerPowerUp.hpp"
-#include "../entities/Player.hpp"
-#include "../entities/Ladder.hpp"
-#include "../entities/DonkeyKong.hpp"
-#include "../entities/BarrelStack.hpp"
-#include "../entities/Pauline.hpp"
-#include "../entities/DissolvingPlatform.hpp"
-#include "../../util/ObserverRegistry.hpp"
-#include "../entities/Ghost.hpp"
-#include "../entities/Beam.hpp"
-#include "Ref.hpp"
+#include <SFML/System/Vector2.hpp>
+
+#include "DK/model/Declarations.hpp"
+#include "DK/model/entities/Barrel.hpp"
+#include "DK/model/entities/BarrelStack.hpp"
+#include "DK/model/entities/Beam.hpp"
+#include "DK/model/entities/DissolvingPlatform.hpp"
+#include "DK/model/entities/DonkeyKong.hpp"
+#include "DK/model/entities/Ghost.hpp"
+#include "DK/model/entities/Girder.hpp"
+#include "DK/model/entities/HammerPowerUp.hpp"
+#include "DK/model/entities/Ladder.hpp"
+#include "DK/model/entities/Pauline.hpp"
+#include "DK/model/entities/Player.hpp"
+#include "DK/model/util/BaseEntity.hpp"
+#include "DK/model/util/EntityRepositoryObserver.hpp"
+#include "DK/model/util/Ref.hpp"
+#include "DK/util/ObserverRegistry.hpp"
 
 /**
  * @brief Repository storing all entities and forwarding entity lifecycle events.
@@ -42,9 +43,7 @@ public:
      * @param position Starting position of the barrel.
      * @return Shared pointer to the created barrel.
      */
-    std::shared_ptr<Barrel> add_barrel(sf::Vector2f position) {
-        return add_entity(std::make_shared<Barrel>(gen_ref(), position));
-    }
+    std::shared_ptr<Barrel> add_barrel(sf::Vector2f position) { return add_entity(std::make_shared<Barrel>(gen_ref(), position)); }
 
     std::shared_ptr<HammerPowerUp> add_hammer_power_up(sf::Vector2f position) {
         return add_entity(std::make_shared<HammerPowerUp>(gen_ref(), position));
@@ -74,9 +73,7 @@ public:
      * @brief Adds the player entity.
      * @return Shared pointer to the created player.
      */
-    std::shared_ptr<Player> add_player() {
-        return add_entity(std::make_shared<Player>(gen_ref()));
-    }
+    std::shared_ptr<Player> add_player() { return add_entity(std::make_shared<Player>(gen_ref())); }
 
     /**
      * @brief Adds a ladder connecting two platform endpoints at an x-position.
@@ -85,7 +82,8 @@ public:
      * @param x_position Horizontal x-position of the ladder.
      * @return Shared pointer to the created ladder.
      */
-    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken) {
+    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
+                                       bool broken) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken));
     }
 
@@ -97,11 +95,13 @@ public:
      * @param color Color of the ladder.
      * @return Shared pointer to the created ladder.
      */
-    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position, bool broken, Ladder::Color color) {
+    std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
+                                       bool broken, Ladder::Color color) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_end, upper_end, x_position, broken, color));
     }
 
-    std::shared_ptr<Ladder> add_ladder(float lower_y, float upper_y, float x_pos, bool broken, Ladder::Color color, bool active_for_player) {
+    std::shared_ptr<Ladder> add_ladder(float lower_y, float upper_y, float x_pos, bool broken, Ladder::Color color,
+                                       bool active_for_player) {
         return add_entity(std::make_shared<Ladder>(gen_ref(), lower_y, upper_y, x_pos, broken, color, active_for_player));
     }
 
@@ -124,7 +124,7 @@ public:
     std::shared_ptr<Ghost> add_ghost(std::shared_ptr<Platform> platform, float x_pos) {
         return add_entity(std::make_shared<Ghost>(gen_ref(), platform, x_pos));
     }
-    
+
     std::shared_ptr<Beam> add_beam(std::shared_ptr<Platform> lower_platform, std::shared_ptr<Platform> upper_platform, float x_pos) {
         return add_entity(std::make_shared<Beam>(gen_ref(), lower_platform, upper_platform, x_pos));
     }
@@ -133,9 +133,7 @@ public:
      * @brief Schedules an entity for deletion in the next repository cleanup pass.
      * @param id Entity id to remove.
      */
-    void prepare_for_deletion(Id id) {
-        pending_deletions.push(id);
-    }
+    void prepare_for_deletion(Id id) { pending_deletions.push(id); }
 
     /**
      * @brief Adds all entities queued for insertion and notifies observers.
@@ -151,24 +149,35 @@ public:
      * @brief Returns an iterator to the beginning of the entity map.
      * @return Iterator to the first entity.
      */
-    auto begin() {
-        return entities.begin();
-    }
+    auto begin() { return entities.begin(); }
 
     /**
      * @brief Returns an iterator to the end of the entity map.
      * @return Iterator past the last entity.
      */
-    auto end() {
-        return entities.end();
-    }
+    auto end() { return entities.end(); }
 
-    std::queue<std::shared_ptr<BaseEntity>>& get_pending_additions() {
-        return pending_additions;
-    }
+    std::queue<std::shared_ptr<BaseEntity>> &get_pending_additions() { return pending_additions; }
 
-    ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() {
-        return observer_registry;
+    ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() { return observer_registry; }
+
+    void clear_secondary_entities() {
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
+            if (it->second->is_secondary_entity()) {
+                it->second->destroy();
+            }
+        }
+
+        // Remove all secondary entities from the pending additions queue by rebuilding it without the secondary entities
+        std::queue<std::shared_ptr<BaseEntity>> temp_queue;
+        while (!pending_additions.empty()) {
+            auto entity = pending_additions.front();
+            pending_additions.pop();
+            if (!entity->is_secondary_entity()) {
+                temp_queue.push(entity);
+            }
+        }
+        pending_additions = std::move(temp_queue);
     }
 
 private:
@@ -176,9 +185,7 @@ private:
      * @brief Generates a reference for a new entity.
      * @return Newly generated reference bound to this repository.
      */
-    Ref gen_ref() {
-        return Ref(id_generator(), *this);
-    }
+    Ref gen_ref() { return Ref(id_generator(), *this); }
 
     /**
      * @brief Adds an entity to the repository and notifies observers.
@@ -186,8 +193,7 @@ private:
      * @param entity Entity to insert.
      * @return The inserted entity.
      */
-    template <typename E>
-    std::shared_ptr<E> add_entity(std::shared_ptr<E> entity) {
+    template <typename E> std::shared_ptr<E> add_entity(std::shared_ptr<E> entity) {
         pending_additions.push(std::static_pointer_cast<BaseEntity>(entity));
         return entity;
     }

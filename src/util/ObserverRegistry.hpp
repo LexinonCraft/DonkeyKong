@@ -3,10 +3,9 @@
 
 #include <unordered_map>
 
-#include "../model/Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
-template <typename T>
-class ObserverRegistry {
+template <typename T> class ObserverRegistry {
 public:
     ObserverRegistry(Id (*id_generator)()) : id_generator(id_generator) {}
 
@@ -25,17 +24,11 @@ public:
      * @brief Unregisters an observer from future events.
      * @param id Observer id returned by register_observer().
      */
-    void unregister_observer(Id id) {
-        observers.erase(id);
-    }
+    void unregister_observer(Id id) { observers.erase(id); }
 
-    auto begin() {
-        return observers.begin();
-    }
+    auto begin() { return observers.begin(); }
 
-    auto end() {
-        return observers.end();
-    }
+    auto end() { return observers.end(); }
 
 private:
     std::unordered_map<Id, T *> observers;
