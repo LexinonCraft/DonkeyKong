@@ -33,6 +33,19 @@ FetchContent_Declare(GTest
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(GTest)
 
+# Optional Doxygen target: `cmake --build build --target docs`
+find_package(Doxygen QUIET)
+if(DOXYGEN_FOUND)
+    add_custom_target(docs
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating HTML documentation with Doxygen"
+        VERBATIM
+    )
+else()
+    message(STATUS "Doxygen not found. Skipping docs target.")
+endif()
+
 # add the contents of the src and test folders
 add_subdirectory(src)
 add_subdirectory(test)

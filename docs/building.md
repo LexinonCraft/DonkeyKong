@@ -12,10 +12,12 @@ Make sure you have the following tools installed on your system:
 ## Building, running and testing the game
 
 ```bash
-cmake -B build          # Create a build directory and generate the build system files
-cmake --build build     # Build the project
+cmake -B build                     # Create a build directory and generate the build system files
+cmake --build build                # Build the project
 
-./build/bin/DonkeyKong  # Run the game
+./build/bin/DonkeyKong             # Run the game
 
-./build/bin/Test  # Run the tests
+./build/bin/Test                   # Run the tests
+
+cmake --build build --target docs  # Generate HTML docs with Doxygen
 ```

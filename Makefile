@@ -2,6 +2,8 @@
 # GoogleTest object rule, would become the default goal)
 .DEFAULT_GOAL := game
 
+.PHONY: clean docs
+
 CXX := c++
 CXXFLAGS := -Wall -std=c++20
 
@@ -83,3 +85,6 @@ $(BUILDDIR)/%.o: %.cpp
 
 clean:
 	$(RM) -r $(BUILDDIR)/src $(BUILDDIR)/test game tests
+
+docs:
+	doxygen Doxyfile
