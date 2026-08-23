@@ -19,8 +19,6 @@ Game::Game()
         throw std::runtime_error("Failed to load icon");
     }
     window.setIcon(image.getSize(), image.getPixelsPtr());
-
-    // level->set_player(std::rand, &player_control.get_player());
 }
 
 void Game::run() {
@@ -46,15 +44,18 @@ void Game::run() {
 
 bool Game::input() {
     while (std::optional<sf::Event> event = window.pollEvent()) {
+        // check if the window was closed
         if (event->is<sf::Event::Closed>()) {
             // quit
             window.close();
             return true;
         }
 
+        // dispatch the event to the scene control
         scene_control->handle_event(&(*event));
     }
 
+    // let the scene control handle continuous input (e.g. holding down a key)
     scene_control->handle_input();
 
     return false;
@@ -64,7 +65,7 @@ void Game::handle_next_scene(AbstractSceneControl::NextScene next_scene) {
     switch (next_scene) {
         case AbstractSceneControl::NextScene::Stay:
             break;
-        case AbstractSceneControl::NextScene::MainMenu:
+        case AbstractSceneControl::NextScene::TitleScreen:
             scene_control = std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data));
             break;
         case AbstractSceneControl::NextScene::StageTransition:

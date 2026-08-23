@@ -4,10 +4,7 @@
 #include <memory>
 
 /**
- * @brief Thin wrapper that stores a pointer to the entity owning the component.
- *
- * This acts as the component-side handle back to the entity while keeping the
- * actual entity logic in the concrete entity classes.
+ * @brief Component that simply holds a reference to an entity.
  *
  * @tparam E Entity type this component belongs to.
  */
@@ -23,7 +20,7 @@ public:
 
     /**
      * @brief Returns the owning entity.
-     * @return Shared pointer to the entity behind this component.
+     * @returns Shared pointer to the entity behind this component.
      */
     std::shared_ptr<E> get_entity() const { return entity; }
 

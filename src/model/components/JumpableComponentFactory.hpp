@@ -12,7 +12,7 @@ protected:
     /**
      * @brief Creates the jumpable component for a specific entity if supported.
      * @param entity Entity to inspect.
-     * @return Unique pointer to the jumpable component or nullptr.
+     * @returns Unique pointer to the jumpable component or nullptr.
      */
     std::unique_ptr<Component<Jumpable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
         return entity->create_jumpable_component();

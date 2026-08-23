@@ -18,7 +18,7 @@ public:
 
     /**
      * @brief Returns whether this climbable currently accepts climbing attempts.
-     * @return True if active.
+     * @returns True if active.
      */
     virtual bool is_active_for_player() const = 0;
 
@@ -27,7 +27,7 @@ public:
      * @param position Player position to test.
      * @param h_tolerance Horizontal tolerance around the climbable's x-position.
      * @param v_tolerance Vertical tolerance around the climbable bounds.
-     * @return True if the player is aligned with the climbable for moving upward.
+     * @returns True if the player is aligned with the climbable for moving upward.
      */
     bool can_climb_up(sf::Vector2f position, float h_tolerance, float v_tolerance) const {
         return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() + v_tolerance &&
@@ -39,7 +39,7 @@ public:
      * @param position Player position to test.
      * @param h_tolerance Horizontal tolerance around the climbable's x-position.
      * @param v_tolerance Vertical tolerance around the climbable bounds.
-     * @return True if the player is aligned with the climbable for moving downward.
+     * @returns True if the player is aligned with the climbable for moving downward.
      */
     bool can_climb_down(sf::Vector2f position, float h_tolerance, float v_tolerance) const {
         return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() - v_tolerance &&
@@ -48,31 +48,31 @@ public:
 
     /**
      * @brief Returns the lower platform endpoint of the climbable.
-     * @return Lower end platform.
+     * @returns Lower end platform.
      */
     std::shared_ptr<Platform> get_lower_end() const { return lower_end; }
 
     /**
      * @brief Returns the upper platform endpoint of the climbable.
-     * @return Upper end platform.
+     * @returns Upper end platform.
      */
     std::shared_ptr<Platform> get_upper_end() const { return upper_end; }
 
     /**
      * @brief Returns the climbable's horizontal position in world space.
-     * @return X coordinate of the climbable center.
+     * @returns X coordinate of the climbable center.
      */
     float get_x_pos() const { return x_pos; }
 
     /**
      * @brief Returns the lower end y-coordinate at the climbable x-position.
-     * @return Surface height of the lower platform at x_pos.
+     * @returns Surface height of the lower platform at x_pos.
      */
     float get_lower_y_pos() const { return lower_y_pos; }
 
     /**
      * @brief Returns the upper end y-coordinate at the climbable x-position.
-     * @return Surface height of the upper platform at x_pos.
+     * @returns Surface height of the upper platform at x_pos.
      */
     float get_upper_y_pos() const { return upper_y_pos; }
 
@@ -101,7 +101,7 @@ private:
      * @brief Checks whether a position is horizontally aligned with the climbable.
      * @param position Position to test.
      * @param h_tolerance Allowed horizontal error.
-     * @return True if the player's x-coordinate is close enough to the climbable.
+     * @returns True if the player's x-coordinate is close enough to the climbable.
      */
     bool can_climb(sf::Vector2f position, float h_tolerance) const {
         return is_active_for_player() && position.x < x_pos + h_tolerance && position.x > x_pos - h_tolerance;

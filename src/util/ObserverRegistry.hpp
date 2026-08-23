@@ -12,7 +12,7 @@ public:
     /**
      * @brief Registers an observer for events.
      * @param observer Observer to notify when events occur (reference must stay valid until unregistered).
-     * @return Observer id used to unregister this observer later.
+     * @returns Observer id used to unregister this observer later.
      */
     Id register_observer(T &observer) {
         Id id = id_generator();

@@ -15,7 +15,7 @@ public:
 
     /**
      * @brief Returns the entity associated with the component adapter.
-     * @return Reference to the owning entity.
+     * @returns Reference to the owning entity.
      */
     virtual BaseEntity &get_entity() = 0;
 };

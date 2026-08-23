@@ -3,6 +3,16 @@
 
 #include <memory>
 
+#include "DK/model/entities/Barrel.hpp"
+#include "DK/model/entities/BarrelStack.hpp"
+#include "DK/model/entities/Beam.hpp"
+#include "DK/model/entities/DissolvingPlatform.hpp"
+#include "DK/model/entities/DonkeyKong.hpp"
+#include "DK/model/entities/Ghost.hpp"
+#include "DK/model/entities/Girder.hpp"
+#include "DK/model/entities/HammerPowerUp.hpp"
+#include "DK/model/entities/Ladder.hpp"
+#include "DK/model/entities/Pauline.hpp"
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/view/Declarations.hpp"
 #include "DK/view/renderers/BarrelRenderer.hpp"
@@ -32,7 +42,7 @@ public:
     /**
      * @brief Creates the drawable component / renderer for an entity using visitor dispatch.
      * @param entity Entity to create a drawable component for.
-     * @return Unique pointer to the drawable component.
+     * @returns Unique pointer to the drawable component.
      */
     std::unique_ptr<DrawableComponent> create_component_for(std::shared_ptr<BaseEntity> entity) override {
         entity->accept(*this);
