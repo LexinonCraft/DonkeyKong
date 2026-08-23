@@ -27,7 +27,7 @@ public:
      * @brief Finds a platform directly underneath a world position.
      * @param position Position to inspect.
      * @param snap_distance Vertical search distance.
-     * @return Matching platform or an empty pointer if nothing is found.
+     * @returns Matching platform or an empty pointer if nothing is found.
      */
     std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right,
                                                        float snap_distance);
@@ -37,7 +37,7 @@ public:
      * @param position Position to inspect.
      * @param snap_distance Vertical search distance.
      * @param exclude_platform Platform to exclude from the search
-     * @return Matching platform or an empty pointer if nothing is found.
+     * @returns Matching platform or an empty pointer if nothing is found.
      */
     std::shared_ptr<Platform> find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left, float h_tolerance_right,
                                                        float snap_distance, std::shared_ptr<Platform> exclude_platform);

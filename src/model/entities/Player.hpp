@@ -90,13 +90,13 @@ public:
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
-     * @return Reference to this entity.
+     * @returns Reference to this entity.
      */
     BaseEntity &get_entity() override { return *this; }
 
     /**
      * @brief Creates the updatable component for this player.
-     * @return Unique pointer to the component wrapper.
+     * @returns Unique pointer to the component wrapper.
      */
     std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 

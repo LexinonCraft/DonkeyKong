@@ -1,6 +1,7 @@
 #include "DK/model/entities/DissolvingPlatform.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/model/Stage.hpp"
 #include "DK/model/entities/Player.hpp"
 
 DissolvingPlatform::DissolvingPlatform(Ref ref, sf::Vector2f position, float width) : BaseEntity(ref), position(position), width(width) {}
@@ -30,8 +31,14 @@ sf::Vector2f DissolvingPlatform::displacement_at(float x, float dt) const {
 void DissolvingPlatform::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 void DissolvingPlatform::update(float dt, Stage &stage) {
-    if (is_dissolving && dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
-        dissolve_timer += dt;
+    if (is_dissolving) {
+        if (dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
+            dissolve_timer += dt;
+        }
+        if (dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION && !dissolved) {
+            dissolved = true;
+            stage.add_to_score(position, constants::DISSOLVING_PLATFORM_SCORE);
+        }
     }
 }
 
@@ -54,6 +61,4 @@ bool DissolvingPlatform::fall_through(std::shared_ptr<Player> player) {
                                        -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
 }
 
-bool DissolvingPlatform::has_dissolved() const {
-    return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION;
-}
+bool DissolvingPlatform::has_dissolved() const { return dissolved; }

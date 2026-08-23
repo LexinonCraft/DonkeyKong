@@ -13,7 +13,7 @@
 class GameOverControl : public AbstractSceneControl {
 public:
     GameOverControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), game_over_view(window, assets_manager), player_data(player_data) {}
+        : AbstractSceneControl(window), game_over_view(window, assets_manager, player_data), player_data(player_data) {}
 
     void handle_event(sf::Event *event) override {}
 

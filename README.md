@@ -6,8 +6,9 @@ See the documentation:
 
 1. [Building](docs/building.md)
 1. [Use of AI](docs/use-of-ai.md)
+1. [Features](docs/features.md)
 1. [Architecture](docs/architecture.md)
 1. [Development](docs/development.md)
 1. [To-do](docs/todo.md)
 
-![Screenshot](screenshot.png)
+![Screenshot](docs/stage_25m.png)

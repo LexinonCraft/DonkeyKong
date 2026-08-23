@@ -43,39 +43,39 @@ public:
     /**
      * @brief Returns the slope of the girder surface at a given x position.
      * @param x Horizontal position.
-     * @return dy/dx value for the surface at x.
+     * @returns dy/dx value for the surface at x.
      */
     float slope_at(float x) const override;
 
     /**
      * @brief Returns the y-coordinate of the girder surface at a given x position.
      * @param x Horizontal position.
-     * @return Surface height.
+     * @returns Surface height.
      */
     float surface_y_at(float x) const override;
 
     /**
      * @brief Returns whether the girder covers the supplied x-coordinate.
      * @param x Horizontal position.
-     * @return True if x lies within the girder's horizontal span.
+     * @returns True if x lies within the girder's horizontal span.
      */
     bool covers_x(float x, float h_tolerance_left, float h_tolerance_right) const override;
 
     /**
      * @brief Returns the direction in which a barrel should roll on this girder.
-     * @return +1 toward the right, -1 toward the left, 0 for a flat surface.
+     * @returns +1 toward the right, -1 toward the left, 0 for a flat surface.
      */
     int downhill_sign() const override;
 
     /**
      * @brief Returns the higher end of the girder.
-     * @return World-space endpoint with smaller y value.
+     * @returns World-space endpoint with smaller y value.
      */
     sf::Vector2f high_end() const override;
 
     /**
      * @brief Returns whether the girder is currently usable as a standing surface.
-     * @return Always true for a static girder.
+     * @returns Always true for a static girder.
      */
     bool is_active() const override;
 
@@ -83,7 +83,7 @@ public:
      * @brief Returns the displacement of an object lying on this girder.
      * @param x Horizontal position.
      * @param dt Time step.
-     * @return Zero displacement for a static surface.
+     * @returns Zero displacement for a static surface.
      */
     sf::Vector2f displacement_at(float x, float dt) const override;
 
@@ -95,7 +95,7 @@ public:
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
-     * @return Reference to this entity.
+     * @returns Reference to this entity.
      */
     BaseEntity &get_entity() override { return *this; }
 
@@ -113,7 +113,7 @@ public:
 
     /**
      * @brief Creates the platform component for this girder.
-     * @return Unique pointer to the platform component wrapper.
+     * @returns Unique pointer to the platform component wrapper.
      */
     std::unique_ptr<Component<Platform>> create_platform_component() override;
 
