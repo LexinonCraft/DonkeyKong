@@ -1,10 +1,16 @@
 #include "DK/view/views/GameOverView.hpp"
 
+#include <format>
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "DK/model/PlayerData.hpp"
 #include "DK/util/Positions.hpp"
 #include "DK/view/AssetsManager.hpp"
+
+GameOverView::GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data)
+    : AbstractSceneView(window, assets_manager), score(player_data.get_score()) {}
 
 void GameOverView::draw() {
     pre_draw();
@@ -13,8 +19,15 @@ void GameOverView::draw() {
     title.setString("Game over!");
     title.setCharacterSize(60);
     set_origin(title, AnchorPosition::Center);
-    title.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
+    title.setPosition(get_absolute_position({0.f, -50.f}, AnchorPosition::Center));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(title);
+
+    sf::Text score_text(assets_manager.get_font());
+    score_text.setString(std::format("Score: {:06d}", score));
+    score_text.setCharacterSize(24);
+    set_origin(score_text, AnchorPosition::Center);
+    score_text.setPosition(get_absolute_position({0.f, 50.f}, AnchorPosition::Center));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(score_text);
 
     post_draw();
 }
