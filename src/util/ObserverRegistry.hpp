@@ -5,8 +5,16 @@
 
 #include "DK/model/Declarations.hpp"
 
+/**
+ * @brief A registry for observers of type T.
+ */
 template <typename T> class ObserverRegistry {
 public:
+    /**
+     * @brief Initialize the registry.
+     *
+     * @param id_generator A function that generates unique ids for observers.
+     */
     ObserverRegistry(Id (*id_generator)()) : id_generator(id_generator) {}
 
     /**
@@ -26,8 +34,10 @@ public:
      */
     void unregister_observer(Id id) { observers.erase(id); }
 
+    /** @returns An iterator to the beginning of the observer registry. */
     auto begin() { return observers.begin(); }
 
+    /** @returns An iterator to the end of the observer registry. */
     auto end() { return observers.end(); }
 
 private:
