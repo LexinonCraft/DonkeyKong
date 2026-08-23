@@ -220,8 +220,6 @@ void Player::jump() {
     }
 }
 
-const sf::RectangleShape &Player::get_shape() const { return shape; }
-
 void Player::check_referenced_entities() {
     if (handle_destroyed_indirect(current_platform) && state == State::OnPlatform) {
         state = State::InAir;

@@ -78,12 +78,6 @@ public:
     void jump();
 
     /**
-     * @brief Returns the SFML shape used for rendering.
-     * @return Player geometry.
-     */
-    const sf::RectangleShape &get_shape() const;
-
-    /**
      * @brief Clears references to deleted platforms or ladders.
      */
     void check_referenced_entities() override;

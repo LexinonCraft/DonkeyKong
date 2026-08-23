@@ -71,12 +71,6 @@ public:
     float get_vy() const { return vy; }
 
     /**
-     * @brief Returns the barrel's SFML render shape.
-     * @return Circle shape used for rendering.
-     */
-    const sf::CircleShape &get_shape() const { return shape; }
-
-    /**
      * @brief Dispatches the barrel to the visitor.
      * @param visitor Visitor used for object-specific rendering logic.
      */
