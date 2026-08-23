@@ -41,13 +41,13 @@ public:
 
     /**
      * @brief Returns an iterator to the beginning of the component map.
-     * @return Begin iterator.
+     * @returns Begin iterator.
      */
     auto begin() { return components.begin(); }
 
     /**
      * @brief Returns an iterator to the end of the component map.
-     * @return End iterator.
+     * @returns End iterator.
      */
     auto end() { return components.end(); }
 

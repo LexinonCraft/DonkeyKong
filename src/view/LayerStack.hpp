@@ -32,7 +32,7 @@ public:
     /**
      * @brief Returns the render layer for a specific object category.
      * @param id Layer identifier.
-     * @return Reference to the corresponding layer.
+     * @returns Reference to the corresponding layer.
      */
     Layer &get_layer(LayerId id);
 

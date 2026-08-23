@@ -22,6 +22,9 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DissolvingPlatform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/JumpableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ghost.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/animations/PlayerDeathAnimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/animations/Stage25MCompletionAnimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/animations/Stage100MCompletionAnimation.cpp
     )
 
 # Controller

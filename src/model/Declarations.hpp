@@ -10,6 +10,13 @@ class PlayerData;
 class Stage;
 class StageObserver;
 
+// animations
+class AbstractAnimation;
+class AnimationVisitor;
+class PlayerDeathAnimation;
+class Stage25MCompletionAnimation;
+class Stage100MCompletionAnimation;
+
 // util
 template <typename C> class AbstractComponentFactory;
 class BaseEntity;
@@ -36,10 +43,6 @@ class DonkeyKong;
 class BarrelStack;
 class Pauline;
 class DissolvingPlatform;
-class Stage25MCompletionAnimation;
-class Stage100MCompletionAnimation;
-class PlayerDeathAnimation;
-class AbstractAnimation;
 class Jumpable;
 class Ghost;
 class Stage100M;
