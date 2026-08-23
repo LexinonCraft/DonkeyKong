@@ -10,18 +10,25 @@ class PlayerData;
 class Stage;
 class StageObserver;
 
-class EntityRepository;
+// util
+template <typename C> class AbstractComponentFactory;
 class BaseEntity;
+template <typename E> class Component;
+template <typename C> class ComponentRepository;
+class EntityFromComponentAux;
+class EntityRepository;
+class EntityRepositoryObserver;
+class EntityVisitor;
+class Ref;
+
 class Platform;
 class Barrel;
-class Ref;
 class PlatformComponentRepository;
 class Girder;
 class Player;
 class Ladder;
 class Climbable;
 class Updatable;
-class SceneVisitor;
 class Enemy;
 class Pickable;
 class HammerPowerUp;
