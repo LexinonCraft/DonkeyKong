@@ -35,7 +35,14 @@ src/
 │   ├── StageObserver.hpp  # observer for stage events
 │   └── StageSequence.hpp  # defines the sequence of stages in the game
 ├── view/                  # renderers for screens and entities as well as utility classes for rendering
-├── control/               # controllers for screens and input handling, managed by the `Game` class
+│   ├── renderers/         # code for rendering entities
+│   ├── views/             # code for rendering screens
+│   ├── AssetsManager.hpp  # manages game assets such as textures and sounds
+│   ├── LayerStack.hpp     # stack of layers for rendering, allowing for different rendering orders and effects
+│   └── ...
+├── control/               # controllers for screens and input handling
+│   ├── Game.hpp           # main game class, manages game loop and overall game state
+│   └── <_>Control.hpp     # controllers for specific screens (e.g. title screen, stage screen, game over screen)
 ├── util/                  # more utility classes for general use
 ├── main.cpp               # entry point of the program
 └── Constants.hpp          # constants used throughout the project
