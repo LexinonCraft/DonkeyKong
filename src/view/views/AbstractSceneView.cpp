@@ -1,10 +1,13 @@
-#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/views/AbstractSceneView.hpp"
 
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/View.hpp>
 
 #include "DK/Constants.hpp"
 
-void AbstractSceneView::adjust_window_view(sf::RenderWindow &window) {
+void AbstractSceneView::adjust_window_view() {
     auto window_size = window.getSize();
     float window_aspect_ratio = static_cast<float>(window_size.x) / static_cast<float>(window_size.y);
 

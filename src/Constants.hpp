@@ -124,6 +124,8 @@ constexpr float DONKEY_KONG_BEFORE_FALL_FRAME_INTERVAL = 0.2f; // seconds betwee
 constexpr float DONKEY_KONG_AFTER_FALL_FRAME_INTERVAL = 0.15f; // seconds between Donkey Kong's after falling animation frames
 
 constexpr float BEAM_WIDTH = 3.f; // px, width of the beam entity
+
+constexpr const char *FALLBACK_CONTRIBUTORS_TEXT = "By Muvels and Lexinon";
 } // namespace constants
 
 #endif

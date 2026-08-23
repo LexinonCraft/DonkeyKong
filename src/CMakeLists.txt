@@ -35,14 +35,26 @@ set(ControlSources
 
 # View
 set(ViewSources
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/StageView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/BarrelRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/BarrelStackRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/BeamRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/DissolvingPlatformRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/DonkeyKongRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/GhostRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/GirderRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/HammerRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/LadderRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/PaulineRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/PlayerRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/AbstractSceneView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/GameOverView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/StageTransitionView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/StageView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/views/TitleScreenView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/AssetsManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/DrawableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/Layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/LayerStack.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/TitleScreenView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/AssetsManager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/AbstractSceneView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/StageTransitionView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/GameOverView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/ScoreEffect.cpp
     )
 
