@@ -24,13 +24,19 @@ public:
 
     /**
      * @brief Draw the title screen.
-     *
-     * @param animation_timer Timer for the Donkey Kong animation.
      */
-    void draw(float animation_timer);
+    void draw();
+
+    /**
+     * @brief Update the title screen view.
+     *
+     * @param dt The time delta since the last update.
+     */
+    void update(float dt);
 
 private:
     PlayerData &player_data;
+    float animation_timer = 0.0f; // Timer for the Donkey Kong animation
 };
 
 #endif

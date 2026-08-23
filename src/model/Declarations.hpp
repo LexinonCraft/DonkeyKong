@@ -6,20 +6,36 @@
  */
 typedef int Id;
 
-class EntityRepository;
+class PlayerData;
+class Stage;
+class StageObserver;
+
+// animations
+class AbstractAnimation;
+class AnimationVisitor;
+class PlayerDeathAnimation;
+class Stage25MCompletionAnimation;
+class Stage100MCompletionAnimation;
+
+// util
+template <typename C> class AbstractComponentFactory;
 class BaseEntity;
+template <typename E> class Component;
+template <typename C> class ComponentRepository;
+class EntityFromComponentAux;
+class EntityRepository;
+class EntityRepositoryObserver;
+class EntityVisitor;
+class Ref;
+
 class Platform;
 class Barrel;
-class Ref;
-class Stage;
 class PlatformComponentRepository;
 class Girder;
 class Player;
 class Ladder;
 class Climbable;
 class Updatable;
-class SceneVisitor;
-class PlayerData;
 class Enemy;
 class Pickable;
 class HammerPowerUp;
@@ -27,10 +43,6 @@ class DonkeyKong;
 class BarrelStack;
 class Pauline;
 class DissolvingPlatform;
-class Stage25MCompletionAnimation;
-class Stage100MCompletionAnimation;
-class PlayerDeathAnimation;
-class AbstractAnimation;
 class Jumpable;
 class Ghost;
 class Stage100M;

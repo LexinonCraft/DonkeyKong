@@ -1,17 +1,15 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <SFML/Graphics.hpp>
-
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/view/AssetsManager.hpp"
 
 /**
- * @brief Main controller for the Donkey Kong-style game loop.
+ * @brief Main controller for the game loop.
  *
- * The game owns the window, the demo level, and the view state used by the
- * render pipeline.
+ * Owns the window, assets manager, player data, and scene control. The game loop is run in the run() method, which handles input, updates
+ * the scene, and draws the scene.
  */
 class Game {
 public:
@@ -31,8 +29,19 @@ private:
     PlayerData player_data;
     std::unique_ptr<AbstractSceneControl> scene_control;
 
+    /**
+     * @brief Handle input
+     *
+     * @returns true if the game should quit
+     * @returns false otherwise
+     */
     bool input();
 
+    /**
+     * @brief Handle the potential transition to the next scene.
+     *
+     * @param next_scene The transition instruction from the current scene control.
+     */
     void handle_next_scene(AbstractSceneControl::NextScene next_scene);
 };
 
