@@ -8,7 +8,6 @@
 #include "DK/model/Declarations.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/components/Updatable.hpp"
-#include "DK/model/entities/Player.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
 /**

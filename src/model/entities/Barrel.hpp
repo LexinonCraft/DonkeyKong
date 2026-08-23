@@ -42,9 +42,9 @@ public:
     /**
      * @brief Advances the barrel simulation by one time step.
      * @param dt Time step in seconds.
-     * @param level Level used to resolve platform intersections.
+     * @param stage Stage used to resolve platform intersections.
      */
-    void update(float dt, Stage &level) override;
+    void update(float dt, Stage &stage) override;
 
     /**
      * @brief Returns whether the barrel is currently attached to a platform.
@@ -113,7 +113,7 @@ private:
     State state = State::Falling;
     std::shared_ptr<Platform> current_platform = nullptr;
     std::shared_ptr<Climbable> current_climbable = nullptr;
-    bool roll_down_climbable;
+    bool roll_down_climbable = false;
     float roll_distance = 0.f;
     bool tracking_player_jump = false;
     bool crossed_above_barrel = false;

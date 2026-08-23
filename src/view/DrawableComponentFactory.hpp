@@ -13,6 +13,7 @@
 #include "DK/model/entities/HammerPowerUp.hpp"
 #include "DK/model/entities/Ladder.hpp"
 #include "DK/model/entities/Pauline.hpp"
+#include "DK/model/entities/Player.hpp"
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/view/Declarations.hpp"
 #include "DK/view/renderers/BarrelRenderer.hpp"
