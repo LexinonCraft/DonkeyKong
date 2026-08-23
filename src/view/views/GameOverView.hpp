@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/view/Declarations.hpp"
 #include "DK/view/views/AbstractSceneView.hpp"
 
@@ -17,12 +18,15 @@ public:
      * @param window The window to draw to
      * @param assets_manager The assets manager to retrieve assets from
      */
-    GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {}
+    GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data);
 
     /**
      * @brief Draws the game over screen
      */
     void draw();
+
+private:
+    unsigned int score;
 };
 
 #endif

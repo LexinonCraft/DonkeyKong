@@ -120,6 +120,7 @@ constexpr float DONKEY_KONG_HITBOX_HEIGHT = 64.f;        // px, height of Donkey
 constexpr float DONKEY_KONG_CLIMBING_FRAME_INTERVAL = 0.25f; // seconds between Donkey Kong's climbing animation frames
 constexpr float HAMMER_Y_OFFSET = 50.f;                      // px, vertical offset from the platform's surface to place the hammer power-up
 
+constexpr unsigned int DISSOLVING_PLATFORM_SCORE = 300;
 constexpr float DONKEY_KONG_BEFORE_FALL_FRAME_INTERVAL = 0.2f; // seconds between Donkey Kong's before falling animation frames
 constexpr float DONKEY_KONG_AFTER_FALL_FRAME_INTERVAL = 0.15f; // seconds between Donkey Kong's after falling animation frames
 
