@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/Declarations.hpp"
 
 /**
  * @brief Completion animation for the 100m stage.
@@ -15,17 +15,17 @@ class Stage100MCompletionAnimation : public AbstractAnimation {
 public:
     /** @brief The possible states of the animation. */
     enum class State {
-        NotStarted,  // The animation has not started yet.
-        BeforeFall,  // The girders have fallen, but Donkey Kong is still levitating.
-        Falling,     // Donkey Kong is falling down.
-        Impact,      // Donkey Kong has hit the ground.
-        United,      // Donkey Kong and Pauline are united on the upper girder.
-        Finished,    // The animation has finished.
+        NotStarted, // The animation has not started yet.
+        BeforeFall, // The girders have fallen, but Donkey Kong is still levitating.
+        Falling,    // Donkey Kong is falling down.
+        Impact,     // Donkey Kong has hit the ground.
+        United,     // Donkey Kong and Pauline are united on the upper girder.
+        Finished,   // The animation has finished.
     };
 
     /**
      * @brief Initializes the animation with the given stage, girders, player, Donkey Kong, and Pauline.
-     * 
+     *
      * @param stage The stage on which the animation takes place.
      * @param lower_falling_girders The girders that fall down onto the lowest platform.
      * @param upper_falling_girder The girder on which Jumpan and Pauline will be united.
@@ -65,7 +65,7 @@ private:
 
     /**
      * @brief Set a new state.
-     * 
+     *
      * @param new_state The new state.
      * @param flag Flag to set to true.
      */

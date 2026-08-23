@@ -3,9 +3,9 @@
 
 #include <memory>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/Declarations.hpp"
 
 /**
  * @brief Completion animation for the 25m stage.
@@ -22,7 +22,7 @@ public:
 
     /**
      * @brief Initializes the animation with the given stage, player, Donkey Kong, and Pauline.
-     * 
+     *
      * @param stage The stage where the animation takes place.
      * @param player The player.
      * @param donkey_kong Donkey Kong.
@@ -55,7 +55,7 @@ private:
 
     /**
      * @brief Set a new state.
-     * 
+     *
      * @param new_state The new state.
      * @param flag Flag to set to true.
      */

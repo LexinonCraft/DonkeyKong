@@ -20,10 +20,8 @@ void Stage100MCompletionAnimation::update(float dt) {
                 donkey_kong->start_animation(this);
                 pauline->start_animation(this);
                 for (unsigned int i = 0; i < lower_falling_girders.size(); ++i) {
-                    lower_falling_girders[i]->set_left(
-                        {lower_falling_girders[i]->get_left().x, -constants::GIRDER_THICKNESS * (i + 2)});
-                    lower_falling_girders[i]->set_right(
-                        {lower_falling_girders[i]->get_right().x, -constants::GIRDER_THICKNESS * (i + 2)});
+                    lower_falling_girders[i]->set_left({lower_falling_girders[i]->get_left().x, -constants::GIRDER_THICKNESS * (i + 2)});
+                    lower_falling_girders[i]->set_right({lower_falling_girders[i]->get_right().x, -constants::GIRDER_THICKNESS * (i + 2)});
                 }
                 upper_falling_girder->set_left({upper_falling_girder->get_left().x, 100.f});
                 upper_falling_girder->set_right(

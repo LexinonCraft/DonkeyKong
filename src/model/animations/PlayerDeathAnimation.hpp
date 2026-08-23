@@ -9,22 +9,22 @@
 
 /**
  * @brief Animation that plays when the player dies.
- * 
+ *
  */
 class PlayerDeathAnimation : public AbstractAnimation {
 public:
     /** @brief States of the player death animation. */
     enum class State {
-        NotStarted,      // Animation has not started yet.
-        BeforeRotating,  // The player has not started rotating yet.
-        Rotating,        // The player is rotating.
-        AfterRotating,   // The player is lying on the ground after rotating.
-        Finished,        // Animation has finished.
+        NotStarted,     // Animation has not started yet.
+        BeforeRotating, // The player has not started rotating yet.
+        Rotating,       // The player is rotating.
+        AfterRotating,  // The player is lying on the ground after rotating.
+        Finished,       // Animation has finished.
     };
 
     /**
      * @brief Initializes the player death animation.
-     * 
+     *
      * @param stage The stage the animation is played on.
      * @param player The dying player.
      */
@@ -51,7 +51,7 @@ private:
 
     /**
      * @brief Set a new state.
-     * 
+     *
      * @param new_state The new state.
      * @param flag Flag to set to true.
      */
