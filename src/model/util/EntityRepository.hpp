@@ -32,7 +32,7 @@ public:
     /**
      * @brief Adds a barrel entity at the given coordinates.
      * @param position Starting position of the barrel.
-     * @return Shared pointer to the created barrel.
+     * @returns Shared pointer to the created barrel.
      */
     std::shared_ptr<Barrel> add_barrel(sf::Vector2f position);
 
@@ -42,7 +42,7 @@ public:
      * @brief Adds a girder entity spanning the two endpoints.
      * @param left Left endpoint of the girder.
      * @param right Right endpoint of the girder.
-     * @return Shared pointer to the created girder.
+     * @returns Shared pointer to the created girder.
      */
     std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right);
 
@@ -50,13 +50,13 @@ public:
      * @brief Adds a girder entity spanning the two endpoints.
      * @param left Left endpoint of the girder.
      * @param right Right endpoint of the girder.
-     * @return Shared pointer to the created girder.
+     * @returns Shared pointer to the created girder.
      */
     std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right, Girder::Color color);
 
     /**
      * @brief Adds the player entity.
-     * @return Shared pointer to the created player.
+     * @returns Shared pointer to the created player.
      */
     std::shared_ptr<Player> add_player();
 
@@ -65,7 +65,7 @@ public:
      * @param lower_end Lower platform endpoint.
      * @param upper_end Upper platform endpoint.
      * @param x_position Horizontal x-position of the ladder.
-     * @return Shared pointer to the created ladder.
+     * @returns Shared pointer to the created ladder.
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
                                        bool broken);
@@ -76,7 +76,7 @@ public:
      * @param upper_end Upper platform endpoint.
      * @param x_position Horizontal x-position of the ladder.
      * @param color Color of the ladder.
-     * @return Shared pointer to the created ladder.
+     * @returns Shared pointer to the created ladder.
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
                                        bool broken, Ladder::Color color);
@@ -113,13 +113,13 @@ public:
 
     /**
      * @brief Returns an iterator to the beginning of the entity map.
-     * @return Iterator to the first entity.
+     * @returns Iterator to the first entity.
      */
     auto begin() { return entities.begin(); }
 
     /**
      * @brief Returns an iterator to the end of the entity map.
-     * @return Iterator past the last entity.
+     * @returns Iterator past the last entity.
      */
     auto end() { return entities.end(); }
 
@@ -138,7 +138,7 @@ private:
 
     /**
      * @brief Generates a reference for a new entity.
-     * @return Newly generated reference bound to this repository.
+     * @returns Newly generated reference bound to this repository.
      */
     Ref gen_ref();
 
@@ -146,7 +146,7 @@ private:
      * @brief Adds an entity to the repository and notifies observers.
      * @tparam E Concrete entity type.
      * @param entity Entity to insert.
-     * @return The inserted entity.
+     * @returns The inserted entity.
      */
     template <typename E> std::shared_ptr<E> add_entity(std::shared_ptr<E> entity) {
         pending_additions.push(std::static_pointer_cast<BaseEntity>(entity));

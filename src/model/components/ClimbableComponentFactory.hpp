@@ -15,7 +15,7 @@ protected:
     /**
      * @brief Creates the climbable component for a specific entity if supported.
      * @param entity Entity to inspect.
-     * @return Unique pointer to the climbable component or nullptr.
+     * @returns Unique pointer to the climbable component or nullptr.
      */
     std::unique_ptr<Component<Climbable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
         return entity->create_climbable_component();

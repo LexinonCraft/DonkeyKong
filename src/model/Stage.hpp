@@ -74,8 +74,8 @@ public:
      * @brief Signals to the stage control when to switch to another scene (either the stage transition scene or the game over scene,
      * depending on the remaining amount of lives).
      *
-     * @return true if the stage is over and the game should switch to another scene
-     * @return false otherwise
+     * @returns true if the stage is over and the game should switch to another scene
+     * @returns false otherwise
      */
     bool is_over() { return ran_on_exit; }
 

@@ -6,7 +6,7 @@
 
 /**
  * @brief Entry point for the game.
- * @return Exit status code for the application.
+ * @returns Exit status code for the application.
  */
 int main() {
     srand(time(NULL)); // seed the RNG
