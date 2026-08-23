@@ -79,7 +79,7 @@ public:
 
     /**
      * @brief Returns the SFML shape used for rendering.
-     * @return Player geometry.
+     * @returns Player geometry.
      */
     const sf::RectangleShape &get_shape() const;
 
@@ -96,13 +96,13 @@ public:
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
-     * @return Reference to this entity.
+     * @returns Reference to this entity.
      */
     BaseEntity &get_entity() override { return *this; }
 
     /**
      * @brief Creates the updatable component for this player.
-     * @return Unique pointer to the component wrapper.
+     * @returns Unique pointer to the component wrapper.
      */
     std::unique_ptr<Component<Updatable>> create_updatable_component() override {
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));

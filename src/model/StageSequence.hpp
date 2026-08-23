@@ -21,7 +21,7 @@ enum class StageId {
  * @brief Get the stage sequence for a specific level.
  *
  * @param level The level number.
- * @return A unique pointer to a vector containing the stage identifiers for the specified level.
+ * @returns A unique pointer to a vector containing the stage identifiers for the specified level.
  */
 std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level);
 
@@ -29,7 +29,7 @@ std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level);
  * @brief Get the number of stages in a specific level.
  *
  * @param level The level number.
- * @return The number of stages in the specified level.
+ * @returns The number of stages in the specified level.
  */
 unsigned int get_number_of_stages_in_level(unsigned int level);
 
@@ -38,7 +38,7 @@ unsigned int get_number_of_stages_in_level(unsigned int level);
  *
  * @param level The level number.
  * @param stage_in_level The stage number within the level.
- * @return The stage identifier.
+ * @returns The stage identifier.
  */
 StageId get_stage_id(unsigned int level, unsigned int stage_in_level);
 
@@ -46,7 +46,7 @@ StageId get_stage_id(unsigned int level, unsigned int stage_in_level);
  * @brief Get the stage identifier for the current level and stage in level of the player data.
  *
  * @param player_data The player data containing the current level and stage in level.
- * @return The stage identifier.
+ * @returns The stage identifier.
  */
 StageId get_stage_id(PlayerData &player_data);
 
@@ -62,7 +62,7 @@ void advance_stage(PlayerData &player_data);
  *
  * @param rng A random number generator function that returns an int.
  * @param player_data The player data containing the current level and stage in level.
- * @return The created stage instance.
+ * @returns The created stage instance.
  */
 std::unique_ptr<Stage> create_stage(int rng(), PlayerData &player_data);
 

@@ -73,21 +73,21 @@ public:
      * @brief Get the SFML texture object corresponding to the given TextureId.
      *
      * @param id Identifier of the texture to retrieve
-     * @return Reference to the corresponding sf::Texture object
+     * @returns Reference to the corresponding sf::Texture object
      */
     const sf::Texture &get_texture(TextureId id) const;
 
     /**
      * @brief Get the SFML font object for the font used in the game.
      *
-     * @return Reference to the sf::Font object
+     * @returns Reference to the sf::Font object
      */
     const sf::Font &get_font() const { return font; }
 
     /**
      * @brief Get the contributors list as a string, loaded from the contributors file if present or a fallback string otherwise.
      *
-     * @return Reference to the contributors string
+     * @returns Reference to the contributors string
      */
     const std::string &get_contributors() const { return contributors; }
 
@@ -152,7 +152,7 @@ private:
      * @brief Read the contributors list from a file.
      *
      * @param filename The name of the contributors file to read.
-     * @return A string with the contributors list from the file if present or a fallback string.
+     * @returns A string with the contributors list from the file if present or a fallback string.
      */
     std::string read_contributors(const std::string &filename) const;
 };

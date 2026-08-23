@@ -34,8 +34,8 @@ public:
     /**
      * @brief Removes a life from the player.
      *
-     * @return true if the player still has lives remaining after losing one.
-     * @return false otherwise
+     * @returns true if the player still has lives remaining after losing one.
+     * @returns false otherwise
      */
     bool lose_life();
 

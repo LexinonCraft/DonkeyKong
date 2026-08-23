@@ -21,7 +21,7 @@ public:
      * @brief Creates a component for the supplied entity.
      *
      * @param entity Entity to be associated with the resulting component.
-     * @return A component instance or nullptr when no component should be created.
+     * @returns A component instance or nullptr when no component should be created.
      */
     virtual std::unique_ptr<C> create_component_for(std::shared_ptr<BaseEntity> entity) = 0;
 };

@@ -57,7 +57,7 @@ public:
     /**
      * @brief Get the instruction for the main game loop about whether and which scene to switch to next.
      *
-     * @return The scene switch instruction.
+     * @returns The scene switch instruction.
      */
     virtual NextScene get_next_scene() const = 0;
 
