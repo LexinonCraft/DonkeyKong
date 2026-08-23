@@ -104,9 +104,7 @@ public:
      * @brief Creates the updatable component for this player.
      * @return Unique pointer to the component wrapper.
      */
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
     sf::Vector2f get_position() const { return position; }
 
@@ -131,15 +129,9 @@ public:
 
     State get_state() const { return state; }
 
-    void start_animation(AbstractAnimation *animation) {
-        current_animation = animation;
-        state = State::Animated;
-    }
+    void start_animation(AbstractAnimation *animation);
 
-    void stop_animation() {
-        current_animation = nullptr;
-        state = State::InAir;
-    }
+    void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 

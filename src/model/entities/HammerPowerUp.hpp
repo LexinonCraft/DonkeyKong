@@ -21,9 +21,7 @@ public:
 
     BaseEntity &get_entity() override { return *this; }
 
-    std::unique_ptr<Component<Pickable>> create_pickable_component() override {
-        return std::make_unique<Component<Pickable>>(std::static_pointer_cast<HammerPowerUp>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Pickable>> create_pickable_component() override;
 
     void accept(EntityVisitor &visitor) override;
 

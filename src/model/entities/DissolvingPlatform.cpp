@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/model/entities/Player.hpp"
 
 DissolvingPlatform::DissolvingPlatform(Ref ref, sf::Vector2f position, float width)
     : BaseEntity(ref), position(position), width(width), shape() {
@@ -37,3 +38,32 @@ sf::Vector2f DissolvingPlatform::displacement_at(float x, float dt) const {
 void DissolvingPlatform::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 const sf::RectangleShape &DissolvingPlatform::get_shape() const { return shape; }
+
+void DissolvingPlatform::update(float dt, Stage &stage) {
+    if (is_dissolving && dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
+        dissolve_timer += dt;
+    }
+}
+
+std::unique_ptr<Component<Platform>> DissolvingPlatform::create_platform_component() {
+    return std::make_unique<Component<Platform>>(std::static_pointer_cast<DissolvingPlatform>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Updatable>> DissolvingPlatform::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DissolvingPlatform>(shared_from_this()));
+}
+
+bool DissolvingPlatform::fall_through(std::shared_ptr<Player> player) {
+    float player_x_pos = player->get_position().x;
+    if (!is_dissolving && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE,
+                                   -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE)) {
+        is_dissolving = true;
+        dissolve_timer = 0.f;
+    }
+    return has_dissolved() && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE,
+                                       -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
+}
+
+bool DissolvingPlatform::has_dissolved() const {
+    return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION;
+}

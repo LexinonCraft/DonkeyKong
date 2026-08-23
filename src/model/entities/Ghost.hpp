@@ -25,13 +25,9 @@ public:
 
     void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Ghost>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
-    std::unique_ptr<Component<Enemy>> create_enemy_component() override {
-        return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Ghost>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Enemy>> create_enemy_component() override;
 
     BaseEntity &get_entity() override { return *this; }
 
