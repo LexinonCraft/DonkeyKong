@@ -5,63 +5,43 @@
 
 #include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/entities/DonkeyKong.hpp"
-#include "DK/model/entities/Pauline.hpp"
-#include "DK/model/entities/Player.hpp"
+#include "DK/model/Declarations.hpp"
 
+/**
+ * @brief Completion animation for the 25m stage.
+ */
 class Stage25MCompletionAnimation : public AbstractAnimation {
 public:
+    /** @brief The different states of the animation. */
     enum class State {
-        NotStarted,
-        United,
-        Climbing,
-        Finished,
+        NotStarted, // The animation has not started yet.
+        United,     // Jumpman and Pauline are happily united.
+        Climbing,   // Donkey Kong has grabbed Pauline again and is climbing up.
+        Finished,   // The animation has finished.
     };
 
+    /**
+     * @brief Initializes the animation with the given stage, player, Donkey Kong, and Pauline.
+     * 
+     * @param stage The stage where the animation takes place.
+     * @param player The player.
+     * @param donkey_kong Donkey Kong.
+     * @param pauline Pauline.
+     */
     Stage25MCompletionAnimation(Stage &stage, std::shared_ptr<Player> player, std::shared_ptr<DonkeyKong> donkey_kong,
                                 std::shared_ptr<Pauline> pauline)
         : AbstractAnimation(stage), player(player), donkey_kong(donkey_kong), pauline(pauline) {}
 
-    void update(float dt) override {
-        AbstractAnimation::update(dt);
-        time_elapsed_in_state += dt;
-
-        bool flag = true;
-        while (flag) {
-            flag = false;
-            switch (state) {
-                case State::NotStarted:
-                    set_state(State::United, flag);
-                    player->set_facing_right(false);
-                    pauline->start_animation(this);
-                    donkey_kong->start_animation(this);
-                    break;
-                case State::United:
-                    if (get_time_elapsed() < 3.0f) {
-                        break;
-                    }
-                    set_state(State::Climbing, flag);
-                    donkey_kong->set_position({205.f, -550.f});
-                    break;
-                case State::Climbing:
-                    donkey_kong->set_position(donkey_kong->get_position() - sf::Vector2f(0.f, 75.f * dt));
-                    if (get_time_elapsed() < 5.0f) {
-                        break;
-                    }
-                    set_state(State::Finished, flag);
-                    break;
-                case State::Finished:
-                    return;
-            }
-        }
-    }
+    void update(float dt) override;
 
     bool is_finished() override { return state == State::Finished; }
 
     void accept(AnimationVisitor &visitor) override { visitor.visit(*this); }
 
+    /** @returns The current state of the animation. */
     State get_state() const { return state; }
 
+    /** @returns The time elapsed in the current state. */
     float get_time_elapsed_in_state() const { return time_elapsed_in_state; }
 
     bool is_exit_animation() const override { return true; }
@@ -73,6 +53,12 @@ private:
     std::shared_ptr<Pauline> pauline;
     float time_elapsed_in_state = 0.0f;
 
+    /**
+     * @brief Set a new state.
+     * 
+     * @param new_state The new state.
+     * @param flag Flag to set to true.
+     */
     void set_state(State new_state, bool &flag) {
         flag = true;
         state = new_state;
