@@ -1,7 +1,7 @@
 #ifndef ENTITY_VISITOR_HPP
 #define ENTITY_VISITOR_HPP
 
-#include "../Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 /**
  * @brief Visitor interface for dispatching behaviour based on the concrete entity type.

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "control/Game.hpp"
+#include "DK/control/Game.hpp"
 
 /**
  * @brief Entry point for the Donkey Kong-style game.

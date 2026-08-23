@@ -6,8 +6,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "../components/Pickable.hpp"
-#include "../util/BaseEntity.hpp"
+#include "DK/model/components/Pickable.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 class HammerPowerUp : public BaseEntity, public Pickable {
 public:

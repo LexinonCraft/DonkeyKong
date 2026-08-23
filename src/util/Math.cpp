@@ -1,10 +1,8 @@
+#include "DK/util/Math.hpp"
+
 #include <cmath>
 
-#include "Math.hpp"
-
-int floor_to_int(float value) {
-    return static_cast<int>(std::floor(value));
-}
+int floor_to_int(float value) { return static_cast<int>(std::floor(value)); }
 
 int mod(int a, int b) {
     int r = a % b;

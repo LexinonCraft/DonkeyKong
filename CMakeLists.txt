@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.22...4.0.1)
 project(DonkeyKong LANGUAGES CXX)
 set (CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
@@ -35,8 +37,44 @@ FetchContent_MakeAvailable(GTest)
 add_subdirectory(src)
 add_subdirectory(test)
 
+# Provide include alias: DK/... -> src/...
+set(PROJECT_INCLUDE_ALIAS_DIR ${CMAKE_BINARY_DIR}/include)
+file(MAKE_DIRECTORY ${PROJECT_INCLUDE_ALIAS_DIR})
+if(POLICY CMP0205)
+    cmake_policy(SET CMP0205 NEW)
+endif()
+file(CREATE_LINK
+    ${CMAKE_SOURCE_DIR}/src
+    ${PROJECT_INCLUDE_ALIAS_DIR}/DK
+    SYMBOLIC
+    COPY_ON_ERROR
+)
+
+# Allow project-root style includes in both app and test targets.
+target_include_directories(DonkeyKong PRIVATE
+    ${PROJECT_INCLUDE_ALIAS_DIR}
+#    ${CMAKE_SOURCE_DIR}
+#    ${CMAKE_SOURCE_DIR}/src
+)
+
+target_include_directories(Test PRIVATE
+    ${PROJECT_INCLUDE_ALIAS_DIR}
+#    ${CMAKE_SOURCE_DIR}
+#    ${CMAKE_SOURCE_DIR}/src
+)
+
 target_compile_features(DonkeyKong PRIVATE cxx_std_20)
 target_compile_features(Test PRIVATE cxx_std_20)
+
+# Add an explicit language standard flag so tools consuming compile_commands.json
+# (e.g. IntelliSense/clangd) do not fall back to an older default standard.
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+    target_compile_options(DonkeyKong PRIVATE -std=c++20)
+    target_compile_options(Test PRIVATE -std=c++20)
+elseif(MSVC)
+    target_compile_options(DonkeyKong PRIVATE /std:c++20)
+    target_compile_options(Test PRIVATE /std:c++20)
+endif()
 
 # link SFML
 target_link_libraries(DonkeyKong PRIVATE SFML::Graphics)

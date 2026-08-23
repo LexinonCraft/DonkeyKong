@@ -4,12 +4,12 @@
 #include <memory>
 #include <vector>
 
-#include "Declarations.hpp"
+#include "DK/model/Declarations.hpp"
 
 enum class StageId {
     Stage25M,
-//    Stage50M,
-//    Stage75M,
+    //    Stage50M,
+    //    Stage75M,
     Stage100M,
 };
 

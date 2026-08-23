@@ -1,4 +1,4 @@
-#include "EntityRepository.hpp"
+#include "DK/model/util/EntityRepository.hpp"
 
 /**
  * @brief Adds all entities queued for insertion and notifies observers.

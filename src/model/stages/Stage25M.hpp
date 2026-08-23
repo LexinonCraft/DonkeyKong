@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "../Stage.hpp"
-#include "../animations/Stage25MCompletionAnimation.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
 
 class Stage25M : public Stage {
 public:
