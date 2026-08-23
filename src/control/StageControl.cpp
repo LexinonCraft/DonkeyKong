@@ -2,6 +2,8 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
+#include "DK/model/PlayerData.hpp"
+
 void StageControl::handle_event(sf::Event *event) {
     if (const auto *key_pressed = event->getIf<sf::Event::KeyPressed>()) {
         switch (key_pressed->code) {

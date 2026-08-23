@@ -27,10 +27,9 @@ set(ModelSources
 # Controller
 set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/GameOverControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/StageControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/TitleScreenControl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/control/StageTransitionControl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/control/GameOverControl.cpp
     )
 
 # View
