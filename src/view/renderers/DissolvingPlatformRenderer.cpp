@@ -1,7 +1,9 @@
 #include "DK/view/renderers/DissolvingPlatformRenderer.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/model/entities/DissolvingPlatform.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void DissolvingPlatformRenderer::draw(LayerStack &layer_stack) {
     if (entity->has_dissolved()) {

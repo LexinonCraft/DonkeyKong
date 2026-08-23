@@ -1,13 +1,14 @@
 #ifndef DONKEYKONG_RENDERER_HPP
 #define DONKEYKONG_RENDERER_HPP
 
+#include <memory>
+
 #include <SFML/Graphics/Rect.hpp>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
-#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
-#include "DK/model/entities/DonkeyKong.hpp"
 #include "DK/view/AssetsManager.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
 
 /**

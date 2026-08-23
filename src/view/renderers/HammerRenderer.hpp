@@ -5,8 +5,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "DK/model/entities/HammerPowerUp.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
 
 /**

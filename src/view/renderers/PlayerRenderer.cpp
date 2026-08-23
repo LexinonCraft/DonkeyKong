@@ -1,10 +1,16 @@
 #include "DK/view/renderers/PlayerRenderer.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/model/animations/PlayerDeathAnimation.hpp"
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/entities/Player.hpp"
 #include "DK/util/Math.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void PlayerRenderer::draw(LayerStack &layer_stack) {
+    AssetsManager::TextureId texture_id;
     bool flip_sprite = false;
     bool rotate_sprite = false;
     bool hammer_origin = false;

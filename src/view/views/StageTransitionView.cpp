@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
 #include "DK/view/LayerStack.hpp"
 
 void StageTransitionView::draw() {

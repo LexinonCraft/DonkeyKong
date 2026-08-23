@@ -1,8 +1,8 @@
 #ifndef DRAWABLE_COMPONENT_HPP
 #define DRAWABLE_COMPONENT_HPP
 
-#include "DK/model/Stage.hpp"
-#include "DK/view/LayerStack.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/view/Declarations.hpp"
 
 /**
  * @brief Component for drawable entities. To be extended by a class specialized to a specific entity type.

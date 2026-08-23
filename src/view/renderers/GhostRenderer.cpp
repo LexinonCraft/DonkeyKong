@@ -1,8 +1,11 @@
 #include "DK/view/renderers/GhostRenderer.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/model/entities/Ghost.hpp"
 #include "DK/util/Math.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void GhostRenderer::draw(LayerStack &layer_stack) {
     AssetsManager::TextureId texture_id = mod(floor_to_int(animation_timer / constants::GHOST_ANIMATION_INTERVAL), 2)

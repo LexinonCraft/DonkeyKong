@@ -1,6 +1,9 @@
 #include "DK/view/views/AbstractSceneView.hpp"
 
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/View.hpp>
 
 #include "DK/Constants.hpp"
 

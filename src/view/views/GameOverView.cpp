@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 void GameOverView::draw() {
     pre_draw();

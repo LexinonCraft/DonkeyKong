@@ -1,7 +1,17 @@
 #include "DK/view/renderers/PaulineRenderer.hpp"
 
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/System/Angle.hpp>
+
+#include "DK/model/Stage.hpp"
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
+#include "DK/model/entities/Pauline.hpp"
 #include "DK/util/Math.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void PaulineRenderer::draw(LayerStack &layer_stack) {
     auto position = pauline->get_position();

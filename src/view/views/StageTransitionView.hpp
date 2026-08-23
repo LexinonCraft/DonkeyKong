@@ -7,7 +7,7 @@
 
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/StageSequence.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/views/AbstractSceneView.hpp"
 
 /**

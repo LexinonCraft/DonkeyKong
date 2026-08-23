@@ -1,7 +1,12 @@
 #include "DK/view/renderers/BarrelRenderer.hpp"
 
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "DK/Constants.hpp"
+#include "DK/model/entities/Barrel.hpp"
 #include "DK/util/Math.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void BarrelRenderer::draw(LayerStack &layer_stack) {
     AssetsManager::TextureId texture_id;

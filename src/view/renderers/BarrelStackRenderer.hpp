@@ -1,12 +1,13 @@
 #ifndef BARREL_STACK_RENDERER_HPP
 #define BARREL_STACK_RENDERER_HPP
 
+#include <memory>
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Angle.hpp>
 
-#include "DK/model/entities/BarrelStack.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/model/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
 
 /**

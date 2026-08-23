@@ -1,11 +1,10 @@
 #ifndef PLAYER_RENDERER_HPP
 #define PLAYER_RENDERER_HPP
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/animations/PlayerDeathAnimation.hpp"
-#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
-#include "DK/model/entities/Player.hpp"
 #include "DK/view/AssetsManager.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
 
 /**
@@ -29,7 +28,6 @@ public:
 private:
     std::shared_ptr<Player> player;
     AssetsManager &assets_manager;
-    AssetsManager::TextureId texture_id;
 
     /**
      * @brief Internal animation visitor for handling player animations.

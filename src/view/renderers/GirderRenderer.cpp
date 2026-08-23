@@ -1,7 +1,12 @@
 #include "DK/view/renderers/GirderRenderer.hpp"
 
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "DK/Constants.hpp"
+#include "DK/model/entities/Girder.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void GirderRenderer::draw(LayerStack &layer_stack) {
     float width = girder->get_width();

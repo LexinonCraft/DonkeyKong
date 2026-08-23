@@ -1,9 +1,11 @@
 #ifndef DISSOLVING_PLATFORM_RENDERER_HPP
 #define DISSOLVING_PLATFORM_RENDERER_HPP
 
-#include "DK/model/entities/DissolvingPlatform.hpp"
+#include <memory>
+
+#include "DK/model/Declarations.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
-#include "DK/view/LayerStack.hpp"
 
 /**
  * @brief Renderer for the dissolving platform entity.

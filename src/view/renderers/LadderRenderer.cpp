@@ -1,6 +1,9 @@
 #include "DK/view/renderers/LadderRenderer.hpp"
 
+#include "DK/model/entities/Ladder.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void LadderRenderer::draw(LayerStack &layer_stack) {
     if (ladder->is_broken()) {

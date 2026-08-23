@@ -6,8 +6,11 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "DK/model/PlayerData.hpp"
 #include "DK/util/Math.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void TitleScreenView::draw(float animation_timer) {
     pre_draw();

@@ -1,17 +1,12 @@
 #ifndef PAULINE_RENDERER_HPP
 #define PAULINE_RENDERER_HPP
 
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/System/Angle.hpp>
+#include <memory>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/animations/AnimationVisitor.hpp"
-#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
-#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
-#include "DK/model/entities/Pauline.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
-#include "DK/view/LayerStack.hpp"
 
 /**
  * @brief Renderer for the Pauline entity.

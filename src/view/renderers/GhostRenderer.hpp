@@ -1,13 +1,14 @@
 #ifndef GHOST_RENDERER_HPP
 #define GHOST_RENDERER_HPP
 
+#include <memory>
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "DK/model/entities/Ghost.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
-#include "DK/view/LayerStack.hpp"
 
 /**
  * @brief Renderer for the ghost entity.

@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "DK/model/entities/Beam.hpp"
+#include "DK/model/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
 
 /**

@@ -1,6 +1,9 @@
 #include "DK/view/renderers/BarrelStackRenderer.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/model/entities/BarrelStack.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void BarrelStackRenderer::draw(LayerStack &layer_stack) {
     draw_single_barrel(layer_stack, false, false);

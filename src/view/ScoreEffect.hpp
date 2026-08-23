@@ -3,8 +3,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "DK/view/AssetsManager.hpp"
-#include "DK/view/LayerStack.hpp"
+#include "DK/Constants.hpp"
+#include "DK/view/Declarations.hpp"
 
 /**
  * @brief Represents the state of the score effect that appears when the player scores points.

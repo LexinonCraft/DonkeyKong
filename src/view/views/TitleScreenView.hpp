@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "DK/model/PlayerData.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/model/Declarations.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/views/AbstractSceneView.hpp"
 
 /**

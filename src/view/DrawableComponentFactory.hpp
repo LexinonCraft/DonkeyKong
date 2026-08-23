@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "DK/model/util/AbstractComponentFactory.hpp"
-#include "DK/view/DrawableComponent.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/renderers/BarrelRenderer.hpp"
 #include "DK/view/renderers/BarrelStackRenderer.hpp"
 #include "DK/view/renderers/BeamRenderer.hpp"

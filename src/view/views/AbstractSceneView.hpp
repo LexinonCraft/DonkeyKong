@@ -1,13 +1,8 @@
 #ifndef ABSTRACT_SCENE_VIEW_HPP
 #define ABSTRACT_SCENE_VIEW_HPP
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/View.hpp>
-
 #include "DK/Constants.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/LayerStack.hpp"
 
 /**

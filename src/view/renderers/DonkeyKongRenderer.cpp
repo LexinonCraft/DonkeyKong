@@ -1,8 +1,14 @@
 #include "DK/view/renderers/DonkeyKongRenderer.hpp"
 
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "DK/Constants.hpp"
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
+#include "DK/model/entities/DonkeyKong.hpp"
 #include "DK/util/Math.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void DonkeyKongRenderer::draw(LayerStack &layer_stack) {
     AssetsManager::TextureId texture_id;
