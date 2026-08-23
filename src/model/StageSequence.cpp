@@ -11,9 +11,15 @@ std::unique_ptr<std::vector<StageId>> get_stage_sequence(unsigned int level) {
     stage_sequence->push_back(StageId::Stage25M);
     stage_sequence->push_back(StageId::Stage100M);
     return stage_sequence;
+    // currently, all levels have the same stage sequence. This can be modified in the future to have different sequences for different
+    // levels.
 }
 
-unsigned int get_number_of_stages_in_level(unsigned level) { return get_stage_sequence(level)->size(); }
+unsigned int get_number_of_stages_in_level(unsigned int level) { return get_stage_sequence(level)->size(); }
+
+StageId get_stage_id(unsigned int level, unsigned int stage_in_level) { return get_stage_sequence(level)->at(stage_in_level); }
+
+StageId get_stage_id(PlayerData &player_data) { return get_stage_id(player_data.get_level(), player_data.get_stage_in_level()); }
 
 void advance_stage(PlayerData &player_data) {
     unsigned int current_stage_in_level = player_data.get_stage_in_level();
@@ -27,22 +33,12 @@ void advance_stage(PlayerData &player_data) {
     }
 }
 
-StageId get_stage_id(unsigned int level, unsigned int stage_in_level) { return get_stage_sequence(level)->at(stage_in_level); }
-
-StageId get_stage_id(PlayerData &player_data) { return get_stage_id(player_data.get_level(), player_data.get_stage_in_level()); }
-
-std::unique_ptr<Stage> create_stage(Id id_generator(), PlayerData &player_data) {
-    StageId stage_id = get_stage_id(player_data);
-    // TODO
-    switch (stage_id) {
+std::unique_ptr<Stage> create_stage(int rng(), PlayerData &player_data) {
+    switch (get_stage_id(player_data)) {
         case StageId::Stage25M:
-            return std::make_unique<Stage25M>(id_generator, player_data);
-            //        case StageId::Stage50M:
-            //            return std::make_unique<DemoStage2>(id_generator, player_data);
-            //        case StageId::Stage75M:
-            //            return std::make_unique<DemoStage>(id_generator, player_data);
+            return std::make_unique<Stage25M>(rng, player_data);
         case StageId::Stage100M:
-            return std::make_unique<Stage100M>(id_generator, player_data);
+            return std::make_unique<Stage100M>(rng, player_data);
         default:
             throw std::logic_error("Unknown stage id");
     }

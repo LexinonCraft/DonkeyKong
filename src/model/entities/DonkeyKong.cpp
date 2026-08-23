@@ -7,6 +7,7 @@
 
 #include "DK/model/Stage.hpp"
 #include "DK/model/components/Platform.hpp"
+#include "DK/model/entities/Barrel.hpp"
 
 DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_position, bool throw_barrels)
     : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform),

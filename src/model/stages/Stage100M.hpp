@@ -13,8 +13,6 @@ public:
     Stage100M(Id id_generator(), PlayerData &player_data);
 
     void on_completed() override {
-        Stage::on_completed();
-
         clear_secondary_entities();
         for (auto it = static_entities_to_be_cleared.begin(); it != static_entities_to_be_cleared.end(); ++it) {
             it->get()->destroy();

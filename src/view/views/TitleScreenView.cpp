@@ -12,7 +12,7 @@
 #include "DK/view/AssetsManager.hpp"
 #include "DK/view/LayerStack.hpp"
 
-void TitleScreenView::draw(float animation_timer) {
+void TitleScreenView::draw() {
     pre_draw();
 
     // Game title
@@ -88,4 +88,11 @@ void TitleScreenView::draw(float animation_timer) {
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore);
 
     post_draw();
+}
+
+void TitleScreenView::update(float dt) {
+    animation_timer += dt;
+    if (animation_timer >= constants::TITLE_SCREEN_ANIMATION_LENGTH) {
+        animation_timer -= constants::TITLE_SCREEN_ANIMATION_LENGTH;
+    }
 }

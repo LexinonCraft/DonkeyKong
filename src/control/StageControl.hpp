@@ -5,12 +5,16 @@
 #include <memory>
 
 #include "DK/control/AbstractSceneControl.hpp"
-#include "DK/model/PlayerData.hpp"
-#include "DK/model/Stage.hpp"
+#include "DK/model/Declarations.hpp"
 #include "DK/model/StageSequence.hpp"
-#include "DK/view/AssetsManager.hpp"
+#include "DK/view/Declarations.hpp"
 #include "DK/view/views/StageView.hpp"
 
+/**
+ * @brief Control class for the main game screen. It owns the Stage and StageView, and handles user input, updates the game state, and
+ * renders the scene.
+ *
+ */
 class StageControl : public AbstractSceneControl {
 public:
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)

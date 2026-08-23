@@ -22,15 +22,17 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/DissolvingPlatform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/JumpableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/Ghost.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/animations/PlayerDeathAnimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/animations/Stage25MCompletionAnimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/animations/Stage100MCompletionAnimation.cpp
     )
 
 # Controller
 set(ControlSources
     ${CMAKE_CURRENT_SOURCE_DIR}/control/Game.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/control/GameOverControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/StageControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/control/TitleScreenControl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/control/StageTransitionControl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/control/GameOverControl.cpp
     )
 
 # View

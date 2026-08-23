@@ -1,9 +1,12 @@
 #include "DK/model/stages/Stage100M.hpp"
 
 #include <memory>
+#include <vector>
 
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/entities/Beam.hpp"
+#include "DK/model/entities/DissolvingPlatform.hpp"
 #include "DK/util/Math.hpp"
 
 /**

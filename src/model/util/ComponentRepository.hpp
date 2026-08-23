@@ -27,6 +27,7 @@ public:
     ComponentRepository(EntityRepository &entity_repo, std::unique_ptr<AbstractComponentFactory<C>> component_factory)
         : entity_repo(entity_repo), observer_id(entity_repo.get_observer_registry().register_observer(*this)),
           component_factory(std::move(component_factory)) {
+        // Populate the component map with components for all existing entities.
         for (auto it = entity_repo.begin(); it != entity_repo.end(); ++it) {
             std::shared_ptr<BaseEntity> entity = it->second;
             auto component = this->component_factory->create_component_for(entity);
@@ -40,13 +41,13 @@ public:
 
     /**
      * @brief Returns an iterator to the beginning of the component map.
-     * @return Begin iterator.
+     * @returns Begin iterator.
      */
     auto begin() { return components.begin(); }
 
     /**
      * @brief Returns an iterator to the end of the component map.
-     * @return End iterator.
+     * @returns End iterator.
      */
     auto end() { return components.end(); }
 

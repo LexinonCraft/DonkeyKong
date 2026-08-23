@@ -33,39 +33,39 @@ public:
     /**
      * @brief Returns the slope of the dissolving platform surface at a given x position.
      * @param x Horizontal position.
-     * @return dy/dx value for the surface at x.
+     * @returns dy/dx value for the surface at x.
      */
     float slope_at(float x) const override;
 
     /**
      * @brief Returns the y-coordinate of the dissolving platform surface at a given x position.
      * @param x Horizontal position.
-     * @return Surface height.
+     * @returns Surface height.
      */
     float surface_y_at(float x) const override;
 
     /**
      * @brief Returns whether the dissolving platform covers the supplied x-coordinate.
      * @param x Horizontal position.
-     * @return True if x lies within the platform's horizontal span.
+     * @returns True if x lies within the platform's horizontal span.
      */
     bool covers_x(float x, float h_tolerance_left, float h_tolerance_right) const override;
 
     /**
      * @brief Returns the direction in which a barrel should roll on this dissolving platform.
-     * @return +1 toward the right, -1 toward the left, 0 for a flat surface.
+     * @returns +1 toward the right, -1 toward the left, 0 for a flat surface.
      */
     int downhill_sign() const override;
 
     /**
      * @brief Returns the higher end of the dissolving platform.
-     * @return World-space endpoint with smaller y value.
+     * @returns World-space endpoint with smaller y value.
      */
     sf::Vector2f high_end() const override;
 
     /**
      * @brief Returns whether the dissolving platform is currently usable as a standing surface.
-     * @return Always true for a static platform.
+     * @returns Always true for a static platform.
      */
     bool is_active() const override;
 
@@ -73,7 +73,7 @@ public:
      * @brief Returns the displacement of an object lying on this dissolving platform.
      * @param x Horizontal position.
      * @param dt Time step.
-     * @return Zero displacement for a static surface.
+     * @returns Zero displacement for a static surface.
      */
     sf::Vector2f displacement_at(float x, float dt) const override;
 
@@ -85,13 +85,13 @@ public:
 
     /**
      * @brief Returns the visible rectangle representing the dissolving platform.
-     * @return SFML rectangle shape used for rendering.
+     * @returns SFML rectangle shape used for rendering.
      */
     const sf::RectangleShape &get_shape() const;
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
-     * @return Reference to this entity.
+     * @returns Reference to this entity.
      */
     BaseEntity &get_entity() override { return *this; }
 
@@ -99,15 +99,11 @@ public:
 
     float get_width() const { return width; }
 
-    void update(float dt, Stage &stage) override {
-        if (is_dissolving && dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
-            dissolve_timer += dt;
-        }
-    }
+    void update(float dt, Stage &stage) override;
 
     /**
      * @brief Creates the platform component for this dissolving platform.
-     * @return Unique pointer to the platform component wrapper.
+     * @returns Unique pointer to the platform component wrapper.
      */
     std::unique_ptr<Component<Platform>> create_platform_component() override {
         return std::make_unique<Component<Platform>>(std::static_pointer_cast<DissolvingPlatform>(shared_from_this()));
@@ -128,12 +124,13 @@ public:
                                            -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
     }
 
-    bool has_dissolved() const { return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION; }
+    bool has_dissolved() const { return dissolved; }
 
 private:
     sf::Vector2f position;
     float width;
     bool is_dissolving = false;
+    bool dissolved = false;
     float dissolve_timer = 0.f;
     sf::RectangleShape shape;
 };

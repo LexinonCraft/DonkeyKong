@@ -48,31 +48,31 @@ public:
 
     /**
      * @brief Returns whether the barrel is currently attached to a platform.
-     * @return OnGirder if attached, otherwise Falling.
+     * @returns OnGirder if attached, otherwise Falling.
      */
     State get_state() const { return state; }
 
     /**
      * @brief Returns the barrel's world position.
-     * @return Current position vector.
+     * @returns Current position vector.
      */
     sf::Vector2f get_position() const override { return position; }
 
     /**
      * @brief Returns the current horizontal velocity.
-     * @return x-velocity in pixels per second.
+     * @returns x-velocity in pixels per second.
      */
     float get_vx() const { return vx; }
 
     /**
      * @brief Returns the current vertical velocity.
-     * @return y-velocity in pixels per second.
+     * @returns y-velocity in pixels per second.
      */
     float get_vy() const { return vy; }
 
     /**
      * @brief Returns the barrel's SFML render shape.
-     * @return Circle shape used for rendering.
+     * @returns Circle shape used for rendering.
      */
     const sf::CircleShape &get_shape() const { return shape; }
 
@@ -89,13 +89,13 @@ public:
 
     /**
      * @brief Returns the underlying entity as an abstract base pointer.
-     * @return Reference to this entity.
+     * @returns Reference to this entity.
      */
     BaseEntity &get_entity() override { return *this; }
 
     /**
      * @brief Creates the updatable component for this barrel.
-     * @return Unique pointer to the component wrapper.
+     * @returns Unique pointer to the component wrapper.
      */
     std::unique_ptr<Component<Updatable>> create_updatable_component() override {
         return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
