@@ -6,7 +6,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "DK/Constants.hpp"
 #include "DK/model/Declarations.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/components/Updatable.hpp"
@@ -99,36 +98,19 @@ public:
 
     float get_width() const { return width; }
 
-    void update(float dt, Stage &stage) override {
-        if (is_dissolving && dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
-            dissolve_timer += dt;
-        }
-    }
+    void update(float dt, Stage &stage) override;
 
     /**
      * @brief Creates the platform component for this dissolving platform.
      * @return Unique pointer to the platform component wrapper.
      */
-    std::unique_ptr<Component<Platform>> create_platform_component() override {
-        return std::make_unique<Component<Platform>>(std::static_pointer_cast<DissolvingPlatform>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Platform>> create_platform_component() override;
 
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DissolvingPlatform>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
-    bool fall_through(std::shared_ptr<Player> player) override {
-        float player_x_pos = player->get_position().x;
-        if (!is_dissolving && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE,
-                                       -constants::DISSOLVING_PLATFORM_DISSOLVE_H_TOLERANCE)) {
-            is_dissolving = true;
-            dissolve_timer = 0.f;
-        }
-        return has_dissolved() && covers_x(player_x_pos, -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE,
-                                           -constants::DISSOLVING_PLATFORM_FALL_THROUGH_H_TOLERANCE);
-    }
+    bool fall_through(std::shared_ptr<Player> player) override;
 
-    bool has_dissolved() const { return is_dissolving && dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION; }
+    bool has_dissolved() const;
 
 private:
     sf::Vector2f position;

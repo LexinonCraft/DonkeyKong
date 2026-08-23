@@ -97,17 +97,11 @@ public:
      * @brief Creates the updatable component for this barrel.
      * @return Unique pointer to the component wrapper.
      */
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
-    std::unique_ptr<Component<Enemy>> create_enemy_component() override {
-        return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Barrel>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Enemy>> create_enemy_component() override;
 
-    std::unique_ptr<Component<Jumpable>> create_jumpable_component() override {
-        return std::make_unique<Component<Jumpable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Jumpable>> create_jumpable_component() override;
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 

@@ -233,6 +233,20 @@ void Player::check_referenced_entities() {
 
 void Player::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
+std::unique_ptr<Component<Updatable>> Player::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
+}
+
+void Player::start_animation(AbstractAnimation *animation) {
+    current_animation = animation;
+    state = State::Animated;
+}
+
+void Player::stop_animation() {
+    current_animation = nullptr;
+    state = State::InAir;
+}
+
 float Player::platform_snap_distance(float dt) const {
     float distance = velocity.y * dt;
     if (distance > constants::PLATFORM_MINIMUM_SNAP_DISTANCE) {

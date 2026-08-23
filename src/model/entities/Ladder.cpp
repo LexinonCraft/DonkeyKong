@@ -21,6 +21,10 @@ Ladder::Ladder(Ref ref, float lower_y, float upper_y, float x_pos, bool broken, 
     shape.setFillColor(broken ? sf::Color(100, 100, 100) : sf::Color(100, 200, 100));
 }
 
+std::unique_ptr<Component<Climbable>> Ladder::create_climbable_component() {
+    return std::make_unique<Component<Climbable>>(std::static_pointer_cast<Ladder>(shared_from_this()));
+}
+
 void Ladder::check_referenced_entities() {
     if ((lower_end && lower_end->get_entity().is_destroyed()) || (upper_end && upper_end->get_entity().is_destroyed())) {
         destroy();

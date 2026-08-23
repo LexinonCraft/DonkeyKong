@@ -5,7 +5,9 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "DK/Constants.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/entities/Barrel.hpp"
 
@@ -84,6 +86,24 @@ bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
     hitbox.setOrigin({hitbox_bounds.size.x / 2.f, hitbox_bounds.size.y});
     hitbox.setPosition(position);
     return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
+}
+
+std::unique_ptr<Component<Updatable>> DonkeyKong::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Enemy>> DonkeyKong::create_enemy_component() {
+    return std::make_unique<Component<Enemy>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
+}
+
+void DonkeyKong::start_animation(AbstractAnimation *animation) {
+    current_animation = animation;
+    set_state(State::Animated, animation->get_stage());
+}
+
+void DonkeyKong::stop_animation() {
+    set_state(State::Idle, current_animation->get_stage());
+    current_animation = nullptr;
 }
 
 void DonkeyKong::set_state(State new_state, Stage &stage) {

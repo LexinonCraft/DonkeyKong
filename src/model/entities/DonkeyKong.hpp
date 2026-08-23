@@ -6,7 +6,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "DK/model/Declarations.hpp"
-#include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/components/Enemy.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
@@ -31,13 +30,9 @@ public:
 
     void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
-    std::unique_ptr<Component<Enemy>> create_enemy_component() override {
-        return std::make_unique<Component<Enemy>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Enemy>> create_enemy_component() override;
 
     BaseEntity &get_entity() override { return *this; }
 
@@ -51,15 +46,9 @@ public:
 
     void set_state(State new_state, Stage &stage);
 
-    void start_animation(AbstractAnimation *animation) {
-        current_animation = animation;
-        set_state(State::Animated, animation->get_stage());
-    }
+    void start_animation(AbstractAnimation *animation);
 
-    void stop_animation() {
-        set_state(State::Idle, current_animation->get_stage());
-        current_animation = nullptr;
-    }
+    void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 

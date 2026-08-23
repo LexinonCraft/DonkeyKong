@@ -3,13 +3,10 @@
 
 #include <memory>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "DK/model/Declarations.hpp"
-#include "DK/model/animations/AbstractAnimation.hpp"
-#include "DK/model/components/Platform.hpp"
 #include "DK/model/util/BaseEntity.hpp"
-#include "DK/model/util/EntityVisitor.hpp"
 
 class Pauline : public BaseEntity {
 public:
@@ -18,10 +15,9 @@ public:
         Animated,
     };
 
-    Pauline(Ref ref, std::shared_ptr<Platform> platform, float x_position)
-        : BaseEntity(ref), position({x_position, platform->surface_y_at(x_position)}) {}
+    Pauline(Ref ref, std::shared_ptr<Platform> platform, float x_position);
 
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
     sf::Vector2f get_position() const { return position; }
 
@@ -30,15 +26,9 @@ public:
     State get_state() const { return state; }
     void set_state(State new_state) { state = new_state; }
 
-    void start_animation(AbstractAnimation *animation) {
-        current_animation = animation;
-        set_state(State::Animated);
-    }
+    void start_animation(AbstractAnimation *animation);
 
-    void stop_animation() {
-        current_animation = nullptr;
-        set_state(State::Normal);
-    }
+    void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 

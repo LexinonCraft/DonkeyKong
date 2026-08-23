@@ -122,9 +122,7 @@ public:
      * @brief Creates the platform component for this girder.
      * @return Unique pointer to the platform component wrapper.
      */
-    std::unique_ptr<Component<Platform>> create_platform_component() override {
-        return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Platform>> create_platform_component() override;
 
     bool is_secondary_entity() const override { return false; }
 

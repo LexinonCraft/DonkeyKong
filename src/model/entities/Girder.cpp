@@ -54,3 +54,7 @@ sf::Vector2f Girder::displacement_at(float x, float dt) const {
 void Girder::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 const sf::RectangleShape &Girder::get_shape() const { return shape; }
+
+std::unique_ptr<Component<Platform>> Girder::create_platform_component() {
+    return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
+}

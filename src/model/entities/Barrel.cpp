@@ -130,6 +130,18 @@ void Barrel::update(float dt, Stage &level) {
 
 void Barrel::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
+std::unique_ptr<Component<Updatable>> Barrel::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Enemy>> Barrel::create_enemy_component() {
+    return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Jumpable>> Barrel::create_jumpable_component() {
+    return std::make_unique<Component<Jumpable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+}
+
 bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
