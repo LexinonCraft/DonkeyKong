@@ -5,8 +5,8 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/Beam.hpp"
+#include "DK/model/entities/Beam.hpp"
+#include "DK/view/DrawableComponent.hpp"
 
 class BeamRenderer : public DrawableComponent {
 public:
@@ -21,6 +21,7 @@ public:
 
         layer_stack.get_layer(LayerStack::LayerId::Ladders).add_to_layer(shape);
     }
+
 private:
     std::shared_ptr<Beam> beam;
 };

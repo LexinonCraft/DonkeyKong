@@ -1,14 +1,15 @@
 #ifndef GAME_OVER_CONTROL_HPP
 #define GAME_OVER_CONTROL_HPP
 
-#include "AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../view/GameOverView.hpp"
-#include "../model/PlayerData.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/GameOverView.hpp"
 
 class GameOverControl : public AbstractSceneControl {
 public:
-    GameOverControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager) : AbstractSceneControl(window), game_over_view(window, assets_manager), player_data(player_data) {}
+    GameOverControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
+        : AbstractSceneControl(window), game_over_view(window, assets_manager), player_data(player_data) {}
 
     void handle_event(sf::Event *event) override;
 

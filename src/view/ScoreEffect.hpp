@@ -3,8 +3,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "LayerStack.hpp"
-#include "AssetsManager.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 class ScoreEffect {
 public:

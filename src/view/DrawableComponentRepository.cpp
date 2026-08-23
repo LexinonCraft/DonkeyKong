@@ -1,4 +1,4 @@
-#include "DrawableComponentRepository.hpp"
+#include "DK/view/DrawableComponentRepository.hpp"
 
 /**
  * @brief Draws every registered drawable component into the provided layer stack.

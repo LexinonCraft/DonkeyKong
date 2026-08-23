@@ -3,13 +3,14 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AssetsManager.hpp"
-#include "AbstractSceneView.hpp"
-#include "../model/PlayerData.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 class TitleScreenView : public AbstractSceneView {
 public:
-    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) : AbstractSceneView(window, assets_manager), player_data(player_data) {};
+    TitleScreenView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data)
+        : AbstractSceneView(window, assets_manager), player_data(player_data) {}
 
     void draw(float animation_timer);
 

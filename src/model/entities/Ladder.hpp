@@ -5,9 +5,9 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "../components/Platform.hpp"
-#include "../components/Climbable.hpp"
-#include "../util/BaseEntity.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/util/BaseEntity.hpp"
 
 /// @brief Represents a ladder connecting two girders at a specific x position.
 class Ladder : public BaseEntity, public Climbable {
@@ -23,17 +23,11 @@ public:
 
     Ladder(Ref ref, float lower_y, float upper_y, float x_pos, bool broken, Color color, bool active_for_player);
 
-    bool is_active_for_player() const override {
-        return active_for_player;
-    }
+    bool is_active_for_player() const override { return active_for_player; }
 
-    const sf::RectangleShape &get_shape() const {
-        return shape;
-    }
+    const sf::RectangleShape &get_shape() const { return shape; }
 
-    void accept(EntityVisitor &visitor) override {
-        visitor.visit(*this);
-    }
+    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
     void check_referenced_entities() override;
 
@@ -43,17 +37,11 @@ public:
         return std::make_unique<Component<Climbable>>(std::static_pointer_cast<Ladder>(shared_from_this()));
     }
 
-    Color get_color() const {
-        return color;
-    }
+    Color get_color() const { return color; }
 
-    bool is_broken() const {
-        return broken;
-    }
+    bool is_broken() const { return broken; }
 
-    bool is_secondary_entity() const override {
-        return false;
-    }
+    bool is_secondary_entity() const override { return false; }
 
 private:
     sf::RectangleShape shape;

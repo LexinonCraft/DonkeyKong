@@ -3,12 +3,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AssetsManager.hpp"
-#include "AbstractSceneView.hpp"
+#include "DK/view/AbstractSceneView.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 class GameOverView : public AbstractSceneView {
 public:
-    GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {};
+    GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager) : AbstractSceneView(window, assets_manager) {}
 
     void draw();
 };

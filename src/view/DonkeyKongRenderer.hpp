@@ -3,14 +3,14 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/DonkeyKong.hpp"
-#include "AssetsManager.hpp"
-#include "../Constants.hpp"
-#include "../util/Math.hpp"
-#include "../model/animations/AnimationVisitor.hpp"
-#include "../model/animations/Stage25MCompletionAnimation.hpp"
-#include "../model/animations/Stage100MCompletionAnimation.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/animations/AnimationVisitor.hpp"
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
+#include "DK/model/entities/DonkeyKong.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponent.hpp"
 
 /**
  * @brief Renderer for the Donkey Kong entity.
@@ -21,7 +21,8 @@ public:
      * @brief Creates the Donkey Kong renderer for a concrete entity.
      * @param donkey_kong Donkey Kong instance to render.
      */
-    DonkeyKongRenderer(std::shared_ptr<DonkeyKong> donkey_kong, AssetsManager &assets_manager) : donkey_kong(donkey_kong), assets_manager(assets_manager) {}
+    DonkeyKongRenderer(std::shared_ptr<DonkeyKong> donkey_kong, AssetsManager &assets_manager)
+        : donkey_kong(donkey_kong), assets_manager(assets_manager) {}
 
     /**
      * @brief Draws Donkey Kong into the object layer.
@@ -77,8 +78,10 @@ public:
             sf::Sprite barrel_sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelSide1));
             sf::FloatRect barrel_bounds = barrel_sprite.getLocalBounds();
             barrel_sprite.setOrigin({barrel_bounds.size.x / 2.f, barrel_bounds.size.y});
-            barrel_sprite.setPosition({donkey_kong->get_position().x, donkey_kong->get_position().y - constants::DONKEY_KONG_HOLDED_BARREL_OFFSET_Y});
-            barrel_sprite.setScale({constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.x, constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.y});
+            barrel_sprite.setPosition(
+                {donkey_kong->get_position().x, donkey_kong->get_position().y - constants::DONKEY_KONG_HOLDED_BARREL_OFFSET_Y});
+            barrel_sprite.setScale(
+                {constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.x, constants::BARREL_RADIUS * 2.5f / barrel_bounds.size.y});
             layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(barrel_sprite);
         }
     }
@@ -99,7 +102,10 @@ private:
                 break;
             case Stage25MCompletionAnimation::State::Climbing:
             case Stage25MCompletionAnimation::State::Finished:
-                texture_id = mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::DONKEY_KONG_CLIMBING_FRAME_INTERVAL), 2) == 0 ? AssetsManager::TextureId::DonkeyKongClimbing1 : AssetsManager::TextureId::DonkeyKongClimbing2;
+                texture_id =
+                    mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::DONKEY_KONG_CLIMBING_FRAME_INTERVAL), 2) == 0
+                        ? AssetsManager::TextureId::DonkeyKongClimbing1
+                        : AssetsManager::TextureId::DonkeyKongClimbing2;
                 break;
         }
     }

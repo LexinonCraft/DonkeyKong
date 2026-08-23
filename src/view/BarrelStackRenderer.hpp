@@ -5,10 +5,10 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Angle.hpp>
 
-#include "DrawableComponent.hpp"
-#include "../model/entities/BarrelStack.hpp"
-#include "AssetsManager.hpp"
-#include "../Constants.hpp"
+#include "DK/Constants.hpp"
+#include "DK/model/entities/BarrelStack.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/DrawableComponent.hpp"
 
 /**
  * @brief Renderer for the barrel stack entity.
@@ -19,7 +19,8 @@ public:
      * @brief Creates the barrel stack renderer for a concrete entity.
      * @param barrel_stack Barrel stack instance to render.
      */
-    BarrelStackRenderer(std::shared_ptr<BarrelStack> barrel_stack, AssetsManager &assets_manager) : barrel_stack(barrel_stack), assets_manager(assets_manager) {}
+    BarrelStackRenderer(std::shared_ptr<BarrelStack> barrel_stack, AssetsManager &assets_manager)
+        : barrel_stack(barrel_stack), assets_manager(assets_manager) {}
 
     /**
      * @brief Draws the barrel stack into the object layer.
@@ -30,7 +31,6 @@ public:
         draw_single_barrel(layer_stack, false, true);
         draw_single_barrel(layer_stack, true, false);
         draw_single_barrel(layer_stack, true, true);
-
     }
 
 private:
@@ -44,7 +44,8 @@ private:
         sprite.setOrigin({bounds.size.x, bounds.size.y / 2.f});
         sprite.setRotation(sf::degrees(90));
         auto position = barrel_stack->get_position();
-        sprite.setPosition({position.x + (left ? -1.f : 1.f) * constants::BARREL_RADIUS * 2.5f * 5.f / 16.f, position.y + (bottom ? 0.f : -1.f) * constants::BARREL_RADIUS * 2.5f});
+        sprite.setPosition({position.x + (left ? -1.f : 1.f) * constants::BARREL_RADIUS * 2.5f * 5.f / 16.f,
+                            position.y + (bottom ? 0.f : -1.f) * constants::BARREL_RADIUS * 2.5f});
         layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(sprite);
     }
 };

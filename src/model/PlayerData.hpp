@@ -1,7 +1,7 @@
 #ifndef PLAYER_DATA_HPP
 #define PLAYER_DATA_HPP
 
-#include "../Constants.hpp"
+#include "DK/Constants.hpp"
 
 class PlayerData {
 public:

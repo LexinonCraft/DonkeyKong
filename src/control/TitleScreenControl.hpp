@@ -1,13 +1,14 @@
 #ifndef TITLE_SCREEN_CONTROL_HPP
 #define TITLE_SCREEN_CONTROL_HPP
 
-#include "AbstractSceneControl.hpp"
-#include "../view/AssetsManager.hpp"
-#include "../view/TitleScreenView.hpp"
+#include "DK/control/AbstractSceneControl.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/TitleScreenView.hpp"
 
 class TitleScreenControl : public AbstractSceneControl {
 public:
-    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) : AbstractSceneControl(window), title_screen_view(window, assets_manager, player_data) {}
+    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data)
+        : AbstractSceneControl(window), title_screen_view(window, assets_manager, player_data) {}
 
     void handle_event(sf::Event *event) override;
 

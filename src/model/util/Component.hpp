@@ -11,8 +11,7 @@
  *
  * @tparam E Entity type this component belongs to.
  */
-template <typename E>
-class Component {
+template <typename E> class Component {
 public:
     /**
      * @brief Constructs a component for the given entity.
@@ -26,9 +25,7 @@ public:
      * @brief Returns the owning entity.
      * @return Shared pointer to the entity behind this component.
      */
-    std::shared_ptr<E> get_entity() const {
-        return entity;
-    }
+    std::shared_ptr<E> get_entity() const { return entity; }
 
 private:
     std::shared_ptr<E> entity;
