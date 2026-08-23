@@ -3,7 +3,6 @@
 
 #include <memory>
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
 #include "DK/model/Declarations.hpp"
@@ -83,12 +82,6 @@ public:
     void accept(EntityVisitor &visitor) override;
 
     /**
-     * @brief Returns the visible rectangle representing the dissolving platform.
-     * @return SFML rectangle shape used for rendering.
-     */
-    const sf::RectangleShape &get_shape() const;
-
-    /**
      * @brief Returns the underlying entity as an abstract base pointer.
      * @return Reference to this entity.
      */
@@ -117,7 +110,6 @@ private:
     float width;
     bool is_dissolving = false;
     float dissolve_timer = 0.f;
-    sf::RectangleShape shape;
 };
 
 #endif

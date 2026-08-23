@@ -3,7 +3,6 @@
 
 #include <memory>
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
 #include "DK/model/Declarations.hpp"
@@ -95,12 +94,6 @@ public:
     void accept(EntityVisitor &visitor) override;
 
     /**
-     * @brief Returns the visible rectangle representing the girder.
-     * @return SFML rectangle shape used for rendering.
-     */
-    const sf::RectangleShape &get_shape() const;
-
-    /**
      * @brief Returns the underlying entity as an abstract base pointer.
      * @return Reference to this entity.
      */
@@ -129,7 +122,6 @@ public:
 private:
     sf::Vector2f left;
     sf::Vector2f right;
-    sf::RectangleShape shape; // TODO: Remove
     Color color;
 };
 

@@ -3,25 +3,9 @@
 #include <cmath>
 #include <cstdlib>
 
-#include <SFML/Graphics/Color.hpp>
-
-#include "DK/Constants.hpp"
-
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right) : Girder(ref, left, right, Color::Red) {}
 
-Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right, Color color)
-    : BaseEntity(ref), left(left), right(right), shape(), color(color) {
-    // build the tilted bar: a rectangle from `left` to `right`, rotated to match
-    float dx = right.x - left.x;
-    float dy = right.y - left.y;
-    float length = std::sqrt(dx * dx + dy * dy);
-
-    shape.setSize({length, constants::GIRDER_THICKNESS});
-    shape.setOrigin({0.f, constants::GIRDER_THICKNESS / 2.f});
-    shape.setPosition(left);
-    shape.setRotation(sf::radians(std::atan2(dy, dx)));
-    shape.setFillColor(sf::Color(200, 80, 40));
-}
+Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right, Color color) : BaseEntity(ref), left(left), right(right), color(color) {}
 
 float Girder::slope_at(float x) const { return (right.y - left.y) / (right.x - left.x); }
 
@@ -52,8 +36,6 @@ sf::Vector2f Girder::displacement_at(float x, float dt) const {
 }
 
 void Girder::accept(EntityVisitor &visitor) { visitor.visit(*this); }
-
-const sf::RectangleShape &Girder::get_shape() const { return shape; }
 
 std::unique_ptr<Component<Platform>> Girder::create_platform_component() {
     return std::make_unique<Component<Platform>>(std::static_pointer_cast<Girder>(shared_from_this()));
