@@ -1,5 +1,7 @@
 #include "DK/model/components/PlatformComponentRepository.hpp"
 
+#include "DK/Constants.hpp"
+
 /**
  * @brief Finds a platform directly below the provided world position.
  */
