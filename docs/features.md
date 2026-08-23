@@ -1,6 +1,6 @@
 # Course and features of the game
 
-Oh no! After Donkey Kong has escaped his cage and has kidnapped his owner Jumpman's girlfriend Pauline, the gorilla climbs to the top of a construction site! Jumpman must rescue Pauline by following his pet monkey through different stages, each with its own unique challenges and obstacles. Will Jumpman be able to save Pauline from the clutches of Donkey Kong?
+Oh no! After Donkey Kong has escaped his cage and kidnapped his owner Jumpman's girlfriend Pauline, the gorilla climbs to the top of a construction site! Jumpman must rescue Pauline by following his pet monkey through different stages, each with its own unique challenges and obstacles. Will Jumpman be able to save Pauline from the clutches of Donkey Kong?
 
 ## General course of the game
 
