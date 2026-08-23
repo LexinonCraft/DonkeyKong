@@ -4,7 +4,7 @@ Oh no! After Donkey Kong has escaped his cage and has kidnapped his owner Jumpma
 
 ## General course of the game
 
-After starting the game, you will see the title screen. Press Enter to start the game. Then will then play two different stages in sequence (25m and 100m). After completing both of them successfully, the sequence will restart with increased difficulty. The level count in the top right shows the current iteration you are in. At the beginning, you have three lives (visible in the top left of the screen). On touching an enemy or obstacle, you will lose one life and have to restart the stage. The game ends after losing all three lives. You can gain score points in different ways, such as jumping over a barrel or using the hammer power-up. Your current score is shown in the top left and the highscore is visible in the top center.
+After starting the game, you will see the title screen. Press Enter to start the game. You will then play two different stages in sequence (25m and 100m). After completing both of them successfully, the sequence will restart with increased difficulty. The level count in the top right shows the current iteration you are in. At the beginning, you have three lives (visible in the top left of the screen). On touching an enemy or obstacle, you will lose one life and have to restart the stage. The game ends after losing all three lives. You can gain score points in different ways, such as jumping over a barrel or using the hammer power-up. Your current score is shown in the top left and the highscore is visible in the top center.
 
 ![Title screen](title_screen.png)
 
