@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/model/Stage.hpp"
 
 DissolvingPlatform::DissolvingPlatform(Ref ref, sf::Vector2f position, float width)
     : BaseEntity(ref), position(position), width(width), shape() {
@@ -37,3 +38,15 @@ sf::Vector2f DissolvingPlatform::displacement_at(float x, float dt) const {
 void DissolvingPlatform::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 const sf::RectangleShape &DissolvingPlatform::get_shape() const { return shape; }
+
+void DissolvingPlatform::update(float dt, Stage &stage) {
+    if (is_dissolving) {
+        if (dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
+            dissolve_timer += dt;
+        }
+        if (dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION && !dissolved) {
+            dissolved = true;
+            stage.add_to_score(position, constants::DISSOLVING_PLATFORM_SCORE);
+        }
+    }
+}
