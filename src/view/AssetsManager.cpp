@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#include "DK/Constants.hpp"
+
 AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::string contributors_file)
     : textures_base_path(base_path), font(font_file), contributors(read_contributors(contributors_file)) {
     load("jumpman_still.png", jumpman_still_texture);
@@ -148,7 +150,7 @@ void AssetsManager::load(const std::string &filename, sf::Texture &texture) {
 std::string AssetsManager::read_contributors(const std::string &filename) const {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        return "By Muvels and Lexinon";
+        return constants::FALLBACK_CONTRIBUTORS_TEXT;
     }
     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     return content;
