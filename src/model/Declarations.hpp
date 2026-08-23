@@ -6,12 +6,15 @@
  */
 typedef int Id;
 
+class PlayerData;
+class Stage;
+class StageObserver;
+
 class EntityRepository;
 class BaseEntity;
 class Platform;
 class Barrel;
 class Ref;
-class Stage;
 class PlatformComponentRepository;
 class Girder;
 class Player;
@@ -19,7 +22,6 @@ class Ladder;
 class Climbable;
 class Updatable;
 class SceneVisitor;
-class PlayerData;
 class Enemy;
 class Pickable;
 class HammerPowerUp;
