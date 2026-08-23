@@ -5,7 +5,7 @@
 #include "DK/control/Game.hpp"
 
 /**
- * @brief Entry point for the Donkey Kong-style game.
+ * @brief Entry point for the game.
  * @return Exit status code for the application.
  */
 int main() {
