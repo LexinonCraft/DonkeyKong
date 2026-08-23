@@ -1,32 +1,37 @@
-#include <stdexcept>
+#include "DK/view/views/TitleScreenView.hpp"
+
 #include <format>
+#include <stdexcept>
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "TitleScreenView.hpp"
-#include "../util/Positions.hpp"
-#include "../util/Math.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void TitleScreenView::draw(float animation_timer) {
     pre_draw();
 
+    // Game title
     sf::Text title(assets_manager.get_font());
     title.setString("Donkey Kong");
     title.setCharacterSize(48);
-    sf::FloatRect text_bounds = title.getLocalBounds();
-    title.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
+    set_origin(title, AnchorPosition::Center);
     title.setPosition(get_absolute_position({0.f, -100.f}, AnchorPosition::Center));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(title);
 
-    sf::Text subtitle(assets_manager.get_font());
-    subtitle.setString("Press ENTER to Start");
-    subtitle.setCharacterSize(24);
-    sf::FloatRect subtitle_bounds = subtitle.getLocalBounds();
-    subtitle.setOrigin({subtitle_bounds.size.x / 2.f, subtitle_bounds.size.y / 2.f});
-    subtitle.setPosition(get_absolute_position({0.f, 100.f}, AnchorPosition::Center));
-    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(subtitle);
+    // "Press ENTER to start" text
+    sf::Text start_text(assets_manager.get_font());
+    start_text.setString("Press ENTER to start");
+    start_text.setCharacterSize(24);
+    set_origin(start_text, AnchorPosition::Center);
+    start_text.setPosition(get_absolute_position({0.f, 100.f}, AnchorPosition::Center));
+    layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(start_text);
 
+    // Animated Donkey Kong
     AssetsManager::TextureId donkey_kong_texture_id;
     bool flip;
     if (animation_timer < 3 * constants::DONKEY_KONG_ANGRY_ANIMATION_INTERVAL) {
@@ -52,33 +57,33 @@ void TitleScreenView::draw(float animation_timer) {
     }
     sf::Sprite donkey_kong_sprite(assets_manager.get_texture(donkey_kong_texture_id));
     donkey_kong_sprite.setPosition(get_absolute_position({0.f, 0.f}, AnchorPosition::Center));
-    sf::FloatRect sprite_bounds = donkey_kong_sprite.getLocalBounds();
-    donkey_kong_sprite.setOrigin({sprite_bounds.size.x / 2.f, sprite_bounds.size.y / 2.f});
-    donkey_kong_sprite.setScale({flip ? -3.f : 3.f, 3.f});
+    set_origin(donkey_kong_sprite, AnchorPosition::Center);
+    scale(donkey_kong_sprite, 3.f);
+    flip_horizontally(donkey_kong_sprite, flip);
     layer_stack.get_layer(LayerStack::LayerId::Background).add_to_layer(donkey_kong_sprite);
 
+    // Contributors text
     sf::Text contributors(assets_manager.get_font());
     contributors.setString(assets_manager.get_contributors());
     contributors.setCharacterSize(6);
-    sf::FloatRect contributors_bounds = contributors.getLocalBounds();
-    contributors.setOrigin({contributors_bounds.size.x / 2.f, contributors_bounds.size.y / 2.f});
+    set_origin(contributors, AnchorPosition::Center);
     contributors.setPosition(get_absolute_position({0.f, -50.f}, AnchorPosition::BottomCenter));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(contributors);
 
+    // Highscore label
     sf::Text highscore_label(assets_manager.get_font());
     highscore_label.setString("HIGH SCORE");
     highscore_label.setFillColor(sf::Color::Red);
     highscore_label.setCharacterSize(24);
-    sf::FloatRect highscore_label_bounds = highscore_label.getLocalBounds();
-    highscore_label.setOrigin({highscore_label_bounds.size.x / 2.f, 0.f});
+    set_origin(highscore_label, AnchorPosition::TopCenter);
     highscore_label.setPosition(get_absolute_position({0.f, 50.f}, AnchorPosition::TopCenter));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore_label);
 
+    // Highscore
     sf::Text highscore(assets_manager.get_font());
     highscore.setString(std::format("{:06d}", player_data.get_highscore()));
     highscore.setCharacterSize(24);
-    sf::FloatRect highscore_bounds = highscore.getLocalBounds();
-    highscore.setOrigin({highscore_bounds.size.x / 2.f, 0.f});
+    set_origin(highscore, AnchorPosition::TopCenter);
     highscore.setPosition(get_absolute_position({0.f, 74.f}, AnchorPosition::TopCenter));
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(highscore);
 

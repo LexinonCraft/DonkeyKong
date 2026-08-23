@@ -1,7 +1,7 @@
 #ifndef JUMPABLE_HPP
 #define JUMPABLE_HPP
 
-#include "../util/EntityFromComponentAux.hpp"
+#include "DK/model/util/EntityFromComponentAux.hpp"
 
 class Jumpable : public EntityFromComponentAux {
 public:

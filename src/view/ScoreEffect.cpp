@@ -1,13 +1,11 @@
+#include "DK/view/ScoreEffect.hpp"
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "ScoreEffect.hpp"
-#include "../Constants.hpp"
-
-bool ScoreEffect::update(float dt) {
-    time_elapsed += dt;
-    return time_elapsed < constants::SCORE_EFFECT_DURATION;
-}
+#include "DK/Constants.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
 
 void ScoreEffect::draw(LayerStack &layer_stack, AssetsManager &assets_manager) {
     float rise_distance = constants::SCORE_EFFECT_RISE_SPEED * time_elapsed;

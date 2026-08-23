@@ -1,24 +1,26 @@
-#include "Game.hpp"
+#include "DK/control/Game.hpp"
 
-#include "../Constants.hpp"
-#include "StageControl.hpp"
-#include "StageTransitionControl.hpp"
-#include "TitleScreenControl.hpp"
-#include "GameOverControl.hpp"
+#include "DK/Constants.hpp"
+#include "DK/control/GameOverControl.hpp"
+#include "DK/control/StageControl.hpp"
+#include "DK/control/StageTransitionControl.hpp"
+#include "DK/control/TitleScreenControl.hpp"
 
-Game::Game() :
-    window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"), scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data))) {
-        // limit frame rate
-        window.setFramerateLimit(constants::FRAME_RATE);
+Game::Game()
+    : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
+      assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"),
+      scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data))) {
+    // limit frame rate
+    window.setFramerateLimit(constants::FRAME_RATE);
 
-        // set icon
-        auto image = sf::Image();
-        if (!image.loadFromFile("assets/icon.png")) {
-            throw std::runtime_error("Failed to load icon");
-        }
-        window.setIcon(image.getSize(), image.getPixelsPtr());
+    // set icon
+    auto image = sf::Image();
+    if (!image.loadFromFile("assets/icon.png")) {
+        throw std::runtime_error("Failed to load icon");
+    }
+    window.setIcon(image.getSize(), image.getPixelsPtr());
 
-        // level->set_player(std::rand, &player_control.get_player());
+    // level->set_player(std::rand, &player_control.get_player());
 }
 
 void Game::run() {
@@ -28,7 +30,7 @@ void Game::run() {
     while (window.isOpen()) {
         // Restart the clock and save the elapsed time into elapsed_time
         sf::Time elapsed_time = clock.restart();
- 
+
         // handle input, check if window is still open
         if (!input()) {
             // update the scene according to the passed time

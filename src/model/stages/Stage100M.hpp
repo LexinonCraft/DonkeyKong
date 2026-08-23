@@ -1,12 +1,12 @@
 #ifndef STAGE_100M_HPP
 #define STAGE_100M_HPP
 
+#include <list>
 #include <memory>
 #include <vector>
-#include <list>
 
-#include "../Stage.hpp"
-#include "../animations/Stage100MCompletionAnimation.hpp"
+#include "DK/model/Stage.hpp"
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 
 class Stage100M : public Stage {
 public:
@@ -14,13 +14,14 @@ public:
 
     void on_completed() override {
         Stage::on_completed();
-        
+
         clear_secondary_entities();
         for (auto it = static_entities_to_be_cleared.begin(); it != static_entities_to_be_cleared.end(); ++it) {
             it->get()->destroy();
         }
 
-        current_animation = std::make_unique<Stage100MCompletionAnimation>(*this, lower_falling_girders, upper_falling_girder, player, donkey_kong, pauline);
+        current_animation = std::make_unique<Stage100MCompletionAnimation>(*this, lower_falling_girders, upper_falling_girder, player,
+                                                                           donkey_kong, pauline);
     }
 
 private:

@@ -1,4 +1,4 @@
-#include "TitleScreenControl.hpp"
+#include "DK/control/TitleScreenControl.hpp"
 
 void TitleScreenControl::handle_event(sf::Event *event) {
     if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
@@ -19,10 +19,6 @@ void TitleScreenControl::update(float dt) {
     }
 }
 
-void TitleScreenControl::draw() {
-    title_screen_view.draw(animation_timer);
-}
+void TitleScreenControl::draw() { title_screen_view.draw(animation_timer); }
 
-AbstractSceneControl::NextScene TitleScreenControl::get_next_scene() const {
-    return next_scene;
-}
+AbstractSceneControl::NextScene TitleScreenControl::get_next_scene() const { return next_scene; }

@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "../util/EntityFromComponentAux.hpp"
+#include "DK/model/util/EntityFromComponentAux.hpp"
 
 class Pickable : public EntityFromComponentAux {
 public:

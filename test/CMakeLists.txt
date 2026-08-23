@@ -6,8 +6,8 @@ set(ModelSources
 #    ${CMAKE_SOURCE_DIR}/src/model/Barrel.cpp
 #    ${CMAKE_SOURCE_DIR}/src/model/Ladder.cpp
 #    ${CMAKE_SOURCE_DIR}/src/model/Player.cpp
-#    ${CMAKE_SOURCE_DIR}/src/model/Stage.cpp
 #    ${CMAKE_SOURCE_DIR}/src/model/DemoStage.cpp
+#    ${CMAKE_SOURCE_DIR}/src/model/Stage.cpp
     )
 
 # Controller

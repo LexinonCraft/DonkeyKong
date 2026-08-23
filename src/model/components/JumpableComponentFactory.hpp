@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../util/AbstractComponentFactory.hpp"
-#include "../util/Component.hpp"
-#include "Jumpable.hpp"
+#include "DK/model/components/Jumpable.hpp"
+#include "DK/model/util/AbstractComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
 
 class JumpableComponentFactory : public AbstractComponentFactory<Component<Jumpable>> {
 protected:

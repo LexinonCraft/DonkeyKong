@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "../util/ComponentRepository.hpp"
-#include "../util/Component.hpp"
-#include "ClimbableComponentFactory.hpp"
-#include "Climbable.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/components/ClimbableComponentFactory.hpp"
+#include "DK/model/util/Component.hpp"
+#include "DK/model/util/ComponentRepository.hpp"
 
 /**
  * @brief Repository storing climbable behaviour components.
@@ -20,7 +20,8 @@ public:
      * @brief Creates the repository and registers it with the entity repository.
      * @param repository Entity repository to observe.
      */
-    ClimbableComponentRepository(EntityRepository &repository) : ComponentRepository<Component<Climbable>>(repository, std::make_unique<ClimbableComponentFactory>()) {}
+    ClimbableComponentRepository(EntityRepository &repository)
+        : ComponentRepository<Component<Climbable>>(repository, std::make_unique<ClimbableComponentFactory>()) {}
 
     /**
      * @brief Finds the nearest climbable that matches the player while moving upward.
