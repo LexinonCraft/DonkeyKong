@@ -12,10 +12,7 @@ public:
 
     bool is_barrel_boundary_gap(const sf::Vector2f &position) const override;
 
-    void on_completed() override {
-        Stage::on_completed();
-        current_animation = std::make_unique<Stage25MCompletionAnimation>(*this, player, donkey_kong, pauline);
-    }
+    void on_completed() override { current_animation = std::make_unique<Stage25MCompletionAnimation>(*this, player, donkey_kong, pauline); }
 
 private:
     float barrel_exit_y;
