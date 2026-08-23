@@ -3,8 +3,6 @@
 
 #include <memory>
 
-#include <SFML/Graphics/RectangleShape.hpp>
-
 #include "DK/model/components/Climbable.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/util/BaseEntity.hpp"
@@ -25,8 +23,6 @@ public:
 
     bool is_active_for_player() const override { return active_for_player; }
 
-    const sf::RectangleShape &get_shape() const { return shape; }
-
     void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
     void check_referenced_entities() override;
@@ -42,7 +38,6 @@ public:
     bool is_secondary_entity() const override { return false; }
 
 private:
-    sf::RectangleShape shape;
     bool active_for_player;
     bool broken;
     Color color;
