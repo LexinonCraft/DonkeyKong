@@ -43,7 +43,8 @@ void DissolvingPlatform::update(float dt, Stage &stage) {
     if (is_dissolving) {
         if (dissolve_timer < constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION) {
             dissolve_timer += dt;
-        } else if (!dissolved) {
+        }
+        if (dissolve_timer >= constants::DISSOLVING_PLATFORM_DISSOLVE_DURATION && !dissolved) {
             dissolved = true;
             stage.add_to_score(position, constants::DISSOLVING_PLATFORM_SCORE);
         }
