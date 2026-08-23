@@ -20,7 +20,7 @@ public:
 
     /**
      * @brief Returns the owning entity.
-     * @return Shared pointer to the entity behind this component.
+     * @returns Shared pointer to the entity behind this component.
      */
     std::shared_ptr<E> get_entity() const { return entity; }
 

@@ -22,8 +22,8 @@ public:
      * @brief Updates the state of the score effect.
      *
      * @param dt Time elapsed since the last update.
-     * @return true If the score effect is still active.
-     * @return false If the score effect has expired.
+     * @returns true If the score effect is still active.
+     * @returns false If the score effect has expired.
      */
     bool update(float dt) {
         time_elapsed += dt;

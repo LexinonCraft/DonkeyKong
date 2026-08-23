@@ -32,8 +32,8 @@ private:
     /**
      * @brief Handle input
      *
-     * @return true if the game should quit
-     * @return false otherwise
+     * @returns true if the game should quit
+     * @returns false otherwise
      */
     bool input();
 
