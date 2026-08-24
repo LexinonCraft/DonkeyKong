@@ -5,10 +5,10 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 #include "DK/model/entities/Beam.hpp"
 #include "DK/model/entities/DissolvingPlatform.hpp"
 #include "DK/util/Math.hpp"
-#include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 
 Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     // create girders
@@ -103,8 +103,8 @@ void Stage100M::on_completed() {
         it->get()->destroy();
     }
 
-    current_animation = std::make_unique<Stage100MCompletionAnimation>(*this, lower_falling_girders, upper_falling_girder, player,
-                                                                        donkey_kong, pauline);
+    current_animation =
+        std::make_unique<Stage100MCompletionAnimation>(*this, lower_falling_girders, upper_falling_girder, player, donkey_kong, pauline);
 }
 
 void Stage100M::update_while_running(float dt) {

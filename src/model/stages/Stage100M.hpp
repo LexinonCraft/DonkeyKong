@@ -10,13 +10,13 @@
 
 /**
  * @brief The 100m stage where the player must destroy the dissolving platforms.
- * 
+ *
  */
 class Stage100M : public Stage, private EntityRepositoryObserver {
 public:
     /**
      * @brief Initializes the 100m stage by creating the entities and setting the player's initial position.
-     * 
+     *
      * @param rng A random number generator.
      * @param player_data The global player data.
      */
