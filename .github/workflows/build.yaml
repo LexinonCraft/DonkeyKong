@@ -42,7 +42,7 @@ jobs:
       - name: Install Doxygen
         run: |
           sudo apt-get update
-          sudo apt-get install -y doxygen $APT_DEPENDENCIES
+          sudo apt-get install -y doxygen=1.15.0+ds1-1ubuntu3 $APT_DEPENDENCIES
       - name: Generate Documentation
         run: |
           doxygen --version
