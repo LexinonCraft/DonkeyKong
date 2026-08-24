@@ -59,7 +59,7 @@ jobs:
           path: html
 
   deploy-docs:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/84-configure-doxygen'
     needs: build-docs
     runs-on: ubuntu-latest
     environment:
