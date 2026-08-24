@@ -9,6 +9,8 @@ Make sure you have the following tools installed on your system:
 * Make (or Ninja)
 * the following packages: `libsfml-dev libx11-dev xorg-dev libudev-dev libvorbis-dev libflac-dev`
 
+If you want to build the documentation, you also need to install Doxygen and Graphviz.
+
 ## Building, running and testing the game
 
 ```bash
