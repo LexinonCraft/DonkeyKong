@@ -42,3 +42,5 @@ GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 
 GENERATE_LATEX         = NO
+
+IMAGE_PATH             = docs
