@@ -4,8 +4,7 @@
 
 #include "DK/Constants.hpp"
 
-AssetsManager::AssetsManager()
-    : font(constants::FONT_FILE), contributors(read_contributors()) {
+AssetsManager::AssetsManager() : font(constants::FONT_FILE), contributors(read_contributors()) {
     load("jumpman_still.png", jumpman_still_texture);
     load("jumpman_walking1.png", jumpman_walking1_texture);
     load("jumpman_walking2.png", jumpman_walking2_texture);
