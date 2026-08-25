@@ -8,7 +8,7 @@
 
 Game::Game()
     : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
-      assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"),
+      assets_manager(),
       scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data))) {
     // limit frame rate
     window.setFramerateLimit(constants::FRAME_RATE);

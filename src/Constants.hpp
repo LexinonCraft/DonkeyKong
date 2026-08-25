@@ -127,6 +127,10 @@ constexpr float DONKEY_KONG_AFTER_FALL_FRAME_INTERVAL = 0.15f; // seconds betwee
 constexpr float BEAM_WIDTH = 3.f; // px, width of the beam entity
 
 constexpr const char *FALLBACK_CONTRIBUTORS_TEXT = "By Muvels and Lexinon";
+
+constexpr const char *TEXTURES_BASE_PATH = "assets/textures/";
+constexpr const char *FONT_FILE = "assets/fonts/PressStart2P.ttf";
+constexpr const char *CONTRIBUTORS_FILE = "assets/contributors.txt";
 } // namespace constants
 
 #endif

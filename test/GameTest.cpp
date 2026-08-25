@@ -2,6 +2,15 @@
 
 #include <vector>
 
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
+#include "DK/Constants.hpp"
+#include "DK/view/AssetsManager.hpp"
+#include "DK/view/LayerStack.hpp"
+
 //#include "../src/model/Barrel.hpp"
 //#include "../src/model/Girder.hpp"
 //#include "../src/../Constants.hpp"
@@ -70,3 +79,21 @@ TEST(BarrelTest, zig_zags_onto_the_next_girder) {
                 girders[1].surface_y_at(barrel.get_position().x) - R, 0.001f);
 }
 */
+
+// Test that AssetsManager can load assets and that a texture can be drawn to a render texture without crashing.
+TEST(AssetsManagerTest, load_assets_and_draw_texture) {
+    AssetsManager assets_manager; // assets are loaded here
+    sf::RenderTexture render_texture({300, 300});
+    sf::Sprite sprite(assets_manager.get_texture(AssetsManager::TextureId::DonkeyKongAngry1));
+    render_texture.draw(sprite);
+    render_texture.display();
+}
+
+// Test that LayerStack can be created, cleared, and drawn without crashing.
+TEST(LayerStackTest, create_and_draw_layers) {
+    sf::RenderWindow window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong");
+    LayerStack layer_stack(window);
+    layer_stack.clear_all();
+    layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(sf::RectangleShape({100, 100}));
+    layer_stack.draw_all();
+}

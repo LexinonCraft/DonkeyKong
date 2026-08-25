@@ -4,8 +4,8 @@
 
 #include "DK/Constants.hpp"
 
-AssetsManager::AssetsManager(std::string base_path, std::string font_file, std::string contributors_file)
-    : textures_base_path(base_path), font(font_file), contributors(read_contributors(contributors_file)) {
+AssetsManager::AssetsManager()
+    : font(constants::FONT_FILE), contributors(read_contributors()) {
     load("jumpman_still.png", jumpman_still_texture);
     load("jumpman_walking1.png", jumpman_walking1_texture);
     load("jumpman_walking2.png", jumpman_walking2_texture);
@@ -142,13 +142,13 @@ const sf::Texture &AssetsManager::get_texture(TextureId id) const {
 }
 
 void AssetsManager::load(const std::string &filename, sf::Texture &texture) {
-    if (!texture.loadFromFile(textures_base_path + filename)) {
+    if (!texture.loadFromFile(constants::TEXTURES_BASE_PATH + filename)) {
         throw std::runtime_error("Failed to load texture: " + filename);
     }
 }
 
-std::string AssetsManager::read_contributors(const std::string &filename) const {
-    std::ifstream file(filename);
+std::string AssetsManager::read_contributors() const {
+    std::ifstream file(constants::CONTRIBUTORS_FILE);
     if (!file.is_open()) {
         return constants::FALLBACK_CONTRIBUTORS_TEXT;
     }
