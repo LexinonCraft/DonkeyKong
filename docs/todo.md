@@ -12,17 +12,17 @@
 
 - [x] Implement level transitions and manage player data across levels
 - [x] Make sure that entities are deleted only at the end of the update cycle, not during it
-- [ ] Polish physics (~~prevent player from falling off girders at edges~~, ~~prevent player from jumping onto next girder~~, adjust hitboxes)
+- [x] Polish physics (~~prevent player from falling off girders at edges~~, ~~prevent player from jumping onto next girder~~, adjust hitboxes)
 - [x] Add broken ladders
 - [x] Allow barrels to roll down ladders
 - [x] Seed for RNG
-- [ ] Add fireballs to 100M stage
+- [x] Add ghosts to 100M stage
 
 ## Low priority
 
 - [x] Add textures
-- [ ] Perform useful generalizations
-- [ ] Add a main menu
+- [x] Perform useful generalizations
+- [x] Add a main menu
 
 ## Nice to have
 
