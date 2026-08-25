@@ -6,6 +6,9 @@
 #include "DK/model/Declarations.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Decorative vertical beam spanning two platforms.
+ */
 class Beam : public BaseEntity {
 public:
     Beam(Ref ref, std::shared_ptr<Platform> lower_platform, std::shared_ptr<Platform> upper_platform, float x_position);

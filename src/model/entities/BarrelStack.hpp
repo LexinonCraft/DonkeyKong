@@ -8,6 +8,9 @@
 #include "DK/model/Declarations.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Decorative stack of barrels positioned on a platform.
+ */
 class BarrelStack : public BaseEntity {
 public:
     BarrelStack(Ref ref, std::shared_ptr<Platform> platform, float x_position);

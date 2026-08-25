@@ -10,6 +10,11 @@
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Enemy that alternates between throwing barrels and angry animations.
+ *
+ * Stage animations can temporarily suspend its regular state machine and move it directly.
+ */
 class DonkeyKong : public BaseEntity, public Updatable, public Enemy {
 public:
     enum class State {
@@ -47,8 +52,13 @@ public:
 
     void set_state(State new_state, Stage &stage);
 
+    /**
+     * @brief Suspends regular behavior and lets an animation control Donkey Kong.
+     * @param animation Animation that takes control of the entity.
+     */
     void start_animation(AbstractAnimation *animation);
 
+    /** @brief Returns Donkey Kong to its regular idle behavior. */
     void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }

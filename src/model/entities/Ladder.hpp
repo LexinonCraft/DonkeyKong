@@ -7,7 +7,11 @@
 #include "DK/model/components/Climbable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
-/// @brief Represents a ladder connecting two girders at a specific x position.
+/**
+ * @brief Climbable ladder spanning two vertical endpoints at a fixed horizontal position.
+ *
+ * Its endpoints can be derived from platforms or supplied as explicit coordinates.
+ */
 class Ladder : public BaseEntity, public Climbable {
 public:
     enum class Color {

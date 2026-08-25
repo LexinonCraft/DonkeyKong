@@ -10,6 +10,9 @@
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Enemy that patrols platforms and occasionally climbs between them.
+ */
 class Ghost : public BaseEntity, public Updatable, public Enemy {
 public:
     enum class State {

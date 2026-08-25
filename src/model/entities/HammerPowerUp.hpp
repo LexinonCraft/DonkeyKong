@@ -10,6 +10,9 @@
 #include "DK/model/components/Pickable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Collectible hammer power-up that is consumed when picked up by the player.
+ */
 class HammerPowerUp : public BaseEntity, public Pickable {
 public:
     HammerPowerUp(Ref ref, sf::Vector2f position);

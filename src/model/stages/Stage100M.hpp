@@ -8,8 +8,16 @@
 #include "DK/model/Stage.hpp"
 #include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 
+/**
+ * @brief Final stage, where the player dissolves platforms while avoiding ghosts.
+ */
 class Stage100M : public Stage {
 public:
+    /**
+     * @brief Creates and populates the 100 m stage.
+     * @param id_generator Function used to create unique entity ids.
+     * @param player_data Persistent player data shared between stages.
+     */
     Stage100M(Id id_generator(), PlayerData &player_data);
 
     void on_completed() override {

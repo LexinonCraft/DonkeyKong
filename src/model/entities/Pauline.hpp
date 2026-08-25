@@ -8,6 +8,9 @@
 #include "DK/model/Declarations.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Stage character whose position and state can be controlled by completion animations.
+ */
 class Pauline : public BaseEntity {
 public:
     enum class State {
@@ -26,8 +29,13 @@ public:
     State get_state() const { return state; }
     void set_state(State new_state) { state = new_state; }
 
+    /**
+     * @brief Lets an animation control Pauline's state and position.
+     * @param animation Animation that takes control of the entity.
+     */
     void start_animation(AbstractAnimation *animation);
 
+    /** @brief Returns Pauline to her normal state. */
     void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }

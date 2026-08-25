@@ -106,6 +106,7 @@ protected:
     /**
      * @brief Creates a stage and registers the component repositories with the entity repository.
      * @param rng Function used to generate random numbers.
+     * @param player_data Persistent player data shared between stages.
      */
     Stage(int rng(), PlayerData &player_data);
 

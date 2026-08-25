@@ -22,11 +22,6 @@ public:
 
     ~DrawableComponentFactory() override;
 
-    /**
-     * @brief Creates the drawable component / renderer for an entity using visitor dispatch.
-     * @param entity Entity to create a drawable component for.
-     * @returns Unique pointer to the drawable component.
-     */
     std::unique_ptr<DrawableComponent> create_component_for(std::shared_ptr<BaseEntity> entity) override;
 
 private:
