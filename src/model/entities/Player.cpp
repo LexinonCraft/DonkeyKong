@@ -227,6 +227,7 @@ void Player::check_referenced_entities() {
     if (handle_destroyed_indirect(current_ladder) && state == State::Climbing) {
         state = State::InAir;
     }
+    handle_destroyed_indirect(last_fall_through_platform);
 }
 
 void Player::accept(EntityVisitor &visitor) { visitor.visit(*this); }

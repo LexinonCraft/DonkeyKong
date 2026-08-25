@@ -25,6 +25,8 @@ public:
 
     void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
 
+    void check_referenced_entities() override;
+
     std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
     std::unique_ptr<Component<Enemy>> create_enemy_component() override;

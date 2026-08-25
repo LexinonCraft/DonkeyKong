@@ -88,6 +88,12 @@ bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
     return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
+void DonkeyKong::check_referenced_entities() {
+    if (platform && platform->get_entity().is_destroyed()) {
+        destroy();
+    }
+}
+
 std::unique_ptr<Component<Updatable>> DonkeyKong::create_updatable_component() {
     return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
 }

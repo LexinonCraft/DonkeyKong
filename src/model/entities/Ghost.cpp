@@ -111,6 +111,13 @@ bool Ghost::touches(const sf::RectangleShape &player_shape) const {
     return ghost_shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
 
+void Ghost::check_referenced_entities() {
+    if ((current_platform && current_platform->get_entity().is_destroyed()) ||
+        (current_climbable && current_climbable->get_entity().is_destroyed())) {
+        destroy();
+    }
+}
+
 std::unique_ptr<Component<Updatable>> Ghost::create_updatable_component() {
     return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Ghost>(shared_from_this()));
 }

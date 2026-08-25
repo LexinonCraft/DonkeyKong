@@ -158,7 +158,12 @@ void Barrel::check_platform_intersection(PlatformComponentRepository &platforms,
                     roll_speed);
 }
 
-void Barrel::check_referenced_entities() { handle_destroyed_indirect(current_platform); }
+void Barrel::check_referenced_entities() {
+    handle_destroyed_indirect(current_platform);
+    if (handle_destroyed_indirect(current_climbable) && state == State::RollingDownClimbable) {
+        state = State::Falling;
+    }
+}
 
 float Barrel::platform_snap_distance(float dt) const {
     float distance = vy * dt;
