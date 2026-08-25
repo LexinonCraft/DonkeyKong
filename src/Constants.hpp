@@ -128,7 +128,7 @@ constexpr float BEAM_WIDTH = 3.f; // px, width of the beam entity
 
 constexpr const char *FALLBACK_CONTRIBUTORS_TEXT = "By Muvels and Lexinon";
 
-constexpr float MAX_DT = 0.05f; // seconds, maximum delta time to prevent large jumps in game state due to lag or pauses
+constexpr float MAX_DT = 0.15f; // seconds, maximum delta time to prevent large jumps in game state due to lag or pauses
 } // namespace constants
 
 #endif
