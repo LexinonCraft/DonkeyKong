@@ -6,6 +6,9 @@
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 #include "DK/util/Math.hpp"
 
 Ghost::Ghost(Ref ref, std::shared_ptr<Platform> platform, float x_pos)
@@ -110,6 +113,8 @@ bool Ghost::touches(const sf::RectangleShape &player_shape) const {
     ghost_shape.setPosition(position - sf::Vector2f{0.f, constants::GHOST_LIFT}); // Adjust for ghost lift
     return ghost_shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
+
+void Ghost::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 void Ghost::check_referenced_entities() {
     if ((current_platform && current_platform->get_entity().is_destroyed()) ||

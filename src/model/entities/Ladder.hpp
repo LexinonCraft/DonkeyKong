@@ -3,8 +3,8 @@
 
 #include <memory>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Climbable.hpp"
-#include "DK/model/components/Platform.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
 /// @brief Represents a ladder connecting two girders at a specific x position.
@@ -23,7 +23,7 @@ public:
 
     bool is_active_for_player() const override { return active_for_player; }
 
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
     void check_referenced_entities() override;
 

@@ -10,6 +10,7 @@
 #include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/entities/Barrel.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
 DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_position, bool throw_barrels)
     : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform),
@@ -87,6 +88,8 @@ bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
     hitbox.setPosition(position);
     return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
+
+void DonkeyKong::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
 void DonkeyKong::check_referenced_entities() {
     if (platform && platform->get_entity().is_destroyed()) {

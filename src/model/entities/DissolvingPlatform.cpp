@@ -3,6 +3,7 @@
 #include "DK/Constants.hpp"
 #include "DK/model/Stage.hpp"
 #include "DK/model/entities/Player.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
 DissolvingPlatform::DissolvingPlatform(Ref ref, sf::Vector2f position, float width) : BaseEntity(ref), position(position), width(width) {}
 

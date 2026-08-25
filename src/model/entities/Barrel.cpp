@@ -12,6 +12,7 @@
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Climbable.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/components/PlatformComponentRepository.hpp"
 #include "DK/model/entities/Player.hpp"

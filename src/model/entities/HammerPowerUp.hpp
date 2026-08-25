@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Pickable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 

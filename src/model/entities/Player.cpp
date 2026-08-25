@@ -8,6 +8,8 @@
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/components/Platform.hpp"
 #include "DK/model/util/EntityVisitor.hpp"
 
 Player::Player(Ref ref)

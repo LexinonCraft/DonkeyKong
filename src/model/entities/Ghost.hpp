@@ -5,6 +5,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Enemy.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
@@ -23,7 +24,7 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
     void check_referenced_entities() override;
 

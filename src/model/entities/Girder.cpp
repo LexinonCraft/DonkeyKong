@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cstdlib>
 
+#include "DK/model/util/EntityVisitor.hpp"
+
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right) : Girder(ref, left, right, Color::Red) {}
 
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right, Color color) : BaseEntity(ref), left(left), right(right), color(color) {}

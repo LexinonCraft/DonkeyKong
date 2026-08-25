@@ -7,7 +7,6 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "DK/model/Declarations.hpp"
-#include "DK/model/components/Climbable.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 

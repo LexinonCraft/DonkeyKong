@@ -9,7 +9,6 @@
 #include "DK/model/components/Enemy.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
-#include "DK/model/util/EntityVisitor.hpp"
 
 class DonkeyKong : public BaseEntity, public Updatable, public Enemy {
 public:
@@ -28,7 +27,7 @@ public:
 
     void on_hammer_hit(Stage &stage) override {}
 
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
     void check_referenced_entities() override;
 
