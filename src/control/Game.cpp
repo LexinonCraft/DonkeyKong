@@ -1,4 +1,5 @@
 #include "DK/control/Game.hpp"
+
 #include <algorithm>
 
 #include "DK/Constants.hpp"
