@@ -12,7 +12,7 @@ If you want to build the documentation, you also need to install Doxygen and Gra
 
 ## Building, running and testing the game
 
-The project can be built with either CMake or Make. On JupyterHub, only Make works.
+The project can be built with either CMake or Make. On JupyterHub, only Make works. Also, please note that the game runs significantly slower on JupyterHub than on your local machine to make the game playable despite the increases latency.
 
 With Make:
 
