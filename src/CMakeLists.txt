@@ -51,6 +51,7 @@ set(ViewSources
     ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/LadderRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/PaulineRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/renderers/PlayerRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/DrawableComponentFactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/views/AbstractSceneView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/views/GameOverView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/views/StageTransitionView.cpp

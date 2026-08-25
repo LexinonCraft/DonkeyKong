@@ -3,6 +3,7 @@
 
 #include "DK/model/util/ComponentRepository.hpp"
 #include "DK/view/Declarations.hpp"
+#include "DK/view/DrawableComponent.hpp"
 #include "DK/view/DrawableComponentFactory.hpp"
 
 /**
