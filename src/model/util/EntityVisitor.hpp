@@ -25,6 +25,7 @@ public:
     /** @brief Visits a ladder entity. */
     virtual void visit(Ladder &ladder) = 0;
 
+    /** @brief Visits a hammer power-up entity. */
     virtual void visit(HammerPowerUp &hammer) = 0;
 
     /** @brief Visits a Donkey Kong entity. */
