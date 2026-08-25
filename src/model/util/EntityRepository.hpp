@@ -38,7 +38,7 @@ public:
 
     /**
      * @brief Adds a hammer power-up entity.
-     * 
+     *
      * @param position Position of the hammer power-up.
      * @return Shared pointer to the created hammer power-up entity.
      */
@@ -104,7 +104,7 @@ public:
 
     /**
      * @brief Adds a Donkey Kong entity.
-     * 
+     *
      * @param platform The platform on which Donkey Kong is placed.
      * @param x_position The horizontal position of Donkey Kong on the platform.
      * @param throw_barrels Whether Donkey Kong should throw barrels.
@@ -114,7 +114,7 @@ public:
 
     /**
      * @brief Adds a barrel stack entity.
-     * 
+     *
      * @param platform The platform on which the barrel stack is placed.
      * @param x_position The horizontal position of the barrel stack on the platform.
      * @return Shared pointer to the created barrel stack entity.
@@ -123,7 +123,7 @@ public:
 
     /**
      * @brief Adds a Pauline entity.
-     * 
+     *
      * @param platform The platform on which Pauline is placed.
      * @param x_position The horizontal position of Pauline on the platform.
      * @return Shared pointer to the created Pauline entity.
@@ -132,7 +132,7 @@ public:
 
     /**
      * @brief Adds a dissolving platform entity.
-     * 
+     *
      * @param position The position of the dissolving platform.
      * @param width The width of the dissolving platform.
      * @return Shared pointer to the created dissolving platform entity.
@@ -141,7 +141,7 @@ public:
 
     /**
      * @brief Adds a ghost entity.
-     * 
+     *
      * @param platform The platform on which the ghost is placed.
      * @param x_pos The horizontal position of the ghost on the platform.
      * @return Shared pointer to the created ghost entity.
@@ -150,7 +150,7 @@ public:
 
     /**
      * @brief Adds a beam entity.
-     * 
+     *
      * @param lower_platform The lower platform to which the beam is attached.
      * @param upper_platform The upper platform to which the beam is attached.
      * @param x_pos The x-position of the beam.
