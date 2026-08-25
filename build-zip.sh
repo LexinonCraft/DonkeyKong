@@ -36,6 +36,7 @@ trap 'rm -rf "$TEMP_DIR"' EXIT
 cp -r assets "$TEMP_DIR/"
 cp -r docs "$TEMP_DIR/"
 cp -r src "$TEMP_DIR/"
+cp -r test "$TEMP_DIR/"
 cp .clang-format "$TEMP_DIR/"
 cp .clangd "$TEMP_DIR/"
 cp clang-format.sh "$TEMP_DIR/"
