@@ -30,69 +30,132 @@ public:
     EntityRepository(Id (*id_generator)()) : observer_registry(id_generator), id_generator(id_generator) {}
 
     /**
-     * @brief Adds a barrel entity at the given coordinates.
+     * @brief Adds a barrel entity.
      * @param position Starting position of the barrel.
-     * @returns Shared pointer to the created barrel.
+     * @returns Shared pointer to the created barrel entity.
      */
     std::shared_ptr<Barrel> add_barrel(sf::Vector2f position);
 
+    /**
+     * @brief Adds a hammer power-up entity.
+     * 
+     * @param position Position of the hammer power-up.
+     * @return Shared pointer to the created hammer power-up entity.
+     */
     std::shared_ptr<HammerPowerUp> add_hammer_power_up(sf::Vector2f position);
 
     /**
-     * @brief Adds a girder entity spanning the two endpoints.
+     * @brief Adds a girder entity with red color.
      * @param left Left endpoint of the girder.
      * @param right Right endpoint of the girder.
-     * @returns Shared pointer to the created girder.
+     * @returns Shared pointer to the created girder entity.
      */
     std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right);
 
     /**
-     * @brief Adds a girder entity spanning the two endpoints.
+     * @brief Adds a girder entity with a specific color.
      * @param left Left endpoint of the girder.
      * @param right Right endpoint of the girder.
-     * @returns Shared pointer to the created girder.
+     * @param color Color of the girder.
+     * @returns Shared pointer to the created girder entity.
      */
     std::shared_ptr<Girder> add_girder(sf::Vector2f left, sf::Vector2f right, Girder::Color color);
 
     /**
      * @brief Adds the player entity.
-     * @returns Shared pointer to the created player.
+     * @returns Shared pointer to the created player entity.
      */
     std::shared_ptr<Player> add_player();
 
     /**
-     * @brief Adds a ladder connecting two platform endpoints at an x-position.
+     * @brief Adds a ladder connecting two platform endpoints at an x-position with cyan color.
      * @param lower_end Lower platform endpoint.
      * @param upper_end Upper platform endpoint.
      * @param x_position Horizontal x-position of the ladder.
-     * @returns Shared pointer to the created ladder.
+     * @param broken Whether the ladder is broken or not.
+     * @returns Shared pointer to the created ladder entity.
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
                                        bool broken);
 
     /**
-     * @brief Adds a ladder connecting two platform endpoints at an x-position.
+     * @brief Adds a ladder connecting two platform endpoints at an x-position with a specific color.
      * @param lower_end Lower platform endpoint.
      * @param upper_end Upper platform endpoint.
      * @param x_position Horizontal x-position of the ladder.
+     * @param broken Whether the ladder is broken or not.
      * @param color Color of the ladder.
-     * @returns Shared pointer to the created ladder.
+     * @returns Shared pointer to the created ladder entity.
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
                                        bool broken, Ladder::Color color);
 
+    /**
+     * @brief Adds a ladder connecting two y-positions at an x-position with a specific color.
+     * @param lower_y Lower y-position of the ladder.
+     * @param upper_y Upper y-position of the ladder.
+     * @param x_pos Horizontal x-position of the ladder.
+     * @param broken Whether the ladder is broken or not.
+     * @param color Color of the ladder.
+     * @param active_for_player Whether the ladder is active for the player.
+     * @returns Shared pointer to the created ladder entity.
+     */
     std::shared_ptr<Ladder> add_ladder(float lower_y, float upper_y, float x_pos, bool broken, Ladder::Color color, bool active_for_player);
 
+    /**
+     * @brief Adds a Donkey Kong entity.
+     * 
+     * @param platform The platform on which Donkey Kong is placed.
+     * @param x_position The horizontal position of Donkey Kong on the platform.
+     * @param throw_barrels Whether Donkey Kong should throw barrels.
+     * @return Shared pointer to the created Donkey Kong entity.
+     */
     std::shared_ptr<DonkeyKong> add_donkey_kong(std::shared_ptr<Platform> platform, float x_position, bool throw_barrels);
 
+    /**
+     * @brief Adds a barrel stack entity.
+     * 
+     * @param platform The platform on which the barrel stack is placed.
+     * @param x_position The horizontal position of the barrel stack on the platform.
+     * @return Shared pointer to the created barrel stack entity.
+     */
     std::shared_ptr<BarrelStack> add_barrel_stack(std::shared_ptr<Platform> platform, float x_position);
 
+    /**
+     * @brief Adds a Pauline entity.
+     * 
+     * @param platform The platform on which Pauline is placed.
+     * @param x_position The horizontal position of Pauline on the platform.
+     * @return Shared pointer to the created Pauline entity.
+     */
     std::shared_ptr<Pauline> add_pauline(std::shared_ptr<Platform> platform, float x_position);
 
+    /**
+     * @brief Adds a dissolving platform entity.
+     * 
+     * @param position The position of the dissolving platform.
+     * @param width The width of the dissolving platform.
+     * @return Shared pointer to the created dissolving platform entity.
+     */
     std::shared_ptr<DissolvingPlatform> add_dissolving_platform(sf::Vector2f position, float width);
 
+    /**
+     * @brief Adds a ghost entity.
+     * 
+     * @param platform The platform on which the ghost is placed.
+     * @param x_pos The horizontal position of the ghost on the platform.
+     * @return Shared pointer to the created ghost entity.
+     */
     std::shared_ptr<Ghost> add_ghost(std::shared_ptr<Platform> platform, float x_pos);
 
+    /**
+     * @brief Adds a beam entity.
+     * 
+     * @param lower_platform The lower platform to which the beam is attached.
+     * @param upper_platform The upper platform to which the beam is attached.
+     * @param x_pos The x-position of the beam.
+     * @return Shared pointer to the created beam entity.
+     */
     std::shared_ptr<Beam> add_beam(std::shared_ptr<Platform> lower_platform, std::shared_ptr<Platform> upper_platform, float x_pos);
 
     /**
@@ -123,10 +186,10 @@ public:
      */
     auto end() { return entities.end(); }
 
-    std::queue<std::shared_ptr<BaseEntity>> &get_pending_additions() { return pending_additions; }
-
+    /** @returns The registry for repository event observers. */
     ObserverRegistry<EntityRepositoryObserver> &get_observer_registry() { return observer_registry; }
 
+    /** @brief Clears all secondary entities (i.e. not Donkey Kong, Pauline or Jumpman) from the repository (and pending additions). */
     void clear_secondary_entities();
 
 private:
