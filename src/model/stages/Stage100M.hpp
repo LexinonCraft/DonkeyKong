@@ -22,6 +22,8 @@ public:
      */
     Stage100M(int rng(), PlayerData &player_data);
 
+    ~Stage100M() override;
+
     /** @brief When the stage is completed, this function clears the static entities and starts the completion animation. */
     void on_completed() override;
 
@@ -36,6 +38,7 @@ private:
 
     float time_since_last_spawn = 0.f;
     unsigned int ghost_count = 0;
+    Id observer_id;
 
     void update_while_running(float dt) override;
 
