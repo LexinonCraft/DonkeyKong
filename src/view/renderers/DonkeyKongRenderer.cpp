@@ -20,7 +20,8 @@ void DonkeyKongRenderer::draw(LayerStack &layer_stack) {
             flip = false;
             break;
         case DonkeyKong::State::ThrowingBarrel:
-            switch (mod(floor_to_int(donkey_kong->get_action_timer() / constants::BARREL_THROW_ANIMATION_INTERVAL), 4)) {
+            switch (mod(floor_to_int(donkey_kong->get_action_timer() / constants::BARREL_THROW_ANIMATION_INTERVAL),
+                        constants::DONKEY_KONG_THROW_ANIMATION_FRAME_COUNT)) {
                 case 0:
                     texture_id = AssetsManager::TextureId::DonkeyKongThrowingSide;
                     flip = false;
@@ -59,7 +60,7 @@ void DonkeyKongRenderer::draw(LayerStack &layer_stack) {
     sf::Sprite donkey_kong_sprite(assets_manager.get_texture(texture_id));
     set_origin(donkey_kong_sprite, AnchorPosition::BottomCenter);
     donkey_kong_sprite.setPosition(donkey_kong->get_position());
-    scale(donkey_kong_sprite, 2.f);
+    scale(donkey_kong_sprite, constants::DONKEY_KONG_RENDER_SCALE);
     flip_horizontally(donkey_kong_sprite, flip);
     layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(donkey_kong_sprite);
 
@@ -68,7 +69,8 @@ void DonkeyKongRenderer::draw(LayerStack &layer_stack) {
         set_origin(barrel_sprite, AnchorPosition::BottomCenter);
         barrel_sprite.setPosition(
             {donkey_kong->get_position().x, donkey_kong->get_position().y - constants::DONKEY_KONG_HOLDED_BARREL_OFFSET_Y});
-        set_to_size(barrel_sprite, {constants::BARREL_RADIUS * 2.5f, constants::BARREL_RADIUS * 2.5f});
+        set_to_size(barrel_sprite, {constants::BARREL_RADIUS * constants::BARREL_RENDER_SIZE_FACTOR,
+                                    constants::BARREL_RADIUS * constants::BARREL_RENDER_SIZE_FACTOR});
         layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(barrel_sprite);
     }
 }
@@ -107,7 +109,8 @@ void DonkeyKongRenderer::DonkeyKongAnimationVisitor::visit(Stage100MCompletionAn
             break;
         case Stage100MCompletionAnimation::State::United:
         case Stage100MCompletionAnimation::State::Finished:
-            switch (mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::DONKEY_KONG_AFTER_FALL_FRAME_INTERVAL), 3)) {
+            switch (mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::DONKEY_KONG_AFTER_FALL_FRAME_INTERVAL),
+                        constants::DONKEY_KONG_AFTER_FALL_ANIMATION_FRAME_COUNT)) {
                 case 0:
                     texture_id = AssetsManager::TextureId::DonkeyKongFalling1;
                     break;

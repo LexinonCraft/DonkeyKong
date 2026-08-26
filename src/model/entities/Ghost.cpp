@@ -41,10 +41,11 @@ void Ghost::update(float dt, Stage &stage) {
                 }
 
                 float next_x = position.x + get_horizontal_speed() * dt;
-                if (!current_platform->covers_x(next_x, constants::GHOST_WIDTH / 8.f, constants::GHOST_WIDTH / 8.f)) {
-                    if (auto next_platform =
-                            stage.get_platforms().find_platform_underneath({next_x, position.y}, constants::GHOST_WIDTH / 8.f,
-                                                                           constants::GHOST_WIDTH / 8.f, constants::SEAM_SNAP_DISTANCE)) {
+                if (!current_platform->covers_x(next_x, constants::GHOST_WIDTH / constants::GHOST_COLLISION_WIDTH_DIVISOR,
+                                                constants::GHOST_WIDTH / constants::GHOST_COLLISION_WIDTH_DIVISOR)) {
+                    if (auto next_platform = stage.get_platforms().find_platform_underneath(
+                            {next_x, position.y}, constants::GHOST_WIDTH / constants::GHOST_COLLISION_WIDTH_DIVISOR,
+                            constants::GHOST_WIDTH / constants::GHOST_COLLISION_WIDTH_DIVISOR, constants::SEAM_SNAP_DISTANCE)) {
                         current_platform = next_platform;
                         position.y = current_platform->surface_y_at(position.x);
                     } else {
@@ -80,7 +81,7 @@ void Ghost::update(float dt, Stage &stage) {
                             just_climbed = false;
                             will_climb = false; // Prevent immediate climbing after just climbing
                         } else {
-                            will_climb = mod(stage.random_int(), 3) == 0; // Randomly decide whether the ghost will climb
+                            will_climb = mod(stage.random_int(), constants::GHOST_CLIMB_CHANCE_STEPS) == 0;
                         }
                     }
                 }
@@ -107,7 +108,7 @@ void Ghost::update(float dt, Stage &stage) {
 
 bool Ghost::touches(const sf::RectangleShape &player_shape) const {
     sf::RectangleShape ghost_shape;
-    ghost_shape.setSize(sf::Vector2f(constants::GHOST_WIDTH / 2.f, constants::GHOST_HEIGHT * 0.75f));
+    ghost_shape.setSize(sf::Vector2f(constants::GHOST_WIDTH / 2.f, constants::GHOST_HEIGHT * constants::GHOST_HITBOX_HEIGHT_FACTOR));
     sf::FloatRect ghost_bounds = ghost_shape.getLocalBounds();
     ghost_shape.setOrigin({ghost_bounds.size.x / 2.f, ghost_bounds.size.y});
     ghost_shape.setPosition(position - sf::Vector2f{0.f, constants::GHOST_LIFT}); // Adjust for ghost lift

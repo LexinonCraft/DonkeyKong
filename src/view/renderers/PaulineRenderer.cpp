@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Angle.hpp>
 
+#include "DK/Constants.hpp"
 #include "DK/model/Stage.hpp"
 #include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 #include "DK/model/animations/Stage25MCompletionAnimation.hpp"
@@ -62,16 +63,16 @@ void PaulineRenderer::draw(LayerStack &layer_stack) {
         sf::FloatRect bounds = pauline_sprite.getLocalBounds();
         set_origin(pauline_sprite, AnchorPosition::BottomCenter);
         auto position = pauline->get_position();
-        pauline_sprite.setPosition({position.x, position.y + bounds.size.y / 32.f * 5.f});
-        scale(pauline_sprite, 2.f);
+        pauline_sprite.setPosition({position.x, position.y + bounds.size.y * constants::PAULINE_FALL_VERTICAL_OFFSET_FACTOR});
+        scale(pauline_sprite, constants::PAULINE_RENDER_SCALE);
         layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(pauline_sprite);
     }
 
     if (help) {
         sf::Sprite help_sprite(assets_manager.get_texture(AssetsManager::TextureId::Help));
         set_origin(help_sprite, AnchorPosition::BottomCenter);
-        help_sprite.setPosition({position.x + 40.f, position.y - 40.f});
-        scale(help_sprite, 2.f);
+        help_sprite.setPosition({position.x + constants::PAULINE_HELP_OFFSET, position.y - constants::PAULINE_HELP_OFFSET});
+        scale(help_sprite, constants::PAULINE_RENDER_SCALE);
         layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(help_sprite);
     }
 
@@ -79,8 +80,8 @@ void PaulineRenderer::draw(LayerStack &layer_stack) {
         sf::Sprite heart_sprite(
             assets_manager.get_texture(!heart_broken ? AssetsManager::TextureId::HeartNormal : AssetsManager::TextureId::HeartBroken));
         set_origin(heart_sprite, AnchorPosition::BottomCenter);
-        heart_sprite.setPosition({constants::VIEW_WIDTH / 2.f, position.y - 40.f});
-        scale(heart_sprite, 2.f);
+        heart_sprite.setPosition({constants::VIEW_WIDTH / 2.f, position.y - constants::PAULINE_HEART_OFFSET_Y});
+        scale(heart_sprite, constants::PAULINE_RENDER_SCALE);
         layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(heart_sprite);
     }
 }

@@ -22,7 +22,8 @@
 Barrel::Barrel(Ref ref, sf::Vector2f position) : BaseEntity(ref), position(position), shape(constants::BARREL_HITBOX_RADIUS) {
     // origin at the circle's centre so `position` is the barrel's centre
     shape.setOrigin({constants::BARREL_HITBOX_RADIUS, 2 * constants::BARREL_HITBOX_RADIUS});
-    shape.setFillColor(sf::Color(120, 200, 230)); // light blue, stands out on the red girders
+    shape.setFillColor(
+        sf::Color(constants::BARREL_DEBUG_COLOR_RED, constants::BARREL_DEBUG_COLOR_GREEN, constants::BARREL_DEBUG_COLOR_BLUE));
     shape.setPosition(position);
 }
 

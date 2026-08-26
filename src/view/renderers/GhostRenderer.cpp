@@ -14,14 +14,14 @@ void GhostRenderer::draw(LayerStack &layer_stack) {
     sf::Sprite ghost_sprite(assets_manager.get_texture(texture_id));
     set_origin(ghost_sprite, AnchorPosition::BottomCenter);
     ghost_sprite.setPosition(ghost->get_position() + sf::Vector2f{0.f, -constants::GHOST_LIFT}); // Adjust for ghost lift
-    scale(ghost_sprite, 2.f);
+    scale(ghost_sprite, constants::GHOST_RENDER_SCALE);
     flip_horizontally(ghost_sprite, !ghost->is_moving_right());
     layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(ghost_sprite);
 }
 
 void GhostRenderer::update(float dt, Stage &stage) {
     animation_timer += dt;
-    if (animation_timer >= 2 * constants::GHOST_ANIMATION_INTERVAL) {
-        animation_timer -= 2 * constants::GHOST_ANIMATION_INTERVAL;
+    if (animation_timer >= constants::GHOST_ANIMATION_FRAME_COUNT * constants::GHOST_ANIMATION_INTERVAL) {
+        animation_timer -= constants::GHOST_ANIMATION_FRAME_COUNT * constants::GHOST_ANIMATION_INTERVAL;
     }
 }

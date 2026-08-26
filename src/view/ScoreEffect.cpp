@@ -13,7 +13,7 @@ void ScoreEffect::draw(LayerStack &layer_stack, AssetsManager &assets_manager) {
 
     sf::Text text(assets_manager.get_font());
     text.setString(std::to_string(added_score));
-    text.setCharacterSize(12);
+    text.setCharacterSize(constants::SCORE_EFFECT_CHARACTER_SIZE);
     sf::FloatRect text_bounds = text.getLocalBounds();
     text.setOrigin({text_bounds.size.x / 2.f, text_bounds.size.y / 2.f});
     text.setPosition(position);

@@ -1,5 +1,6 @@
 #include "DK/view/renderers/LadderRenderer.hpp"
 
+#include "DK/Constants.hpp"
 #include "DK/model/entities/Ladder.hpp"
 #include "DK/util/Positions.hpp"
 #include "DK/view/AssetsManager.hpp"
@@ -8,16 +9,17 @@
 void LadderRenderer::draw(LayerStack &layer_stack) {
     if (ladder->is_broken()) {
         float midway_y = (ladder->get_lower_y_pos() + ladder->get_upper_y_pos()) / 2.f;
-        draw_raw(ladder->get_x_pos(), ladder->get_lower_y_pos(), midway_y + 10.f, layer_stack);
-        draw_raw(ladder->get_x_pos(), midway_y - 10.f, ladder->get_upper_y_pos() + 5.f, layer_stack);
+        draw_raw(ladder->get_x_pos(), ladder->get_lower_y_pos(), midway_y + constants::LADDER_BROKEN_GAP_HALF_HEIGHT, layer_stack);
+        draw_raw(ladder->get_x_pos(), midway_y - constants::LADDER_BROKEN_GAP_HALF_HEIGHT,
+                 ladder->get_upper_y_pos() + constants::LADDER_END_OVERHANG, layer_stack);
     } else {
-        draw_raw(ladder->get_x_pos(), ladder->get_lower_y_pos(), ladder->get_upper_y_pos() + 5.f, layer_stack);
+        draw_raw(ladder->get_x_pos(), ladder->get_lower_y_pos(), ladder->get_upper_y_pos() + constants::LADDER_END_OVERHANG, layer_stack);
     }
 }
 
 void LadderRenderer::draw_raw(float x, float lower_y, float upper_y, LayerStack &layer_stack) {
     float y_diff = lower_y - upper_y;
-    int num_tiles = static_cast<int>(y_diff / 20.f);
+    int num_tiles = static_cast<int>(y_diff / constants::LADDER_TILE_HEIGHT);
     float tile_height = y_diff / num_tiles;
 
     AssetsManager::TextureId texture_id;
@@ -33,7 +35,7 @@ void LadderRenderer::draw_raw(float x, float lower_y, float upper_y, LayerStack 
     for (int i = 0; i < num_tiles; ++i) {
         sf::Sprite sprite(assets_manager.get_texture(texture_id));
         sprite.setPosition({x, upper_y + i * tile_height});
-        set_to_size(sprite, {20.f, tile_height});
+        set_to_size(sprite, {constants::LADDER_TILE_WIDTH, tile_height});
         set_origin(sprite, AnchorPosition::TopCenter);
         layer_stack.get_layer(LayerStack::LayerId::Ladders).add_to_layer(sprite);
     }

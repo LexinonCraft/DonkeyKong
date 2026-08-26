@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdlib>
 
+#include "DK/Constants.hpp"
 #include "DK/model/util/EntityVisitor.hpp"
 
 Girder::Girder(Ref ref, sf::Vector2f left, sf::Vector2f right) : Girder(ref, left, right, Color::Red) {}
@@ -19,7 +20,7 @@ bool Girder::covers_x(float x, float h_tolerance_left, float h_tolerance_right) 
 
 int Girder::downhill_sign() const {
     // the lower end has the larger y; roll toward it
-    if (std::abs(right.y - left.y) < 1e-6f) {
+    if (std::abs(right.y - left.y) < constants::GIRDER_HORIZONTAL_SLOPE_TOLERANCE) {
         return 0; // flat
     }
     return (right.y > left.y) ? 1 : -1;
