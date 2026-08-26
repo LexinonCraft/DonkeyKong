@@ -131,6 +131,7 @@ constexpr const char *FALLBACK_CONTRIBUTORS_TEXT = "By Muvels and Lexinon";
 constexpr const char *TEXTURES_BASE_PATH = "assets/textures/";
 constexpr const char *FONT_FILE = "assets/fonts/PressStart2P.ttf";
 constexpr const char *CONTRIBUTORS_FILE = "assets/contributors.txt";
+constexpr float MAX_DT = 0.05f; // seconds, maximum delta time to prevent large jumps in game state due to lag or pauses
 } // namespace constants
 
 #endif
