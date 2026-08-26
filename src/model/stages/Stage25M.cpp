@@ -50,7 +50,7 @@ constexpr float EXIT_LADDER_1_PLATFORM_X = 220.f;
 constexpr float EXIT_LADDER_1_X = 220.f;
 constexpr float EXIT_LADDER_UPPER_Y = -750.f;
 constexpr float PLAYER_START_X = 50.f;
-}
+} // namespace
 
 Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     // create girders
