@@ -7,6 +7,11 @@
 #include "DK/model/util/Component.hpp"
 #include "DK/model/util/ComponentRepository.hpp"
 
+/**
+ * @brief Repository storing pickable behaviour components.
+ *
+ * It provides a helper query to find a pickable entity touching the player.
+ */
 class PickableComponentRepository : public ComponentRepository<Component<Pickable>> {
 public:
     explicit PickableComponentRepository(EntityRepository &repository);

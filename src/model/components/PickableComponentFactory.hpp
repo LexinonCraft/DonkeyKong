@@ -7,6 +7,9 @@
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
 
+/**
+ * @brief Factory that creates pickable components for entities that can be collected.
+ */
 class PickableComponentFactory : public AbstractComponentFactory<Component<Pickable>> {
 protected:
     std::unique_ptr<Component<Pickable>> create_component_for(std::shared_ptr<BaseEntity> entity) override;

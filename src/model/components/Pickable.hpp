@@ -5,6 +5,9 @@
 
 #include "DK/model/util/EntityFromComponentAux.hpp"
 
+/**
+ * @brief Behaviour interface for entities that the player can pick up.
+ */
 class Pickable : public EntityFromComponentAux {
 public:
     enum class Type { Hammer };

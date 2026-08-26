@@ -10,8 +10,7 @@
 /**
  * @brief Repository storing enemy behaviour components.
  *
- * It provides helper queries to find the enemy closest to
- * a player position when moving up or down.
+ * It provides a helper query to find an enemy touching the player.
  */
 class EnemyComponentRepository : public ComponentRepository<Component<Enemy>> {
 public:

@@ -10,7 +10,7 @@
 /**
  * @brief Repository storing climbable behaviour components.
  *
- * It provides helper queries to find the ladder or climbing structure closest to
+ * It provides helper queries to find a ladder or climbing structure that matches
  * a player position when moving up or down.
  */
 class ClimbableComponentRepository : public ComponentRepository<Component<Climbable>> {
@@ -22,7 +22,7 @@ public:
     explicit ClimbableComponentRepository(EntityRepository &repository);
 
     /**
-     * @brief Finds the nearest climbable that matches the player while moving upward.
+     * @brief Finds a climbable that matches the player while moving upward.
      * @param position Player position.
      * @param h_tolerance Horizontal tolerance.
      * @param v_tolerance Vertical tolerance.
@@ -31,7 +31,7 @@ public:
     std::shared_ptr<Climbable> find_climbable_up_at(const sf::Vector2f &position, float h_tolerance, float v_tolerance);
 
     /**
-     * @brief Finds the nearest climbable that matches the player while moving downward.
+     * @brief Finds a climbable that matches the player while moving downward.
      * @param position Player position.
      * @param h_tolerance Horizontal tolerance.
      * @param v_tolerance Vertical tolerance.

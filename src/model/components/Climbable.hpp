@@ -11,8 +11,9 @@
 /**
  * @brief Behaviour interface for vertical structures that a player can climb.
  *
- * A climbable object connects the lower and upper platform endpoints at a fixed
- * x-position, allowing the player to move vertically between them.
+ * A climbable occupies a fixed x-position between upper and lower y-coordinates.
+ * It can connect two platforms or use explicit endpoint coordinates. When it
+ * uses explicit coordinates, lower_end and upper_end are nullptr.
  */
 class Climbable : public EntityFromComponentAux {
 public:
@@ -44,13 +45,13 @@ public:
 
     /**
      * @brief Returns the lower platform endpoint of the climbable.
-     * @returns Lower end platform.
+     * @returns Lower end platform, or nullptr if the climbable uses explicit coordinates.
      */
     std::shared_ptr<Platform> get_lower_end() const { return lower_end; }
 
     /**
      * @brief Returns the upper platform endpoint of the climbable.
-     * @returns Upper end platform.
+     * @returns Upper end platform, or nullptr if the climbable uses explicit coordinates.
      */
     std::shared_ptr<Platform> get_upper_end() const { return upper_end; }
 
@@ -61,14 +62,14 @@ public:
     float get_x_pos() const { return x_pos; }
 
     /**
-     * @brief Returns the lower end y-coordinate at the climbable x-position.
-     * @returns Surface height of the lower platform at x_pos.
+     * @brief Returns the lower endpoint y-coordinate.
+     * @returns Lower endpoint y-coordinate.
      */
     float get_lower_y_pos() const { return lower_y_pos; }
 
     /**
-     * @brief Returns the upper end y-coordinate at the climbable x-position.
-     * @returns Surface height of the upper platform at x_pos.
+     * @brief Returns the upper endpoint y-coordinate.
+     * @returns Upper endpoint y-coordinate.
      */
     float get_upper_y_pos() const { return upper_y_pos; }
 
@@ -87,6 +88,12 @@ protected:
      */
     Climbable(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos);
 
+    /**
+     * @brief Creates a climbable from explicit endpoint coordinates without platform references.
+     * @param lower_y Lower endpoint y-coordinate.
+     * @param upper_y Upper endpoint y-coordinate.
+     * @param x_pos Horizontal position of the climbable.
+     */
     Climbable(float lower_y, float upper_y, float x_pos);
 
 private:

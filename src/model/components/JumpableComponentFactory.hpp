@@ -7,6 +7,9 @@
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
 
+/**
+ * @brief Factory that creates jumpable components for entities that can be jumped over.
+ */
 class JumpableComponentFactory : public AbstractComponentFactory<Component<Jumpable>> {
 protected:
     /**
