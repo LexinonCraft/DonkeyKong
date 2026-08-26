@@ -1,5 +1,7 @@
 #include "DK/control/Game.hpp"
 
+#include <algorithm>
+
 #include "DK/Constants.hpp"
 #include "DK/control/GameOverControl.hpp"
 #include "DK/control/StageControl.hpp"
@@ -7,8 +9,7 @@
 #include "DK/control/TitleScreenControl.hpp"
 
 Game::Game()
-    : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"),
-      assets_manager("assets/textures/", "assets/fonts/PressStart2P.ttf", "assets/contributors.txt"),
+    : window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong"), assets_manager(),
       scene_control(std::unique_ptr<AbstractSceneControl>(new TitleScreenControl(window, assets_manager, player_data))) {
     // limit frame rate
     window.setFramerateLimit(constants::FRAME_RATE);
@@ -31,8 +32,9 @@ void Game::run() {
 
         // handle input, check if window is still open
         if (!input()) {
+            float dt = std::min(elapsed_time.asSeconds(), constants::MAX_DT);
             // update the scene according to the passed time
-            scene_control->update(elapsed_time.asSeconds());
+            scene_control->update(dt);
             // draw the scene
             scene_control->draw();
 

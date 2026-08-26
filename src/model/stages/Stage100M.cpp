@@ -91,11 +91,15 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     // set player position
     player->enter_platform(p0, 50);
 
+    observer_id = get_entities().get_observer_registry().register_observer(*this);
+
     // spawn initial ghosts
     for (unsigned int i = 0; i < constants::STAGE_100M_INITIAL_GHOST_COUNT; ++i) {
         spawn_ghost();
     }
 }
+
+Stage100M::~Stage100M() { get_entities().get_observer_registry().unregister_observer(observer_id); }
 
 void Stage100M::on_completed() {
     clear_secondary_entities();
