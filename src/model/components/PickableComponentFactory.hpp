@@ -9,9 +9,7 @@
 
 class PickableComponentFactory : public AbstractComponentFactory<Component<Pickable>> {
 protected:
-    std::unique_ptr<Component<Pickable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
-        return entity->create_pickable_component();
-    }
+    std::unique_ptr<Component<Pickable>> create_component_for(std::shared_ptr<BaseEntity> entity) override;
 };
 
 #endif

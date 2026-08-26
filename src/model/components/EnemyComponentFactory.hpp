@@ -17,9 +17,7 @@ protected:
      * @param entity Entity to inspect.
      * @returns Unique pointer to the enemy component or nullptr.
      */
-    std::unique_ptr<Component<Enemy>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
-        return entity->create_enemy_component();
-    }
+    std::unique_ptr<Component<Enemy>> create_component_for(std::shared_ptr<BaseEntity> entity) override;
 };
 
 #endif

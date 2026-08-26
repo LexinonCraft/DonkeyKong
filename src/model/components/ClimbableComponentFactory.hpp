@@ -17,9 +17,7 @@ protected:
      * @param entity Entity to inspect.
      * @returns Unique pointer to the climbable component or nullptr.
      */
-    std::unique_ptr<Component<Climbable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
-        return entity->create_climbable_component();
-    }
+    std::unique_ptr<Component<Climbable>> create_component_for(std::shared_ptr<BaseEntity> entity) override;
 };
 
 #endif

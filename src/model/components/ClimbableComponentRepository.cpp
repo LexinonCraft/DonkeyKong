@@ -1,5 +1,11 @@
 #include "DK/model/components/ClimbableComponentRepository.hpp"
 
+#include "DK/model/components/ClimbableComponentFactory.hpp"
+
+std::unique_ptr<Component<Climbable>> ClimbableComponentFactory::create_component_for(std::shared_ptr<BaseEntity> entity) {
+    return entity->create_climbable_component();
+}
+
 std::shared_ptr<Climbable> ClimbableComponentRepository::find_climbable_up_at(const sf::Vector2f &position, float h_tolerance,
                                                                               float v_tolerance) {
     for (auto it = begin(); it != end(); ++it) {

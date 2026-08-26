@@ -1,5 +1,11 @@
 #include "DK/model/components/UpdatableComponentRepository.hpp"
 
+#include "DK/model/components/UpdatableComponentFactory.hpp"
+
+std::unique_ptr<Component<Updatable>> UpdatableComponentFactory::create_component_for(std::shared_ptr<BaseEntity> entity) {
+    return entity->create_updatable_component();
+}
+
 void UpdatableComponentRepository::update_all(float dt, Stage &level) {
     iterating = true;
     for (auto it = begin(); it != end(); ++it) {
