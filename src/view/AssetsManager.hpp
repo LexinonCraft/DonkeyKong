@@ -60,14 +60,10 @@ public:
     };
 
     /**
-     * @brief Initializes the AssetsManager with the base path for textures, font file, and contributors file. Loads all assets into memory
+     * @brief Initializes the AssetsManager. Loads all assets into memory
      * for later retrieval. Fails if any asset cannot be loaded.
-     *
-     * @param textures_base_path Base path for texture files
-     * @param font_file Path to the font file
-     * @param contributors_file Path to the contributors file
      */
-    AssetsManager(std::string textures_base_path, std::string font_file, std::string contributors_file);
+    AssetsManager();
 
     /**
      * @brief Get the SFML texture object corresponding to the given TextureId.
@@ -92,8 +88,6 @@ public:
     const std::string &get_contributors() const { return contributors; }
 
 private:
-    std::string textures_base_path;
-
     sf::Texture jumpman_still_texture;
     sf::Texture jumpman_walking1_texture;
     sf::Texture jumpman_walking2_texture;
@@ -149,12 +143,11 @@ private:
     void load(const std::string &filename, sf::Texture &texture);
 
     /**
-     * @brief Read the contributors list from a file.
+     * @brief Read the contributors list from the file.
      *
-     * @param filename The name of the contributors file to read.
      * @returns A string with the contributors list from the file if present or a fallback string.
      */
-    std::string read_contributors(const std::string &filename) const;
+    std::string read_contributors() const;
 };
 
 #endif
