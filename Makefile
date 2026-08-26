@@ -2,6 +2,8 @@
 # GoogleTest object rule, would become the default goal)
 .DEFAULT_GOAL := game
 
+.PHONY: clean docs prepare_include_alias
+
 CXX := c++
 CXXFLAGS := -Wall -std=c++20
 
@@ -10,7 +12,7 @@ CXXFLAGS := -Wall -std=c++20
 # /usr/local/include, on mac could be /opt/homebrew/include
 GTEST_INCLUDES := -IGoogleTest/googletest/include -IGoogleTest/googletest \
 			      -IGoogleTest/googlemock/include -IGoogleTest/googlemock
-INCLUDES := -I./SFML/include -I/opt/homebrew/include $(GTEST_INCLUDES)
+INCLUDES = -I./SFML/include -I/opt/homebrew/include -I$(ALIAS_INCLUDE_ROOT) $(GTEST_INCLUDES)
 
 # Contains libraries we need to (-L is directory search path, -l is lib)
 LDFLAGS := -L/usr/local/lib -L./SFML/lib -L/opt/homebrew/lib -Wl,-rpath,'$$ORIGIN/SFML/lib'
@@ -19,6 +21,8 @@ LDLIBS := -lsfml-system -lsfml-window -lsfml-graphics
 SRCDIR := ./src
 TESTDIR := ./test
 BUILDDIR := ./build
+ALIAS_INCLUDE_ROOT := $(BUILDDIR)/include
+ALIAS_INCLUDE_DIR := $(ALIAS_INCLUDE_ROOT)/DK
 VPATH := src
 
 # search all .cpp files and add corresponding .o-files to GAME_OBJECTS
@@ -54,6 +58,10 @@ tests: $(TEST_OBJECTS) $(BUILDDIR)/libgtest.a $(BUILDDIR)/libgmock.a
 	
 -include $(DEPENDENCIES)
 
+prepare_include_alias:
+	@mkdir -p $(ALIAS_INCLUDE_ROOT)
+	@ln -sfn ../../src $(ALIAS_INCLUDE_DIR)
+
 getGTest:
 	@echo "Downloading GoogleTest"
 	curl -L https://github.com/google/googletest/releases/download/v1.17.0/googletest-1.17.0.tar.gz --output googletest-1.17.0.tar.gz
@@ -77,9 +85,12 @@ getSFML:
 	mv SFML-3.0.0 SFML
 	@echo "Finished!"
     
-$(BUILDDIR)/%.o: %.cpp
+$(BUILDDIR)/%.o: %.cpp prepare_include_alias
 	@mkdir -p $(@D)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 clean:
 	$(RM) -r $(BUILDDIR)/src $(BUILDDIR)/test game tests
+
+docs:
+	doxygen Doxyfile
