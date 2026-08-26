@@ -7,12 +7,9 @@
 
 #include "DK/model/entities/Beam.hpp"
 #include "DK/model/entities/DissolvingPlatform.hpp"
+#include "DK/model/entities/Player.hpp"
 #include "DK/util/Math.hpp"
 
-/**
- * @brief Builds the prototype scene used for the current game demo.
- * @param id_generator Function used to create unique entity ids.
- */
 Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     auto p0 = entities.add_girder({0, -20}, {constants::VIEW_WIDTH, -20}, Girder::Color::Blue);
     auto p1 = entities.add_girder({20, -130}, {145, -130}, Girder::Color::Blue);

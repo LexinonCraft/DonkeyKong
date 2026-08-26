@@ -4,10 +4,6 @@
 
 #include "DK/model/entities/Player.hpp"
 
-/**
- * @brief Builds the prototype scene used for the current game demo.
- * @param id_generator Function used to create unique entity ids.
- */
 Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     auto p0 = entities.add_girder({-100, -20}, {constants::VIEW_WIDTH / 2.f, -20});
     auto p1 = entities.add_girder({constants::VIEW_WIDTH / 2.f, -20}, {constants::VIEW_WIDTH + 100, -40});

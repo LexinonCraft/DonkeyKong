@@ -8,6 +8,8 @@
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/components/Platform.hpp"
 #include "DK/model/util/EntityVisitor.hpp"
 
 Player::Player(Ref ref)
@@ -220,8 +222,6 @@ void Player::jump() {
     }
 }
 
-const sf::RectangleShape &Player::get_shape() const { return shape; }
-
 void Player::check_referenced_entities() {
     if (handle_destroyed_indirect(current_platform) && state == State::OnPlatform) {
         state = State::InAir;
@@ -229,9 +229,24 @@ void Player::check_referenced_entities() {
     if (handle_destroyed_indirect(current_ladder) && state == State::Climbing) {
         state = State::InAir;
     }
+    handle_destroyed_indirect(last_fall_through_platform);
 }
 
 void Player::accept(EntityVisitor &visitor) { visitor.visit(*this); }
+
+std::unique_ptr<Component<Updatable>> Player::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
+}
+
+void Player::start_animation(AbstractAnimation *animation) {
+    current_animation = animation;
+    state = State::Animated;
+}
+
+void Player::stop_animation() {
+    current_animation = nullptr;
+    state = State::InAir;
+}
 
 float Player::platform_snap_distance(float dt) const {
     float distance = velocity.y * dt;

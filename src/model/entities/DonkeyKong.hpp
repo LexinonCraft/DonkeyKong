@@ -6,12 +6,15 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "DK/model/Declarations.hpp"
-#include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/components/Enemy.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
-#include "DK/model/util/EntityVisitor.hpp"
 
+/**
+ * @brief Enemy that alternates between throwing barrels and angry animations.
+ *
+ * Stage animations can temporarily suspend its regular state machine and move it directly.
+ */
 class DonkeyKong : public BaseEntity, public Updatable, public Enemy {
 public:
     enum class State {
@@ -29,15 +32,13 @@ public:
 
     void on_hammer_hit(Stage &stage) override {}
 
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
-    }
+    void check_referenced_entities() override;
 
-    std::unique_ptr<Component<Enemy>> create_enemy_component() override {
-        return std::make_unique<Component<Enemy>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
+
+    std::unique_ptr<Component<Enemy>> create_enemy_component() override;
 
     BaseEntity &get_entity() override { return *this; }
 
@@ -51,15 +52,14 @@ public:
 
     void set_state(State new_state, Stage &stage);
 
-    void start_animation(AbstractAnimation *animation) {
-        current_animation = animation;
-        set_state(State::Animated, animation->get_stage());
-    }
+    /**
+     * @brief Suspends regular behavior and lets an animation control Donkey Kong.
+     * @param animation Animation that takes control of the entity.
+     */
+    void start_animation(AbstractAnimation *animation);
 
-    void stop_animation() {
-        set_state(State::Idle, current_animation->get_stage());
-        current_animation = nullptr;
-    }
+    /** @brief Returns Donkey Kong to its regular idle behavior. */
+    void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 

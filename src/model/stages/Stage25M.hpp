@@ -6,8 +6,16 @@
 #include "DK/model/Stage.hpp"
 #include "DK/model/animations/Stage25MCompletionAnimation.hpp"
 
+/**
+ * @brief First stage, where the player climbs girders while avoiding barrels.
+ */
 class Stage25M : public Stage {
 public:
+    /**
+     * @brief Creates and populates the 25 m stage.
+     * @param id_generator Function used to create unique entity ids.
+     * @param player_data Persistent player data shared between stages.
+     */
     Stage25M(Id id_generator(), PlayerData &player_data);
 
     bool is_barrel_boundary_gap(const sf::Vector2f &position) const override;

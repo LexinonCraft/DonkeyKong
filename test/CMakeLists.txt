@@ -13,7 +13,6 @@ set(ModelSources
     ${CMAKE_SOURCE_DIR}/src/model/components/PlatformComponentRepository.cpp
     ${CMAKE_SOURCE_DIR}/src/model/components/UpdatableComponentRepository.cpp
     ${CMAKE_SOURCE_DIR}/src/model/util/EntityRepository.cpp
-    ${CMAKE_SOURCE_DIR}/src/view/DrawableComponentRepository.cpp
     ${CMAKE_SOURCE_DIR}/src/model/PlayerData.cpp
     ${CMAKE_SOURCE_DIR}/src/model/components/EnemyComponentRepository.cpp
     ${CMAKE_SOURCE_DIR}/src/model/components/PickableComponentRepository.cpp
@@ -27,6 +26,9 @@ set(ModelSources
     ${CMAKE_SOURCE_DIR}/src/model/animations/PlayerDeathAnimation.cpp
     ${CMAKE_SOURCE_DIR}/src/model/animations/Stage25MCompletionAnimation.cpp
     ${CMAKE_SOURCE_DIR}/src/model/animations/Stage100MCompletionAnimation.cpp
+    ${CMAKE_SOURCE_DIR}/src/model/entities/Pauline.cpp
+    ${CMAKE_SOURCE_DIR}/src/model/entities/Beam.cpp
+    ${CMAKE_SOURCE_DIR}/src/model/entities/BarrelStack.cpp
     )
 
 # Controller
@@ -57,6 +59,7 @@ set(ViewSources
     ${CMAKE_SOURCE_DIR}/src/view/views/TitleScreenView.cpp
     ${CMAKE_SOURCE_DIR}/src/view/AssetsManager.cpp
     ${CMAKE_SOURCE_DIR}/src/view/DrawableComponentRepository.cpp
+    ${CMAKE_SOURCE_DIR}/src/view/DrawableComponentFactory.cpp
     ${CMAKE_SOURCE_DIR}/src/view/Layer.cpp
     ${CMAKE_SOURCE_DIR}/src/view/LayerStack.cpp
     ${CMAKE_SOURCE_DIR}/src/view/ScoreEffect.cpp

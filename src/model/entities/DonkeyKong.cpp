@@ -5,9 +5,12 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "DK/Constants.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/animations/AbstractAnimation.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/entities/Barrel.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
 DonkeyKong::DonkeyKong(Ref ref, std::shared_ptr<Platform> platform, float x_position, bool throw_barrels)
     : BaseEntity(ref), Updatable(), Enemy(), position(x_position, platform->surface_y_at(x_position)), platform(platform),
@@ -84,6 +87,32 @@ bool DonkeyKong::touches(const sf::RectangleShape &player_shape) const {
     hitbox.setOrigin({hitbox_bounds.size.x / 2.f, hitbox_bounds.size.y});
     hitbox.setPosition(position);
     return hitbox.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
+}
+
+void DonkeyKong::accept(EntityVisitor &visitor) { visitor.visit(*this); }
+
+void DonkeyKong::check_referenced_entities() {
+    if (platform && platform->get_entity().is_destroyed()) {
+        destroy();
+    }
+}
+
+std::unique_ptr<Component<Updatable>> DonkeyKong::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Enemy>> DonkeyKong::create_enemy_component() {
+    return std::make_unique<Component<Enemy>>(std::static_pointer_cast<DonkeyKong>(shared_from_this()));
+}
+
+void DonkeyKong::start_animation(AbstractAnimation *animation) {
+    current_animation = animation;
+    set_state(State::Animated, animation->get_stage());
+}
+
+void DonkeyKong::stop_animation() {
+    set_state(State::Idle, current_animation->get_stage());
+    current_animation = nullptr;
 }
 
 void DonkeyKong::set_state(State new_state, Stage &stage) {

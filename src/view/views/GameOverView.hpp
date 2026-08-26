@@ -17,6 +17,7 @@ public:
      *
      * @param window The window to draw to
      * @param assets_manager The assets manager to retrieve assets from
+     * @param player_data Player data used to display the final score
      */
     GameOverView(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data);
 
