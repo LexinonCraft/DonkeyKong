@@ -99,9 +99,7 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     }
 }
 
-Stage100M::~Stage100M() {
-    get_entities().get_observer_registry().unregister_observer(observer_id);
-}
+Stage100M::~Stage100M() { get_entities().get_observer_registry().unregister_observer(observer_id); }
 
 void Stage100M::on_completed() {
     clear_secondary_entities();
