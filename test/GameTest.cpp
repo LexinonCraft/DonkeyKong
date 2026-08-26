@@ -130,11 +130,12 @@ TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
 // Test that the player can destroy a barrel by hitting it with a hammer.
 TEST_F(PlayerUpdateTest, player_hammers_barrel) {
     stage.place_hammer();
-    for (int i = 0; i < 1000 && !stage.get_barrel()->is_destroyed(); ++i) {
+    for (int i = 0; i < 1000 && player_data.get_hammer_use_count() == 0; ++i) {
         stage.update(1.f / 60.f);
     }
     EXPECT_FALSE(stage.is_over());
     EXPECT_TRUE(stage.get_barrel()->is_destroyed());
+    EXPECT_EQ(player_data.get_hammer_use_count(), 1);
 }
 
 // Test that the player can jump over a barrel and survive.
