@@ -1,5 +1,7 @@
 #include "DK/control/Game.hpp"
 
+#include <algorithm>
+
 #include "DK/Constants.hpp"
 #include "DK/control/GameOverControl.hpp"
 #include "DK/control/StageControl.hpp"
@@ -31,8 +33,9 @@ void Game::run() {
 
         // handle input, check if window is still open
         if (!input()) {
+            float dt = std::min(elapsed_time.asSeconds(), constants::MAX_DT);
             // update the scene according to the passed time
-            scene_control->update(elapsed_time.asSeconds());
+            scene_control->update(dt);
             // draw the scene
             scene_control->draw();
 
