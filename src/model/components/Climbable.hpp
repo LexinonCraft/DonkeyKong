@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <SFML/System/Vector2.hpp>
+
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/util/EntityFromComponentAux.hpp"
 
@@ -14,7 +16,7 @@
  */
 class Climbable : public EntityFromComponentAux {
 public:
-    virtual ~Climbable() {}
+    ~Climbable() override = default;
 
     /**
      * @brief Returns whether this climbable currently accepts climbing attempts.
@@ -29,10 +31,7 @@ public:
      * @param v_tolerance Vertical tolerance around the climbable bounds.
      * @returns True if the player is aligned with the climbable for moving upward.
      */
-    bool can_climb_up(sf::Vector2f position, float h_tolerance, float v_tolerance) const {
-        return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() + v_tolerance &&
-               position.y > get_upper_y_pos() + v_tolerance;
-    }
+    bool can_climb_up(sf::Vector2f position, float h_tolerance, float v_tolerance) const;
 
     /**
      * @brief Checks whether the player can climb downward from a given position.
@@ -41,10 +40,7 @@ public:
      * @param v_tolerance Vertical tolerance around the climbable bounds.
      * @returns True if the player is aligned with the climbable for moving downward.
      */
-    bool can_climb_down(sf::Vector2f position, float h_tolerance, float v_tolerance) const {
-        return can_climb(position, h_tolerance) && position.y < get_lower_y_pos() - v_tolerance &&
-               position.y > get_upper_y_pos() - v_tolerance;
-    }
+    bool can_climb_down(sf::Vector2f position, float h_tolerance, float v_tolerance) const;
 
     /**
      * @brief Returns the lower platform endpoint of the climbable.
@@ -89,12 +85,9 @@ protected:
      * @param upper_end Upper platform endpoint.
      * @param x_pos Horizontal position of the climbable.
      */
-    Climbable(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos)
-        : lower_end(lower_end), upper_end(upper_end), x_pos(x_pos), upper_y_pos(upper_end->surface_y_at(x_pos)),
-          lower_y_pos(lower_end->surface_y_at(x_pos)) {}
+    Climbable(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_pos);
 
-    Climbable(float lower_y, float upper_y, float x_pos)
-        : lower_end(nullptr), upper_end(nullptr), x_pos(x_pos), upper_y_pos(upper_y), lower_y_pos(lower_y) {}
+    Climbable(float lower_y, float upper_y, float x_pos);
 
 private:
     /**
@@ -103,9 +96,7 @@ private:
      * @param h_tolerance Allowed horizontal error.
      * @returns True if the player's x-coordinate is close enough to the climbable.
      */
-    bool can_climb(sf::Vector2f position, float h_tolerance) const {
-        return is_active_for_player() && position.x < x_pos + h_tolerance && position.x > x_pos - h_tolerance;
-    }
+    bool can_climb(sf::Vector2f position, float h_tolerance) const;
 };
 
 #endif

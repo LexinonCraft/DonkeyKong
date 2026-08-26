@@ -9,6 +9,7 @@ set(ModelSources
     ${CMAKE_CURRENT_SOURCE_DIR}/model/entities/HammerPowerUp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/Stage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/util/BaseEntity.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/components/Climbable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/ClimbableComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/PlatformComponentRepository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/components/UpdatableComponentRepository.cpp
