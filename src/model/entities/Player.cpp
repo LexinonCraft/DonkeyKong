@@ -17,7 +17,8 @@ Player::Player(Ref ref)
       vertical_direction(VerticalDirection::None), hammer_time_remaining(0.f), shape({constants::PLAYER_WIDTH, constants::PLAYER_HEIGHT}) {
     // origin at the rectangle's centre so `position` is the player's centre
     shape.setOrigin({constants::PLAYER_WIDTH / 2.f, constants::PLAYER_HEIGHT}); // origin at the bottom centre of the rectangle
-    shape.setFillColor(sf::Color(200, 100, 100));                               // light red, stands out on the girders
+    shape.setFillColor(
+        sf::Color(constants::PLAYER_DEBUG_COLOR_RED, constants::PLAYER_DEBUG_COLOR_GREEN, constants::PLAYER_DEBUG_COLOR_BLUE));
     shape.setPosition(position);
 }
 

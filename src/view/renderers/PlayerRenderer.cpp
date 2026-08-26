@@ -69,9 +69,10 @@ void PlayerRenderer::draw(LayerStack &layer_stack) {
 
     sf::Sprite player_sprite(assets_manager.get_texture(texture_id));
     sf::FloatRect sprite_bounds = player_sprite.getLocalBounds();
-    player_sprite.setOrigin({sprite_bounds.size.x / (hammer_origin ? 4.f : 2.f), sprite_bounds.size.y});
+    player_sprite.setOrigin(
+        {sprite_bounds.size.x / (hammer_origin ? constants::PLAYER_HAMMER_SPRITE_ORIGIN_DIVISOR : 2.f), sprite_bounds.size.y});
     player_sprite.setPosition(player->get_position());
-    scale(player_sprite, 2.f);
+    scale(player_sprite, constants::PLAYER_RENDER_SCALE);
     flip_horizontally(player_sprite, flip_sprite);
     rotate_180_degrees(player_sprite, AnchorPosition::Center, rotate_sprite);
     layer_stack.get_layer(LayerStack::LayerId::Player).add_to_layer(player_sprite);
@@ -85,7 +86,8 @@ void PlayerRenderer::PlayerAnimationVisitor::visit(PlayerDeathAnimation &animati
             rotate_sprite = false;
             break;
         case PlayerDeathAnimation::State::Rotating:
-            switch (mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::PLAYER_DYING_ANIMATION_INTERVAL), 4)) {
+            switch (mod(floor_to_int(animation.get_time_elapsed_in_state() / constants::PLAYER_DYING_ANIMATION_INTERVAL),
+                        constants::PLAYER_DYING_ANIMATION_FRAME_COUNT)) {
                 case 0:
                     texture_id = AssetsManager::TextureId::JumpmanDying1;
                     rotate_sprite = false;

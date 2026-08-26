@@ -9,19 +9,19 @@ sf::Vector2f get_position_in_normalized_coordinates(AnchorPosition anchor) {
         case AnchorPosition::TopLeft:
             return {0.f, 0.f};
         case AnchorPosition::TopCenter:
-            return {0.5f, 0.f};
+            return {constants::NORMALIZED_CENTER, 0.f};
         case AnchorPosition::TopRight:
             return {1.f, 0.f};
         case AnchorPosition::CenterLeft:
-            return {0.f, 0.5f};
+            return {0.f, constants::NORMALIZED_CENTER};
         case AnchorPosition::Center:
-            return {0.5f, 0.5f};
+            return {constants::NORMALIZED_CENTER, constants::NORMALIZED_CENTER};
         case AnchorPosition::CenterRight:
-            return {1.f, 0.5f};
+            return {1.f, constants::NORMALIZED_CENTER};
         case AnchorPosition::BottomLeft:
             return {0.f, 1.f};
         case AnchorPosition::BottomCenter:
-            return {0.5f, 1.f};
+            return {constants::NORMALIZED_CENTER, 1.f};
         case AnchorPosition::BottomRight:
             return {1.f, 1.f};
         default:

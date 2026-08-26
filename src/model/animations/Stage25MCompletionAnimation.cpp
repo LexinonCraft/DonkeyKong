@@ -1,5 +1,6 @@
 #include "DK/model/animations/Stage25MCompletionAnimation.hpp"
 
+#include "DK/Constants.hpp"
 #include "DK/model/entities/DonkeyKong.hpp"
 #include "DK/model/entities/Pauline.hpp"
 #include "DK/model/entities/Player.hpp"
@@ -19,15 +20,16 @@ void Stage25MCompletionAnimation::update(float dt) {
                 donkey_kong->start_animation(this);
                 break;
             case State::United:
-                if (get_time_elapsed() < 3.0f) {
+                if (get_time_elapsed() < constants::STAGE_25M_UNITED_DURATION) {
                     break;
                 }
                 set_state(State::Climbing, flag);
-                donkey_kong->set_position({205.f, -550.f});
+                donkey_kong->set_position({constants::STAGE_25M_COMPLETION_DONKEY_KONG_X, constants::STAGE_25M_COMPLETION_DONKEY_KONG_Y});
                 break;
             case State::Climbing:
-                donkey_kong->set_position(donkey_kong->get_position() - sf::Vector2f(0.f, 75.f * dt));
-                if (get_time_elapsed() < 5.0f) {
+                donkey_kong->set_position(donkey_kong->get_position() -
+                                          sf::Vector2f(0.f, constants::STAGE_25M_COMPLETION_CLIMBING_SPEED * dt));
+                if (get_time_elapsed() < constants::STAGE_25M_COMPLETION_DURATION) {
                     break;
                 }
                 set_state(State::Finished, flag);

@@ -10,7 +10,7 @@
 
 void GirderRenderer::draw(LayerStack &layer_stack) {
     float width = girder->get_width();
-    unsigned int num_steps = static_cast<unsigned int>(width / (constants::GIRDER_THICKNESS * 2.f));
+    unsigned int num_steps = static_cast<unsigned int>(width / (constants::GIRDER_THICKNESS * constants::GIRDER_RENDER_TILE_WIDTH_FACTOR));
     float step_width = width / num_steps;
     float x = girder->get_left().x;
 
@@ -26,7 +26,7 @@ void GirderRenderer::draw(LayerStack &layer_stack) {
 
     for (unsigned int i = 0; i < num_steps; ++i) {
         sf::Sprite sprite(assets_manager.get_texture(texture_id));
-        sprite.setPosition({x + i * step_width, girder->surface_y_at(x + (i + 0.5f) * step_width)});
+        sprite.setPosition({x + i * step_width, girder->surface_y_at(x + (i + constants::NORMALIZED_CENTER) * step_width)});
         set_to_size(sprite, {step_width, constants::GIRDER_THICKNESS});
         layer_stack.get_layer(LayerStack::LayerId::Platforms).add_to_layer(sprite);
     }

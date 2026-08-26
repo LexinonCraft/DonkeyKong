@@ -10,7 +10,8 @@ HammerPowerUp::HammerPowerUp(Ref ref, sf::Vector2f position)
     : BaseEntity(ref), position(position), shape({constants::HAMMER_WIDTH, constants::HAMMER_HEIGHT}) {
     shape.setOrigin({constants::HAMMER_WIDTH / 2.f, constants::HAMMER_HEIGHT});
     shape.setPosition(position);
-    shape.setFillColor(sf::Color(240, 200, 60));
+    shape.setFillColor(
+        sf::Color(constants::HAMMER_DEBUG_COLOR_RED, constants::HAMMER_DEBUG_COLOR_GREEN, constants::HAMMER_DEBUG_COLOR_BLUE));
 }
 
 bool HammerPowerUp::touches(const sf::RectangleShape &player_shape) const {

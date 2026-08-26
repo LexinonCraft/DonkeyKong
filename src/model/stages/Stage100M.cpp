@@ -11,22 +11,63 @@
 #include "DK/model/entities/Player.hpp"
 #include "DK/util/Math.hpp"
 
+namespace {
+constexpr float BOTTOM_GIRDER_Y = -20.f;
+constexpr float FIRST_ROW_Y = -130.f;
+constexpr float SECOND_ROW_Y = -230.f;
+constexpr float THIRD_ROW_Y = -330.f;
+constexpr float FOURTH_ROW_Y = -430.f;
+constexpr float TOP_GIRDER_Y = -550.f;
+constexpr float SIDE_GIRDER_INNER_X = 145.f;
+constexpr float CENTER_GIRDER_OUTER_X = 175.f;
+constexpr float FIRST_ROW_MARGIN = 20.f;
+constexpr float SECOND_ROW_MARGIN = 40.f;
+constexpr float THIRD_ROW_MARGIN = 60.f;
+constexpr float FOURTH_ROW_MARGIN = 80.f;
+
+constexpr float DISSOLVING_PLATFORM_X = 160.f;
+constexpr float DISSOLVING_PLATFORM_WIDTH = 30.f;
+
+constexpr float BOTTOM_LEFT_LADDER_X = 30.f;
+constexpr float BOTTOM_CENTER_LADDER_X = 300.f;
+constexpr float FIRST_ROW_LEFT_LADDER_X = 50.f;
+constexpr float FIRST_ROW_CENTER_LADDER_X = 200.f;
+constexpr float SECOND_ROW_LEFT_LADDER_X = 70.f;
+constexpr float SECOND_ROW_CENTER_LADDER_X = 300.f;
+constexpr float THIRD_ROW_LEFT_LADDER_X = 90.f;
+constexpr float THIRD_ROW_CENTER_LADDER_X = 190.f;
+constexpr float TOP_BEAM_X = 220.f;
+
+constexpr float HAMMER_X = 300.f;
+constexpr float PAULINE_X = 200.f;
+constexpr float PLAYER_START_X = 50.f;
+} // namespace
+
 Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     // create girders
-    auto p0 = entities.add_girder({0, -20}, {constants::VIEW_WIDTH, -20}, Girder::Color::Blue);
-    auto p1 = entities.add_girder({20, -130}, {145, -130}, Girder::Color::Blue);
-    auto p2 = entities.add_girder({175, -130}, {constants::VIEW_WIDTH - 175, -130}, Girder::Color::Blue);
-    auto p3 = entities.add_girder({constants::VIEW_WIDTH - 145, -130}, {constants::VIEW_WIDTH - 20, -130}, Girder::Color::Blue);
-    auto p4 = entities.add_girder({40, -230}, {145, -230}, Girder::Color::Blue);
-    auto p5 = entities.add_girder({175, -230}, {constants::VIEW_WIDTH - 175, -230}, Girder::Color::Blue);
-    auto p6 = entities.add_girder({constants::VIEW_WIDTH - 145, -230}, {constants::VIEW_WIDTH - 40, -230}, Girder::Color::Blue);
-    auto p7 = entities.add_girder({60, -330}, {145, -330}, Girder::Color::Blue);
-    auto p8 = entities.add_girder({175, -330}, {constants::VIEW_WIDTH - 175, -330}, Girder::Color::Blue);
-    auto p9 = entities.add_girder({constants::VIEW_WIDTH - 145, -330}, {constants::VIEW_WIDTH - 60, -330}, Girder::Color::Blue);
-    auto p10 = entities.add_girder({80, -430}, {145, -430}, Girder::Color::Blue);
-    auto p11 = entities.add_girder({175, -430}, {constants::VIEW_WIDTH - 175, -430}, Girder::Color::Blue);
-    auto p12 = entities.add_girder({constants::VIEW_WIDTH - 145, -430}, {constants::VIEW_WIDTH - 80, -430}, Girder::Color::Blue);
-    auto p13 = entities.add_girder({145, -550}, {constants::VIEW_WIDTH - 145, -550}, Girder::Color::Blue);
+    auto p0 = entities.add_girder({0.f, BOTTOM_GIRDER_Y}, {constants::VIEW_WIDTH, BOTTOM_GIRDER_Y}, Girder::Color::Blue);
+    auto p1 = entities.add_girder({FIRST_ROW_MARGIN, FIRST_ROW_Y}, {SIDE_GIRDER_INNER_X, FIRST_ROW_Y}, Girder::Color::Blue);
+    auto p2 = entities.add_girder({CENTER_GIRDER_OUTER_X, FIRST_ROW_Y}, {constants::VIEW_WIDTH - CENTER_GIRDER_OUTER_X, FIRST_ROW_Y},
+                                  Girder::Color::Blue);
+    auto p3 = entities.add_girder({constants::VIEW_WIDTH - SIDE_GIRDER_INNER_X, FIRST_ROW_Y},
+                                  {constants::VIEW_WIDTH - FIRST_ROW_MARGIN, FIRST_ROW_Y}, Girder::Color::Blue);
+    auto p4 = entities.add_girder({SECOND_ROW_MARGIN, SECOND_ROW_Y}, {SIDE_GIRDER_INNER_X, SECOND_ROW_Y}, Girder::Color::Blue);
+    auto p5 = entities.add_girder({CENTER_GIRDER_OUTER_X, SECOND_ROW_Y}, {constants::VIEW_WIDTH - CENTER_GIRDER_OUTER_X, SECOND_ROW_Y},
+                                  Girder::Color::Blue);
+    auto p6 = entities.add_girder({constants::VIEW_WIDTH - SIDE_GIRDER_INNER_X, SECOND_ROW_Y},
+                                  {constants::VIEW_WIDTH - SECOND_ROW_MARGIN, SECOND_ROW_Y}, Girder::Color::Blue);
+    auto p7 = entities.add_girder({THIRD_ROW_MARGIN, THIRD_ROW_Y}, {SIDE_GIRDER_INNER_X, THIRD_ROW_Y}, Girder::Color::Blue);
+    auto p8 = entities.add_girder({CENTER_GIRDER_OUTER_X, THIRD_ROW_Y}, {constants::VIEW_WIDTH - CENTER_GIRDER_OUTER_X, THIRD_ROW_Y},
+                                  Girder::Color::Blue);
+    auto p9 = entities.add_girder({constants::VIEW_WIDTH - SIDE_GIRDER_INNER_X, THIRD_ROW_Y},
+                                  {constants::VIEW_WIDTH - THIRD_ROW_MARGIN, THIRD_ROW_Y}, Girder::Color::Blue);
+    auto p10 = entities.add_girder({FOURTH_ROW_MARGIN, FOURTH_ROW_Y}, {SIDE_GIRDER_INNER_X, FOURTH_ROW_Y}, Girder::Color::Blue);
+    auto p11 = entities.add_girder({CENTER_GIRDER_OUTER_X, FOURTH_ROW_Y}, {constants::VIEW_WIDTH - CENTER_GIRDER_OUTER_X, FOURTH_ROW_Y},
+                                   Girder::Color::Blue);
+    auto p12 = entities.add_girder({constants::VIEW_WIDTH - SIDE_GIRDER_INNER_X, FOURTH_ROW_Y},
+                                   {constants::VIEW_WIDTH - FOURTH_ROW_MARGIN, FOURTH_ROW_Y}, Girder::Color::Blue);
+    auto p13 = entities.add_girder({SIDE_GIRDER_INNER_X, TOP_GIRDER_Y}, {constants::VIEW_WIDTH - SIDE_GIRDER_INNER_X, TOP_GIRDER_Y},
+                                   Girder::Color::Blue);
 
     // add girders to the list of suitable girders for spawning ghosts
     spawn_suitable_girders.push_back(p0);
@@ -52,45 +93,51 @@ Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_gene
     upper_falling_girder = p13;
 
     // create dissolving platforms
-    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -130}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -130}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -230}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -230}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -330}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -330}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({160, -430}, 30));
-    dissolving_platforms.push_back(entities.add_dissolving_platform({constants::VIEW_WIDTH - 160, -430}, 30));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({DISSOLVING_PLATFORM_X, FIRST_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(
+        entities.add_dissolving_platform({constants::VIEW_WIDTH - DISSOLVING_PLATFORM_X, FIRST_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({DISSOLVING_PLATFORM_X, SECOND_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(
+        entities.add_dissolving_platform({constants::VIEW_WIDTH - DISSOLVING_PLATFORM_X, SECOND_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({DISSOLVING_PLATFORM_X, THIRD_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(
+        entities.add_dissolving_platform({constants::VIEW_WIDTH - DISSOLVING_PLATFORM_X, THIRD_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(entities.add_dissolving_platform({DISSOLVING_PLATFORM_X, FOURTH_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
+    dissolving_platforms.push_back(
+        entities.add_dissolving_platform({constants::VIEW_WIDTH - DISSOLVING_PLATFORM_X, FOURTH_ROW_Y}, DISSOLVING_PLATFORM_WIDTH));
 
     // create ladders
-    entities.add_ladder(p0, p1, 30.f, false, Ladder::Color::Yellow);
-    static_entities_to_be_cleared.push_back(entities.add_ladder(p0, p2, 300.f, false, Ladder::Color::Yellow));
-    entities.add_ladder(p0, p3, constants::VIEW_WIDTH - 30.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p1, p4, 50.f, false, Ladder::Color::Yellow);
-    static_entities_to_be_cleared.push_back(entities.add_ladder(p2, p5, 200.f, false, Ladder::Color::Yellow));
-    static_entities_to_be_cleared.push_back(entities.add_ladder(p2, p5, constants::VIEW_WIDTH - 200.f, false, Ladder::Color::Yellow));
-    entities.add_ladder(p3, p6, constants::VIEW_WIDTH - 50.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p4, p7, 70.f, false, Ladder::Color::Yellow);
-    static_entities_to_be_cleared.push_back(entities.add_ladder(p5, p8, 300.f, false, Ladder::Color::Yellow));
-    entities.add_ladder(p6, p9, constants::VIEW_WIDTH - 70.f, false, Ladder::Color::Yellow);
-    entities.add_ladder(p7, p10, 90.f, false, Ladder::Color::Yellow);
-    static_entities_to_be_cleared.push_back(entities.add_ladder(p8, p11, 190.f, false, Ladder::Color::Yellow));
-    static_entities_to_be_cleared.push_back(entities.add_ladder(p8, p11, constants::VIEW_WIDTH - 190.f, false, Ladder::Color::Yellow));
-    entities.add_ladder(p9, p12, constants::VIEW_WIDTH - 90.f, false, Ladder::Color::Yellow);
+    entities.add_ladder(p0, p1, BOTTOM_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p0, p2, BOTTOM_CENTER_LADDER_X, false, Ladder::Color::Yellow));
+    entities.add_ladder(p0, p3, constants::VIEW_WIDTH - BOTTOM_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    entities.add_ladder(p1, p4, FIRST_ROW_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p2, p5, FIRST_ROW_CENTER_LADDER_X, false, Ladder::Color::Yellow));
+    static_entities_to_be_cleared.push_back(
+        entities.add_ladder(p2, p5, constants::VIEW_WIDTH - FIRST_ROW_CENTER_LADDER_X, false, Ladder::Color::Yellow));
+    entities.add_ladder(p3, p6, constants::VIEW_WIDTH - FIRST_ROW_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    entities.add_ladder(p4, p7, SECOND_ROW_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p5, p8, SECOND_ROW_CENTER_LADDER_X, false, Ladder::Color::Yellow));
+    entities.add_ladder(p6, p9, constants::VIEW_WIDTH - SECOND_ROW_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    entities.add_ladder(p7, p10, THIRD_ROW_LEFT_LADDER_X, false, Ladder::Color::Yellow);
+    static_entities_to_be_cleared.push_back(entities.add_ladder(p8, p11, THIRD_ROW_CENTER_LADDER_X, false, Ladder::Color::Yellow));
+    static_entities_to_be_cleared.push_back(
+        entities.add_ladder(p8, p11, constants::VIEW_WIDTH - THIRD_ROW_CENTER_LADDER_X, false, Ladder::Color::Yellow));
+    entities.add_ladder(p9, p12, constants::VIEW_WIDTH - THIRD_ROW_LEFT_LADDER_X, false, Ladder::Color::Yellow);
 
     // create beams
-    static_entities_to_be_cleared.push_back(entities.add_beam(p11, p13, 220.f));
-    static_entities_to_be_cleared.push_back(entities.add_beam(p11, p13, constants::VIEW_WIDTH - 220.f));
+    static_entities_to_be_cleared.push_back(entities.add_beam(p11, p13, TOP_BEAM_X));
+    static_entities_to_be_cleared.push_back(entities.add_beam(p11, p13, constants::VIEW_WIDTH - TOP_BEAM_X));
 
     // add hammer power-ups
     entities.add_hammer_power_up(p4->get_left() - sf::Vector2f(0.f, constants::HAMMER_Y_OFFSET));
-    entities.add_hammer_power_up(sf::Vector2f(300.f, -330 - constants::HAMMER_Y_OFFSET));
+    entities.add_hammer_power_up(sf::Vector2f(HAMMER_X, THIRD_ROW_Y - constants::HAMMER_Y_OFFSET));
 
     // add Donkey Kong and Pauline
     donkey_kong = entities.add_donkey_kong(p11, constants::VIEW_WIDTH / 2.f, false);
-    pauline = entities.add_pauline(p13, 200.f);
+    pauline = entities.add_pauline(p13, PAULINE_X);
 
     // set player position
-    player->enter_platform(p0, 50);
+    player->enter_platform(p0, PLAYER_START_X);
 
     observer_id = get_entities().get_observer_registry().register_observer(*this);
 

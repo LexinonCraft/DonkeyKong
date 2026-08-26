@@ -35,7 +35,7 @@ void DonkeyKong::update(float dt, Stage &stage) {
                 } else if (consecutive_angry_actions >= constants::DONKEY_KONG_MAX_CONSECUTIVE_ANGRY_ACTIONS) {
                     next_action = 0; // Force throwing barrel
                 } else {
-                    next_action = stage.random_int() % 3;
+                    next_action = stage.random_int() % constants::DONKEY_KONG_ACTION_COUNT;
                 }
                 switch (next_action) {
                     case 0:
@@ -54,12 +54,13 @@ void DonkeyKong::update(float dt, Stage &stage) {
 
         case State::ThrowingBarrel:
             action_timer += dt;
-            if (num_barrels_to_be_thrown > 0 && action_timer >= constants::BARREL_THROW_ANIMATION_INTERVAL * 2) {
+            if (num_barrels_to_be_thrown > 0 &&
+                action_timer >= constants::BARREL_THROW_ANIMATION_INTERVAL * constants::DONKEY_KONG_THROW_BARREL_FRAME) {
                 float barrel_x_pos = position.x + constants::BARREL_THROW_OFFSET_X;
                 auto barrel = stage.get_entities().add_barrel({barrel_x_pos, platform->surface_y_at(barrel_x_pos)});
                 barrel->set_on_platform(platform, stage.get_barrel_roll_speed(), 1);
                 num_barrels_to_be_thrown--;
-                action_timer -= constants::BARREL_THROW_ANIMATION_INTERVAL * 4;
+                action_timer -= constants::BARREL_THROW_ANIMATION_INTERVAL * constants::DONKEY_KONG_THROW_ANIMATION_FRAME_COUNT;
             }
             if (num_barrels_to_be_thrown == 0 && action_timer >= 0) {
                 set_state(State::Idle, stage);

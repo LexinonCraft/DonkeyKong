@@ -1,6 +1,7 @@
 #ifndef STAGE_TRANSITION_CONTROL_HPP
 #define STAGE_TRANSITION_CONTROL_HPP
 
+#include "DK/Constants.hpp"
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/view/Declarations.hpp"
 #include "DK/view/views/StageTransitionView.hpp"
@@ -22,7 +23,9 @@ public:
 
     void draw() override { stage_transition_view.draw(); }
 
-    NextScene get_next_scene() const override { return time_elapsed >= 5.f ? NextScene::Stage : NextScene::Stay; }
+    NextScene get_next_scene() const override {
+        return time_elapsed >= constants::STAGE_TRANSITION_DURATION ? NextScene::Stage : NextScene::Stay;
+    }
 
 private:
     StageTransitionView stage_transition_view;

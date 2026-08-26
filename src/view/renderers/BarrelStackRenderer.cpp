@@ -15,11 +15,13 @@ void BarrelStackRenderer::draw(LayerStack &layer_stack) {
 void BarrelStackRenderer::draw_single_barrel(LayerStack &layer_stack, bool left, bool bottom) {
     sf::Sprite sprite(assets_manager.get_texture(AssetsManager::TextureId::BarrelSide1));
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setScale({constants::BARREL_RADIUS * 2.5f / bounds.size.x, constants::BARREL_RADIUS * 2.5f / bounds.size.y});
+    sprite.setScale({constants::BARREL_RADIUS * constants::BARREL_RENDER_SIZE_FACTOR / bounds.size.x,
+                     constants::BARREL_RADIUS * constants::BARREL_RENDER_SIZE_FACTOR / bounds.size.y});
     sprite.setOrigin({bounds.size.x, bounds.size.y / 2.f});
-    sprite.setRotation(sf::degrees(90));
+    sprite.setRotation(sf::degrees(constants::BARREL_STACK_ROTATION));
     auto position = barrel_stack->get_position();
-    sprite.setPosition({position.x + (left ? -1.f : 1.f) * constants::BARREL_RADIUS * 2.5f * 5.f / 16.f,
-                        position.y + (bottom ? 0.f : -1.f) * constants::BARREL_RADIUS * 2.5f});
+    sprite.setPosition({position.x + (left ? -1.f : 1.f) * constants::BARREL_RADIUS * constants::BARREL_RENDER_SIZE_FACTOR *
+                                         constants::BARREL_RENDER_VERTICAL_OFFSET_FACTOR,
+                        position.y + (bottom ? 0.f : -1.f) * constants::BARREL_RADIUS * constants::BARREL_RENDER_SIZE_FACTOR});
     layer_stack.get_layer(LayerStack::LayerId::Objects).add_to_layer(sprite);
 }

@@ -5,6 +5,8 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/Constants.hpp"
+
 /**
  * @brief Enum class representing anchor positions for positioning and transformations.
  */
@@ -95,7 +97,7 @@ template <typename T> void rotate_180_degrees(T &target, AnchorPosition anchor, 
     auto origin_diff = compute_origin_for_anchor(target, anchor) - target.getOrigin();
     auto scale = target.getScale();
 
-    target.setRotation(sf::degrees(180.f));
+    target.setRotation(sf::degrees(constants::HALF_TURN_DEGREES));
     target.setPosition(target.getPosition() + sf::Vector2f(origin_diff.x * scale.x, origin_diff.y * scale.y) * 2.f);
 }
 
