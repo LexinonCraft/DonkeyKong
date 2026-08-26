@@ -6,6 +6,9 @@ std::unique_ptr<Component<Updatable>> UpdatableComponentFactory::create_componen
     return entity->create_updatable_component();
 }
 
+UpdatableComponentRepository::UpdatableComponentRepository(EntityRepository &entity_repo)
+    : ComponentRepository<Component<Updatable>>(entity_repo, std::make_unique<UpdatableComponentFactory>()) {}
+
 void UpdatableComponentRepository::update_all(float dt, Stage &level) {
     iterating = true;
     for (auto it = begin(); it != end(); ++it) {

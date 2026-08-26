@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "DK/model/components/Updatable.hpp"
-#include "DK/model/components/UpdatableComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
 #include "DK/model/util/ComponentRepository.hpp"
 
@@ -17,8 +16,7 @@ public:
      * @brief Creates the repository and subscribes it to the entity repository.
      * @param entity_repo Repository whose entities are tracked.
      */
-    UpdatableComponentRepository(EntityRepository &entity_repo)
-        : ComponentRepository<Component<Updatable>>(entity_repo, std::make_unique<UpdatableComponentFactory>()) {}
+    explicit UpdatableComponentRepository(EntityRepository &entity_repo);
 
     /**
      * @brief Calls update() on every tracked entity.

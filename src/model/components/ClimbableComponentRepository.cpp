@@ -6,6 +6,9 @@ std::unique_ptr<Component<Climbable>> ClimbableComponentFactory::create_componen
     return entity->create_climbable_component();
 }
 
+ClimbableComponentRepository::ClimbableComponentRepository(EntityRepository &repository)
+    : ComponentRepository<Component<Climbable>>(repository, std::make_unique<ClimbableComponentFactory>()) {}
+
 std::shared_ptr<Climbable> ClimbableComponentRepository::find_climbable_up_at(const sf::Vector2f &position, float h_tolerance,
                                                                               float v_tolerance) {
     for (auto it = begin(); it != end(); ++it) {

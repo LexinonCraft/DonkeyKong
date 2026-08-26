@@ -6,6 +6,9 @@ std::unique_ptr<Component<Pickable>> PickableComponentFactory::create_component_
     return entity->create_pickable_component();
 }
 
+PickableComponentRepository::PickableComponentRepository(EntityRepository &repository)
+    : ComponentRepository<Component<Pickable>>(repository, std::make_unique<PickableComponentFactory>()) {}
+
 std::shared_ptr<Pickable> PickableComponentRepository::find_touching_pickable(const sf::RectangleShape &player_shape) {
     for (auto it = begin(); it != end(); ++it) {
         auto pickable = it->second->get_entity();

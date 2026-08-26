@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "DK/model/components/Platform.hpp"
-#include "DK/model/components/PlatformComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
 #include "DK/model/util/ComponentRepository.hpp"
 
@@ -20,8 +19,7 @@ public:
      * @brief Creates the repository and registers it with the entity repository.
      * @param repository Entity repository to observe.
      */
-    PlatformComponentRepository(EntityRepository &repository)
-        : ComponentRepository<Component<Platform>>(repository, std::make_unique<PlatformComponentFactory>()) {}
+    explicit PlatformComponentRepository(EntityRepository &repository);
 
     /**
      * @brief Finds a platform directly underneath a world position.

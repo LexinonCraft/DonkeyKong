@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "DK/model/components/Jumpable.hpp"
-#include "DK/model/components/JumpableComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
 #include "DK/model/util/ComponentRepository.hpp"
 
@@ -17,8 +16,7 @@ public:
      * @brief Creates the repository and subscribes it to the entity repository.
      * @param entity_repo Repository whose entities are tracked.
      */
-    JumpableComponentRepository(EntityRepository &entity_repo)
-        : ComponentRepository<Component<Jumpable>>(entity_repo, std::make_unique<JumpableComponentFactory>()) {}
+    explicit JumpableComponentRepository(EntityRepository &entity_repo);
 
     void check_all_jumpables(const Player &player, Stage &stage);
 };
