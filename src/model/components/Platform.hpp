@@ -22,6 +22,8 @@ public:
     /**
      * @brief Returns whether the platform spans the given world x position.
      * @param x Horizontal world coordinate.
+     * @param h_tolerance_left Additional tolerance at the platform's left edge.
+     * @param h_tolerance_right Additional tolerance at the platform's right edge.
      * @returns True if x lies on the platform.
      */
     virtual bool covers_x(float x, float h_tolerance_left, float h_tolerance_right) const = 0;

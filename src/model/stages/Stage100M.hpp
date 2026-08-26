@@ -7,6 +7,7 @@
 
 #include "DK/model/Stage.hpp"
 #include "DK/model/util/EntityRepositoryObserver.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 
 /**
  * @brief The 100m stage where the player must destroy the dissolving platforms.

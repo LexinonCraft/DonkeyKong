@@ -5,10 +5,14 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Enemy.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Enemy that patrols platforms and occasionally climbs between them.
+ */
 class Ghost : public BaseEntity, public Updatable, public Enemy {
 public:
     enum class State {
@@ -23,15 +27,13 @@ public:
 
     bool touches(const sf::RectangleShape &player_shape) const override;
 
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Ghost>(shared_from_this()));
-    }
+    void check_referenced_entities() override;
 
-    std::unique_ptr<Component<Enemy>> create_enemy_component() override {
-        return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Ghost>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
+
+    std::unique_ptr<Component<Enemy>> create_enemy_component() override;
 
     BaseEntity &get_entity() override { return *this; }
 
