@@ -4,7 +4,6 @@
 #include "DK/model/util/ComponentRepository.hpp"
 #include "DK/view/Declarations.hpp"
 #include "DK/view/DrawableComponent.hpp"
-#include "DK/view/DrawableComponentFactory.hpp"
 
 /**
  * @brief Repository for drawable components / renderers used by the view layer.
@@ -16,8 +15,7 @@ public:
      * @param entity_repo Repository with the entities to create drawable components for.
      * @param assets_manager Assets manager used to retrieve assets.
      */
-    DrawableComponentRepository(EntityRepository &entity_repo, AssetsManager &assets_manager)
-        : ComponentRepository<DrawableComponent>(entity_repo, std::make_unique<DrawableComponentFactory>(assets_manager)) {}
+    DrawableComponentRepository(EntityRepository &entity_repo, AssetsManager &assets_manager);
 
     /**
      * @brief Draws every drawable entity onto the layer stack.
