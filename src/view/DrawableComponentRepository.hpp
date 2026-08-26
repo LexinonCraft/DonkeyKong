@@ -14,7 +14,7 @@ public:
     /**
      * @brief Creates a repository for all drawable components in the current stage.
      * @param entity_repo Repository with the entities to create drawable components for.
-     * @param assets_manager Assets manager passed to entity renderers.
+     * @param assets_manager Assets manager used to retrieve assets.
      */
     DrawableComponentRepository(EntityRepository &entity_repo, AssetsManager &assets_manager)
         : ComponentRepository<DrawableComponent>(entity_repo, std::make_unique<DrawableComponentFactory>(assets_manager)) {}

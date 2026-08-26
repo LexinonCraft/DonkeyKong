@@ -4,23 +4,27 @@
 #include <memory>
 
 #include "DK/model/Stage.hpp"
-#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
 
 /**
- * @brief First stage, where the player climbs girders while avoiding barrels.
+ * @brief The 25m stage where the player must climb to the top while avoiding barrels.
  */
 class Stage25M : public Stage {
 public:
     /**
-     * @brief Creates and populates the 25 m stage.
-     * @param id_generator Function used to create unique entity ids.
-     * @param player_data Persistent player data shared between stages.
+     * @brief Initializes the stage by creating the entities and setting the player's starting position.
+     *
+     * @param rng A random number generator.
+     * @param player_data The global player data.
      */
-    Stage25M(Id id_generator(), PlayerData &player_data);
+    Stage25M(int rng(), PlayerData &player_data);
 
     bool is_barrel_boundary_gap(const sf::Vector2f &position) const override;
 
-    void on_completed() override { current_animation = std::make_unique<Stage25MCompletionAnimation>(*this, player, donkey_kong, pauline); }
+    /**
+     * @brief When the stage is completed, player the animation where Pauline and Jumpman are united at first but Donkey Kong then grabs
+     * Pauline again and climbs up.
+     */
+    void on_completed() override;
 
 private:
     float barrel_exit_y;

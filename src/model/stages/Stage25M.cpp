@@ -2,9 +2,11 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/animations/Stage25MCompletionAnimation.hpp"
 #include "DK/model/entities/Player.hpp"
 
 Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
+    // create girders
     auto p0 = entities.add_girder({-100, -20}, {constants::VIEW_WIDTH / 2.f, -20});
     auto p1 = entities.add_girder({constants::VIEW_WIDTH / 2.f, -20}, {constants::VIEW_WIDTH + 100, -40});
     auto p2 = entities.add_girder({0, -140}, {constants::VIEW_WIDTH - 50, -100});
@@ -15,8 +17,10 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     auto p7 = entities.add_girder({0, -520}, {380, -520});
     auto p8 = entities.add_girder({230, -610}, {360, -610});
 
+    // set barrel exit y position
     barrel_exit_y = p0->surface_y_at(0.f);
 
+    // create ladders
     entities.add_ladder(p0, p2, 220, true);
     entities.add_ladder(p1, p2, 500, false);
     entities.add_ladder(p2, p3, 260, false);
@@ -31,20 +35,32 @@ Stage25M::Stage25M(Id id_generator(), PlayerData &player_data) : Stage(id_genera
     entities.add_ladder(p5, p6, 490, false);
     entities.add_ladder(p7, p8, 340, false);
 
+    // create hammer power ups
     entities.add_hammer_power_up({500.f, p2->surface_y_at(500.f) - constants::HAMMER_Y_OFFSET});
     entities.add_hammer_power_up({100.f, p5->surface_y_at(100.f) - constants::HAMMER_Y_OFFSET});
 
+    // set final girder for triggering the completion animation
     final_girder = p8;
 
+    // create Donkey Kong, Pauline and barrel stack
     donkey_kong = entities.add_donkey_kong(p7, 100, true);
     entities.add_barrel_stack(p7, 30);
     pauline = entities.add_pauline(p8, 275);
 
+    // create ladders leading to the next stage
     entities.add_ladder(p7->surface_y_at(195.f), -750, 190, false, Ladder::Color::Cyan, false);
     entities.add_ladder(p7->surface_y_at(220.f), -750, 220, false, Ladder::Color::Cyan, false);
 
+    // set player starting position
     player->enter_platform(p0, 50);
 }
+
+bool Stage25M::is_barrel_boundary_gap(const sf::Vector2f &position) const {
+    const auto left_boundary = get_left_boundary();
+    return left_boundary && position.x < *left_boundary && position.y >= barrel_exit_y;
+}
+
+void Stage25M::on_completed() { current_animation = std::make_unique<Stage25MCompletionAnimation>(*this, player, donkey_kong, pauline); }
 
 void Stage25M::update_while_running(float dt) {
     if (player->get_current_platform() == final_girder) {
@@ -52,9 +68,4 @@ void Stage25M::update_while_running(float dt) {
     }
 
     Stage::update_while_running(dt);
-}
-
-bool Stage25M::is_barrel_boundary_gap(const sf::Vector2f &position) const {
-    const auto left_boundary = get_left_boundary();
-    return left_boundary && position.x < *left_boundary && position.y >= barrel_exit_y;
 }
