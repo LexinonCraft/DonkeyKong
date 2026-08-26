@@ -2,17 +2,11 @@
 
 #include "DK/Constants.hpp"
 
-/**
- * @brief Finds a platform directly below the provided world position.
- */
 std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left,
                                                                                 float h_tolerance_right, float snap_distance) {
     return find_platform_underneath(position, h_tolerance_left, h_tolerance_right, snap_distance, nullptr);
 }
 
-/**
- * @brief Finds a platform directly below the provided world position.
- */
 std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left,
                                                                                 float h_tolerance_right, float snap_distance,
                                                                                 std::shared_ptr<Platform> exclude_platform) {

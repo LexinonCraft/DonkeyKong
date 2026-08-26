@@ -5,7 +5,6 @@
 
 #include "DK/model/Declarations.hpp"
 #include "DK/model/util/Component.hpp"
-#include "DK/model/util/EntityVisitor.hpp"
 #include "DK/model/util/Ref.hpp"
 
 /**

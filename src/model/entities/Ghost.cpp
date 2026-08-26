@@ -6,12 +6,13 @@
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Climbable.hpp"
+#include "DK/model/components/Platform.hpp"
+#include "DK/model/util/EntityVisitor.hpp"
 #include "DK/util/Math.hpp"
 
 Ghost::Ghost(Ref ref, std::shared_ptr<Platform> platform, float x_pos)
-    : BaseEntity(ref), position({x_pos, platform->surface_y_at(x_pos)}), current_platform(platform) {
-    // Additional initialization code for Ghost can be added here
-}
+    : BaseEntity(ref), position({x_pos, platform->surface_y_at(x_pos)}), current_platform(platform) {}
 
 void Ghost::update(float dt, Stage &stage) {
     switch (state) {
@@ -111,6 +112,23 @@ bool Ghost::touches(const sf::RectangleShape &player_shape) const {
     ghost_shape.setOrigin({ghost_bounds.size.x / 2.f, ghost_bounds.size.y});
     ghost_shape.setPosition(position - sf::Vector2f{0.f, constants::GHOST_LIFT}); // Adjust for ghost lift
     return ghost_shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
+}
+
+void Ghost::accept(EntityVisitor &visitor) { visitor.visit(*this); }
+
+void Ghost::check_referenced_entities() {
+    if ((current_platform && current_platform->get_entity().is_destroyed()) ||
+        (current_climbable && current_climbable->get_entity().is_destroyed())) {
+        destroy();
+    }
+}
+
+std::unique_ptr<Component<Updatable>> Ghost::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Ghost>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Enemy>> Ghost::create_enemy_component() {
+    return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Ghost>(shared_from_this()));
 }
 
 float Ghost::get_horizontal_speed() const {

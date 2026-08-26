@@ -6,9 +6,13 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Pickable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
+/**
+ * @brief Collectible hammer power-up that is consumed when picked up by the player.
+ */
 class HammerPowerUp : public BaseEntity, public Pickable {
 public:
     HammerPowerUp(Ref ref, sf::Vector2f position);
@@ -21,9 +25,7 @@ public:
 
     BaseEntity &get_entity() override { return *this; }
 
-    std::unique_ptr<Component<Pickable>> create_pickable_component() override {
-        return std::make_unique<Component<Pickable>>(std::static_pointer_cast<HammerPowerUp>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Pickable>> create_pickable_component() override;
 
     void accept(EntityVisitor &visitor) override;
 

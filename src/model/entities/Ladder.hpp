@@ -3,13 +3,15 @@
 
 #include <memory>
 
-#include <SFML/Graphics/RectangleShape.hpp>
-
+#include "DK/model/Declarations.hpp"
 #include "DK/model/components/Climbable.hpp"
-#include "DK/model/components/Platform.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
-/// @brief Represents a ladder connecting two girders at a specific x position.
+/**
+ * @brief Climbable ladder spanning two vertical endpoints at a fixed horizontal position.
+ *
+ * Its endpoints can be derived from platforms or supplied as explicit coordinates.
+ */
 class Ladder : public BaseEntity, public Climbable {
 public:
     enum class Color {
@@ -25,17 +27,13 @@ public:
 
     bool is_active_for_player() const override { return active_for_player; }
 
-    const sf::RectangleShape &get_shape() const { return shape; }
-
-    void accept(EntityVisitor &visitor) override { visitor.visit(*this); }
+    void accept(EntityVisitor &visitor) override;
 
     void check_referenced_entities() override;
 
     BaseEntity &get_entity() override { return *this; }
 
-    std::unique_ptr<Component<Climbable>> create_climbable_component() override {
-        return std::make_unique<Component<Climbable>>(std::static_pointer_cast<Ladder>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Climbable>> create_climbable_component() override;
 
     Color get_color() const { return color; }
 
@@ -44,7 +42,6 @@ public:
     bool is_secondary_entity() const override { return false; }
 
 private:
-    sf::RectangleShape shape;
     bool active_for_player;
     bool broken;
     Color color;

@@ -26,6 +26,8 @@ public:
     /**
      * @brief Finds a platform directly underneath a world position.
      * @param position Position to inspect.
+     * @param h_tolerance_left Horizontal tolerance at the platform's left edge.
+     * @param h_tolerance_right Horizontal tolerance at the platform's right edge.
      * @param snap_distance Vertical search distance.
      * @returns Matching platform or an empty pointer if nothing is found.
      */
@@ -35,6 +37,8 @@ public:
     /**
      * @brief Finds a platform directly underneath a world position.
      * @param position Position to inspect.
+     * @param h_tolerance_left Horizontal tolerance at the platform's left edge.
+     * @param h_tolerance_right Horizontal tolerance at the platform's right edge.
      * @param snap_distance Vertical search distance.
      * @param exclude_platform Platform to exclude from the search
      * @returns Matching platform or an empty pointer if nothing is found.

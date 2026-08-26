@@ -6,6 +6,7 @@
 
 #include "DK/model/PlayerData.hpp"
 #include "DK/util/Positions.hpp"
+#include "DK/view/AssetsManager.hpp"
 
 StageView::StageView(sf::RenderWindow &window, Stage &stage, AssetsManager &texture_registry)
     : AbstractSceneView(window, texture_registry), drawable_components(stage.get_entities(), assets_manager), stage(stage) {

@@ -7,15 +7,14 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "DK/model/Declarations.hpp"
-#include "DK/model/components/Climbable.hpp"
 #include "DK/model/components/Updatable.hpp"
 #include "DK/model/util/BaseEntity.hpp"
 
 /**
  * @brief Player-controlled entity.
  *
- * The player can walk on girders, jump into the air, and climb ladders using a
- * small state machine composed of OnPlatform, InAir and Climbing states.
+ * The player can walk on platforms, jump, climb, and temporarily yield control
+ * to a stage animation.
  */
 class Player : public BaseEntity, public Updatable {
 public:
@@ -53,11 +52,6 @@ public:
      */
     Player(Ref ref);
 
-    /**
-     * @brief Advances the player by one physics update step.
-     * @param dt Time step in seconds.
-     * @param stage Stage used for collision and climbable lookup.
-     */
     void update(float dt, Stage &stage) override;
 
     /**
@@ -77,36 +71,13 @@ public:
      */
     void jump();
 
-    /**
-     * @brief Returns the SFML shape used for rendering.
-     * @returns Player geometry.
-     */
-    const sf::RectangleShape &get_shape() const;
-
-    /**
-     * @brief Clears references to deleted platforms or ladders.
-     */
     void check_referenced_entities() override;
 
-    /**
-     * @brief Dispatches this entity to the visitor.
-     * @param visitor Visitor used for type-based rendering/factory logic.
-     */
     void accept(EntityVisitor &visitor) override;
 
-    /**
-     * @brief Returns the underlying entity as an abstract base pointer.
-     * @returns Reference to this entity.
-     */
     BaseEntity &get_entity() override { return *this; }
 
-    /**
-     * @brief Creates the updatable component for this player.
-     * @returns Unique pointer to the component wrapper.
-     */
-    std::unique_ptr<Component<Updatable>> create_updatable_component() override {
-        return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Player>(shared_from_this()));
-    }
+    std::unique_ptr<Component<Updatable>> create_updatable_component() override;
 
     sf::Vector2f get_position() const { return position; }
 
@@ -131,15 +102,14 @@ public:
 
     State get_state() const { return state; }
 
-    void start_animation(AbstractAnimation *animation) {
-        current_animation = animation;
-        state = State::Animated;
-    }
+    /**
+     * @brief Suspends player movement while an animation controls the entity.
+     * @param animation Animation that takes control of the player.
+     */
+    void start_animation(AbstractAnimation *animation);
 
-    void stop_animation() {
-        current_animation = nullptr;
-        state = State::InAir;
-    }
+    /** @brief Releases animation control and returns the player to the air. */
+    void stop_animation();
 
     AbstractAnimation *get_current_animation() const { return current_animation; }
 

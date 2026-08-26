@@ -12,6 +12,7 @@
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/Stage.hpp"
+#include "DK/model/components/Climbable.hpp"
 #include "DK/model/components/Platform.hpp"
 #include "DK/model/components/PlatformComponentRepository.hpp"
 #include "DK/model/entities/Player.hpp"
@@ -38,7 +39,7 @@ void Barrel::set_on_platform(std::shared_ptr<Platform> platform, float roll_spee
     vy = 0.f;
 }
 
-void Barrel::update(float dt, Stage &level) {
+void Barrel::update(float dt, Stage &stage) {
     switch (state) {
         case State::OnGirder:
             position.x += vx * dt;
@@ -61,21 +62,21 @@ void Barrel::update(float dt, Stage &level) {
                     }
                 } else {
                     current_climbable =
-                        level.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
+                        stage.get_climbables().find_climbable_down_at(position, constants::BARREL_RADIUS, constants::BARREL_RADIUS);
                     if (current_climbable) {
-                        const float player_vertical_distance = level.get_player()->get_position().y - position.y;
+                        const float player_vertical_distance = stage.get_player()->get_position().y - position.y;
                         const float descent_chance =
                             std::clamp(constants::BARREL_LADDER_DESCENT_BASE_CHANCE +
                                            player_vertical_distance / constants::BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT,
                                        constants::BARREL_LADDER_DESCENT_BASE_CHANCE, constants::BARREL_LADDER_DESCENT_MAX_CHANCE);
-                        roll_down_climbable = mod(level.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance;
+                        roll_down_climbable = mod(stage.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance;
                     }
                 }
             } else {
-                const std::shared_ptr<Platform> platform_below = level.get_platforms().find_platform_underneath(
+                const std::shared_ptr<Platform> platform_below = stage.get_platforms().find_platform_underneath(
                     position, constants::BARREL_RADIUS, constants::BARREL_RADIUS, constants::SEAM_SNAP_DISTANCE);
                 if (platform_below) {
-                    set_on_platform(platform_below, level.get_barrel_roll_speed(), std::signbit(vx) ? -1 : 1);
+                    set_on_platform(platform_below, stage.get_barrel_roll_speed(), std::signbit(vx) ? -1 : 1);
                     current_climbable.reset();
                     position.y = current_platform->surface_y_at(position.x);
                 } else {
@@ -87,19 +88,19 @@ void Barrel::update(float dt, Stage &level) {
             break;
         case State::Falling:
             vy += constants::GRAVITY * dt;
-            check_platform_intersection(level.get_platforms(), dt, level.get_barrel_roll_speed());
+            check_platform_intersection(stage.get_platforms(), dt, stage.get_barrel_roll_speed());
             position.x += vx * dt;
             position.y += vy * dt;
 
             if (state == State::Falling) {
-                if (auto left_boundary = level.get_left_boundary()) {
-                    if (position.x < *left_boundary && !level.is_barrel_boundary_gap(position)) {
+                if (auto left_boundary = stage.get_left_boundary()) {
+                    if (position.x < *left_boundary && !stage.is_barrel_boundary_gap(position)) {
                         position.x = *left_boundary;
                         vx = -vx;
                     }
                 }
-                if (auto right_boundary = level.get_right_boundary()) {
-                    if (position.x > *right_boundary && !level.is_barrel_boundary_gap(position)) {
+                if (auto right_boundary = stage.get_right_boundary()) {
+                    if (position.x > *right_boundary && !stage.is_barrel_boundary_gap(position)) {
                         position.x = *right_boundary;
                         vx = -vx;
                     }
@@ -107,12 +108,12 @@ void Barrel::update(float dt, Stage &level) {
             }
             break;
         case State::RollingDownClimbable:
-            vy = level.get_barrel_roll_speed();
+            vy = stage.get_barrel_roll_speed();
             if (position.y < current_climbable->get_lower_y_pos()) {
                 position.y += vy * dt;
                 roll_distance += vy * dt * constants::BARREL_CLIMBABLE_ROLL_DISTANCE_FACTOR;
             } else {
-                set_on_platform(current_climbable->get_lower_end(), level.get_barrel_roll_speed());
+                set_on_platform(current_climbable->get_lower_end(), stage.get_barrel_roll_speed());
                 current_climbable.reset();
                 position.x += vx * dt;
                 position.y += vy * dt;
@@ -130,6 +131,18 @@ void Barrel::update(float dt, Stage &level) {
 
 void Barrel::accept(EntityVisitor &visitor) { visitor.visit(*this); }
 
+std::unique_ptr<Component<Updatable>> Barrel::create_updatable_component() {
+    return std::make_unique<Component<Updatable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Enemy>> Barrel::create_enemy_component() {
+    return std::make_unique<Component<Enemy>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+}
+
+std::unique_ptr<Component<Jumpable>> Barrel::create_jumpable_component() {
+    return std::make_unique<Component<Jumpable>>(std::static_pointer_cast<Barrel>(shared_from_this()));
+}
+
 bool Barrel::touches(const sf::RectangleShape &player_shape) const {
     return shape.getGlobalBounds().findIntersection(player_shape.getGlobalBounds()).has_value();
 }
@@ -146,7 +159,12 @@ void Barrel::check_platform_intersection(PlatformComponentRepository &platforms,
                     roll_speed);
 }
 
-void Barrel::check_referenced_entities() { handle_destroyed_indirect(current_platform); }
+void Barrel::check_referenced_entities() {
+    handle_destroyed_indirect(current_platform);
+    if (handle_destroyed_indirect(current_climbable) && state == State::RollingDownClimbable) {
+        state = State::Falling;
+    }
+}
 
 float Barrel::platform_snap_distance(float dt) const {
     float distance = vy * dt;

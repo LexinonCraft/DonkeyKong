@@ -19,4 +19,8 @@ bool HammerPowerUp::touches(const sf::RectangleShape &player_shape) const {
 
 void HammerPowerUp::on_picked_up() { destroy(); }
 
+std::unique_ptr<Component<Pickable>> HammerPowerUp::create_pickable_component() {
+    return std::make_unique<Component<Pickable>>(std::static_pointer_cast<HammerPowerUp>(shared_from_this()));
+}
+
 void HammerPowerUp::accept(EntityVisitor &visitor) { visitor.visit(*this); }

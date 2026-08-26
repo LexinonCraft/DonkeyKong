@@ -8,6 +8,7 @@
 #include "DK/model/animations/Stage100MCompletionAnimation.hpp"
 #include "DK/model/entities/Beam.hpp"
 #include "DK/model/entities/DissolvingPlatform.hpp"
+#include "DK/model/entities/Player.hpp"
 #include "DK/util/Math.hpp"
 
 Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
