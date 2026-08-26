@@ -5,7 +5,7 @@
 
 class Jumpable : public EntityFromComponentAux {
 public:
-    virtual ~Jumpable() {}
+    ~Jumpable() override = default;
 
     virtual void check_jumps_over(const Player &player, Stage &stage) = 0;
 };

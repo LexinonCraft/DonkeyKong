@@ -12,14 +12,14 @@
  */
 class Updatable : public EntityFromComponentAux {
 public:
-    virtual ~Updatable() {}
+    ~Updatable() override = default;
 
     /**
      * @brief Advances the entity by one simulation step.
      * @param dt Duration of the simulation step in seconds.
-     * @param level Level containing the surrounding entities and platform data.
+     * @param stage Stage containing the surrounding entities and platform data.
      */
-    virtual void update(float dt, Stage &level) = 0;
+    virtual void update(float dt, Stage &stage) = 0;
 };
 
 #endif

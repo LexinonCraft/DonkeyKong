@@ -29,5 +29,5 @@ std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(
             }
         }
     }
-    return std::shared_ptr<Platform>();
+    return nullptr;
 }

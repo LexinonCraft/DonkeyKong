@@ -9,10 +9,10 @@ std::unique_ptr<Component<Updatable>> UpdatableComponentFactory::create_componen
 UpdatableComponentRepository::UpdatableComponentRepository(EntityRepository &entity_repo)
     : ComponentRepository<Component<Updatable>>(entity_repo, std::make_unique<UpdatableComponentFactory>()) {}
 
-void UpdatableComponentRepository::update_all(float dt, Stage &level) {
+void UpdatableComponentRepository::update_all(float dt, Stage &stage) {
     iterating = true;
     for (auto it = begin(); it != end(); ++it) {
-        it->second->get_entity()->update(dt, level);
+        it->second->get_entity()->update(dt, stage);
     }
     iterating = false;
 }

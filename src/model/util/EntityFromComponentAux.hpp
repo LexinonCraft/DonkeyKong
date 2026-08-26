@@ -11,7 +11,7 @@
  */
 class EntityFromComponentAux {
 public:
-    virtual ~EntityFromComponentAux() {}
+    virtual ~EntityFromComponentAux() = default;
 
     /**
      * @brief Returns the entity associated with the component adapter.

@@ -17,7 +17,7 @@ std::shared_ptr<Climbable> ClimbableComponentRepository::find_climbable_up_at(co
             return climbable;
         }
     }
-    return std::shared_ptr<Climbable>();
+    return nullptr;
 }
 
 std::shared_ptr<Climbable> ClimbableComponentRepository::find_climbable_down_at(const sf::Vector2f &position, float h_tolerance,
@@ -28,5 +28,5 @@ std::shared_ptr<Climbable> ClimbableComponentRepository::find_climbable_down_at(
             return climbable;
         }
     }
-    return std::shared_ptr<Climbable>();
+    return nullptr;
 }

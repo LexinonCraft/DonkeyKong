@@ -21,9 +21,9 @@ public:
     /**
      * @brief Calls update() on every tracked entity.
      * @param dt Time step in seconds.
-     * @param level Level used to query surrounding game state.
+     * @param stage Stage used to query surrounding game state.
      */
-    void update_all(float dt, Stage &level);
+    void update_all(float dt, Stage &stage);
 };
 
 #endif
