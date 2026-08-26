@@ -1,0 +1,46 @@
+PROJECT_NAME           = "Donkey Kong in C++"
+PROJECT_BRIEF          = "Core mechanics of the original Donkey Kong arcade game in C++ with SFML"
+
+OUTPUT_DIRECTORY       = .
+CREATE_SUBDIRS         = NO
+ALLOW_UNICODE_NAMES    = NO
+
+OUTPUT_LANGUAGE        = English
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_SUPPORT       = YES
+AUTOLINK_SUPPORT       = YES
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_ANON_NSPACES   = YES
+JAVADOC_AUTOBRIEF      = YES
+HIDE_UNDOC_CLASSES     = NO
+HIDE_UNDOC_MEMBERS     = NO
+
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO
+
+INPUT                  = README.md src docs
+FILE_PATTERNS          = *.hpp *.h *.cpp *.md
+EXTENSION_MAPPING      = h=C++ hpp=C++ cpp=C++
+RECURSIVE              = YES
+
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = .
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+VERBATIM_HEADERS       = YES
+REFERENCES_RELATION    = YES
+REFERENCED_BY_RELATION = YES
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = YES
+SHOW_INCLUDE_FILES     = YES
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+
+GENERATE_LATEX         = NO
+
+IMAGE_PATH             = docs

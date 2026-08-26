@@ -16,6 +16,8 @@
 * For each declared class, add a forward declaration to the appropriate `Declarations.hpp` file.
 * When referencing a class, only include the `Declarations.hpp` file and not the header file of the class itself, unless you need to access its members or methods.
 
+The scripts `clang-format.sh` and `clang-tidy.sh` will allow you to easily check and fix code files.
+
 Structure for header file:
 
 ```cpp
