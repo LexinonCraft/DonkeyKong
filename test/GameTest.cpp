@@ -117,6 +117,7 @@ protected:
     TestStage stage{std::rand, player_data};
 };
 
+// Test that the player loses a life when hit by a barrel.
 TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
     unsigned int previous_lives = player_data.get_lives();
     for (int i = 0; i < 1000 && !stage.is_over(); ++i) {
@@ -126,6 +127,7 @@ TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
     EXPECT_EQ(player_data.get_lives(), previous_lives - 1);
 }
 
+// Test that the player can destroy a barrel by hitting it with a hammer.
 TEST_F(PlayerUpdateTest, player_hammers_barrel) {
     stage.place_hammer();
     for (int i = 0; i < 1000 && !stage.get_barrel()->is_destroyed(); ++i) {
@@ -135,6 +137,7 @@ TEST_F(PlayerUpdateTest, player_hammers_barrel) {
     EXPECT_TRUE(stage.get_barrel()->is_destroyed());
 }
 
+// Test that the player can jump over a barrel and survive.
 TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
     bool has_jumped = false;
     for (int i = 0; i < 1000 && !stage.is_over() && (!has_jumped || stage.get_player()->get_state() == Player::State::InAir); ++i) {
