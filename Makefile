@@ -27,7 +27,7 @@ VPATH := src
 
 # search all .cpp files and add corresponding .o-files to GAME_OBJECTS
 SRCFILES := $(shell find $(SRCDIR) -name '*.cpp')
-TEST_SOURCES := $(shell find $(TESTDIR) $(SRCDIR)/model $(SRCDIR)/view $(SRCDIR)/control -name '*.cpp')
+TEST_SOURCES := $(shell find $(TESTDIR) $(SRCDIR)/model $(SRCDIR)/view $(SRCDIR)/control $(SRCDIR)/util -name '*.cpp')
 TEST_OBJECTS := $(patsubst %.cpp,$(BUILDDIR)/%.o,$(TEST_SOURCES))
 GAME_OBJECTS := $(SRCFILES:$(SRCDIR)/%.cpp=$(BUILDDIR)/src/%.o)
 DEPENDENCIES := $(SRCFILES:$(SRCDIR)/%.cpp=$(BUILDDIR)/src/%.d) 
