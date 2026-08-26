@@ -72,13 +72,8 @@ public:
      * @param lower_end Lower platform endpoint.
      * @param upper_end Upper platform endpoint.
      * @param x_position Horizontal x-position of the ladder.
-<<<<<<< HEAD
-     * @param broken Whether the ladder is broken or not.
-     * @returns Shared pointer to the created ladder entity.
-=======
      * @param broken Whether the ladder is broken.
-     * @returns Shared pointer to the created ladder.
->>>>>>> origin/76-refactor-both-stages
+     * @returns Shared pointer to the created ladder entity.
      */
     std::shared_ptr<Ladder> add_ladder(std::shared_ptr<Platform> lower_end, std::shared_ptr<Platform> upper_end, float x_position,
                                        bool broken);
@@ -88,11 +83,7 @@ public:
      * @param lower_end Lower platform endpoint.
      * @param upper_end Upper platform endpoint.
      * @param x_position Horizontal x-position of the ladder.
-<<<<<<< HEAD
-     * @param broken Whether the ladder is broken or not.
-=======
      * @param broken Whether the ladder is broken.
->>>>>>> origin/76-refactor-both-stages
      * @param color Color of the ladder.
      * @returns Shared pointer to the created ladder entity.
      */
