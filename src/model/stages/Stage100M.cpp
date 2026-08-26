@@ -41,7 +41,7 @@ constexpr float TOP_BEAM_X = 220.f;
 constexpr float HAMMER_X = 300.f;
 constexpr float PAULINE_X = 200.f;
 constexpr float PLAYER_START_X = 50.f;
-}
+} // namespace
 
 Stage100M::Stage100M(Id id_generator(), PlayerData &player_data) : Stage(id_generator, player_data) {
     // create girders

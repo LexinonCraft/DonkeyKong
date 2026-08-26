@@ -74,6 +74,7 @@ set(UtilSources
 
 set(TestSources
     ${CMAKE_CURRENT_SOURCE_DIR}/GameTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestStage.cpp
     )
 
 add_executable(Test
