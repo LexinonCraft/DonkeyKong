@@ -23,7 +23,7 @@ else
 fi
 
 if [ ${#FILES[@]} -eq 0 ]; then
-    FILES=($(find src -regex '.*\.\(cpp\|hpp\|c\|h\)'))
+    FILES=($(find src test -regex '.*\.\(cpp\|hpp\|c\|h\)'))
 fi
 
 run_clang_format() {

@@ -1,6 +1,6 @@
+#include "TestStage.hpp"
 #include <cstdlib>
 #include <gtest/gtest.h>
-
 #include <vector>
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -9,17 +9,20 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/model/PlayerData.hpp"
+#include "DK/model/entities/Barrel.hpp"
+#include "DK/model/entities/Player.hpp"
 #include "DK/view/AssetsManager.hpp"
 #include "DK/view/LayerStack.hpp"
 
-#define SKIP_IF_NO_DISPLAY() \
-    if (std::getenv("DISPLAY") == nullptr) { \
-        GTEST_SKIP() << "Skipping rendering-related test because there is no display."; \
+#define SKIP_IF_NO_DISPLAY()                                                                                                               \
+    if (std::getenv("DISPLAY") == nullptr) {                                                                                               \
+        GTEST_SKIP() << "Skipping rendering-related test because there is no display.";                                                    \
     }
 
-//#include "../src/model/Barrel.hpp"
-//#include "../src/model/Girder.hpp"
-//#include "../src/../Constants.hpp"
+// #include "../src/model/Barrel.hpp"
+// #include "../src/model/Girder.hpp"
+// #include "../src/../Constants.hpp"
 
 // These tests exercise the barrel/girder physics directly. They construct only
 // model objects (which hold CPU-side SFML shapes, no window), so they run headless.
@@ -104,4 +107,49 @@ TEST(LayerStackTest, create_and_draw_layers) {
     layer_stack.clear_all();
     layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(sf::RectangleShape({100, 100}));
     layer_stack.draw_all();
+}
+
+// Test the Player::update() method and its interaction with the Stage and Barrel indirectly through the TestStage class and its update()
+// method.
+class PlayerUpdateTest : public ::testing::Test {
+protected:
+    PlayerData player_data;
+    TestStage stage{std::rand, player_data};
+};
+
+// Test that the player loses a life when hit by a barrel.
+TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
+    unsigned int previous_lives = player_data.get_lives();
+    for (int i = 0; i < 1000 && !stage.is_over(); ++i) {
+        stage.update(1.f / 60.f);
+    }
+    EXPECT_TRUE(stage.is_over());
+    EXPECT_EQ(player_data.get_lives(), previous_lives - 1);
+}
+
+// Test that the player can destroy a barrel by hitting it with a hammer.
+TEST_F(PlayerUpdateTest, player_hammers_barrel) {
+    stage.place_hammer();
+    for (int i = 0; i < 1000 && player_data.get_hammer_use_count() == 0; ++i) {
+        stage.update(1.f / 60.f);
+    }
+    EXPECT_FALSE(stage.is_over());
+    EXPECT_TRUE(stage.get_barrel()->is_destroyed());
+    EXPECT_EQ(player_data.get_hammer_use_count(), 1);
+}
+
+// Test that the player can jump over a barrel and survive.
+TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
+    bool has_jumped = false;
+    for (int i = 0; i < 1000 && !stage.is_over() && (!has_jumped || stage.get_player()->get_state() == Player::State::InAir); ++i) {
+        if (stage.get_barrel()->get_position().x - stage.get_player()->get_position().x < 50.f && !has_jumped) {
+            stage.get_player()->jump();
+            has_jumped = true;
+        }
+        stage.update(1.f / 60.f);
+    }
+    EXPECT_TRUE(stage.get_player()->get_state() == Player::State::OnPlatform);
+    EXPECT_FALSE(stage.is_over());
+    EXPECT_FALSE(stage.get_barrel()->is_destroyed());
+    EXPECT_LT(0u, player_data.get_score());
 }
