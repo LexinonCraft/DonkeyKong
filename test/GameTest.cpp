@@ -163,45 +163,53 @@ TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
 
 class StageControlTest : public ::testing::Test {
 protected:
+    void SetUp() override {
+        SKIP_IF_NO_DISPLAY();
+        window.emplace(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "StageControlTest");
+        assets_manager.emplace();
+        stage_ptr = new TestStage(std::rand, player_data);
+        stage_control.emplace(*window, player_data, *assets_manager, std::unique_ptr<TestStage>(stage_ptr));
+    }
+
     PlayerData player_data;
-    sf::RenderWindow window{sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "StageControlTest"};
-    AssetsManager assets_manager;
-    TestStage *stage{new TestStage(std::rand, player_data)};
-    StageControl stage_control{window, player_data, assets_manager, std::unique_ptr<TestStage>(stage)};
+    std::optional<sf::RenderWindow> window;
+    std::optional<AssetsManager> assets_manager;
+    TestStage *stage_ptr{nullptr};
+    std::optional<StageControl> stage_control;
 };
 
 // Test that the StageControl transitions to the GameOver scene when the player loses all lives.
 TEST_F(StageControlTest, game_over) {
     SKIP_IF_NO_DISPLAY();
 
-    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+    EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
 
     for (unsigned int i = 0; i < constants::INITIAL_LIVES - 1; ++i) {
         player_data.lose_life();
     }
 
-    stage->on_player_dying();
+    stage_ptr->on_player_dying();
 
-    for (int i = 0; i < 1000 && stage_control.get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
-        stage_control.update(1.f / 60.f);
+    for (int i = 0; i < 1000 && stage_control->get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
+        stage_control->update(1.f / 60.f);
     }
 
-    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::GameOver);
+    EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::GameOver);
 }
 
 // Test that the StageControl transitions to the next stage when the player completes the current stage.
 TEST_F(StageControlTest, advance_stage) {
     SKIP_IF_NO_DISPLAY();
 
-    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+    EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
 
-    stage->start_exit_animation();
+    stage_ptr->start_exit_animation();
 
-    for (int i = 0; i < 1000 && stage_control.get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
-        stage_control.update(1.f / 60.f);
+    for (int i = 0; i < 1000 && stage_control->get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
+        stage_control->update(1.f / 60.f);
     }
 
-    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
+    EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
     EXPECT_EQ(player_data.get_stage_in_level(), 1u);
 }
 
@@ -209,15 +217,15 @@ TEST_F(StageControlTest, advance_stage) {
 TEST_F(StageControlTest, repeat_stage) {
     SKIP_IF_NO_DISPLAY();
 
-    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+    EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
 
-    stage->on_player_dying();
+    stage_ptr->on_player_dying();
 
-    for (int i = 0; i < 1000 && stage_control.get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
-        stage_control.update(1.f / 60.f);
+    for (int i = 0; i < 1000 && stage_control->get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
+        stage_control->update(1.f / 60.f);
     }
 
-    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
+    EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
     EXPECT_EQ(player_data.get_stage_in_level(), 0u);
 }
 
