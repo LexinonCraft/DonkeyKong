@@ -1,4 +1,3 @@
-#include "TestStage.hpp"
 #include <cstdlib>
 #include <gtest/gtest.h>
 
@@ -8,13 +7,17 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/control/StageControl.hpp"
+#include "DK/control/TitleScreenControl.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/entities/Barrel.hpp"
 #include "DK/model/entities/Player.hpp"
 #include "DK/view/AssetsManager.hpp"
 #include "DK/view/LayerStack.hpp"
-#include "DK/control/StageControl.hpp"
-#include "DK/control/TitleScreenControl.hpp"
+
+// clang-format off
+#include "TestStage.hpp"
+// clang-format on
 
 #define SKIP_IF_NO_DISPLAY()                                                                                                               \
     if (std::getenv("DISPLAY") == nullptr) {                                                                                               \
@@ -185,7 +188,6 @@ TEST_F(StageControlTest, game_over) {
 
     EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::GameOver);
 }
-
 
 // Test that the StageControl transitions to the next stage when the player completes the current stage.
 TEST_F(StageControlTest, advance_stage) {

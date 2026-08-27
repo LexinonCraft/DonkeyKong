@@ -1,4 +1,5 @@
 #include "DK/control/StageControl.hpp"
+
 #include <iostream>
 
 #include <SFML/Window/Keyboard.hpp>
