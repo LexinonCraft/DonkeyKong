@@ -231,18 +231,24 @@ TEST_F(StageControlTest, repeat_stage) {
 
 class TitleScreenControlTest : public ::testing::Test {
 protected:
+    void SetUp() override {
+        SKIP_IF_NO_DISPLAY();
+        window.emplace(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "TitleScreenControlTest");
+        assets_manager.emplace();
+        title_screen_control.emplace(*window, *assets_manager, player_data);
+    }
     PlayerData player_data;
-    sf::RenderWindow window{sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "TitleScreenControlTest"};
-    AssetsManager assets_manager;
-    TitleScreenControl title_screen_control{window, assets_manager, player_data};
+    std::optional<sf::RenderWindow> window;
+    std::optional<AssetsManager> assets_manager;
+    std::optional<TitleScreenControl> title_screen_control;
 };
 
 TEST_F(TitleScreenControlTest, press_enter) {
     SKIP_IF_NO_DISPLAY();
-    EXPECT_EQ(title_screen_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+    EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
     sf::Event::KeyPressed key_pressed_event;
     key_pressed_event.code = sf::Keyboard::Key::Enter;
     sf::Event event(key_pressed_event);
-    title_screen_control.handle_event(&event);
-    EXPECT_EQ(title_screen_control.get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
+    title_screen_control->handle_event(&event);
+    EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
 }
