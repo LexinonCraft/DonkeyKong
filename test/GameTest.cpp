@@ -1,7 +1,6 @@
 #include "TestStage.hpp"
 #include <cstdlib>
 #include <gtest/gtest.h>
-#include <vector>
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
@@ -14,6 +13,8 @@
 #include "DK/model/entities/Player.hpp"
 #include "DK/view/AssetsManager.hpp"
 #include "DK/view/LayerStack.hpp"
+#include "DK/control/StageControl.hpp"
+#include "DK/control/TitleScreenControl.hpp"
 
 #define SKIP_IF_NO_DISPLAY()                                                                                                               \
     if (std::getenv("DISPLAY") == nullptr) {                                                                                               \
@@ -102,7 +103,7 @@ TEST(AssetsManagerTest, load_assets_and_draw_texture) {
 // Test that LayerStack can be created, cleared, and drawn without crashing.
 TEST(LayerStackTest, create_and_draw_layers) {
     SKIP_IF_NO_DISPLAY();
-    sf::RenderWindow window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "Donkey Kong");
+    sf::RenderWindow window(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "LayerStackTest.create_and_draw_layers");
     LayerStack layer_stack(window);
     layer_stack.clear_all();
     layer_stack.get_layer(LayerStack::LayerId::DonkeyKong).add_to_layer(sf::RectangleShape({100, 100}));
@@ -119,6 +120,7 @@ protected:
 
 // Test that the player loses a life when hit by a barrel.
 TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
+    stage.spawn_barrel();
     unsigned int previous_lives = player_data.get_lives();
     for (int i = 0; i < 1000 && !stage.is_over(); ++i) {
         stage.update(1.f / 60.f);
@@ -130,6 +132,7 @@ TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
 // Test that the player can destroy a barrel by hitting it with a hammer.
 TEST_F(PlayerUpdateTest, player_hammers_barrel) {
     stage.place_hammer();
+    stage.spawn_barrel();
     for (int i = 0; i < 1000 && player_data.get_hammer_use_count() == 0; ++i) {
         stage.update(1.f / 60.f);
     }
@@ -140,6 +143,7 @@ TEST_F(PlayerUpdateTest, player_hammers_barrel) {
 
 // Test that the player can jump over a barrel and survive.
 TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
+    stage.spawn_barrel();
     bool has_jumped = false;
     for (int i = 0; i < 1000 && !stage.is_over() && (!has_jumped || stage.get_player()->get_state() == Player::State::InAir); ++i) {
         if (stage.get_barrel()->get_position().x - stage.get_player()->get_position().x < 50.f && !has_jumped) {
@@ -152,4 +156,83 @@ TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
     EXPECT_FALSE(stage.is_over());
     EXPECT_FALSE(stage.get_barrel()->is_destroyed());
     EXPECT_LT(0u, player_data.get_score());
+}
+
+class StageControlTest : public ::testing::Test {
+protected:
+    PlayerData player_data;
+    sf::RenderWindow window{sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "StageControlTest"};
+    AssetsManager assets_manager;
+    TestStage *stage{new TestStage(std::rand, player_data)};
+    StageControl stage_control{window, player_data, assets_manager, std::unique_ptr<TestStage>(stage)};
+};
+
+// Test that the StageControl transitions to the GameOver scene when the player loses all lives.
+TEST_F(StageControlTest, game_over) {
+    SKIP_IF_NO_DISPLAY();
+
+    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    for (unsigned int i = 0; i < constants::INITIAL_LIVES - 1; ++i) {
+        player_data.lose_life();
+    }
+
+    stage->on_player_dying();
+
+    for (int i = 0; i < 1000 && stage_control.get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
+        stage_control.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::GameOver);
+}
+
+
+// Test that the StageControl transitions to the next stage when the player completes the current stage.
+TEST_F(StageControlTest, advance_stage) {
+    SKIP_IF_NO_DISPLAY();
+
+    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    stage->start_exit_animation();
+
+    for (int i = 0; i < 1000 && stage_control.get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
+        stage_control.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
+    EXPECT_EQ(player_data.get_stage_in_level(), 1u);
+}
+
+// Test that the StageControl transitions to the same stage when the player dies and has lives remaining.
+TEST_F(StageControlTest, repeat_stage) {
+    SKIP_IF_NO_DISPLAY();
+
+    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    stage->on_player_dying();
+
+    for (int i = 0; i < 1000 && stage_control.get_next_scene() == AbstractSceneControl::NextScene::Stay; ++i) {
+        stage_control.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage_control.get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
+    EXPECT_EQ(player_data.get_stage_in_level(), 0u);
+}
+
+class TitleScreenControlTest : public ::testing::Test {
+protected:
+    PlayerData player_data;
+    sf::RenderWindow window{sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "TitleScreenControlTest"};
+    AssetsManager assets_manager;
+    TitleScreenControl title_screen_control{window, assets_manager, player_data};
+};
+
+TEST_F(TitleScreenControlTest, press_enter) {
+    SKIP_IF_NO_DISPLAY();
+    EXPECT_EQ(title_screen_control.get_next_scene(), AbstractSceneControl::NextScene::Stay);
+    sf::Event::KeyPressed key_pressed_event;
+    key_pressed_event.code = sf::Keyboard::Key::Enter;
+    sf::Event event(key_pressed_event);
+    title_screen_control.handle_event(&event);
+    EXPECT_EQ(title_screen_control.get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
 }

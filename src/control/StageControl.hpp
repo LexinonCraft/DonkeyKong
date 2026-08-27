@@ -17,8 +17,11 @@
  */
 class StageControl : public AbstractSceneControl {
 public:
+    StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
+        : AbstractSceneControl(window), stage(std::move(stage)), stage_view(window, *(this->stage.get()), assets_manager) {}
+
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), stage(create_stage(std::rand, player_data)), stage_view(window, *stage.get(), assets_manager) {}
+        : StageControl(window, player_data, assets_manager, create_stage(std::rand, player_data)) {}
 
     virtual ~StageControl() {}
 
@@ -31,6 +34,9 @@ public:
     void draw() override;
 
     NextScene get_next_scene() const override;
+
+    /** @returns The managed Stage instance. */
+    Stage &get_stage() { return *stage; }
 
 private:
     std::unique_ptr<Stage> stage;
