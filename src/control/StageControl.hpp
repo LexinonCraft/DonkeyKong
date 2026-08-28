@@ -18,17 +18,32 @@
  */
 class StageControl : public AbstractSceneControl {
 public:
+    /**
+     * @brief Initialize with a view and a prebuilt stage
+     *
+     * @param window The window to draw on
+     * @param assets_manager The assets manager to load resources
+     * @param stage The prebuilt Stage instance
+     */
     StageControl(sf::RenderWindow &window, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
         : AbstractSceneControl(window), stage(std::move(stage)) {
         stage_view.emplace(window, *this->stage, assets_manager);
     }
 
-    // Compatibility overload for callers that still pass PlayerData together with a prebuilt Stage.
-    StageControl(sf::RenderWindow &window, PlayerData &, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
-        : StageControl(window, assets_manager, std::move(stage)) {}
-
+    /**
+     * @brief Initialize without a view and with a prebuilt stage
+     *
+     * @param stage The prebuilt Stage instance
+     */
     explicit StageControl(std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
 
+    /**
+     * @brief Initialize with a view and build a new stage
+     *
+     * @param window The window to draw on
+     * @param player_data The global player data
+     * @param assets_manager The assets manager to load resources
+     */
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : StageControl(window, assets_manager, create_stage(std::rand, player_data)) {}
 

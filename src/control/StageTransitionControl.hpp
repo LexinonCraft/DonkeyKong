@@ -14,11 +14,21 @@
  */
 class StageTransitionControl : public AbstractSceneControl {
 public:
+    /**
+     * @brief Initialize with a view
+     *
+     * @param window The window to draw on
+     * @param player_data The global player data
+     * @param assets_manager The assets manager to load resources
+     */
     StageTransitionControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : AbstractSceneControl(window) {
         stage_transition_view.emplace(window, assets_manager, player_data);
     }
 
+    /**
+     * @brief Initialize without a view
+     */
     StageTransitionControl() : AbstractSceneControl() {}
 
     void handle_event(sf::Event *event) override {}

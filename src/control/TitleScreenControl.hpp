@@ -12,10 +12,20 @@
  */
 class TitleScreenControl : public AbstractSceneControl {
 public:
+    /**
+     * @brief Initialize with a view
+     *
+     * @param window The window to draw on
+     * @param assets_manager The assets manager to load resources
+     * @param player_data The global player data
+     */
     TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) : AbstractSceneControl(window) {
         title_screen_view.emplace(window, assets_manager, player_data);
     }
 
+    /**
+     * @brief Initialize without a view
+     */
     TitleScreenControl() : AbstractSceneControl() {}
 
     void handle_event(sf::Event *event) override;

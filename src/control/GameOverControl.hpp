@@ -14,11 +14,23 @@
  */
 class GameOverControl : public AbstractSceneControl {
 public:
+    /**
+     * @brief Initialize with a view
+     *
+     * @param window The window to draw on
+     * @param player_data The global player data
+     * @param assets_manager The assets manager to load resources
+     */
     GameOverControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : AbstractSceneControl(window), player_data(player_data) {
         game_over_view.emplace(window, assets_manager, player_data);
     }
 
+    /**
+     * @brief Initialize without a view, used for testing purposes
+     *
+     * @param player_data The global player data
+     */
     explicit GameOverControl(PlayerData &player_data) : AbstractSceneControl(), player_data(player_data) {}
 
     void handle_event(sf::Event *event) override {}
