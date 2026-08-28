@@ -18,17 +18,17 @@
  */
 class StageControl : public AbstractSceneControl {
 public:
-    StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
+    StageControl(sf::RenderWindow &window, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
         : AbstractSceneControl(window), stage(std::move(stage)) {
         stage_view.emplace(window, *this->stage, assets_manager);
     }
 
-    StageControl(PlayerData &player_data, std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
+    explicit StageControl(std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
 
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : StageControl(window, player_data, assets_manager, create_stage(std::rand, player_data)) {}
+        : StageControl(window, assets_manager, create_stage(std::rand, player_data)) {}
 
-    StageControl(PlayerData &player_data) : StageControl(player_data, create_stage(std::rand, player_data)) {}
+    StageControl(PlayerData &player_data) : StageControl(create_stage(std::rand, player_data)) {}
 
     virtual ~StageControl() {}
 

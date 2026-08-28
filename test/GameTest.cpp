@@ -165,7 +165,7 @@ class StageControlTest : public ::testing::Test {
 protected:
     void SetUp() override {
         stage_ptr = new TestStage(std::rand, player_data);
-        stage_control.emplace(player_data, std::unique_ptr<TestStage>(stage_ptr));
+        stage_control.emplace(std::unique_ptr<TestStage>(stage_ptr));
     }
 
     PlayerData player_data;
@@ -221,7 +221,7 @@ TEST_F(StageControlTest, repeat_stage) {
 class TitleScreenControlTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        title_screen_control.emplace(player_data);
+        title_screen_control.emplace();
     }
     PlayerData player_data;
     std::optional<TitleScreenControl> title_screen_control;
