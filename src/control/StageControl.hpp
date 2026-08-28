@@ -28,8 +28,6 @@ public:
 
     explicit StageControl(std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
 
-    StageControl(PlayerData &, std::unique_ptr<Stage> stage) : StageControl(std::move(stage)) {}
-
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : StageControl(window, assets_manager, create_stage(std::rand, player_data)) {}
 
