@@ -23,6 +23,7 @@ public:
         stage_view.emplace(window, *this->stage, assets_manager);
     }
 
+    // Compatibility overload for callers that still pass PlayerData together with a prebuilt Stage.
     StageControl(sf::RenderWindow &window, PlayerData &, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
         : StageControl(window, assets_manager, std::move(stage)) {}
 

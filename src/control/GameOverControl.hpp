@@ -19,7 +19,7 @@ public:
         game_over_view.emplace(window, assets_manager, player_data);
     }
 
-    GameOverControl(PlayerData &player_data) : AbstractSceneControl(), player_data(player_data) {}
+    explicit GameOverControl(PlayerData &player_data) : AbstractSceneControl(), player_data(player_data) {}
 
     void handle_event(sf::Event *event) override {}
 
