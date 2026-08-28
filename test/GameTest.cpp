@@ -220,9 +220,7 @@ TEST_F(StageControlTest, repeat_stage) {
 
 class TitleScreenControlTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        title_screen_control.emplace();
-    }
+    void SetUp() override { title_screen_control.emplace(); }
     PlayerData player_data;
     std::optional<TitleScreenControl> title_screen_control;
 };

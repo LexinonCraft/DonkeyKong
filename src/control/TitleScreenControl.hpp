@@ -12,8 +12,7 @@
  */
 class TitleScreenControl : public AbstractSceneControl {
 public:
-    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data)
-        : AbstractSceneControl(window) {
+    TitleScreenControl(sf::RenderWindow &window, AssetsManager &assets_manager, PlayerData &player_data) : AbstractSceneControl(window) {
         title_screen_view.emplace(window, assets_manager, player_data);
     }
 
