@@ -17,7 +17,7 @@ public:
         title_screen_view.emplace(window, assets_manager, player_data);
     }
 
-    TitleScreenControl() : AbstractSceneControl() {}
+    explicit TitleScreenControl(PlayerData &player_data) : AbstractSceneControl() {}
 
     void handle_event(sf::Event *event) override;
 

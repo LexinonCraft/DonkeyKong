@@ -1,6 +1,9 @@
 #ifndef ABSTRACT_SCENE_CONTROL_HPP
 #define ABSTRACT_SCENE_CONTROL_HPP
 
+#include <functional>
+#include <optional>
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -28,7 +31,7 @@ public:
      */
     AbstractSceneControl() = default;
 
-    AbstractSceneControl(sf::RenderWindow &window) : window(&window) {}
+    AbstractSceneControl(sf::RenderWindow &window) : window(std::ref(window)) {}
 
     virtual ~AbstractSceneControl() {}
 
@@ -64,7 +67,7 @@ public:
     virtual NextScene get_next_scene() const = 0;
 
 protected:
-    sf::RenderWindow *window = nullptr;
+    std::optional<std::reference_wrapper<sf::RenderWindow>> window;
 };
 
 #endif
