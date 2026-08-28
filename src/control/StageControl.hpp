@@ -23,12 +23,17 @@ public:
         stage_view.emplace(window, *this->stage, assets_manager);
     }
 
+    StageControl(sf::RenderWindow &window, PlayerData &, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
+        : StageControl(window, assets_manager, std::move(stage)) {}
+
     explicit StageControl(std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
+
+    StageControl(PlayerData &, std::unique_ptr<Stage> stage) : StageControl(std::move(stage)) {}
 
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : StageControl(window, assets_manager, create_stage(std::rand, player_data)) {}
 
-    StageControl(PlayerData &player_data) : StageControl(create_stage(std::rand, player_data)) {}
+    explicit StageControl(PlayerData &player_data) : StageControl(create_stage(std::rand, player_data)) {}
 
     virtual ~StageControl() {}
 
