@@ -161,3 +161,15 @@ elseif(MSVC)
     target_compile_options(Test PRIVATE /std:c++20)
 endif()
 ```
+
+## Headless control tests
+
+Adjusting the scene control classes so they can be initialized without constructing SFML views, allowing controller tests to run headlessly.
+
+Prompt:
+
+> Adjust the control classes for the different screens so they can be initialized without creating a view (so we can run the tests for the control classes headlessly). Add an entry for yourself to `docs/use-of-ai.md`.
+
+Output:
+
+> Updated the scene control base class and screen controls so view creation is optional, preserving the existing window-backed constructors for the game while adding headless construction paths for tests. The StageControl and TitleScreenControl tests were then switched to the new headless initialization path so they no longer need to open a window or skip when no display is present.

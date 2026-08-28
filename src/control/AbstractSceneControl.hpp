@@ -26,7 +26,9 @@ public:
      *
      * @param window The window to draw the scene to.
      */
-    AbstractSceneControl(sf::RenderWindow &window) : window(window) {}
+    AbstractSceneControl() = default;
+
+    AbstractSceneControl(sf::RenderWindow &window) : window(&window) {}
 
     virtual ~AbstractSceneControl() {}
 
@@ -62,7 +64,7 @@ public:
     virtual NextScene get_next_scene() const = 0;
 
 protected:
-    sf::RenderWindow &window;
+    sf::RenderWindow *window = nullptr;
 };
 
 #endif

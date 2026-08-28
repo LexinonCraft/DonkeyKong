@@ -1,6 +1,8 @@
 #ifndef GAME_OVER_CONTROL_HPP
 #define GAME_OVER_CONTROL_HPP
 
+#include <optional>
+
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/model/Declarations.hpp"
 #include "DK/view/Declarations.hpp"
@@ -13,7 +15,11 @@
 class GameOverControl : public AbstractSceneControl {
 public:
     GameOverControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), game_over_view(window, assets_manager, player_data), player_data(player_data) {}
+        : AbstractSceneControl(window), player_data(player_data) {
+        game_over_view.emplace(window, assets_manager, player_data);
+    }
+
+    GameOverControl(PlayerData &player_data) : AbstractSceneControl(), player_data(player_data) {}
 
     void handle_event(sf::Event *event) override {}
 
@@ -21,12 +27,16 @@ public:
 
     void update(float dt) override;
 
-    void draw() override { game_over_view.draw(); }
+    void draw() override {
+        if (game_over_view.has_value()) {
+            game_over_view->draw();
+        }
+    }
 
     NextScene get_next_scene() const override { return next_scene; }
 
 private:
-    GameOverView game_over_view;
+    std::optional<GameOverView> game_over_view;
     NextScene next_scene = NextScene::Stay;
     float time_elapsed = 0.f;
     PlayerData &player_data;

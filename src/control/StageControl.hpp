@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <memory>
+#include <optional>
 
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/model/Declarations.hpp"
@@ -18,10 +19,16 @@
 class StageControl : public AbstractSceneControl {
 public:
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
-        : AbstractSceneControl(window), stage(std::move(stage)), stage_view(window, *(this->stage.get()), assets_manager) {}
+        : AbstractSceneControl(window), stage(std::move(stage)) {
+        stage_view.emplace(window, *this->stage, assets_manager);
+    }
+
+    StageControl(PlayerData &player_data, std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
 
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
         : StageControl(window, player_data, assets_manager, create_stage(std::rand, player_data)) {}
+
+    StageControl(PlayerData &player_data) : StageControl(player_data, create_stage(std::rand, player_data)) {}
 
     virtual ~StageControl() {}
 
@@ -40,7 +47,7 @@ public:
 
 private:
     std::unique_ptr<Stage> stage;
-    StageView stage_view;
+    std::optional<StageView> stage_view;
     bool left_pressed = false;
     bool right_pressed = false;
     bool up_pressed = false;

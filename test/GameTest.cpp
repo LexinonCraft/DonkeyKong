@@ -164,24 +164,17 @@ TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
 class StageControlTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        SKIP_IF_NO_DISPLAY();
-        window.emplace(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "StageControlTest");
-        assets_manager.emplace();
         stage_ptr = new TestStage(std::rand, player_data);
-        stage_control.emplace(*window, player_data, *assets_manager, std::unique_ptr<TestStage>(stage_ptr));
+        stage_control.emplace(player_data, std::unique_ptr<TestStage>(stage_ptr));
     }
 
     PlayerData player_data;
-    std::optional<sf::RenderWindow> window;
-    std::optional<AssetsManager> assets_manager;
     TestStage *stage_ptr{nullptr};
     std::optional<StageControl> stage_control;
 };
 
 // Test that the StageControl transitions to the GameOver scene when the player loses all lives.
 TEST_F(StageControlTest, game_over) {
-    SKIP_IF_NO_DISPLAY();
-
     EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
 
     for (unsigned int i = 0; i < constants::INITIAL_LIVES - 1; ++i) {
@@ -199,8 +192,6 @@ TEST_F(StageControlTest, game_over) {
 
 // Test that the StageControl transitions to the next stage when the player completes the current stage.
 TEST_F(StageControlTest, advance_stage) {
-    SKIP_IF_NO_DISPLAY();
-
     EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
 
     stage_ptr->start_exit_animation();
@@ -215,8 +206,6 @@ TEST_F(StageControlTest, advance_stage) {
 
 // Test that the StageControl transitions to the same stage when the player dies and has lives remaining.
 TEST_F(StageControlTest, repeat_stage) {
-    SKIP_IF_NO_DISPLAY();
-
     EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
 
     stage_ptr->on_player_dying();
@@ -232,19 +221,13 @@ TEST_F(StageControlTest, repeat_stage) {
 class TitleScreenControlTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        SKIP_IF_NO_DISPLAY();
-        window.emplace(sf::VideoMode({constants::VIEW_WIDTH, constants::VIEW_HEIGHT}), "TitleScreenControlTest");
-        assets_manager.emplace();
-        title_screen_control.emplace(*window, *assets_manager, player_data);
+        title_screen_control.emplace();
     }
     PlayerData player_data;
-    std::optional<sf::RenderWindow> window;
-    std::optional<AssetsManager> assets_manager;
     std::optional<TitleScreenControl> title_screen_control;
 };
 
 TEST_F(TitleScreenControlTest, press_enter) {
-    SKIP_IF_NO_DISPLAY();
     EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
     sf::Event::KeyPressed key_pressed_event;
     key_pressed_event.code = sf::Keyboard::Key::Enter;

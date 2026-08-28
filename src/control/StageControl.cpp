@@ -91,10 +91,16 @@ void StageControl::handle_input() {
 
 void StageControl::update(float dt) {
     stage->update(dt);
-    stage_view.update(dt);
+    if (stage_view.has_value()) {
+        stage_view->update(dt);
+    }
 }
 
-void StageControl::draw() { stage_view.draw(); }
+void StageControl::draw() {
+    if (stage_view.has_value()) {
+        stage_view->draw();
+    }
+}
 
 AbstractSceneControl::NextScene StageControl::get_next_scene() const {
     if (!stage->is_over()) {
