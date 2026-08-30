@@ -9,6 +9,7 @@ See the documentation:
 1. [Features](docs/features.md)
 1. [Architecture](docs/architecture.md)
 1. [Development](docs/development.md)
+1. [Attributions](docs/attributions.md)
 1. [To-do](docs/todo.md)
 
 ![Screenshot](docs/stage_25m.png)
