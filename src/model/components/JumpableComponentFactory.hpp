@@ -7,6 +7,9 @@
 #include "DK/model/util/AbstractComponentFactory.hpp"
 #include "DK/model/util/Component.hpp"
 
+/**
+ * @brief Factory that creates jumpable components for entities that can be jumped over.
+ */
 class JumpableComponentFactory : public AbstractComponentFactory<Component<Jumpable>> {
 protected:
     /**
@@ -14,9 +17,7 @@ protected:
      * @param entity Entity to inspect.
      * @returns Unique pointer to the jumpable component or nullptr.
      */
-    std::unique_ptr<Component<Jumpable>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
-        return entity->create_jumpable_component();
-    }
+    std::unique_ptr<Component<Jumpable>> create_component_for(std::shared_ptr<BaseEntity> entity) override;
 };
 
 #endif

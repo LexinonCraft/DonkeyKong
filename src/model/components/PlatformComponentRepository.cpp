@@ -1,6 +1,14 @@
 #include "DK/model/components/PlatformComponentRepository.hpp"
 
 #include "DK/Constants.hpp"
+#include "DK/model/components/PlatformComponentFactory.hpp"
+
+std::unique_ptr<Component<Platform>> PlatformComponentFactory::create_component_for(std::shared_ptr<BaseEntity> entity) {
+    return entity->create_platform_component();
+}
+
+PlatformComponentRepository::PlatformComponentRepository(EntityRepository &repository)
+    : ComponentRepository<Component<Platform>>(repository, std::make_unique<PlatformComponentFactory>()) {}
 
 std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(const sf::Vector2f &position, float h_tolerance_left,
                                                                                 float h_tolerance_right, float snap_distance) {
@@ -21,5 +29,5 @@ std::shared_ptr<Platform> PlatformComponentRepository::find_platform_underneath(
             }
         }
     }
-    return std::shared_ptr<Platform>();
+    return nullptr;
 }

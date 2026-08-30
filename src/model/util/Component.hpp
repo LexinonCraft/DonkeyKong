@@ -2,6 +2,7 @@
 #define COMPONENT_HPP
 
 #include <memory>
+#include <utility>
 
 /**
  * @brief Component that simply holds a reference to an entity.
@@ -14,9 +15,9 @@ public:
      * @brief Constructs a component for the given entity.
      * @param entity Entity instance referenced by this component.
      */
-    Component(std::shared_ptr<E> entity) : entity(entity) {}
+    explicit Component(std::shared_ptr<E> entity) : entity(std::move(entity)) {}
 
-    virtual ~Component() {}
+    virtual ~Component() = default;
 
     /**
      * @brief Returns the owning entity.

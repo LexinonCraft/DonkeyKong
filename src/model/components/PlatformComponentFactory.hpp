@@ -17,9 +17,7 @@ protected:
      * @param entity Entity to inspect.
      * @returns Unique pointer to the platform component or nullptr.
      */
-    std::unique_ptr<Component<Platform>> create_component_for(std::shared_ptr<BaseEntity> entity) override {
-        return entity->create_platform_component();
-    }
+    std::unique_ptr<Component<Platform>> create_component_for(std::shared_ptr<BaseEntity> entity) override;
 };
 
 #endif
