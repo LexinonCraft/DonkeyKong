@@ -102,6 +102,9 @@ public:
     /** @returns The multiplier for barrel speed based on the current level. */
     float get_barrel_difficulty_multiplier() const;
 
+    /** @returns Whether barrels should always roll down climbable objects (e.g., ladders). */
+    virtual bool barrels_always_roll_down_climbables() const { return false; }
+
 protected:
     /**
      * @brief Creates a stage and registers the component repositories with the entity repository.

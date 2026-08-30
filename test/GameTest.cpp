@@ -24,74 +24,14 @@
         GTEST_SKIP() << "Skipping rendering-related test because there is no display.";                                                    \
     }
 
-// #include "../src/model/Barrel.hpp"
-// #include "../src/model/Girder.hpp"
-// #include "../src/../Constants.hpp"
-
-// These tests exercise the barrel/girder physics directly. They construct only
-// model objects (which hold CPU-side SFML shapes, no window), so they run headless.
-
-/*
-namespace {
-constexpr float R = constants::BARREL_RADIUS;
-
-// two overlapping girders: g0 slopes down-right, g1 (below it) down-left, so a
-// barrel rolling off g0's right end drops onto g1 and reverses direction.
-std::vector<Girder> two_girder_stage() {
-    std::vector<Girder> girders;
-    girders.emplace_back(sf::Vector2f{0, -200}, sf::Vector2f{100, -160}); // down-right
-    girders.emplace_back(sf::Vector2f{0, -60},  sf::Vector2f{140, -100}); // down-left
-    return girders;
-}
-
-Barrel barrel_on(const Girder& g) {
-    Barrel barrel({g.high_end().x, g.high_end().y - R});
-    barrel.set_on_girder(g);
-    return barrel;
-}
-} // namespace
-
-TEST(GirderTest, geometry) {
-    Girder down_right({0, -200}, {100, -160}); // slope 0.4, lower end on the right
-    EXPECT_FLOAT_EQ(down_right.slope(), 0.4f);
-    EXPECT_FLOAT_EQ(down_right.surface_y_at(50), -180.f);
-    EXPECT_EQ(down_right.downhill_sign(), 1);
-    EXPECT_FLOAT_EQ(down_right.high_end().x, 0.f);
-
-    Girder down_left({0, -60}, {100, -100}); // lower end on the left
-    EXPECT_EQ(down_left.downhill_sign(), -1);
-    EXPECT_FLOAT_EQ(down_left.high_end().x, 100.f);
-}
-
-TEST(BarrelTest, rolls_glued_to_the_slope) {
-    std::vector<Girder> girders = two_girder_stage();
-    Barrel barrel = barrel_on(girders[0]);
-
-    barrel.update(0.1f, girders);
-
-    EXPECT_EQ(barrel.get_state(), Barrel::State::OnGirder);
-    EXPECT_FLOAT_EQ(barrel.get_position().x, constants::ROLL_SPEED * 0.1f); // moved downhill
-    EXPECT_FLOAT_EQ(barrel.get_position().y,                               // y follows the surface
-                    girders[0].surface_y_at(barrel.get_position().x) - R);
-}
-
-TEST(BarrelTest, zig_zags_onto_the_next_girder) {
-    std::vector<Girder> girders = two_girder_stage();
-    Barrel barrel = barrel_on(girders[0]);
-    ASSERT_GT(barrel.get_vx(), 0.f); // rolling right on g0
-
-    // run until it rolls off g0, falls, and settles on g1 (now rolling left)
-    for (int i = 0; i < 2000 &&
-         !(barrel.get_state() == Barrel::State::OnGirder && barrel.get_vx() < 0.f); ++i) {
-        barrel.update(1.f / 60.f, girders);
-    }
-
-    EXPECT_EQ(barrel.get_state(), Barrel::State::OnGirder);
-    EXPECT_LT(barrel.get_vx(), 0.f); // direction flipped on the down-left girder
-    EXPECT_NEAR(barrel.get_position().y,
-                girders[1].surface_y_at(barrel.get_position().x) - R, 0.001f);
-}
-*/
+//  /$$    /$$ /$$                                 /$$                           /$$
+// | $$   | $$|__/                                | $$                          | $$
+// | $$   | $$ /$$  /$$$$$$  /$$  /$$  /$$       /$$$$$$    /$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$$
+// |  $$ / $$/| $$ /$$__  $$| $$ | $$ | $$      |_  $$_/   /$$__  $$ /$$_____/|_  $$_/  /$$_____/
+//  \  $$ $$/ | $$| $$$$$$$$| $$ | $$ | $$        | $$    | $$$$$$$$|  $$$$$$   | $$   |  $$$$$$
+//   \  $$$/  | $$| $$_____/| $$ | $$ | $$        | $$ /$$| $$_____/ \____  $$  | $$ /$$\____  $$
+//    \  $/   | $$|  $$$$$$$|  $$$$$/$$$$/        |  $$$$/|  $$$$$$$ /$$$$$$$/  |  $$$$//$$$$$$$/
+//     \_/    |__/ \_______/ \_____/\___/          \___/   \_______/|_______/    \___/ |_______/
 
 // Test that AssetsManager can load assets and that a texture can be drawn to a render texture without crashing.
 TEST(AssetsManagerTest, load_assets_and_draw_texture) {
@@ -113,6 +53,16 @@ TEST(LayerStackTest, create_and_draw_layers) {
     layer_stack.draw_all();
 }
 
+//  /$$      /$$                 /$$           /$$         /$$                           /$$
+// | $$$    /$$$                | $$          | $$        | $$                          | $$
+// | $$$$  /$$$$  /$$$$$$   /$$$$$$$  /$$$$$$ | $$       /$$$$$$    /$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$$
+// | $$ $$/$$ $$ /$$__  $$ /$$__  $$ /$$__  $$| $$      |_  $$_/   /$$__  $$ /$$_____/|_  $$_/  /$$_____/
+// | $$  $$$| $$| $$  \ $$| $$  | $$| $$$$$$$$| $$        | $$    | $$$$$$$$|  $$$$$$   | $$   |  $$$$$$
+// | $$\  $ | $$| $$  | $$| $$  | $$| $$_____/| $$        | $$ /$$| $$_____/ \____  $$  | $$ /$$\____  $$
+// | $$ \/  | $$|  $$$$$$/|  $$$$$$$|  $$$$$$$| $$        |  $$$$/|  $$$$$$$ /$$$$$$$/  |  $$$$//$$$$$$$/
+// |__/     |__/ \______/  \_______/ \_______/|__/         \___/   \_______/|_______/    \___/ |_______/
+
+// =========================================================================================================================================
 // Test the Player::update() method and its interaction with the Stage and Barrel indirectly through the TestStage class and its update()
 // method.
 class PlayerUpdateTest : public ::testing::Test {
@@ -123,7 +73,7 @@ protected:
 
 // Test that the player loses a life when hit by a barrel.
 TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
-    stage.spawn_barrel();
+    stage.spawn_lower_barrel();
     unsigned int previous_lives = player_data.get_lives();
     for (int i = 0; i < 1000 && !stage.is_over(); ++i) {
         stage.update(1.f / 60.f);
@@ -135,7 +85,7 @@ TEST_F(PlayerUpdateTest, player_hit_by_barrel) {
 // Test that the player can destroy a barrel by hitting it with a hammer.
 TEST_F(PlayerUpdateTest, player_hammers_barrel) {
     stage.place_hammer();
-    stage.spawn_barrel();
+    stage.spawn_lower_barrel();
     for (int i = 0; i < 1000 && player_data.get_hammer_use_count() == 0; ++i) {
         stage.update(1.f / 60.f);
     }
@@ -146,7 +96,7 @@ TEST_F(PlayerUpdateTest, player_hammers_barrel) {
 
 // Test that the player can jump over a barrel and survive.
 TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
-    stage.spawn_barrel();
+    stage.spawn_lower_barrel();
     bool has_jumped = false;
     for (int i = 0; i < 1000 && !stage.is_over() && (!has_jumped || stage.get_player()->get_state() == Player::State::InAir); ++i) {
         if (stage.get_barrel()->get_position().x - stage.get_player()->get_position().x < 50.f && !has_jumped) {
@@ -160,7 +110,95 @@ TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
     EXPECT_FALSE(stage.get_barrel()->is_destroyed());
     EXPECT_LT(0u, player_data.get_score());
 }
+// =========================================================================================================================================
 
+// =========================================================================================================================================
+// Test the Barrel::update() method
+class BarrelUpdateTest : public ::testing::Test {
+protected:
+    void SetUp() override { stage.get_player()->destroy(); }
+    PlayerData player_data;
+    TestStage stage{std::rand, player_data};
+};
+
+// Test that a barrel is destroyed after falling off the screen.
+TEST_F(BarrelUpdateTest, barrel_destroyed_after_falling_off_screen) {
+    stage.spawn_lower_barrel();
+    EXPECT_FALSE(stage.get_barrel()->is_destroyed());
+
+    for (int i = 0; i < 1000 && !stage.get_barrel()->is_destroyed(); ++i) {
+        stage.update(1.f / 60.f);
+    }
+
+    EXPECT_TRUE(stage.get_barrel()->is_destroyed());
+    EXPECT_LT(constants::BARREL_RADIUS, stage.get_barrel()->get_position().y);
+}
+
+// Test that a barrel rolls off the upper girder, falls, and lands on the lower girder, reversing direction.
+TEST_F(BarrelUpdateTest, barrel_rolls_off_upper_girder_onto_lower_girder) {
+    stage.spawn_upper_barrel();
+
+    EXPECT_EQ(stage.get_barrel()->get_state(), Barrel::State::OnGirder);
+    EXPECT_EQ(stage.get_barrel()->get_current_platform(), stage.get_upper_girder());
+    EXPECT_LT(0.f, stage.get_barrel()->get_vx());
+
+    for (int i = 0; i < 1000 && stage.get_barrel()->get_state() == Barrel::State::OnGirder; ++i) {
+        stage.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage.get_barrel()->get_state(), Barrel::State::Falling);
+    EXPECT_LT(0.f, stage.get_barrel()->get_vx());
+
+    for (int i = 0; i < 1000 && stage.get_barrel()->get_state() == Barrel::State::Falling; ++i) {
+        stage.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage.get_barrel()->get_state(), Barrel::State::OnGirder);
+    EXPECT_EQ(stage.get_barrel()->get_current_platform(), stage.get_lower_girder());
+    EXPECT_LT(stage.get_barrel()->get_vx(), 0.f);
+    EXPECT_LT(400, stage.get_barrel()->get_position().x);
+}
+
+// Test that a barrel rolls down a ladder when it reaches the ladder's position.
+TEST_F(BarrelUpdateTest, barrel_rolls_down_ladder) {
+    stage.add_ladder();
+    stage.spawn_upper_barrel();
+
+    EXPECT_EQ(stage.get_barrel()->get_state(), Barrel::State::OnGirder);
+    EXPECT_EQ(stage.get_barrel()->get_current_platform(), stage.get_upper_girder());
+    EXPECT_LT(0.f, stage.get_barrel()->get_vx());
+
+    for (int i = 0; i < 1000 && stage.get_barrel()->get_state() == Barrel::State::OnGirder; ++i) {
+        stage.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage.get_barrel()->get_state(), Barrel::State::RollingDownClimbable);
+    EXPECT_EQ(stage.get_barrel()->get_current_climbable(), stage.get_ladder());
+    EXPECT_EQ(300, stage.get_barrel()->get_position().x);
+    EXPECT_EQ(0.f, stage.get_barrel()->get_vx());
+
+    for (int i = 0; i < 1000 && stage.get_barrel()->get_state() == Barrel::State::RollingDownClimbable; ++i) {
+        stage.update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage.get_barrel()->get_state(), Barrel::State::OnGirder);
+    EXPECT_EQ(stage.get_barrel()->get_current_platform(), stage.get_lower_girder());
+    EXPECT_LT(stage.get_barrel()->get_vx(), 0.f);
+    EXPECT_LE(stage.get_barrel()->get_position().x, 300);
+}
+// =========================================================================================================================================
+
+//   /$$$$$$                        /$$                         /$$         /$$                           /$$
+//  /$$__  $$                      | $$                        | $$        | $$                          | $$
+// | $$  \__/  /$$$$$$  /$$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$ | $$       /$$$$$$    /$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$$
+// | $$       /$$__  $$| $$__  $$|_  $$_/   /$$__  $$ /$$__  $$| $$      |_  $$_/   /$$__  $$ /$$_____/|_  $$_/  /$$_____/
+// | $$      | $$  \ $$| $$  \ $$  | $$    | $$  \__/| $$  \ $$| $$        | $$    | $$$$$$$$|  $$$$$$   | $$   |  $$$$$$
+// | $$    $$| $$  | $$| $$  | $$  | $$ /$$| $$      | $$  | $$| $$        | $$ /$$| $$_____/ \____  $$  | $$ /$$\____  $$
+// |  $$$$$$/|  $$$$$$/| $$  | $$  |  $$$$/| $$      |  $$$$$$/| $$        |  $$$$/|  $$$$$$$ /$$$$$$$/  |  $$$$//$$$$$$$/
+//  \______/  \______/ |__/  |__/   \___/  |__/       \______/ |__/         \___/   \_______/|_______/    \___/ |_______/
+
+// =========================================================================================================================================
+// Test the StageControl class
 class StageControlTest : public ::testing::Test {
 protected:
     void SetUp() override {
@@ -217,7 +255,10 @@ TEST_F(StageControlTest, repeat_stage) {
     EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
     EXPECT_EQ(player_data.get_stage_in_level(), 0u);
 }
+// =========================================================================================================================================
 
+// =========================================================================================================================================
+// Test the TitleScreenControl class
 class TitleScreenControlTest : public ::testing::Test {
 protected:
     void SetUp() override { title_screen_control.emplace(); }
@@ -225,6 +266,7 @@ protected:
     std::optional<TitleScreenControl> title_screen_control;
 };
 
+// Test that pressing the Enter key transitions from the title screen to the stage transition scene.
 TEST_F(TitleScreenControlTest, press_enter) {
     EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
     sf::Event::KeyPressed key_pressed_event;
@@ -233,3 +275,4 @@ TEST_F(TitleScreenControlTest, press_enter) {
     title_screen_control->handle_event(&event);
     EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
 }
+// =========================================================================================================================================

@@ -70,7 +70,8 @@ void Barrel::update(float dt, Stage &stage) {
                             std::clamp(constants::BARREL_LADDER_DESCENT_BASE_CHANCE +
                                            player_vertical_distance / constants::BARREL_LADDER_DESCENT_DISTANCE_PER_PERCENT,
                                        constants::BARREL_LADDER_DESCENT_BASE_CHANCE, constants::BARREL_LADDER_DESCENT_MAX_CHANCE);
-                        roll_down_climbable = mod(stage.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance;
+                        roll_down_climbable = mod(stage.random_int(), constants::BARREL_LADDER_DESCENT_CHANCE_STEPS) < descent_chance ||
+                                              stage.barrels_always_roll_down_climbables();
                     }
                 }
             } else {
