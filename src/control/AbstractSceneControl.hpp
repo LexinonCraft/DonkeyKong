@@ -25,12 +25,15 @@ public:
     };
 
     /**
+     * @brief Construct a new Abstract Scene Control object without a window. This is useful for testing purposes.
+     */
+    AbstractSceneControl() = default;
+
+    /**
      * @brief Construct a new Abstract Scene Control object
      *
      * @param window The window to draw the scene to.
      */
-    AbstractSceneControl() = default;
-
     AbstractSceneControl(sf::RenderWindow &window) : window(std::ref(window)) {}
 
     virtual ~AbstractSceneControl() {}
