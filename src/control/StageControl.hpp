@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <memory>
+#include <optional>
 
 #include "DK/control/AbstractSceneControl.hpp"
 #include "DK/model/Declarations.hpp"
@@ -17,8 +18,36 @@
  */
 class StageControl : public AbstractSceneControl {
 public:
+    /**
+     * @brief Initialize with a view and a prebuilt stage
+     *
+     * @param window The window to draw on
+     * @param assets_manager The assets manager to load resources
+     * @param stage The prebuilt Stage instance
+     */
+    StageControl(sf::RenderWindow &window, AssetsManager &assets_manager, std::unique_ptr<Stage> stage)
+        : AbstractSceneControl(window), stage(std::move(stage)) {
+        stage_view.emplace(window, *this->stage, assets_manager);
+    }
+
+    /**
+     * @brief Initialize without a view and with a prebuilt stage
+     *
+     * @param stage The prebuilt Stage instance
+     */
+    explicit StageControl(std::unique_ptr<Stage> stage) : AbstractSceneControl(), stage(std::move(stage)) {}
+
+    /**
+     * @brief Initialize with a view and build a new stage
+     *
+     * @param window The window to draw on
+     * @param player_data The global player data
+     * @param assets_manager The assets manager to load resources
+     */
     StageControl(sf::RenderWindow &window, PlayerData &player_data, AssetsManager &assets_manager)
-        : AbstractSceneControl(window), stage(create_stage(std::rand, player_data)), stage_view(window, *stage.get(), assets_manager) {}
+        : StageControl(window, assets_manager, create_stage(std::rand, player_data)) {}
+
+    explicit StageControl(PlayerData &player_data) : StageControl(create_stage(std::rand, player_data)) {}
 
     virtual ~StageControl() {}
 
@@ -32,9 +61,12 @@ public:
 
     NextScene get_next_scene() const override;
 
+    /** @returns The managed Stage instance. */
+    Stage &get_stage() { return *stage; }
+
 private:
     std::unique_ptr<Stage> stage;
-    StageView stage_view;
+    std::optional<StageView> stage_view;
     bool left_pressed = false;
     bool right_pressed = false;
     bool up_pressed = false;
