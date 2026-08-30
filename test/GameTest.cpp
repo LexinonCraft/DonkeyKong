@@ -125,10 +125,13 @@ protected:
 TEST_F(BarrelUpdateTest, barrel_destroyed_after_falling_off_screen) {
     stage.spawn_lower_barrel();
     EXPECT_FALSE(stage.get_barrel()->is_destroyed());
-    for (int i = 0; i < 1000; ++i) {
+
+    for (int i = 0; i < 1000 && !stage.get_barrel()->is_destroyed(); ++i) {
         stage.update(1.f / 60.f);
     }
+
     EXPECT_TRUE(stage.get_barrel()->is_destroyed());
+    EXPECT_LT(constants::BARREL_RADIUS, stage.get_barrel()->get_position().y);
 }
 
 // Test that a barrel rolls off the upper girder, falls, and lands on the lower girder, reversing direction.
