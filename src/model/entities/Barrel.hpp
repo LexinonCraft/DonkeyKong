@@ -70,6 +70,12 @@ public:
 
     void check_jumps_over(const Player &player, Stage &stage) override;
 
+    /** @returns The current platform the barrel is on, or nullptr if not on a platform. */
+    std::shared_ptr<Platform> get_current_platform() const { return state == State::OnGirder ? current_platform : nullptr; }
+
+    /** @returns The current climbable the barrel is rolling down, or nullptr if none. */
+    std::shared_ptr<Climbable> get_current_climbable() const { return state == State::RollingDownClimbable ? current_climbable : nullptr; }
+
 private:
     sf::Vector2f position;
     float vx = 0.f;
