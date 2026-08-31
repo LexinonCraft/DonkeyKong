@@ -182,3 +182,15 @@ Prompt:
 Output:
 
 > Updated the scene control base class and screen controls so view creation is optional, preserving the existing window-backed constructors for the game while adding headless construction paths for tests. The StageControl and TitleScreenControl tests were then switched to the new headless initialization path so they no longer need to open a window or skip when no display is present.
+
+## Test for clear_secondary_entities
+
+Writing a unit test for `EntityRepository::clear_secondary_entities()` in `GameTest.cpp`.
+
+Prompt:
+
+> Write a test for the method `EntityRepository::clear_secondary_entities()` (its purpose is defined in a Doxygen comment) and add the test to the `GameTest.cpp` file. Make sure that it also checks that pending additions are cleared too. Add an entry for yourself to the `use-of-ai.md` file.
+
+Output:
+
+> Added an `EntityRepositoryTest` fixture with a `clear_secondary_entities` test case that verifies active secondary entities are marked as destroyed, secondary entities in the pending additions queue are not inserted after `handle_additions`, and non-secondary entities such as the player are left untouched. Also added this entry to `docs/use-of-ai.md`.

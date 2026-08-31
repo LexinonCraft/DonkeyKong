@@ -190,6 +190,46 @@ TEST_F(BarrelUpdateTest, barrel_rolls_down_ladder) {
 }
 // =========================================================================================================================================
 
+// =========================================================================================================================================
+// Test the EntityRepository::clear_secondary_entities() method
+class EntityRepositoryTest : public ::testing::Test {
+protected:
+    PlayerData player_data;
+    TestStage stage{std::rand, player_data};
+};
+
+// Test that clear_secondary_entities destroys active secondary entities, removes secondary entities from the
+// pending additions queue, and leaves non-secondary entities untouched.
+TEST_F(EntityRepositoryTest, clear_secondary_entities) {
+    // Add a barrel and flush it into the active entities map.
+    stage.spawn_lower_barrel();
+    stage.get_entities().handle_additions();
+    EXPECT_FALSE(stage.get_barrel()->is_destroyed());
+
+    // Add a second barrel that stays in the pending additions queue (handle_additions not called yet).
+    auto pending_barrel = stage.get_entities().add_barrel({300, -400});
+
+    // Clear all secondary entities.
+    stage.get_entities().clear_secondary_entities();
+
+    // The already-active barrel must be marked as destroyed.
+    EXPECT_TRUE(stage.get_barrel()->is_destroyed());
+
+    // After processing additions the pending barrel must not appear in the repository.
+    stage.get_entities().handle_additions();
+    bool pending_barrel_added = false;
+    for (const auto &[id, entity] : stage.get_entities()) {
+        if (entity.get() == pending_barrel.get()) {
+            pending_barrel_added = true;
+        }
+    }
+    EXPECT_FALSE(pending_barrel_added);
+
+    // Non-secondary entities (e.g. the player) must not be affected.
+    EXPECT_FALSE(stage.get_player()->is_destroyed());
+}
+// =========================================================================================================================================
+
 //   /$$$$$$                        /$$                         /$$         /$$                           /$$
 //  /$$__  $$                      | $$                        | $$        | $$                          | $$
 // | $$  \__/  /$$$$$$  /$$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$ | $$       /$$$$$$    /$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$$
