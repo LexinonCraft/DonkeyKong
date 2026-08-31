@@ -12,7 +12,8 @@ constexpr int VIEW_WIDTH = 600;
 constexpr int VIEW_HEIGHT = 800;
 constexpr unsigned int FRAME_RATE = 60;
 constexpr float TARGET_ASPECT_RATIO = static_cast<float>(VIEW_WIDTH) / static_cast<float>(VIEW_HEIGHT);
-constexpr float MAX_DT = 0.05f;
+constexpr double FIXED_DT = 1.0 / static_cast<double>(FRAME_RATE);
+constexpr double MAX_FRAME_TIME = 0.1;
 
 constexpr const char *TEXTURES_BASE_PATH = "assets/textures/";
 constexpr const char *FONT_FILE = "assets/fonts/PressStart2P.ttf";

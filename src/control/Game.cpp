@@ -1,8 +1,7 @@
 #include "DK/control/Game.hpp"
 
-#include <algorithm>
-
 #include "DK/Constants.hpp"
+#include "DK/control/FixedTimestep.hpp"
 #include "DK/control/GameOverControl.hpp"
 #include "DK/control/StageControl.hpp"
 #include "DK/control/StageTransitionControl.hpp"
@@ -25,6 +24,7 @@ Game::Game()
 void Game::run() {
     // The clock is needed to control the speed of movement
     sf::Clock clock;
+    FixedTimestep fixed_timestep;
 
     while (window.isOpen()) {
         // Restart the clock and save the elapsed time into elapsed_time
@@ -32,14 +32,19 @@ void Game::run() {
 
         // handle input, check if window is still open
         if (!input()) {
-            float dt = std::min(elapsed_time.asSeconds(), constants::MAX_DT);
-            // update the scene according to the passed time
-            scene_control->update(dt);
+            fixed_timestep.add_frame_time(elapsed_time.asSeconds());
+
+            // perform fixed timestep updates
+            AbstractSceneControl::NextScene next_scene = scene_control->get_next_scene();
+            while (next_scene == AbstractSceneControl::NextScene::Stay && fixed_timestep.has_step()) {
+                scene_control->update(fixed_timestep.consume_step());
+                next_scene = scene_control->get_next_scene();
+            }
             // draw the scene
             scene_control->draw();
 
             // check if we need to switch to a different scene
-            handle_next_scene(scene_control->get_next_scene());
+            handle_next_scene(next_scene);
         }
     }
 }
