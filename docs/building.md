@@ -20,7 +20,7 @@ With Make:
 make getSFML                       # Download and build SFML
 make getGTest                      # Download and build GoogleTest
 
-make build                         # Build the game
+make game                          # Build the game
 ./game                             # Run the game
 
 make tests                         # Build the tests
