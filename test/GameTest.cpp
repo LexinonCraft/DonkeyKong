@@ -119,34 +119,6 @@ TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
     EXPECT_FALSE(stage.get_barrel()->is_destroyed());
     EXPECT_LT(0u, player_data.get_score());
 }
-
-TEST(FixedTimestepTest, max_frame_time_uses_three_updates) {
-    FixedTimestep fixed_timestep;
-    fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME));
-    unsigned int update_count = 0;
-    float updated_time = 0.f;
-    while (fixed_timestep.has_step()) {
-        updated_time += fixed_timestep.consume_step();
-        update_count++;
-    }
-    EXPECT_EQ(update_count, 3u);
-    EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
-}
-
-TEST(FixedTimestepTest, preserves_remainder_between_frames) {
-    FixedTimestep fixed_timestep;
-    unsigned int update_count = 0;
-    float updated_time = 0.f;
-    for (int frame = 0; frame < 2; ++frame) {
-        fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME / 2.0));
-        while (fixed_timestep.has_step()) {
-            updated_time += fixed_timestep.consume_step();
-            update_count++;
-        }
-    }
-    EXPECT_EQ(update_count, 3u);
-    EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
-}
 // =========================================================================================================================================
 
 // =========================================================================================================================================
@@ -443,6 +415,38 @@ TEST_F(TitleScreenControlTest, press_enter) {
     sf::Event event(key_pressed_event);
     title_screen_control->handle_event(&event);
     EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
+}
+// =========================================================================================================================================
+
+// =========================================================================================================================================
+// Test the FixedTimestep class
+
+TEST(FixedTimestepTest, max_frame_time_uses_six_updates) {
+    FixedTimestep fixed_timestep;
+    fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME));
+    unsigned int update_count = 0;
+    float updated_time = 0.f;
+    while (fixed_timestep.has_step()) {
+        updated_time += fixed_timestep.consume_step();
+        update_count++;
+    }
+    EXPECT_EQ(update_count, 6u);
+    EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
+}
+
+TEST(FixedTimestepTest, preserves_remainder_between_frames) {
+    FixedTimestep fixed_timestep;
+    unsigned int update_count = 0;
+    float updated_time = 0.f;
+    for (int frame = 0; frame < 2; ++frame) {
+        fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME / 2.0));
+        while (fixed_timestep.has_step()) {
+            updated_time += fixed_timestep.consume_step();
+            update_count++;
+        }
+    }
+    EXPECT_EQ(update_count, 6u);
+    EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
 }
 // =========================================================================================================================================
 

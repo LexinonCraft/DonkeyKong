@@ -33,6 +33,8 @@ void Game::run() {
         // handle input, check if window is still open
         if (!input()) {
             fixed_timestep.add_frame_time(elapsed_time.asSeconds());
+
+            // perform fixed timestep updates
             AbstractSceneControl::NextScene next_scene = scene_control->get_next_scene();
             while (next_scene == AbstractSceneControl::NextScene::Stay && fixed_timestep.has_step()) {
                 scene_control->update(fixed_timestep.consume_step());
