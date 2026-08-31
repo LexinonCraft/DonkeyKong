@@ -5,7 +5,7 @@
 .PHONY: clean docs prepare_include_alias
 
 CXX := c++
-CXXFLAGS := -Wall -std=c++20
+CXXFLAGS := -Wall -std=c++17
 
 # Contain path for any includes (headers)
 # Depending on your platform: Include a path to boost, on linux should be 
