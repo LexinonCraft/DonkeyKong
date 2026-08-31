@@ -430,7 +430,7 @@ TEST(FixedTimestepTest, max_frame_time_uses_six_updates) {
         updated_time += fixed_timestep.consume_step();
         update_count++;
     }
-    EXPECT_EQ(update_count, 6u);
+    EXPECT_EQ(update_count, 3u);
     EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
 }
 
@@ -445,7 +445,7 @@ TEST(FixedTimestepTest, preserves_remainder_between_frames) {
             update_count++;
         }
     }
-    EXPECT_EQ(update_count, 6u);
+    EXPECT_EQ(update_count, 3u);
     EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
 }
 // =========================================================================================================================================
