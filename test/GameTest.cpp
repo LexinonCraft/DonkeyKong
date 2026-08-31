@@ -7,7 +7,9 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/control/GameOverControl.hpp"
 #include "DK/control/StageControl.hpp"
+#include "DK/control/StageTransitionControl.hpp"
 #include "DK/control/TitleScreenControl.hpp"
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/entities/Barrel.hpp"
@@ -294,6 +296,98 @@ TEST_F(StageControlTest, repeat_stage) {
 
     EXPECT_EQ(stage_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
     EXPECT_EQ(player_data.get_stage_in_level(), 0u);
+}
+
+// Test that pressing Space is forwarded to the player, causing the player to enter the InAir state.
+TEST_F(StageControlTest, space_key_causes_player_to_jump) {
+    EXPECT_EQ(stage_ptr->get_player()->get_state(), Player::State::OnPlatform);
+
+    sf::Event::KeyPressed key_pressed_event;
+    key_pressed_event.code = sf::Keyboard::Key::Space;
+    sf::Event event(key_pressed_event);
+    stage_control->handle_event(&event);
+
+    // Update a few frames so the jump can take effect.
+    for (int i = 0; i < 10; ++i) {
+        stage_control->update(1.f / 60.f);
+    }
+
+    EXPECT_EQ(stage_ptr->get_player()->get_state(), Player::State::InAir);
+}
+// =========================================================================================================================================
+
+// =========================================================================================================================================
+// Test the StageTransitionControl class
+class StageTransitionControlTest : public ::testing::Test {
+protected:
+    void SetUp() override { stage_transition_control.emplace(); }
+    std::optional<StageTransitionControl> stage_transition_control;
+};
+
+// Test that the StageTransitionControl stays in the current scene before the transition duration has elapsed.
+TEST_F(StageTransitionControlTest, stays_before_duration) {
+    EXPECT_EQ(stage_transition_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    // Update for less than the required duration.
+    const float dt = 1.f / 60.f;
+    const int frames = static_cast<int>((constants::STAGE_TRANSITION_DURATION - 0.5f) / dt);
+    for (int i = 0; i < frames; ++i) {
+        stage_transition_control->update(dt);
+    }
+
+    EXPECT_EQ(stage_transition_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
+}
+
+// Test that the StageTransitionControl transitions to the Stage scene after the transition duration has elapsed.
+TEST_F(StageTransitionControlTest, transitions_to_stage_after_duration) {
+    EXPECT_EQ(stage_transition_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    // Update for at least the required duration.
+    const float dt = 1.f / 60.f;
+    const int frames = static_cast<int>((constants::STAGE_TRANSITION_DURATION + 0.5f) / dt) + 1;
+    for (int i = 0; i < frames; ++i) {
+        stage_transition_control->update(dt);
+    }
+
+    EXPECT_EQ(stage_transition_control->get_next_scene(), AbstractSceneControl::NextScene::Stage);
+}
+// =========================================================================================================================================
+
+// =========================================================================================================================================
+// Test the GameOverControl class
+class GameOverControlTest : public ::testing::Test {
+protected:
+    void SetUp() override { game_over_control.emplace(player_data); }
+    PlayerData player_data;
+    std::optional<GameOverControl> game_over_control;
+};
+
+// Test that the GameOverControl stays in the current scene before the game over duration has elapsed.
+TEST_F(GameOverControlTest, stays_before_duration) {
+    EXPECT_EQ(game_over_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    // Update for less than the required duration.
+    const float dt = 1.f / 60.f;
+    const int frames = static_cast<int>((constants::GAME_OVER_DURATION - 0.5f) / dt);
+    for (int i = 0; i < frames; ++i) {
+        game_over_control->update(dt);
+    }
+
+    EXPECT_EQ(game_over_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
+}
+
+// Test that the GameOverControl transitions to the TitleScreen scene after the game over duration has elapsed.
+TEST_F(GameOverControlTest, transitions_to_title_screen_after_duration) {
+    EXPECT_EQ(game_over_control->get_next_scene(), AbstractSceneControl::NextScene::Stay);
+
+    // Update for at least the required duration.
+    const float dt = 1.f / 60.f;
+    const int frames = static_cast<int>((constants::GAME_OVER_DURATION + 0.5f) / dt) + 1;
+    for (int i = 0; i < frames; ++i) {
+        game_over_control->update(dt);
+    }
+
+    EXPECT_EQ(game_over_control->get_next_scene(), AbstractSceneControl::NextScene::TitleScreen);
 }
 // =========================================================================================================================================
 
