@@ -162,6 +162,15 @@ elseif(MSVC)
 endif()
 ```
 
+## Extending control tests
+
+Extending `StageControlTest` with a test for space key input forwarding to the player, and adding new `StageTransitionControlTest` and `GameOverControlTest` test suites to verify that `get_next_scene()` returns the correct result before and after the expected timeout.
+
+Prompt:
+
+> Extend the `StageControlTest` (found in `GameTest.cpp`) and check whether inputs (at least space for jumping) are correctly forwarded to the player (e.g. by checking the player's y velocity a few frames later). Also write tests for `StageTransitionControl` and `GameOverControl` to check whether their `get_next_scene()` method returns the correct result after the expected amount of time.
+
+
 ## Headless control tests
 
 Adjusting the scene control classes so they can be initialized without constructing SFML views, allowing controller tests to run headlessly.
