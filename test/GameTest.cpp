@@ -439,5 +439,6 @@ TEST(PositionsTest, get_absolute_position) {
     EXPECT_LT((absolute_position - sf::Vector2f(10.f, -constants::VIEW_HEIGHT + 20.f)).length(), 0.001f);
 
     absolute_position = get_absolute_position(relative_position, AnchorPosition::Center);
-    EXPECT_LT((absolute_position - sf::Vector2f(constants::VIEW_WIDTH / 2.f + 10.f, -constants::VIEW_HEIGHT / 2.f + 20.f)).length(), 0.001f);
+    EXPECT_LT((absolute_position - sf::Vector2f(constants::VIEW_WIDTH / 2.f + 10.f, -constants::VIEW_HEIGHT / 2.f + 20.f)).length(),
+              0.001f);
 }
