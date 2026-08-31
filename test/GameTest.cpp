@@ -95,7 +95,7 @@ TEST_F(PlayerUpdateTest, player_hammers_barrel) {
     }
     EXPECT_FALSE(stage.is_over());
     EXPECT_TRUE(stage.get_barrel()->is_destroyed());
-    EXPECT_EQ(player_data.get_hammer_use_count(), 1);
+    EXPECT_EQ(player_data.get_hammer_use_count(), 1u);
 }
 
 // Test that the player can jump over a barrel and survive.
