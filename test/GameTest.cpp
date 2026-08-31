@@ -107,7 +107,7 @@ TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
             stage.get_player()->jump();
             has_jumped = true;
         }
-        stage.update(1.f / 60.f);
+        stage.update(constants::MAX_DT);
     }
     EXPECT_TRUE(stage.get_player()->get_state() == Player::State::OnPlatform);
     EXPECT_FALSE(stage.is_over());
