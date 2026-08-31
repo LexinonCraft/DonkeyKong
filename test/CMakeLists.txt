@@ -70,6 +70,8 @@ set(ViewSources
 set(UtilSources
     ${CMAKE_SOURCE_DIR}/src/util/Positions.cpp
     ${CMAKE_SOURCE_DIR}/src/util/Math.cpp
+    ${CMAKE_SOURCE_DIR}/src/util/Format.cpp
+    ${CMAKE_SOURCE_DIR}/src/util/GlibcCompat.cpp
     )
 
 set(TestSources

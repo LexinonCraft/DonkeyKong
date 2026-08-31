@@ -1,12 +1,11 @@
 #include "DK/view/views/GameOverView.hpp"
 
-#include <format>
-
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
+#include "DK/util/Format.hpp"
 #include "DK/util/Positions.hpp"
 #include "DK/view/AssetsManager.hpp"
 
@@ -24,7 +23,7 @@ void GameOverView::draw() {
     layer_stack.get_layer(LayerStack::LayerId::UI).add_to_layer(title);
 
     sf::Text score_text(assets_manager.get_font());
-    score_text.setString(std::format("Score: {:06d}", score));
+    score_text.setString("Score: " + zero_pad_number(score, 6));
     score_text.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     set_origin(score_text, AnchorPosition::Center);
     score_text.setPosition(get_absolute_position({0.f, constants::GAME_OVER_SCORE_Y}, AnchorPosition::Center));

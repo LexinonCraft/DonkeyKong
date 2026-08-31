@@ -1,6 +1,5 @@
 #include "DK/view/views/TitleScreenView.hpp"
 
-#include <format>
 #include <stdexcept>
 
 #include <SFML/Graphics/Rect.hpp>
@@ -8,6 +7,7 @@
 
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
+#include "DK/util/Format.hpp"
 #include "DK/util/Math.hpp"
 #include "DK/util/Positions.hpp"
 #include "DK/view/AssetsManager.hpp"
@@ -83,7 +83,7 @@ void TitleScreenView::draw() {
 
     // Highscore
     sf::Text highscore(assets_manager.get_font());
-    highscore.setString(std::format("{:06d}", player_data.get_highscore()));
+    highscore.setString(zero_pad_number(player_data.get_highscore(), 6));
     highscore.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     set_origin(highscore, AnchorPosition::TopCenter);
     highscore.setPosition(get_absolute_position({0.f, constants::TITLE_SCREEN_HIGHSCORE_Y}, AnchorPosition::TopCenter));

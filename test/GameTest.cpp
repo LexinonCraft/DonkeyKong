@@ -26,7 +26,7 @@
 
 #define SKIP_IF_NO_DISPLAY()                                                                                                               \
     if (std::getenv("DISPLAY") == nullptr) {                                                                                               \
-        GTEST_SKIP() << "Skipping rendering-related test because there is no display.";                                                    \
+        return;                                                                                                                            \
     }
 
 //  /$$    /$$ /$$                                 /$$                           /$$

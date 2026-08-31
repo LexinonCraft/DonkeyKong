@@ -194,3 +194,13 @@ Prompt:
 Output:
 
 > Added an `EntityRepositoryTest` fixture with a `clear_secondary_entities` test case that verifies active secondary entities are marked as destroyed, secondary entities in the pending additions queue are not inserted after `handle_additions`, and non-secondary entities such as the player are left untouched. Also added this entry to `docs/use-of-ai.md`.
+
+## Replace `std::format` calls
+
+Replace `std::format` calls with string concatenation combined with the `zero_pad_number` function to make the project compatible with C++17 und runnable on JupyterHub.
+
+Prompt:
+
+> This project contains calls to `std::format``, which was introduced in C++ 20. They need to be replaced with something that works with C++ 17.
+
+Replaced `std::format` calls and added `zero_pad_number` function at `DK/util/Format.hpp`.

@@ -1,7 +1,7 @@
 # https://github.com/SFML/cmake-sfml-project
 cmake_minimum_required(VERSION 3.22...4.0.1)
 project(DonkeyKong LANGUAGES CXX)
-set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -76,17 +76,17 @@ target_include_directories(Test PRIVATE
 #    ${CMAKE_SOURCE_DIR}/src
 )
 
-target_compile_features(DonkeyKong PRIVATE cxx_std_20)
-target_compile_features(Test PRIVATE cxx_std_20)
+target_compile_features(DonkeyKong PRIVATE cxx_std_17)
+target_compile_features(Test PRIVATE cxx_std_17)
 
 # Add an explicit language standard flag so tools consuming compile_commands.json
 # (e.g. IntelliSense/clangd) do not fall back to an older default standard.
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
-    target_compile_options(DonkeyKong PRIVATE -std=c++20)
-    target_compile_options(Test PRIVATE -std=c++20)
+    target_compile_options(DonkeyKong PRIVATE -std=c++17)
+    target_compile_options(Test PRIVATE -std=c++17)
 elseif(MSVC)
-    target_compile_options(DonkeyKong PRIVATE /std:c++20)
-    target_compile_options(Test PRIVATE /std:c++20)
+    target_compile_options(DonkeyKong PRIVATE /std:c++17)
+    target_compile_options(Test PRIVATE /std:c++17)
 endif()
 
 # link SFML
