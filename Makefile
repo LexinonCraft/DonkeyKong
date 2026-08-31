@@ -4,8 +4,8 @@
 
 .PHONY: clean docs prepare_include_alias
 
-CXX := c++
-CXXFLAGS := -Wall -std=c++17
+CXX := g++
+CXXFLAGS := -Wall -std=c++17 -D_GLIBCXX_USE_CXX11_ABI=1
 
 # Contain path for any includes (headers)
 # Depending on your platform: Include a path to boost, on linux should be 
@@ -16,7 +16,7 @@ INCLUDES = -I./SFML/include -I/opt/homebrew/include -I$(ALIAS_INCLUDE_ROOT) $(GT
 
 # Contains libraries we need to (-L is directory search path, -l is lib)
 LDFLAGS := -L/usr/local/lib -L./SFML/lib -L/opt/homebrew/lib -Wl,-rpath,'$$ORIGIN/SFML/lib'
-LDLIBS := -lsfml-system -lsfml-window -lsfml-graphics
+LDLIBS := -lsfml-system -lsfml-window -lsfml-graphics -lstdc++
 
 SRCDIR := ./src
 TESTDIR := ./test
