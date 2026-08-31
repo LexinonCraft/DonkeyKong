@@ -1,11 +1,12 @@
 #include "DK/view/views/StageView.hpp"
 
-#include <format>
+#include <string>
 
 #include <SFML/Graphics/Color.hpp>
 
 #include "DK/Constants.hpp"
 #include "DK/model/PlayerData.hpp"
+#include "DK/util/Format.hpp"
 #include "DK/util/Positions.hpp"
 #include "DK/view/AssetsManager.hpp"
 
@@ -33,7 +34,7 @@ void StageView::draw() {
 
     // Score
     sf::Text score(assets_manager.get_font());
-    score.setString(std::format("{:06d}", stage.get_player_data().get_score()));
+    score.setString(zero_pad_number(stage.get_player_data().get_score(), 6));
     score.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     set_origin(score, AnchorPosition::TopCenter);
     score.setPosition(get_absolute_position({constants::STAGE_HUD_SCORE_X, constants::STAGE_HUD_TEXT_ROW_HEIGHT}, AnchorPosition::TopLeft));
@@ -50,7 +51,7 @@ void StageView::draw() {
 
     // Highscore
     sf::Text highscore(assets_manager.get_font());
-    highscore.setString(std::format("{:06d}", stage.get_player_data().get_highscore()));
+    highscore.setString(zero_pad_number(stage.get_player_data().get_highscore(), 6));
     highscore.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     set_origin(highscore, AnchorPosition::TopCenter);
     highscore.setPosition(get_absolute_position({0.f, constants::STAGE_HUD_TEXT_ROW_HEIGHT}, AnchorPosition::TopCenter));
@@ -66,7 +67,7 @@ void StageView::draw() {
 
     // Hammer count
     sf::Text hammer_count(assets_manager.get_font());
-    hammer_count.setString(std::format("{:d}", stage.get_player_data().get_hammer_use_count()));
+    hammer_count.setString(std::to_string(stage.get_player_data().get_hammer_use_count()));
     hammer_count.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     sf::FloatRect hammer_count_bounds = hammer_count.getLocalBounds();
     hammer_count.setOrigin({0.f, hammer_count_bounds.size.y / 2.f});
@@ -83,7 +84,7 @@ void StageView::draw() {
 
     // Barrel count
     sf::Text barrel_count(assets_manager.get_font());
-    barrel_count.setString(std::format("{:d}", stage.get_player_data().get_jumped_over_barrels_count()));
+    barrel_count.setString(std::to_string(stage.get_player_data().get_jumped_over_barrels_count()));
     barrel_count.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     sf::FloatRect barrel_count_bounds = barrel_count.getLocalBounds();
     barrel_count.setOrigin({0.f, barrel_count_bounds.size.y / 2.f});
@@ -104,7 +105,7 @@ void StageView::draw() {
 
     // Level
     sf::Text level_text(assets_manager.get_font());
-    level_text.setString(std::format("L={:02d}", stage.get_player_data().get_level() + 1));
+    level_text.setString("L=" + zero_pad_number(stage.get_player_data().get_level() + 1, 2));
     level_text.setCharacterSize(constants::TEXT_CHARACTER_SIZE);
     set_origin(level_text, AnchorPosition::Center);
     level_text.setPosition(get_absolute_position({constants::STAGE_HUD_LEVEL_X, constants::STAGE_HUD_LEVEL_Y}, AnchorPosition::TopRight));
