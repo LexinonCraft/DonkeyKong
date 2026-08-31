@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "DK/Constants.hpp"
+#include "DK/control/FixedTimestep.hpp"
 #include "DK/control/GameOverControl.hpp"
 #include "DK/control/StageControl.hpp"
 #include "DK/control/StageTransitionControl.hpp"
@@ -101,18 +102,50 @@ TEST_F(PlayerUpdateTest, player_hammers_barrel) {
 // Test that the player can jump over a barrel and survive.
 TEST_F(PlayerUpdateTest, player_jumps_over_barrel) {
     stage.spawn_lower_barrel();
+    FixedTimestep fixed_timestep;
     bool has_jumped = false;
     for (int i = 0; i < 1000 && !stage.is_over() && (!has_jumped || stage.get_player()->get_state() == Player::State::InAir); ++i) {
         if (stage.get_barrel()->get_position().x - stage.get_player()->get_position().x < 50.f && !has_jumped) {
             stage.get_player()->jump();
             has_jumped = true;
         }
-        stage.update(1.f / 60.f);
+        fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME));
+        while (fixed_timestep.has_step()) {
+            stage.update(fixed_timestep.consume_step());
+        }
     }
     EXPECT_TRUE(stage.get_player()->get_state() == Player::State::OnPlatform);
     EXPECT_FALSE(stage.is_over());
     EXPECT_FALSE(stage.get_barrel()->is_destroyed());
     EXPECT_LT(0u, player_data.get_score());
+}
+
+TEST(FixedTimestepTest, max_frame_time_uses_three_updates) {
+    FixedTimestep fixed_timestep;
+    fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME));
+    unsigned int update_count = 0;
+    float updated_time = 0.f;
+    while (fixed_timestep.has_step()) {
+        updated_time += fixed_timestep.consume_step();
+        update_count++;
+    }
+    EXPECT_EQ(update_count, 3u);
+    EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
+}
+
+TEST(FixedTimestepTest, preserves_remainder_between_frames) {
+    FixedTimestep fixed_timestep;
+    unsigned int update_count = 0;
+    float updated_time = 0.f;
+    for (int frame = 0; frame < 2; ++frame) {
+        fixed_timestep.add_frame_time(static_cast<float>(constants::MAX_FRAME_TIME / 2.0));
+        while (fixed_timestep.has_step()) {
+            updated_time += fixed_timestep.consume_step();
+            update_count++;
+        }
+    }
+    EXPECT_EQ(update_count, 3u);
+    EXPECT_NEAR(updated_time, constants::MAX_FRAME_TIME, 1e-6);
 }
 // =========================================================================================================================================
 
