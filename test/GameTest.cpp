@@ -14,6 +14,8 @@
 #include "DK/model/PlayerData.hpp"
 #include "DK/model/entities/Barrel.hpp"
 #include "DK/model/entities/Player.hpp"
+#include "DK/util/Math.hpp"
+#include "DK/util/Positions.hpp"
 #include "DK/view/AssetsManager.hpp"
 #include "DK/view/LayerStack.hpp"
 
@@ -410,3 +412,33 @@ TEST_F(TitleScreenControlTest, press_enter) {
     EXPECT_EQ(title_screen_control->get_next_scene(), AbstractSceneControl::NextScene::StageTransition);
 }
 // =========================================================================================================================================
+
+//  /$$   /$$   /$$     /$$ /$$         /$$                           /$$
+// | $$  | $$  | $$    |__/| $$        | $$                          | $$
+// | $$  | $$ /$$$$$$   /$$| $$       /$$$$$$    /$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$$
+// | $$  | $$|_  $$_/  | $$| $$      |_  $$_/   /$$__  $$ /$$_____/|_  $$_/  /$$_____/
+// | $$  | $$  | $$    | $$| $$        | $$    | $$$$$$$$|  $$$$$$   | $$   |  $$$$$$
+// | $$  | $$  | $$ /$$| $$| $$        | $$ /$$| $$_____/ \____  $$  | $$ /$$\____  $$
+// |  $$$$$$/  |  $$$$/| $$| $$        |  $$$$/|  $$$$$$$ /$$$$$$$/  |  $$$$//$$$$$$$/
+//  \______/    \___/  |__/|__/         \___/   \_______/|_______/    \___/ |_______/
+
+TEST(MathTest, floor_to_int) {
+    EXPECT_EQ(floor_to_int(3.7f), 3);
+    EXPECT_EQ(floor_to_int(-3.7f), -4);
+    EXPECT_EQ(floor_to_int(0.f), 0);
+}
+
+TEST(MathTest, mod) {
+    EXPECT_EQ(mod(5, 3), 2);
+    EXPECT_EQ(mod(-5, 3), 1);
+}
+
+TEST(PositionsTest, get_absolute_position) {
+    sf::Vector2f relative_position{10.f, 20.f};
+    sf::Vector2f absolute_position = get_absolute_position(relative_position, AnchorPosition::TopLeft);
+    EXPECT_LT((absolute_position - sf::Vector2f(10.f, -constants::VIEW_HEIGHT + 20.f)).length(), 0.001f);
+
+    absolute_position = get_absolute_position(relative_position, AnchorPosition::Center);
+    EXPECT_LT((absolute_position - sf::Vector2f(constants::VIEW_WIDTH / 2.f + 10.f, -constants::VIEW_HEIGHT / 2.f + 20.f)).length(),
+              0.001f);
+}
