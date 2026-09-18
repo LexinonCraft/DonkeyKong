@@ -69,8 +69,6 @@ set(ViewSources
 set(UtilSources
     ${CMAKE_CURRENT_SOURCE_DIR}/util/Positions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/Math.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/Format.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/GlibcCompat.cpp
     )
 
 # add src code to target
